@@ -9,12 +9,13 @@ import javafx.stage.Stage;
 
 public class GuiApp extends Application {
 
-    public static final int SCALE = 2;
+    public static final int SCALE = 3;
     public static final int WIDTH = 80;
     public static final int HEIGHT = 40;
     public static final int TILE_SIZE = 5 * SCALE;
 
     private Group tileGroup = new Group();
+    private Group rackGroup = new Group();
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -28,18 +29,33 @@ public class GuiApp extends Application {
         launch(args);
     }
 
-    public Parent createContent() {
-        Pane root = new Pane();
-        root.setPrefSize(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
-        root.getChildren().add(tileGroup);
-
+    public void createTiles() {
         for (int x = 0; x < WIDTH; x++) {
             for (int y = 0; y < HEIGHT; y++) {
-                Tile tile = new Tile((x + y) % 2 == 0, x, y);
+                Tile tile = new Tile(x, y);
                 tileGroup.getChildren().add(tile);
             }
-
         }
+    }
+
+    public void createRacks() {
+
+
+        
+        Rack rack = new Rack(2 * TILE_SIZE, 15 * TILE_SIZE, 1, 1);
+        rackGroup.getChildren().add(rack);
+
+    }
+
+    public Parent createContent() {
+        Pane root = new Pane();
+
+        createTiles();
+        createRacks();
+
+        root.setPrefSize(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
+        root.getChildren().addAll(rackGroup, tileGroup);
+
 
         return root;
     }

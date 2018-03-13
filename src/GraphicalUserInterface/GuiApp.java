@@ -38,30 +38,37 @@ public class GuiApp extends Application {
         }
     }
 
-    public void createRacks() {
-        Rack rack = new Rack(2 * TILE_SIZE, 15 * TILE_SIZE, 1, 1);
+    public void createRack() {
+        // TODO: Should not create both rack and products
 
-        rackGroup.getChildren().addAll(rack, createProducts());
-
-    }
-
-    public Group createProducts() {
+        // Create rack
+        Rack rack = new Rack(2 * TILE_SIZE, 15 * TILE_SIZE, 2, 2);
         Group productGroup = new Group();
+
+        // Create products and put into rack
+        // Rack holds an array of products
         Product product1 = new Product(0, 0);
-        Product product2 = new Product(1, 0);
-        productGroup.getChildren().addAll(product1, product2);
-        return productGroup;
+        Product product2 = new Product(0, 1);
+        Product product3 = new Product(0, 2);
+
+        rack.setProduct(product1);
+        rack.setProduct(product2);
+        rack.setProduct(product3);
+
+        productGroup.getChildren().addAll(product1, product2, product3);
+
+        rackGroup.getChildren().addAll(rack, productGroup);
+
     }
 
     public Parent createContent() {
         Pane root = new Pane();
 
         createTiles();
-        createRacks();
+        createRack();
 
         root.setPrefSize(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
         root.getChildren().addAll(rackGroup, tileGroup);
-
 
         return root;
     }

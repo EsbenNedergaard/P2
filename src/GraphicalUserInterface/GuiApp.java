@@ -39,12 +39,18 @@ public class GuiApp extends Application {
     }
 
     public void createRacks() {
-
-
-        
         Rack rack = new Rack(2 * TILE_SIZE, 15 * TILE_SIZE, 1, 1);
-        rackGroup.getChildren().add(rack);
 
+        rackGroup.getChildren().addAll(rack, createProducts());
+
+    }
+
+    public Group createProducts() {
+        Group productGroup = new Group();
+        Product product1 = new Product(0, 0);
+        Product product2 = new Product(1, 0);
+        productGroup.getChildren().addAll(product1, product2);
+        return productGroup;
     }
 
     public Parent createContent() {

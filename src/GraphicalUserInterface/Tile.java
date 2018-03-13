@@ -11,6 +11,10 @@ public class Tile extends Rectangle {
         setHeight(TILE_SIZE);
 
         relocate(x * TILE_SIZE, y * TILE_SIZE);
+        design();
+    }
+
+    public void design() {
         setFill(Color.TRANSPARENT);
         setStroke(Color.valueOf("#b7b7b7"));
         setStrokeWidth(0.5);

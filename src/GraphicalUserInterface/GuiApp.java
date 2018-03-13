@@ -32,7 +32,7 @@ public class GuiApp extends Application {
     public void createTiles() {
         for (int x = 0; x < WIDTH; x++) {
             for (int y = 0; y < HEIGHT; y++) {
-                Tile tile = new Tile((x + y) % 2 == 0, x, y);
+                Tile tile = new Tile(x, y);
                 tileGroup.getChildren().add(tile);
             }
         }

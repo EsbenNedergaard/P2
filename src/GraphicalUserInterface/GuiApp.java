@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 
 public class GuiApp extends Application {
 
-    public static final int SCALE = 2;
+    public static final int SCALE = 3;
     public static final int WIDTH = 80;
     public static final int HEIGHT = 40;
     public static final int TILE_SIZE = 5 * SCALE;
@@ -39,7 +39,10 @@ public class GuiApp extends Application {
     }
 
     public void createRacks() {
-        Rack rack = new Rack(20 * TILE_SIZE, 10 * TILE_SIZE, 1, 1);
+
+
+        
+        Rack rack = new Rack(2 * TILE_SIZE, 15 * TILE_SIZE, 1, 1);
         rackGroup.getChildren().add(rack);
 
     }
@@ -51,7 +54,7 @@ public class GuiApp extends Application {
         createRacks();
 
         root.setPrefSize(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
-        root.getChildren().addAll(tileGroup, rackGroup);
+        root.getChildren().addAll(rackGroup, tileGroup);
 
 
         return root;

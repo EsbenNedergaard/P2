@@ -15,6 +15,7 @@ public class GuiApp extends Application {
     public static final int TILE_SIZE = 5 * SCALE;
 
     private Group tileGroup = new Group();
+    private Group rackGroup = new Group();
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -28,18 +29,30 @@ public class GuiApp extends Application {
         launch(args);
     }
 
-    public Parent createContent() {
-        Pane root = new Pane();
-        root.setPrefSize(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
-        root.getChildren().add(tileGroup);
-
+    public void createTiles() {
         for (int x = 0; x < WIDTH; x++) {
             for (int y = 0; y < HEIGHT; y++) {
                 Tile tile = new Tile((x + y) % 2 == 0, x, y);
                 tileGroup.getChildren().add(tile);
             }
-
         }
+    }
+
+    public void createRacks() {
+        Rack rack = new Rack(20 * TILE_SIZE, 10 * TILE_SIZE, 1, 1);
+        rackGroup.getChildren().add(rack);
+
+    }
+
+    public Parent createContent() {
+        Pane root = new Pane();
+
+        createTiles();
+        createRacks();
+
+        root.setPrefSize(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
+        root.getChildren().addAll(tileGroup, rackGroup);
+
 
         return root;
     }

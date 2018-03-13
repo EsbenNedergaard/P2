@@ -9,7 +9,9 @@ public class Tile extends Rectangle {
         setHeight(GuiApp.TILE_SIZE);
 
         relocate(x * GuiApp.TILE_SIZE, y * GuiApp.TILE_SIZE);
-        setFill(color ? Color.valueOf("grey") : Color.valueOf("white"));
+        setFill(Color.TRANSPARENT);
+        setStroke(Color.valueOf("#b7b7b7"));
+        setStrokeWidth(0.5);
     }
 }
 

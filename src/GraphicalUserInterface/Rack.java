@@ -6,7 +6,7 @@ import javafx.scene.shape.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
-import static GraphicalUserInterface.GuiApp.TILE_SIZE;
+import static GraphicalUserInterface.Warehouse.TILE_SIZE;
 
 public class Rack extends Rectangle {
 
@@ -31,9 +31,13 @@ public class Rack extends Rectangle {
     }
 
     public void addProduct(Product product) {
-        // TODO: check product out of rack
+        // Elements of list decides which coordinates the product should have
 
-        productList.add(product);
+        // TODO: Add product and set location x and y by value of rack x and y
+        // TODO: Use product.relocate();
+
+        // TODO: Try to add product which already got a location
+
     }
 
     public Product getProduct(int id) {
@@ -42,7 +46,7 @@ public class Rack extends Rectangle {
                 return product;
         }
 
-        // TODO: skal caste en exception om at productet ikke findes!!!!!
+        // TODO: skal caste en exception om at produktet ikke findes!!!!!
         return new Product("NULL", 0, 0, 0);
     }
 

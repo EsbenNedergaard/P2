@@ -7,7 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class GuiApp extends Application {
+public class Warehouse extends Application {
 
     public static final int SCALE = 3;
     public static final int WIDTH = 80;
@@ -36,9 +36,9 @@ public class GuiApp extends Application {
         // Create products and put into rack
         // Rack holds an array of products
 
-        rack.addProduct(new Product("Apples", 1, 0, 0));
-        rack.addProduct(new Product("Oranges", 2, 0, 1));
-        rack.addProduct(new Product("Monkeys", 3, 0, 2));
+        rack.addProduct(new Product("Apple", 2));
+        rack.addProduct(new Product("Orange", 2));
+        rack.addProduct(new Product("Grapes", 3, 2, 4));
 
         // Add to graphical group
         for(Product product : rack.getProductList())

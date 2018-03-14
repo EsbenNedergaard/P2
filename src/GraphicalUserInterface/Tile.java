@@ -20,10 +20,10 @@ public class Tile extends Rectangle {
 
         // Graphical position of tile
         relocate(x * TILE_SIZE, y * TILE_SIZE);
-        design();
+        setDesign();
     }
 
-    public void design() {
+    public void setDesign() {
         // Design options
         setFill(Color.TRANSPARENT);
         setStroke(Color.valueOf("#b7b7b7"));

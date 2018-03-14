@@ -17,18 +17,6 @@ public class GuiApp extends Application {
     private Group tileGroup = new Group();
     private Group rackGroup = new Group();
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        Scene scene = new Scene(createContent());
-        primaryStage.setTitle("Warehouse");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
-
-    public static void main(String[] args) {
-        launch(args);
-    }
-
     public void createTiles() {
         for (int x = 0; x < WIDTH; x++) {
             for (int y = 0; y < HEIGHT; y++) {
@@ -42,20 +30,19 @@ public class GuiApp extends Application {
         // TODO: Should not create both rack and products
 
         // Create rack
-        Rack rack = new Rack(2 * TILE_SIZE, 15 * TILE_SIZE, 2, 2);
+        Rack rack = new Rack("A", TILE_SIZE, 15 * TILE_SIZE, 2, 2);
         Group productGroup = new Group();
 
         // Create products and put into rack
         // Rack holds an array of products
-        Product product1 = new Product(0, 0);
-        Product product2 = new Product(0, 1);
-        Product product3 = new Product(0, 2);
 
-        rack.setProduct(product1);
-        rack.setProduct(product2);
-        rack.setProduct(product3);
+        rack.addProduct(new Product("Apples", 1, 0, 0));
+        rack.addProduct(new Product("Oranges", 2, 0, 1));
+        rack.addProduct(new Product("Monkeys", 3, 0, 2));
 
-        productGroup.getChildren().addAll(product1, product2, product3);
+        // Add to graphical group
+        for(Product product : rack.getProductList())
+            productGroup.getChildren().add(product);
 
         rackGroup.getChildren().addAll(rack, productGroup);
 
@@ -72,5 +59,18 @@ public class GuiApp extends Application {
 
         return root;
     }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        Scene scene = new Scene(createContent());
+        primaryStage.setTitle("Warehouse");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+
 }
 

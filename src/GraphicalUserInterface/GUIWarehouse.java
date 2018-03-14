@@ -7,21 +7,22 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class Warehouse extends Application {
+public class GUIWarehouse extends Application {
 
     public static final int SCALE = 3;
+
     public static final int WIDTH = 80;
     public static final int HEIGHT = 40;
     public static final int TILE_SIZE = 5 * SCALE;
 
-    private Group tileGroup = new Group();
-    private Group rackGroup = new Group();
+    private Group tileGraphicalGroup = new Group();
+    private Group rackGraphicalGroup = new Group();
 
     public void createTiles() {
         for (int x = 0; x < WIDTH; x++) {
             for (int y = 0; y < HEIGHT; y++) {
                 Tile tile = new Tile(x, y);
-                tileGroup.getChildren().add(tile);
+                tileGraphicalGroup.getChildren().add(tile);
             }
         }
     }
@@ -31,7 +32,7 @@ public class Warehouse extends Application {
 
         // Create rack
         Rack rack = new Rack("A", TILE_SIZE, 15 * TILE_SIZE, 2, 2);
-        Group productGroup = new Group();
+        Group productGraphicalGroup = new Group();
 
         // Create products and put into rack
         // Rack holds an array of products
@@ -42,9 +43,9 @@ public class Warehouse extends Application {
 
         // Add to graphical group
         for(Product product : rack.getProductList())
-            productGroup.getChildren().add(product);
+            productGraphicalGroup.getChildren().add(product);
 
-        rackGroup.getChildren().addAll(rack, productGroup);
+        rackGraphicalGroup.getChildren().addAll(rack, productGraphicalGroup);
 
     }
 
@@ -55,7 +56,7 @@ public class Warehouse extends Application {
         createRack();
 
         root.setPrefSize(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
-        root.getChildren().addAll(rackGroup, tileGroup);
+        root.getChildren().addAll(rackGraphicalGroup, tileGraphicalGroup);
 
         return root;
     }
@@ -63,7 +64,7 @@ public class Warehouse extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Scene scene = new Scene(createContent());
-        primaryStage.setTitle("Warehouse");
+        primaryStage.setTitle("GUIWarehouse");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

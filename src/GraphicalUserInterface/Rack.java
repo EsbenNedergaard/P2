@@ -6,7 +6,7 @@ import javafx.scene.shape.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
-import static GraphicalUserInterface.Warehouse.TILE_SIZE;
+import static GraphicalUserInterface.GUIWarehouse.TILE_SIZE;
 
 public class Rack extends Rectangle {
 
@@ -41,9 +41,9 @@ public class Rack extends Rectangle {
     }
 
     public Product getProduct(int id) {
-        for(Product product : productList) {
-            if(product.getById() == id)
-                return product;
+        for(Product item : productList) {
+            if(item.getById() == id)
+                return item;
         }
 
         // TODO: skal caste en exception om at produktet ikke findes!!!!!

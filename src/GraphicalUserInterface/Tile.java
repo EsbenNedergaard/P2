@@ -3,7 +3,7 @@ package GraphicalUserInterface;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-import static GraphicalUserInterface.Warehouse.TILE_SIZE;
+import static GraphicalUserInterface.GUIWarehouse.TILE_SIZE;
 
 public class Tile extends Rectangle {
 

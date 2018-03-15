@@ -14,7 +14,9 @@ public class Product extends Rectangle {
         this.name = name;
         this.id = id;
         // Position of object
-        relocate(x * TILE_SIZE, y * TILE_SIZE);
+
+        setTranslateX(x * TILE_SIZE);
+        setTranslateY(y * TILE_SIZE);
 
         setDesign();
     }
@@ -23,7 +25,8 @@ public class Product extends Rectangle {
         this.name = name;
         this.id = id;
 
-        relocate(-1 * TILE_SIZE, -1 * TILE_SIZE);
+        setTranslateX(-1 * TILE_SIZE);
+        setTranslateY(-1 * TILE_SIZE);
 
         setDesign();
     }

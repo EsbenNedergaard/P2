@@ -37,15 +37,17 @@ public class GUIWarehouse extends Application {
         // Create products and put into rack
         // Rack holds an array of products
 
-        rack.addProduct(new Product("Apple", 2));
-        rack.addProduct(new Product("Orange", 2));
-        rack.addProduct(new Product("Grapes", 3, 2, 4));
+        rack.addProduct(new Product("Apple", 1, 2, 2));
+        rack.addProduct(new Product("Orange", 2, 2, 3));
+        rack.addProduct(new Product("Grapes", 3));
+        rack.addProduct(new Product("Anton", 10, 2, 10));
 
         // Add to graphical group
         for(Product product : rack.getProductList())
             productGraphicalGroup.getChildren().add(product);
 
         rackGraphicalGroup.getChildren().addAll(rack, productGraphicalGroup);
+
     }
 
     public Parent createContent() {

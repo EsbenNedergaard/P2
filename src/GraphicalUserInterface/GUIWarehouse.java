@@ -46,7 +46,6 @@ public class GUIWarehouse extends Application {
             productGraphicalGroup.getChildren().add(product);
 
         rackGraphicalGroup.getChildren().addAll(rack, productGraphicalGroup);
-
     }
 
     public Parent createContent() {

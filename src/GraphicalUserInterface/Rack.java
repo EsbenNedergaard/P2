@@ -1,5 +1,6 @@
 package GraphicalUserInterface;
 
+import Exceptions.IllegalRackDimensionException;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -10,6 +11,7 @@ import static GraphicalUserInterface.GUIWarehouse.TILE_SIZE;
 
 public class Rack extends Rectangle {
 
+    private boolean isVertical;
     private String name;
     private int xCoordinate, yCoordinate;
     private List<Product> productList = new ArrayList<>();
@@ -17,6 +19,8 @@ public class Rack extends Rectangle {
     public Rack(String name, int width, int height, int x, int y) {
         // TODO: A rack can only hold one row or one column of products
         // TODO: so, if width > 1 when height = 1 or if height > 1 then width = 1
+
+        checkRackDimensions(width, height);
 
         this.name = name;
         this.xCoordinate = x;
@@ -30,6 +34,18 @@ public class Rack extends Rectangle {
 
     }
 
+    private void checkRackDimensions(int width, int height) {
+        if (width >= TILE_SIZE && height == TILE_SIZE) {
+            this.isVertical = false;
+        }
+        else if (width == TILE_SIZE && height >= TILE_SIZE) {
+            this.isVertical = true;
+        }
+        else {
+            throw new IllegalRackDimensionException();
+        }
+    }
+
     public void addProduct(Product product) {
         // Elements of list decides which coordinates the product should have
 
@@ -37,6 +53,16 @@ public class Rack extends Rectangle {
         // TODO: Use product.relocate();
 
         // TODO: Try to add product which already got a location
+
+        if (this.isVertical) {
+            // If x and y is not set from Product constructor
+            if (product.getTranslateX() == -1 * TILE_SIZE &&
+                    product.getTranslateY() == -1 * TILE_SIZE) {
+                while () {
+
+                }
+            }
+        }
 
     }
 

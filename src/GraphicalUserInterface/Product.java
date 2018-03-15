@@ -23,6 +23,8 @@ public class Product extends Rectangle {
         this.name = name;
         this.id = id;
 
+        relocate(-1 * TILE_SIZE, -1 * TILE_SIZE);
+
         setDesign();
     }
 

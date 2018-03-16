@@ -8,7 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class AddProductTest {
     // Tests for adding a product to rack
-
     // When rack is vertical
     // Create a new vertical test rack located in (x, y) = (2, 2)
     private Rack verticalTestRack = new Rack("A", 1, 15, 2, 2);

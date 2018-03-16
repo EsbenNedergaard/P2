@@ -42,6 +42,7 @@ public class GUIWarehouse extends Application {
         rack.addProduct(new Product("Grapes", 3));
         rack.addProduct(new Product("Anton", 10, 2, 10));
 
+
         // Add to graphical group
         for(Product product : rack.getProductList())
             productGraphicalGroup.getChildren().add(product);

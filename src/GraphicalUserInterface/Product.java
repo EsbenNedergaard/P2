@@ -46,4 +46,5 @@ public class Product extends Rectangle {
     public int getById() {
         return id;
     }
+
 }

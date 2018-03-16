@@ -23,14 +23,14 @@ public class Rack extends Rectangle {
         // TODO: A rack can only hold one row or one column of products
         // TODO: so, if width > 1 when height = 1 or if height > 1 then width = 1
 
-        checkRackDimensions(width, height);
+        checkRackDimensions(width * TILE_SIZE, height * TILE_SIZE);
 
         this.name = name;
         this.xCoordinate = x;
         this.yCoordinate = y;
 
-        setWidth(width);
-        setHeight(height);
+        setWidth(width * TILE_SIZE);
+        setHeight(height * TILE_SIZE);
 
         relocate(x * TILE_SIZE, y * TILE_SIZE);
         setFill(Color.valueOf("yellow"));
@@ -112,10 +112,6 @@ public class Rack extends Rectangle {
             }
         }
 
-
-        // TODO: Try to add product which already got a location
-
-
     }
 
     public Product getProduct(int id) {
@@ -128,6 +124,7 @@ public class Rack extends Rectangle {
         return new Product("NULL", 0, 0, 0);
     }
 
+    // Return the hole product list
     public List<Product> getProductList() {
         return this.productList;
     }
@@ -143,11 +140,21 @@ public class Rack extends Rectangle {
     }
 
     private boolean inRack(int x, int y) {
-        if(x >= this.xCoordinate && x < this.xCoordinate + this.getWidth() / TILE_SIZE)
-            if(y >= this.yCoordinate && x < this.yCoordinate + this.getHeight() / TILE_SIZE)
-                return true;
-        return false;
+        boolean xInRack = x >= this.xCoordinate && x < this.xCoordinate + this.getWidth() / TILE_SIZE;
+        boolean yInRack = y >= this.yCoordinate && x < this.yCoordinate + this.getHeight() / TILE_SIZE;
 
+        if(xInRack && yInRack)
+            return true;
+        return false;
+    }
+
+    public boolean containsProduct(int x, int y) {
+        for(Product product : productList) {
+            if(product.getTranslateX() / TILE_SIZE == x &&
+               product.getTranslateY() / TILE_SIZE == y)
+                return true;
+        }
+        return false;
     }
 
 }

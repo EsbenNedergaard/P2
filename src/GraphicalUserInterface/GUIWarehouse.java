@@ -31,7 +31,7 @@ public class GUIWarehouse extends Application {
         // TODO: Should not create both rack and products
 
         // Create rack
-        Rack rack = new Rack("A", TILE_SIZE, 15 * TILE_SIZE, 2, 2);
+        Rack rack = new Rack("A", 1, 15, 2, 2);
         Group productGraphicalGroup = new Group();
 
         // Create products and put into rack

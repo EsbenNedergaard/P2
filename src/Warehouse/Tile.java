@@ -1,5 +1,6 @@
 package Warehouse;
 
+import Geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -12,14 +13,14 @@ public class Tile extends Rectangle {
     // TODO: koordinater. Altså, et product øverst i en hylde har (x,y) = (0,0)
     // private int localX, localY;
 
-    public Tile(int x, int y) {
+    public Tile(Point2D point) {
 
         // Pixel width of tile
         setWidth(TILE_SIZE);
         setHeight(TILE_SIZE);
 
         // Graphical position of tile
-        relocate(x * TILE_SIZE, y * TILE_SIZE);
+        relocate(point.getXPixels(), point.getYPixels());
         setDesign();
     }
 

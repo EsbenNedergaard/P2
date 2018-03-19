@@ -1,7 +1,11 @@
 package Warehouse;
 
+import Exceptions.FullRackException;
 import Exceptions.IllegalProductPositionException;
+import Warehouse.ProductContainer.Rack;
+import Warehouse.ProductContainer.VerticalRack;
 import javafx.application.Application;
+import Geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -12,17 +16,17 @@ public class GUIWarehouse extends Application {
 
     public static final int SCALE = 3;
 
-    public static final int WIDTH = 80;
-    public static final int HEIGHT = 40;
+    public static final int WIDTH_WAREHOUSE = 80;
+    public static final int HEIGHT_WAREHOUSE = 40;
     public static final int TILE_SIZE = 5 * SCALE;
 
     private Group tileGraphicalGroup = new Group();
     private Group rackGraphicalGroup = new Group();
 
     public void createTiles() {
-        for (int x = 0; x < WIDTH; x++) {
-            for (int y = 0; y < HEIGHT; y++) {
-                Tile tile = new Tile(x, y);
+        for (int x = 0; x < WIDTH_WAREHOUSE; x++) {
+            for (int y = 0; y < HEIGHT_WAREHOUSE; y++) {
+                Tile tile = new Tile(new Point2D(x, y));
                 tileGraphicalGroup.getChildren().add(tile);
             }
         }
@@ -32,27 +36,20 @@ public class GUIWarehouse extends Application {
         // TODO: Should not create both rack and products
 
         // Create rack
-        RackSome rack = new RackSome("A", 1, 15, 2, 2);
+        Rack rack = new VerticalRack("A", 12, new Point2D(1, 1));
         Group productGraphicalGroup = new Group();
 
         // Create products and put into rack
         // RackSome holds an array of products
 
         try {
-            rack.addProduct(new Product("Apple", 1, 2, 2));
-            rack.addProduct(new Product("Orange", 2, 2, 3));
-            rack.addProduct(new Product("Grapes", 3));
-            rack.addProduct(new Product("Orange", 10, 2, 16));
-        } catch (IllegalProductPositionException e) {
-            System.out.println("Illegal product position");
+            rack.addProduct(new Product("Apple", 1));
+            rack.addProduct(new Product("Orange", 2));
+            rack.addProduct(new Product("Grapes", 3), 20);
+            //rack.addProduct(new Product("Orange", 10));
+        } catch (IllegalProductPositionException | FullRackException e) {
+            System.out.println(e.toString());
         }
-
-        /*for(Product somProduct : rack.getProductList()) {
-            System.out.println(somProduct.getTranslateX() + " " + somProduct.getTranslateY());
-        }*/
-
-
-
 
         // Add to graphical group
         for(Product product : rack.getProductList())
@@ -68,7 +65,7 @@ public class GUIWarehouse extends Application {
         createTiles();
         createRack();
 
-        root.setPrefSize(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
+        root.setPrefSize(WIDTH_WAREHOUSE * TILE_SIZE, HEIGHT_WAREHOUSE * TILE_SIZE);
         root.getChildren().addAll(rackGraphicalGroup, tileGraphicalGroup);
 
         return root;

@@ -1,8 +1,8 @@
-package GraphicalUserInterface;
+package Warehouse;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import static GraphicalUserInterface.GUIWarehouse.TILE_SIZE;
+import static Warehouse.GUIWarehouse.TILE_SIZE;
 
 public class Product extends Rectangle {
 

@@ -1,5 +1,6 @@
-package GraphicalUserInterface;
+package Warehouse;
 
+import Exceptions.IllegalProductPositionException;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Parent;
@@ -31,16 +32,26 @@ public class GUIWarehouse extends Application {
         // TODO: Should not create both rack and products
 
         // Create rack
-        Rack rack = new Rack("A", 1, 15, 2, 2);
+        RackSome rack = new RackSome("A", 1, 15, 2, 2);
         Group productGraphicalGroup = new Group();
 
         // Create products and put into rack
-        // Rack holds an array of products
+        // RackSome holds an array of products
 
-        rack.addProduct(new Product("Apple", 1, 2, 2));
-        rack.addProduct(new Product("Orange", 2, 2, 3));
-        rack.addProduct(new Product("Grapes", 3));
-        rack.addProduct(new Product("Anton", 10, 2, 10));
+        try {
+            rack.addProduct(new Product("Apple", 1, 2, 2));
+            rack.addProduct(new Product("Orange", 2, 2, 3));
+            rack.addProduct(new Product("Grapes", 3));
+            rack.addProduct(new Product("Orange", 10, 2, 16));
+        } catch (IllegalProductPositionException e) {
+            System.out.println("Illegal product position");
+        }
+
+        /*for(Product somProduct : rack.getProductList()) {
+            System.out.println(somProduct.getTranslateX() + " " + somProduct.getTranslateY());
+        }*/
+
+
 
 
         // Add to graphical group

@@ -1,4 +1,4 @@
-package GraphicalUserInterface;
+package Warehouse;
 
 import Exceptions.IllegalProductPositionException;
 import Exceptions.IllegalRackDimensionException;
@@ -10,16 +10,16 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import static GraphicalUserInterface.GUIWarehouse.TILE_SIZE;
+import static Warehouse.GUIWarehouse.TILE_SIZE;
 
-public class Rack extends Rectangle {
+public class RackSome extends Rectangle {
 
     private boolean isVertical;
     private String name;
     private int xCoordinate, yCoordinate;
     private List<Product> productList = new ArrayList<>();
 
-    public Rack(String name, int width, int height, int x, int y) {
+    public RackSome(String name, int width, int height, int x, int y) {
         // TODO: A rack can only hold one row or one column of products
         // TODO: so, if width > 1 when height = 1 or if height > 1 then width = 1
 
@@ -141,7 +141,7 @@ public class Rack extends Rectangle {
 
     private boolean inRack(int x, int y) {
         boolean xInRack = x >= this.xCoordinate && x < this.xCoordinate + this.getWidth() / TILE_SIZE;
-        boolean yInRack = y >= this.yCoordinate && x < this.yCoordinate + this.getHeight() / TILE_SIZE;
+        boolean yInRack = y >= this.yCoordinate && y < this.yCoordinate + this.getHeight() / TILE_SIZE;
 
         if(xInRack && yInRack)
             return true;

@@ -1,7 +1,7 @@
-package GraphicalUserInterface.RackTest;
+package Warehouse.RackTest;
 
-import GraphicalUserInterface.Product;
-import GraphicalUserInterface.Rack;
+import Warehouse.Product;
+import Warehouse.RackSome;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -12,7 +12,7 @@ public class ContainsProductTest {
     // Contains product Test
     @Test
     void testContainsProduct01() {
-        Rack testRack = new Rack("A", 1, 4, 0, 0);
+        RackSome testRack = new RackSome("A", 1, 4, 0, 0);
 
         assertFalse(testRack.containsProduct(0, 0));
         assertFalse(testRack.containsProduct(0, 1));
@@ -22,7 +22,7 @@ public class ContainsProductTest {
 
     @Test
     void testContainsProduct02() {
-        Rack testRack = new Rack("A", 1, 4, 0, 0);
+        RackSome testRack = new RackSome("A", 1, 4, 0, 0);
         // Adding some products to the rack
         testRack.addProduct(new Product("product", 1));
         testRack.addProduct(new Product("product", 1));
@@ -38,7 +38,7 @@ public class ContainsProductTest {
 
     @Test
     void testContainsProduct03() {
-        Rack testRack = new Rack("A", 1, 4, 0, 0);
+        RackSome testRack = new RackSome("A", 1, 4, 0, 0);
 
         testRack.addProduct(new Product("product", 1));
         testRack.addProduct(new Product("product", 1));

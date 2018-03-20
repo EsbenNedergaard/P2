@@ -34,7 +34,7 @@ public class GUIWarehouse extends Application {
 
     public void createRack() {
         // TODO: Should not create both rack and products
-
+        // TODO: Make sure Rakcs cant be placed on top of each other
         // Create rack
         Rack rack = new VerticalRack("A", 12, new Point2D(1, 1));
         Group productGraphicalGroup = new Group();

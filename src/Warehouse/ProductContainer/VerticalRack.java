@@ -7,6 +7,8 @@ import Warehouse.Product;
 import Geometry.Point2D;
 import javafx.scene.paint.Color;
 
+import java.util.List;
+
 import static Warehouse.GUIWarehouse.HEIGHT_WAREHOUSE;
 import static Warehouse.GUIWarehouse.TILE_SIZE;
 import static Warehouse.GUIWarehouse.WIDTH_WAREHOUSE;
@@ -19,8 +21,14 @@ public class VerticalRack extends Rack {
         if(rackOutsideWarehouse())
             throw new IllegalRackDimensionException();
 
+        setUpGraphics();
+    }
+
+    private void setUpGraphics(){
         setWidth(TILE_SIZE);
-        setHeight(length * TILE_SIZE);
+        setHeight(this.getRackLength() * TILE_SIZE);
+
+        Point2D startPoint = this.getStartPoint();
         relocate(startPoint.getXPixels(), startPoint.getYPixels());
         // Color of rack
         setFill(Color.valueOf("yellow"));
@@ -29,16 +37,16 @@ public class VerticalRack extends Rack {
     @Override
     public void addProduct(Product product) {
         // Check if rack has space for a product
-        if(this.rackLength <= productList.size())
+
+        if(getRackLength() <= productList.size())
             throw new FullRackException();
 
-        int rackPositionX = this.startPoint.getX();
-        int rackPositionY = this.startPoint.getY();
+        int rackPositionX = this.getStartPoint().getX();
+        int rackPositionY = this.getStartPoint().getY();
         int i = 0;
         boolean found = false;
 
-        while(i < this.rackLength && !found) {
-
+        while(i < getRackLength() && !found) {
             Point2D productPoint = new Point2D(rackPositionX, rackPositionY + i);
 
             if(!containsProduct(productPoint)) {
@@ -57,12 +65,12 @@ public class VerticalRack extends Rack {
             throw new IllegalProductPositionException("The product position cannot be negative");
 
         // Check if rack position is in rack
-        if(productPosition > this.rackLength)
+        if(productPosition > getRackLength())
             throw new IllegalProductPositionException("The product position was too high");
 
 
-        int rackPositionX = this.startPoint.getX();
-        int rackPositionY = this.startPoint.getY();
+        int rackPositionX = this.getStartPoint().getX();
+        int rackPositionY = this.getStartPoint().getY();
 
         Point2D placementPoint = new Point2D(rackPositionX, rackPositionY + productPosition);
 
@@ -72,18 +80,20 @@ public class VerticalRack extends Rack {
 
         product.setProductPosition(placementPoint);
         productList.add(product);
-
     }
 
     private boolean rackOutsideWarehouse() {
-        if(this.startPoint.getX() < 0 || this.startPoint.getX() >= WIDTH_WAREHOUSE)
+        int rackPositionX = this.getStartPoint().getX();
+        int rackPositionY = this.getStartPoint().getY();
+
+
+        if(WIDTH_WAREHOUSE <= rackPositionX || rackPositionX < 0)
             return true;
 
-        if(this.startPoint.getY() + this.rackLength > HEIGHT_WAREHOUSE)
+        if(HEIGHT_WAREHOUSE <= rackPositionY + getRackLength() || rackPositionY + getRackLength() < 0)
             return true;
 
         return false;
 
     }
-
 }

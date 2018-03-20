@@ -7,16 +7,16 @@ import javafx.scene.shape.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
+import static Warehouse.GUIWarehouse.HEIGHT_WAREHOUSE;
 import static Warehouse.GUIWarehouse.TILE_SIZE;
 
 public abstract class Rack extends Rectangle implements ProductContainer {
+    private String name;
+    private int rackLength;
+    private Point2D startPoint;
+    List<Product> productList = new ArrayList<>();
 
-    protected String name;
-    protected int rackLength;
-    protected Point2D startPoint;
-    protected List<Product> productList = new ArrayList<>();
-
-    public Rack(String name, int rackLength, Point2D startPoint) {
+    Rack(String name, int rackLength, Point2D startPoint) {
         this.name = name;
         this.rackLength = rackLength;
         this.startPoint = startPoint;
@@ -24,6 +24,19 @@ public abstract class Rack extends Rectangle implements ProductContainer {
 
     abstract public void addProduct(Product product);
     abstract public void addProduct(Product product, int productPosition);
+
+
+    public String getName() {
+        return name;
+    }
+
+    int getRackLength() {
+        return rackLength;
+    }
+
+    Point2D getStartPoint() {
+        return startPoint;
+    }
 
     @Override
     public Product getProduct(int id) {
@@ -39,6 +52,24 @@ public abstract class Rack extends Rectangle implements ProductContainer {
     @Override
     public List<Product> getProductList() {
         return this.productList;
+    }
+
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setRackLength(int rackLength) {
+        this.rackLength = rackLength;
+    }
+
+    public void setStartPoint(Point2D startPoint) {
+        this.startPoint = startPoint;
+    }
+
+    @Override
+    public void setProductList(List<Product> productList) {
+        this.productList = productList;
     }
 
     @Override
@@ -64,5 +95,6 @@ public abstract class Rack extends Rectangle implements ProductContainer {
             return true;
         return false;
     }
+
 
 }

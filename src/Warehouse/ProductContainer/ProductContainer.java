@@ -11,6 +11,7 @@ public interface ProductContainer {
     //void checkRackDimensions(int width, int height);
     Product getProduct(int id);
     List<Product> getProductList();
+    void setProductList(List<Product> productList);
     boolean inProductContainer(Point2D point);
     boolean containsProduct(Point2D point);
 

@@ -1,5 +1,7 @@
 package Warehouse.ProductContainer;
 
+import Exceptions.FullRackException;
+import Exceptions.IllegalProductPositionException;
 import Exceptions.ProductDoesNotExistException;
 import Warehouse.Product;
 import Geometry.Point2D;
@@ -21,9 +23,38 @@ public abstract class Rack extends Rectangle implements ProductContainer {
         this.rackLength = rackLength;
         this.startPoint = startPoint;
     }
+    abstract Point2D createPlacementPoint(int productPosition);
 
-    abstract public void addProduct(Product product);
-    abstract public void addProduct(Product product, int productPosition);
+    public void addProduct(Product product) {
+        // Check if rack has space for a product
+        if(getRackLength() <= productList.size())
+            throw new FullRackException();
+
+        int i = 0;
+        boolean found = false;
+
+        while(i < getRackLength() && !found) {
+            Point2D productPoint = createPlacementPoint(i);
+            if(!containsProduct(productPoint)) {
+                product.setProductPosition(productPoint);
+                productList.add(product);
+                found = true;
+            }
+            i++;
+        }
+    }
+
+    public void addProduct(Product product, int productPosition) {
+        checkForIllegalProductPostion(productPosition);
+
+        Point2D placementPoint = createPlacementPoint(productPosition);
+        // Check if position contains a product
+        if(containsProduct(placementPoint))
+            throw new IllegalProductPositionException("Place contains a product");
+
+        product.setProductPosition(placementPoint);
+        productList.add(product);
+    }
 
 
     public String getName() {
@@ -53,7 +84,6 @@ public abstract class Rack extends Rectangle implements ProductContainer {
     public List<Product> getProductList() {
         return this.productList;
     }
-
 
     public void setName(String name) {
         this.name = name;
@@ -96,5 +126,14 @@ public abstract class Rack extends Rectangle implements ProductContainer {
         return false;
     }
 
+    void checkForIllegalProductPostion(int productPosition){
+        // Check if position is negative
+        if(productPosition < 0)
+            throw new IllegalProductPositionException("The product position cannot be negative");
 
+        // Check if rack position is in rack
+        if(productPosition > getRackLength())
+            throw new IllegalProductPositionException("The product position was too high");
+
+    }
 }

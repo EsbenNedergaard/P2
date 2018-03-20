@@ -13,12 +13,21 @@ public class NewVerticalRackTest {
 
     Rack testRack;
 
-    // Testing rack positioning of making a new rack
+    // Testing a length that is one longer than the height of the warehouse.
     @Test
-    void testNewVerticalRackOutOfWarehouseWidth01() {
+    void testNewVerticalRackWarehouseHeight01() {
         assertThrows(IllegalRackDimensionException.class, () -> {
-            testRack = new VerticalRack("A", HEIGHT_WAREHOUSE, new Point2D(WIDTH_WAREHOUSE, 0));
+            testRack = new VerticalRack("A", HEIGHT_WAREHOUSE+1, new Point2D(0, 0));
         });
+    }
+
+    // Testing a rack placed
+    @Test
+    void testNewVerticalRackWarehouseHeight02() {
+        assertThrows(IllegalRackDimensionException.class, () -> {
+            testRack = new VerticalRack("A", 1, new Point2D(0, HEIGHT_WAREHOUSE));
+        });
+        a
     }
 
     @Test
@@ -29,11 +38,6 @@ public class NewVerticalRackTest {
         });
     }
 
-    @Test
-    void testNewVerticalRackOutOfWarehouseHeight01() {
-        assertThrows(IllegalRackDimensionException.class, () -> {
-            testRack = new VerticalRack("A", 1, new Point2D(0, HEIGHT_WAREHOUSE));
-        });
-    }
+
 
 }

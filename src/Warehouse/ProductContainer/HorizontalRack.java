@@ -11,7 +11,7 @@ public class HorizontalRack extends Rack {
     }
 
     @Override
-    Point2D createProductPlacementPoint(int productPosition) {
+    Point2D createProductPlacementPoint() {
         int rackPositionX = this.getStartPoint().getX();
         int rackPositionY = this.getStartPoint().getY();
         return new Point2D(rackPositionX + productPosition, rackPositionY);

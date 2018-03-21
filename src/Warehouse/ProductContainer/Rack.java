@@ -27,7 +27,7 @@ public abstract class Rack extends Rectangle implements ProductContainer {
         if(getRackLength() <= productList.size())
             throw new FullRackException();
 
-        product.setProductPosition(new Point2D((startPoint.getX() + productList.size()), startPoint.getY()));
+        product.setProductPosition(this.createProductPlacementPoint(productList.size()));
         productList.add(product);
     }
 

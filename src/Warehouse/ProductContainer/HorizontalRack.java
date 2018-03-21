@@ -18,7 +18,7 @@ public class HorizontalRack extends Rack {
     }
 
     @Override
-    boolean isHorizontal() {
+    public boolean isHorizontal() {
         return true;
     }
 }

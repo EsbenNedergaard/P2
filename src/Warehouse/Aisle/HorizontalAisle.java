@@ -21,10 +21,8 @@ public class HorizontalAisle implements Aisle {
 
         this.endPoint = new Point2D(startPoint.getX() + aisleLenght, startPoint.getY());
 
-        firstRack = new HorizontalRack("")
-
-
-
+        Point2D firstRackStartPoint = new Point2D(startPoint.getX()+1, startPoint.getY()-1);
+        firstRack = new HorizontalRack(aisleLenght-2, firstRackStartPoint);
     }
 
     @Override

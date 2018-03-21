@@ -34,20 +34,20 @@ public class Warehouse22b implements Warehouse {
 
     public void createRackList() {
 
-        rackList.add(new HorizontalRack("A", RACK_LENGTH, new Point2D(RACK_PADDING, 0), this.width, this.height));
-        rackList.add(new HorizontalRack("B", RACK_LENGTH, new Point2D(RACK_PADDING, 2), this.width, this.height));
-        rackList.add(new HorizontalRack("C", RACK_LENGTH, new Point2D(RACK_PADDING, 3), this.width, this.height));
-        rackList.add(new HorizontalRack("D", RACK_LENGTH, new Point2D(RACK_PADDING, 5), this.width, this.height));
-        rackList.add(new HorizontalRack("D", RACK_LENGTH, new Point2D(RACK_PADDING, 6), this.width, this.height));
-        rackList.add(new HorizontalRack("D", RACK_LENGTH, new Point2D(RACK_PADDING, 8), this.width, this.height));
-        rackList.add(new HorizontalRack("D", RACK_LENGTH, new Point2D(RACK_PADDING, 9), this.width, this.height));
-        rackList.add(new HorizontalRack("D", RACK_LENGTH, new Point2D(RACK_PADDING, 11), this.width, this.height));
+        rackList.add(new HorizontalRack(RACK_LENGTH, new Point2D(RACK_PADDING, 0)));
+        rackList.add(new HorizontalRack(RACK_LENGTH, new Point2D(RACK_PADDING, 2)));
+        rackList.add(new HorizontalRack(RACK_LENGTH, new Point2D(RACK_PADDING, 3)));
+        rackList.add(new HorizontalRack(RACK_LENGTH, new Point2D(RACK_PADDING, 5)));
+        rackList.add(new HorizontalRack(RACK_LENGTH, new Point2D(RACK_PADDING, 6)));
+        rackList.add(new HorizontalRack(RACK_LENGTH, new Point2D(RACK_PADDING, 8)));
+        rackList.add(new HorizontalRack(RACK_LENGTH, new Point2D(RACK_PADDING, 9)));
+        rackList.add(new HorizontalRack(RACK_LENGTH, new Point2D(RACK_PADDING, 11)));
 
 
         try {
             rackList.get(0).addProduct(new Product("Apple", 1));
             rackList.get(0).addProduct(new Product("Orange", 2));
-            rackList.get(0).addProduct(new Product("Grapes", 3), 20);
+            rackList.get(0).addProduct(new Product("Grapes", 3));
             //rack.addProduct(new Product("Orange", 10));
         } catch (IllegalProductPositionException | FullRackException e) {
             System.out.println(e.toString());
@@ -56,7 +56,7 @@ public class Warehouse22b implements Warehouse {
         try {
             rackList.get(1).addProduct(new Product("Pear", 5));
             rackList.get(1).addProduct(new Product("Orange", 10));
-            rackList.get(1).addProduct(new Product("Grapes", 17), 4);
+            rackList.get(1).addProduct(new Product("Grapes", 17));
             //rack.addProduct(new Product("Orange", 10));
         } catch (IllegalProductPositionException | FullRackException e) {
             System.out.println(e.toString());

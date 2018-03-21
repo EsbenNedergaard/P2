@@ -1,8 +1,6 @@
 package Warehouse.ProductContainer;
 
 import Exceptions.FullRackException;
-import Exceptions.IllegalProductPositionException;
-import Exceptions.ProductDoesNotExistException;
 import Warehouse.Product;
 import Geometry.Point2D;
 import javafx.scene.shape.Rectangle;
@@ -22,36 +20,13 @@ public abstract class Rack extends Rectangle implements ProductContainer {
     }
 
     abstract Point2D createProductPlacementPoint(int productPosition);
-    abstract boolean isHorizontal();
+    public abstract boolean isHorizontal();
 
     public void addProduct(Product product) {
         // Check if rack has space for a product
         if(getRackLength() <= productList.size())
             throw new FullRackException();
 
-        int i = 0;
-        boolean found = false;
-
-        while(i < getRackLength() && !found) {
-            Point2D productPoint = createProductPlacementPoint(i);
-            if(!containsProduct(productPoint)) {
-                product.setProductPosition(productPoint);
-                productList.add(product);
-                found = true;
-            }
-            i++;
-        }
-    }
-
-    public void addProduct(Product product, int productPosition) {
-        checkForIllegalProductPostion(productPosition);
-
-        Point2D placementPoint = createProductPlacementPoint(productPosition);
-        // Check if position contains a product
-        if(containsProduct(placementPoint))
-            throw new IllegalProductPositionException("Place contains a product");
-
-        product.setProductPosition(placementPoint);
         productList.add(product);
     }
 
@@ -59,18 +34,8 @@ public abstract class Rack extends Rectangle implements ProductContainer {
         return rackLength;
     }
 
-    Point2D getStartPoint() {
+    public Point2D getStartPoint() {
         return startPoint;
-    }
-
-    @Override
-    public Product getProduct(int id) {
-        for(Product item : productList) {
-            if(item.getById() == id)
-                return item;
-        }
-        // Product does not exist
-        throw new ProductDoesNotExistException();
     }
 
     // Return the whole product list
@@ -85,16 +50,12 @@ public abstract class Rack extends Rectangle implements ProductContainer {
     }
 
     @Override
-    public boolean containsProduct(Point2D point) {
-        for(Product item : productList) {
-            if(item.getProductPosition().equals(point))
-                return true;
-        }
+    public boolean doesItContainProductID(int productId) {
         return false;
     }
 
     @Override
-    public boolean inProductContainer(Point2D point) {
+    public boolean checkIfPointInProductContainer(Point2D point) {
         int pointXCoordinate = point.getX();
         int pointYCoordinate = point.getY();
         int rackXCoordinate = this.startPoint.getX();
@@ -106,15 +67,5 @@ public abstract class Rack extends Rectangle implements ProductContainer {
         if(xInRack && yInRack)
             return true;
         return false;
-    }
-
-    void checkForIllegalProductPostion(int productPosition){
-        // Check if position is negative
-        if(productPosition < 0)
-            throw new IllegalProductPositionException("The product position cannot be negative");
-
-        // Check if rack position is in rack
-        if(productPosition > getRackLength())
-            throw new IllegalProductPositionException("The product position was too high");
     }
 }

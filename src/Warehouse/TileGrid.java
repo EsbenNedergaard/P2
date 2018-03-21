@@ -1,7 +1,7 @@
 package Warehouse;
 
 import Geometry.Point2D;
-import javafx.scene.Group;
+import GraphicalWarehouse.GraphicalObjects.Tile;
 
 public class TileGrid {
     private int width;

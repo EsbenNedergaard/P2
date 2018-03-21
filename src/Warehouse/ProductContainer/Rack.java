@@ -31,7 +31,7 @@ public abstract class Rack extends Rectangle implements ProductContainer {
         productList.add(product);
     }
 
-    int getRackLength() {
+    public int getRackLength() {
         return rackLength;
     }
 

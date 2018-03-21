@@ -19,10 +19,13 @@ public abstract class Rack extends Rectangle implements ProductContainer {
     private int widthWarehouse;
     private int heightWarehouse;
 
-    Rack(String name, int rackLength, Point2D startPoint) {
+    Rack(String name, int rackLength, Point2D startPoint, int widthWarehouse, int heightWarehouse) {
         this.name = name;
         this.rackLength = rackLength;
         this.startPoint = startPoint;
+        this.widthWarehouse = widthWarehouse;
+        this.heightWarehouse = heightWarehouse;
+
     }
     abstract Point2D createProductPlacementPoint(int productPosition);
 
@@ -68,6 +71,14 @@ public abstract class Rack extends Rectangle implements ProductContainer {
 
     Point2D getStartPoint() {
         return startPoint;
+    }
+
+    public int getWidthWarehouse() {
+        return widthWarehouse;
+    }
+
+    public int getHeightWarehouse() {
+        return heightWarehouse;
     }
 
     @Override

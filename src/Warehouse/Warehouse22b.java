@@ -24,7 +24,6 @@ public class Warehouse22b implements Warehouse {
 
         createTileGrid();
         createRackList();
-
     }
 
     public void createTileGrid() {
@@ -32,34 +31,24 @@ public class Warehouse22b implements Warehouse {
     }
 
     public void createRackList() {
+        rackList.add(new VerticalRack("A", 15, new Point2D(1, 1), this.width, this.height));
+        rackList.add(new VerticalRack("A", 15, new Point2D(4, 1), this.width, this.height));
+
         try {
-            //TODO: something is fucky here, because it does not throw correctly
-            if(VerticalRack.rackOutsideWarehouse(new Point2D(1, 100), 15, this.width, this.height))
-                throw new IllegalRackDimensionException();
-            rackList.add(new VerticalRack("A", 15, new Point2D(1, 1)));
+            rackList.get(0).addProduct(new Product("Apple", 1));
+            rackList.get(0).addProduct(new Product("Orange", 2));
+            rackList.get(0).addProduct(new Product("Grapes", 3), 20);
+            //rack.addProduct(new Product("Orange", 10));
+        } catch (IllegalProductPositionException | FullRackException e) {
+            System.out.println(e.toString());
+        }
 
-            if(HorizontalRack.rackOutsideWarehouse(new Point2D(5,5), 15, this.width, this.height))
-                throw new IllegalRackDimensionException();
-            rackList.add(new HorizontalRack("B", 15, new Point2D(5,5)));
-
-            try {
-                rackList.get(0).addProduct(new Product("Apple", 1), 20);
-                rackList.get(0).addProduct(new Product("Orange", 2));
-                rackList.get(0).addProduct(new Product("Grapes", 3));
-                //rack.addProduct(new Product("Orange", 10));
-            } catch (IllegalProductPositionException | FullRackException e) {
-                System.out.println(e.toString());
-            }
-
-            try {
-                rackList.get(1).addProduct(new Product("Pear", 5));
-                rackList.get(1).addProduct(new Product("Orange", 10));
-                rackList.get(1).addProduct(new Product("Grapes", 17), 4);
-                //rack.addProduct(new Product("Orange", 10));
-            } catch (IllegalProductPositionException | FullRackException e) {
-                System.out.println(e.toString());
-            }
-        } catch (IllegalRackDimensionException e) {
+        try {
+            rackList.get(1).addProduct(new Product("Pear", 5));
+            rackList.get(1).addProduct(new Product("Orange", 10));
+            rackList.get(1).addProduct(new Product("Grapes", 17), 4);
+            //rack.addProduct(new Product("Orange", 10));
+        } catch (IllegalProductPositionException | FullRackException e) {
             System.out.println(e.toString());
         }
     }

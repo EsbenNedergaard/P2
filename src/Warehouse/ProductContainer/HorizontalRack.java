@@ -11,8 +11,12 @@ import javafx.scene.paint.Color;
 import static Warehouse.GUIWarehouse.TILE_SIZE;
 
 public class HorizontalRack extends Rack {
-    public HorizontalRack(String name, int length, Point2D startPoint) {
-        super(name, length, startPoint);
+    public HorizontalRack(String name, int length, Point2D startPoint, int widthWarehouse, int heightWarehouse) {
+        super(name, length, startPoint, widthWarehouse, heightWarehouse);
+
+        if(rackOutsideWarehouse())
+            throw new IllegalRackDimensionException();
+
         setUpGraphics();
     }
 
@@ -33,19 +37,16 @@ public class HorizontalRack extends Rack {
         return new Point2D(rackPositionX + productPosition, rackPositionY);
     }
 
+    private boolean rackOutsideWarehouse() {
+        int rackPositionX = this.getStartPoint().getX();
+        int rackPositionY = this.getStartPoint().getY();
 
-    public static boolean rackOutsideWarehouse(Point2D rackStartPoint, int rackLength, int widthWarehouse, int heightWarehouse) {
-        int rackPositionX = rackStartPoint.getX();
-        int rackPositionY = rackStartPoint.getY();
-
-
-        if(widthWarehouse < rackPositionX + rackLength || rackPositionX + rackLength < 0)
+        if(this.getWidthWarehouse() < rackPositionX + getRackLength() || rackPositionX + getRackLength() < 0)
             return true;
 
-        if(heightWarehouse <= rackPositionY || rackPositionY < 0)
+        if(this.getHeightWarehouse() <= rackPositionY  || rackPositionY < 0)
             return true;
 
         return false;
     }
-
 }

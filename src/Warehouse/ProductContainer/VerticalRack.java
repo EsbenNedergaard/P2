@@ -11,8 +11,8 @@ import java.util.List;
 
 import static Warehouse.GUIWarehouse.TILE_SIZE;
 
-public class VerticalRack extends Rack {
-    public VerticalRack(String name, int length, Point2D startPoint, int widthWarehouse, int heightWarehouse) {
+public class VerticalRack /*extends Rack*/ {
+    /*public VerticalRack(String name, int length, Point2D startPoint, int widthWarehouse, int heightWarehouse) {
         super(name, length, startPoint, widthWarehouse, heightWarehouse);
 
         if(rackOutsideWarehouse())
@@ -50,5 +50,5 @@ public class VerticalRack extends Rack {
             return true;
 
         return false;
-    }
+    }*/
 }

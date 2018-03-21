@@ -12,22 +12,17 @@ import java.util.List;
 import static Warehouse.GUIWarehouse.TILE_SIZE;
 
 public abstract class Rack extends Rectangle implements ProductContainer {
-    private String name;
     private int rackLength;
     private Point2D startPoint;
-    List<Product> productList = new ArrayList<>();
-    private int widthWarehouse;
-    private int heightWarehouse;
+    private List<Product> productList = new ArrayList<>();
 
-    Rack(String name, int rackLength, Point2D startPoint, int widthWarehouse, int heightWarehouse) {
-        this.name = name;
+    Rack(int rackLength, Point2D startPoint) {
         this.rackLength = rackLength;
         this.startPoint = startPoint;
-        this.widthWarehouse = widthWarehouse;
-        this.heightWarehouse = heightWarehouse;
-
     }
+
     abstract Point2D createProductPlacementPoint(int productPosition);
+    abstract boolean isHorizontal();
 
     public void addProduct(Product product) {
         // Check if rack has space for a product
@@ -60,25 +55,12 @@ public abstract class Rack extends Rectangle implements ProductContainer {
         productList.add(product);
     }
 
-
-    public String getName() {
-        return name;
-    }
-
     int getRackLength() {
         return rackLength;
     }
 
     Point2D getStartPoint() {
         return startPoint;
-    }
-
-    public int getWidthWarehouse() {
-        return widthWarehouse;
-    }
-
-    public int getHeightWarehouse() {
-        return heightWarehouse;
     }
 
     @Override
@@ -95,18 +77,6 @@ public abstract class Rack extends Rectangle implements ProductContainer {
     @Override
     public List<Product> getProductList() {
         return this.productList;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setRackLength(int rackLength) {
-        this.rackLength = rackLength;
-    }
-
-    public void setStartPoint(Point2D startPoint) {
-        this.startPoint = startPoint;
     }
 
     @Override
@@ -146,6 +116,5 @@ public abstract class Rack extends Rectangle implements ProductContainer {
         // Check if rack position is in rack
         if(productPosition > getRackLength())
             throw new IllegalProductPositionException("The product position was too high");
-
     }
 }

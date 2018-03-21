@@ -14,5 +14,4 @@ public interface ProductContainer {
     void setProductList(List<Product> productList);
     boolean inProductContainer(Point2D point);
     boolean containsProduct(Point2D point);
-
 }

@@ -15,7 +15,6 @@ public class Product extends Rectangle {
     public Product(String name, int id) {
         this.name = name;
         this.id = id;
-
         this.productPosition = null;
     }
 

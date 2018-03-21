@@ -25,7 +25,6 @@ public class Warehouse22b implements Warehouse {
 
         createTileGrid();
         createRackList();
-
     }
 
     public void createTileGrid() {

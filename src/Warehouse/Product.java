@@ -18,17 +18,6 @@ public class Product extends Rectangle {
         this.productPosition = new Point2D(-1, -1);
     }
 
-    private void setDesign() {
-        // Product background color
-        setFill(Color.valueOf("green"));
-        // Graphical position
-        setTranslateX(this.productPosition.getXPixels());
-        setTranslateY(this.productPosition.getYPixels());
-        // Pixel width of tile
-        setWidth(TILE_SIZE);
-        setHeight(TILE_SIZE);
-    }
-
     public String getName() {
         return name;
     }
@@ -60,7 +49,6 @@ public class Product extends Rectangle {
 
     public void setProductPosition(Point2D productPosition) {
         this.productPosition = productPosition;
-        setDesign();
     }
 
 }

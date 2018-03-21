@@ -15,7 +15,7 @@ public class Product extends Rectangle {
     public Product(String name, int id) {
         this.name = name;
         this.id = id;
-        this.productPosition = null;
+        this.productPosition = new Point2D(-1, -1);
     }
 
     private void setDesign() {
@@ -38,21 +38,21 @@ public class Product extends Rectangle {
     }
 
     public int getXCoordinate() {
-        if(productPosition == null)
+        if(productPosition.equals(new Point2D(-1, -1)))
             throw new NullPointerException("Tried to get an unplaced product");
 
         return this.productPosition.getX();
     }
 
     public int getYCoordinate() {
-        if(productPosition == null)
+        if(productPosition.equals(new Point2D(-1, -1)))
             throw new NullPointerException("Tried to get an unplaced product");
 
         return this.productPosition.getY();
     }
 
     public Point2D getProductPosition() {
-        if(productPosition == null)
+        if(productPosition.equals(new Point2D(-1, -1)))
             throw new NullPointerException("Tried to get an unplaced product");
 
         return productPosition;

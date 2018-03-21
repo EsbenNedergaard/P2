@@ -19,7 +19,7 @@ import java.util.List;
 // TODO: Skal have gjort så vi gemmer et ARRAY af tiles, og så Tiles gemmer info omkring, hvad er er på dem, da lige nu har vi ingen ide om, hvor der er er racks og tiles henne
 
 public class GUIWarehouse extends Application {
-    private Warehouse warehouse;
+    private Warehouse warehouse = new Warehouse22b();
     private Group tileGroup = new Group();
     private Group rackGroup = new Group();
     private Group productGroup = new Group();
@@ -27,9 +27,9 @@ public class GUIWarehouse extends Application {
     private static final int SCALE = 3;
     public static final int TILE_SIZE = 5 * SCALE;
 
-    public GUIWarehouse(Warehouse warehouse) {
+    /*public GUIWarehouse(Warehouse warehouse) {
         this.warehouse = warehouse;
-    }
+    }*/
 
     public void fillRackGroup(){
         List<Rack> rackList = warehouse.getRackList();

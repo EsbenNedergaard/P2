@@ -12,7 +12,6 @@ import java.util.List;
 public class Warehouse22b implements Warehouse {
     private int width;
     private int height;
-    private TileGrid tileGrid;
     private List<Rack> rackList = new ArrayList<>();
 
     public static final int RACK_LENGTH = 34;
@@ -23,16 +22,10 @@ public class Warehouse22b implements Warehouse {
         width = RACK_LENGTH + (RACK_PADDING * 2);
         height = 12;
 
-        createTileGrid();
         createRackList();
     }
 
-    public void createTileGrid() {
-        tileGrid = new TileGrid(this.width, this.height);
-    }
-
     public void createRackList() {
-
         rackList.add(new HorizontalRack(RACK_LENGTH, new Point2D(RACK_PADDING, 0)));
         rackList.add(new HorizontalRack(RACK_LENGTH, new Point2D(RACK_PADDING, 2)));
         rackList.add(new HorizontalRack(RACK_LENGTH, new Point2D(RACK_PADDING, 3)));
@@ -60,10 +53,6 @@ public class Warehouse22b implements Warehouse {
         } catch (IllegalProductPositionException | FullRackException e) {
             System.out.println(e.toString());
         }
-    }
-
-    public TileGrid getTileGrid() {
-        return this.tileGrid;
     }
 
     @Override

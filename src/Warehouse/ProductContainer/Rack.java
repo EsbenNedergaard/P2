@@ -9,7 +9,6 @@ import javafx.scene.shape.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
-import static Warehouse.GUIWarehouse.HEIGHT_WAREHOUSE;
 import static Warehouse.GUIWarehouse.TILE_SIZE;
 
 public abstract class Rack extends Rectangle implements ProductContainer {
@@ -17,13 +16,15 @@ public abstract class Rack extends Rectangle implements ProductContainer {
     private int rackLength;
     private Point2D startPoint;
     List<Product> productList = new ArrayList<>();
+    private int widthWarehouse;
+    private int heightWarehouse;
 
     Rack(String name, int rackLength, Point2D startPoint) {
         this.name = name;
         this.rackLength = rackLength;
         this.startPoint = startPoint;
     }
-    abstract Point2D createPlacementPoint(int productPosition);
+    abstract Point2D createProductPlacementPoint(int productPosition);
 
     public void addProduct(Product product) {
         // Check if rack has space for a product
@@ -34,7 +35,7 @@ public abstract class Rack extends Rectangle implements ProductContainer {
         boolean found = false;
 
         while(i < getRackLength() && !found) {
-            Point2D productPoint = createPlacementPoint(i);
+            Point2D productPoint = createProductPlacementPoint(i);
             if(!containsProduct(productPoint)) {
                 product.setProductPosition(productPoint);
                 productList.add(product);
@@ -47,7 +48,7 @@ public abstract class Rack extends Rectangle implements ProductContainer {
     public void addProduct(Product product, int productPosition) {
         checkForIllegalProductPostion(productPosition);
 
-        Point2D placementPoint = createPlacementPoint(productPosition);
+        Point2D placementPoint = createProductPlacementPoint(productPosition);
         // Check if position contains a product
         if(containsProduct(placementPoint))
             throw new IllegalProductPositionException("Place contains a product");

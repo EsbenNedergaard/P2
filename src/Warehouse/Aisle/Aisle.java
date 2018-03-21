@@ -15,6 +15,7 @@ public interface Aisle {
 
     Rack getFirstRack();
     Rack getSecondRack();
+    List<Rack> getRackList();
 
     List<Point2D> getPickingPoints(List<Product> productList);
     boolean doesItContainProductID(int id); //Should be used to look through the racks an see if it contains the product, and then we can add the products point to teh pickingpoints.

@@ -2,11 +2,9 @@ package Warehouse;
 
 import Exceptions.FullRackException;
 import Exceptions.IllegalProductPositionException;
-import Exceptions.IllegalRackDimensionException;
 import Geometry.Point2D;
 import Warehouse.ProductContainer.HorizontalRack;
 import Warehouse.ProductContainer.Rack;
-import Warehouse.ProductContainer.VerticalRack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,13 +15,17 @@ public class Warehouse22b implements Warehouse {
     private TileGrid tileGrid;
     private List<Rack> rackList = new ArrayList<>();
 
+    public static final int RACK_LENGTH = 34;
+    public static final int RACK_PADDING = 5;
+
 
     public Warehouse22b() {
-        width = 80;
-        height = 40;
+        width = RACK_LENGTH + (RACK_PADDING * 2);
+        height = 12;
 
         createTileGrid();
         createRackList();
+
     }
 
     public void createTileGrid() {
@@ -31,8 +33,16 @@ public class Warehouse22b implements Warehouse {
     }
 
     public void createRackList() {
-        rackList.add(new VerticalRack("A", 15, new Point2D(1, 1), this.width, this.height));
-        rackList.add(new VerticalRack("A", 15, new Point2D(4, 1), this.width, this.height));
+
+        rackList.add(new HorizontalRack("A", RACK_LENGTH, new Point2D(RACK_PADDING, 0), this.width, this.height));
+        rackList.add(new HorizontalRack("B", RACK_LENGTH, new Point2D(RACK_PADDING, 2), this.width, this.height));
+        rackList.add(new HorizontalRack("C", RACK_LENGTH, new Point2D(RACK_PADDING, 3), this.width, this.height));
+        rackList.add(new HorizontalRack("D", RACK_LENGTH, new Point2D(RACK_PADDING, 5), this.width, this.height));
+        rackList.add(new HorizontalRack("D", RACK_LENGTH, new Point2D(RACK_PADDING, 6), this.width, this.height));
+        rackList.add(new HorizontalRack("D", RACK_LENGTH, new Point2D(RACK_PADDING, 8), this.width, this.height));
+        rackList.add(new HorizontalRack("D", RACK_LENGTH, new Point2D(RACK_PADDING, 9), this.width, this.height));
+        rackList.add(new HorizontalRack("D", RACK_LENGTH, new Point2D(RACK_PADDING, 11), this.width, this.height));
+
 
         try {
             rackList.get(0).addProduct(new Product("Apple", 1));

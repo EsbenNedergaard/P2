@@ -24,7 +24,7 @@ public class GUIWarehouse extends Application {
     private Group rackGroup = new Group();
     private Group productGroup = new Group();
 
-    private static final int SCALE = 3;
+    private static final int SCALE = 5;
     public static final int TILE_SIZE = 5 * SCALE;
 
     public GUIWarehouse() {

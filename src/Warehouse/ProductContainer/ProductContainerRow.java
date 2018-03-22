@@ -5,12 +5,11 @@ import Geometry.Point2D;
 
 import java.util.List;
 
-public interface ProductContainer {
+public interface ProductContainerRow {
     List<Product> getProductList();
-    void setProductList(List<Product> productList);
 
     void addProduct(Product product);
-    boolean doesItContainProductID(int productId);
+    boolean doesItContainProduct(Product product);
 
     boolean checkIfPointInProductContainer(Point2D point);
 }

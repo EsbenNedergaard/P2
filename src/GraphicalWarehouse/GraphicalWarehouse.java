@@ -3,7 +3,7 @@ package GraphicalWarehouse;
 import Geometry.Point2D;
 import GraphicalWarehouse.GraphicalObjects.PickPointsDesign;
 import GraphicalWarehouse.GraphicalObjects.ProductDesign;
-import GraphicalWarehouse.GraphicalObjects.RackDesign;
+import GraphicalWarehouse.GraphicalObjects.RackRowDesign;
 import GraphicalWarehouse.GraphicalObjects.Tile;
 import Warehouse.Aisle.Aisle;
 import Warehouse.ProductContainer.RackRow;
@@ -43,25 +43,25 @@ public class GraphicalWarehouse {
         return tileGroup;
     }
 
-    private Group getRackGroup() {
+    private Group getRackRowGroup() {
         // Create a group of graphical racks
-        Group rackGroup = new Group();
+        Group rackRowGroup = new Group();
 
-        for(RackRow rackRowElement : warehouse.getRackList()) {
+        for(RackRow rackRowElement : warehouse.getRackRowList()) {
             // Styles the rack
-            RackDesign graphicRack = new RackDesign(rackRowElement);
+            RackRowDesign graphicRack = new RackRowDesign(rackRowElement);
             // Puts the rack into the group
-            rackGroup.getChildren().add(graphicRack);
+            rackRowGroup.getChildren().add(graphicRack);
         }
 
-        return rackGroup;
+        return rackRowGroup;
     }
 
     private Group getProductGroup() {
         // Create a group of graphical products
         Group productGroup = new Group();
 
-        for(RackRow rackRowElement : warehouse.getRackList()) {
+        for(RackRow rackRowElement : warehouse.getRackRowList()) {
             // Now get the product list from the current rack
             for(Product productElement : rackRowElement.getProductList()) {
                 // Styles the product
@@ -94,12 +94,13 @@ public class GraphicalWarehouse {
 
         Group pickPointGroup = getPickPointGroup();
         Group tileGroup = getTileGroup();
-        Group rackGroup = getRackGroup();
-        Group productGroup = getProductGroup();
+        Group rackRowGroup = getRackRowGroup();
+        //Group productGroup = getProductGroup(); TODO: skal fixes senere hvor vi laver noget med tal på dem i stedet alt efter hvor mange er ligger på dem
 
 
         root.setPrefSize(WIDTH_WAREHOUSE * TILE_SIZE, HEIGHT_WAREHOUSE * TILE_SIZE);
-        root.getChildren().addAll(pickPointGroup, rackGroup, productGroup, tileGroup);
+        root.getChildren().addAll(pickPointGroup, rackRowGroup, tileGroup);
+        //root.getChildren().addAll(pickPointGroup, rackRowGroup, productGroup, tileGroup);
 
         return root;
     }

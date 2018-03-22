@@ -13,8 +13,8 @@ public interface Aisle {
     Point2D getStartPoint();
     Point2D getEndPoint();
 
-    RackRow getFirstRack();
-    RackRow getSecondRack();
+    RackRow getFirstRackRow();
+    RackRow getSecondRackRow();
     List<RackRow> getRackRowList();
 
     List<Point2D> getPickingPoints(List<Product> productPickList);

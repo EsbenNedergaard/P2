@@ -4,6 +4,8 @@ import Geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import java.util.Objects;
+
 import static Warehouse.GUIWarehouse.TILE_SIZE;
 
 public class Product extends Rectangle {
@@ -50,5 +52,21 @@ public class Product extends Rectangle {
     public void setProductPosition(Point2D productPosition) {
         this.productPosition = productPosition;
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if(this == that) return true;
+        if(that == null || this.getClass() != that.getClass()) return false;
+
+        Product product = (Product) that;
+
+        return  product.getById() == this.id;
+    }
+
 
 }

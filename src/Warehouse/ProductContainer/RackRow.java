@@ -9,30 +9,43 @@ import java.util.List;
 
 import static Warehouse.GUIWarehouse.TILE_SIZE;
 
-public abstract class RackRow extends Rectangle implements ProductContainer {
-    private int rackLength;
+public abstract class RackRow extends Rectangle implements ProductContainerRow {
+    private int rackRowLength;
     private Point2D startPoint;
-    private List<Product> productList = new ArrayList<>();
+    private Rack[] rackArray;
+    private int maxAmtInSingleRack;
 
-    RackRow(int rackLength, Point2D startPoint) {
-        this.rackLength = rackLength;
+    RackRow(int rackRowLength, Point2D startPoint, int maxAmtInRack) {
+        this.rackRowLength = rackRowLength;
         this.startPoint = startPoint;
+        this.maxAmtInSingleRack = maxAmtInRack;
+
+        this.rackArray = new Rack[rackRowLength];
+
+        for(Rack rackElement : rackArray) {
+            rackElement = new Rack(maxAmtInSingleRack);
+        }
     }
 
-    abstract Point2D createProductPlacementPoint(int productPosition);
+    abstract Point2D getRackPlacementPoint(int RackIndex);
     public abstract boolean isHorizontal();
 
     public void addProduct(Product product) {
-        // Check if rack has space for a product
-        if(getRackLength() <= productList.size())
-            throw new FullRackException();
-
-        product.setProductPosition(this.createProductPlacementPoint(productList.size()));
-        productList.add(product);
+        for (Rack rackElement : rackArray) {
+            if (!rackElement.checkIfFull()) {
+                rackElement.addProduct(product);
+                return;
+            }
+        }
+        throw new FullRackException("This rackrow is aldready full");
     }
 
-    public int getRackLength() {
-        return rackLength;
+    public void addProductToRack(Product product, int rackIndex) {
+        rackArray[rackIndex].addProduct(product);
+    }
+
+    public int getRackRowLength() {
+        return rackRowLength;
     }
 
     public Point2D getStartPoint() {
@@ -42,16 +55,16 @@ public abstract class RackRow extends Rectangle implements ProductContainer {
     // Return the whole product list
     @Override
     public List<Product> getProductList() {
-        return this.productList;
+        List<Product> productList = new ArrayList<>();
+        for(Rack rackElement : rackArray) {
+            productList.addAll(rackElement.getProductList());
+        }
+        return productList;
     }
 
+    //TODO: FÅ LAVET MIG
     @Override
-    public void setProductList(List<Product> productList) {
-        this.productList = productList;
-    }
-
-    @Override
-    public boolean doesItContainProductID(int productId) {
+    public boolean doesItContainProduct(Product product) {
         return false;
     }
 

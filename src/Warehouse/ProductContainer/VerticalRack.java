@@ -23,7 +23,7 @@ public class VerticalRack /*extends RackRow*/ {
 
     private void setUpGraphics(){
         setWidth(TILE_SIZE);
-        setHeight(this.getRackLength() * TILE_SIZE);
+        setHeight(this.getRackRowLength() * TILE_SIZE);
 
         Point2D startPoint = this.getStartPoint();
         relocate(startPoint.getXPixels(), startPoint.getYPixels());
@@ -46,7 +46,7 @@ public class VerticalRack /*extends RackRow*/ {
         if(this.getWidthWarehouse() <= rackPositionX || rackPositionX < 0)
             return true;
 
-        if(this.getHeightWarehouse() < rackPositionY + this.getRackLength() || rackPositionY + this.getRackLength() < 0)
+        if(this.getHeightWarehouse() < rackPositionY + this.getRackRowLength() || rackPositionY + this.getRackRowLength() < 0)
             return true;
 
         return false;

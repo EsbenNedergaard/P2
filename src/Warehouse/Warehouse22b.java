@@ -21,6 +21,7 @@ public class Warehouse22b implements Warehouse {
         width = AISLE_LENGTH + (AISLE_PADDING * 2);
         height = 12;
         createAisleList();
+        createProducts();
     }
 
     public void createAisleList() {
@@ -30,8 +31,15 @@ public class Warehouse22b implements Warehouse {
         aisleList.add(new HorizontalAisle(AISLE_LENGTH, new Point2D(AISLE_PADDING, 10)));
     }
 
+    public void createProducts() {
+
+
+        /*aisleList.get(0).getFirstRackRow().addProduct(new Product("Pear", 1));
+        aisleList.get(0).getFirstRackRow().addProduct(new Product("Apple", 2));*/
+    }
+
     @Override
-    public List<RackRow> getRackList() {
+    public List<RackRow> getRackRowList() {
         List<RackRow> tempRackRowList = new ArrayList<>();
         for(Aisle aisleElement : aisleList) {
             tempRackRowList.addAll(aisleElement.getRackRowList());

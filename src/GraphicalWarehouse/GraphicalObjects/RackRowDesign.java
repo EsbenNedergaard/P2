@@ -6,15 +6,15 @@ import javafx.scene.shape.Rectangle;
 
 import static Warehouse.GUIWarehouse.TILE_SIZE;
 
-public class RackDesign extends Rectangle {
+public class RackRowDesign extends Rectangle {
 
-    public RackDesign(RackRow rackRow) {
+    public RackRowDesign(RackRow rackRow) {
         if(rackRow.isHorizontal()) {
-            setWidth(TILE_SIZE * rackRow.getRackLength());
+            setWidth(TILE_SIZE * rackRow.getRackRowLength());
             setHeight(TILE_SIZE);
         } else {
             setWidth(TILE_SIZE);
-            setHeight(TILE_SIZE * rackRow.getRackLength());
+            setHeight(TILE_SIZE * rackRow.getRackRowLength());
         }
 
         // Relocates the rackRow to its position

@@ -95,7 +95,8 @@ public class GraphicalWarehouse {
         Group pickPointGroup = getPickPointGroup();
         Group tileGroup = getTileGroup();
         Group rackRowGroup = getRackRowGroup();
-        //Group productGroup = getProductGroup(); TODO: skal fixes senere hvor vi laver noget med tal på dem i stedet alt efter hvor mange er ligger på dem
+        //TODO: skal fixes senere hvor vi laver noget med tal på dem i stedet alt efter hvor mange er ligger på dem
+        //Group productGroup = getProductGroup();
 
 
         root.setPrefSize(WIDTH_WAREHOUSE * TILE_SIZE, HEIGHT_WAREHOUSE * TILE_SIZE);

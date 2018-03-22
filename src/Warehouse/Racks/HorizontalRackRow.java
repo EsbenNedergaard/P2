@@ -18,8 +18,9 @@ public class HorizontalRackRow implements RackRow {
         this.maxAmtInSingleRack = maxAmtInSingleRack;
 
         rackArray = new Rack[rackRowLength];
-        for (Rack rackElement : rackArray) {
-            rackElement = new Rack(maxAmtInSingleRack);
+
+        for(int i = 0; i < rackRowLength; i++) {
+            rackArray[i] = new Rack(maxAmtInSingleRack);
         }
     }
 

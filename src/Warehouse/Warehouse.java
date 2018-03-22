@@ -11,7 +11,7 @@ import java.util.List;
 
 
 public interface Warehouse {
-    void createRackList();
+    void createAisleList();
     List<Rack> getRackList();
 
     int getHeight();

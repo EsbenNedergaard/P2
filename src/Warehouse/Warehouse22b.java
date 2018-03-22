@@ -3,6 +3,8 @@ package Warehouse;
 import Exceptions.FullRackException;
 import Exceptions.IllegalProductPositionException;
 import Geometry.Point2D;
+import Warehouse.Aisle.Aisle;
+import Warehouse.Aisle.HorizontalAisle;
 import Warehouse.ProductContainer.HorizontalRack;
 import Warehouse.ProductContainer.Rack;
 
@@ -12,52 +14,32 @@ import java.util.List;
 public class Warehouse22b implements Warehouse {
     private int width;
     private int height;
-    private List<Rack> rackList = new ArrayList<>();
+    private List<Aisle> aisleList = new ArrayList<>();
 
-    public static final int RACK_LENGTH = 34;
-    public static final int RACK_PADDING = 5;
+    public static final int AISLE_LENGTH = 36;
+    public static final int AISLE_PADDING = 4;
 
 
     public Warehouse22b() {
-        width = RACK_LENGTH + (RACK_PADDING * 2);
+        width = AISLE_LENGTH + (AISLE_PADDING * 2);
         height = 12;
-
-        createRackList();
+        createAisleList();
     }
 
-    public void createRackList() {
-        rackList.add(new HorizontalRack(RACK_LENGTH, new Point2D(RACK_PADDING, 0)));
-        rackList.add(new HorizontalRack(RACK_LENGTH, new Point2D(RACK_PADDING, 2)));
-        rackList.add(new HorizontalRack(RACK_LENGTH, new Point2D(RACK_PADDING, 3)));
-        rackList.add(new HorizontalRack(RACK_LENGTH, new Point2D(RACK_PADDING, 5)));
-        rackList.add(new HorizontalRack(RACK_LENGTH, new Point2D(RACK_PADDING, 6)));
-        rackList.add(new HorizontalRack(RACK_LENGTH, new Point2D(RACK_PADDING, 8)));
-        rackList.add(new HorizontalRack(RACK_LENGTH, new Point2D(RACK_PADDING, 9)));
-        rackList.add(new HorizontalRack(RACK_LENGTH, new Point2D(RACK_PADDING, 11)));
-
-
-        try {
-            rackList.get(0).addProduct(new Product("Apple", 1));
-            rackList.get(0).addProduct(new Product("Orange", 2));
-            rackList.get(0).addProduct(new Product("Grapes", 3));
-            //rack.addProduct(new Product("Orange", 10));
-        } catch (IllegalProductPositionException | FullRackException e) {
-            System.out.println(e.toString());
-        }
-
-        try {
-            rackList.get(1).addProduct(new Product("Pear", 5));
-            rackList.get(1).addProduct(new Product("Orange", 10));
-            rackList.get(1).addProduct(new Product("Grapes", 17));
-            //rack.addProduct(new Product("Orange", 10));
-        } catch (IllegalProductPositionException | FullRackException e) {
-            System.out.println(e.toString());
-        }
+    public void createAisleList() {
+        aisleList.add(new HorizontalAisle(AISLE_LENGTH, new Point2D(AISLE_PADDING, 1)));
+        aisleList.add(new HorizontalAisle(AISLE_LENGTH, new Point2D(AISLE_PADDING, 4)));
+        aisleList.add(new HorizontalAisle(AISLE_LENGTH, new Point2D(AISLE_PADDING, 7)));
+        aisleList.add(new HorizontalAisle(AISLE_LENGTH, new Point2D(AISLE_PADDING, 10)));
     }
 
     @Override
     public List<Rack> getRackList() {
-        return this.rackList;
+        List<Rack> temprackList = new ArrayList<>();
+        for(Aisle AisleElement : aisleList) {
+            temprackList.addAll(AisleElement.getRackList());
+        }
+        return temprackList;
     }
 
     @Override

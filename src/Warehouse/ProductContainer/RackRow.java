@@ -22,8 +22,8 @@ public abstract class RackRow extends Rectangle implements ProductContainerRow {
 
         this.rackArray = new Rack[rackRowLength];
 
-        for(Rack rackElement : rackArray) {
-            rackElement = new Rack(maxAmtInSingleRack);
+        for(int i = 0; i < rackRowLength; i++) {
+            rackArray[i] = new Rack(maxAmtInSingleRack);
         }
     }
 

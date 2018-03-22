@@ -50,5 +50,15 @@ class HorizontalRackRowTest {
 
     @Test
     void getRackArray() {
+        Rack[] tempArray = testRow.getRackArray();
+        Rack tempRack = new Rack(2);
+        Rack temp1Rack = new Rack(2);
+
+     //   tempArray = new Rack[2];
+
+       // tempArray[0] = new Rack(2);
+
+        assertTrue(tempRack.equals(temp1Rack));
+        assertTrue(tempRack.equals(tempArray[0]));
     }
 }

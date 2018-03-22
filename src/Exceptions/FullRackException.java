@@ -8,7 +8,7 @@ public class FullRackException extends RuntimeException {
     }
 
     public FullRackException() {
-        this.errorMsg = "Rack is full";
+        this.errorMsg = "RackRow is full";
     }
 
     @Override

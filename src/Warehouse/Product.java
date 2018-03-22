@@ -15,19 +15,7 @@ public class Product extends Rectangle {
     public Product(String name, int id) {
         this.name = name;
         this.id = id;
-
-        this.productPosition = null;
-    }
-
-    private void setDesign() {
-        // Product background color
-        setFill(Color.valueOf("green"));
-        // Graphical position
-        setTranslateX(this.productPosition.getXPixels());
-        setTranslateY(this.productPosition.getYPixels());
-        // Pixel width of tile
-        setWidth(TILE_SIZE);
-        setHeight(TILE_SIZE);
+        this.productPosition = new Point2D(-1, -1);
     }
 
     public String getName() {
@@ -39,21 +27,21 @@ public class Product extends Rectangle {
     }
 
     public int getXCoordinate() {
-        if(productPosition == null)
+        if(productPosition.equals(new Point2D(-1, -1)))
             throw new NullPointerException("Tried to get an unplaced product");
 
         return this.productPosition.getX();
     }
 
     public int getYCoordinate() {
-        if(productPosition == null)
+        if(productPosition.equals(new Point2D(-1, -1)))
             throw new NullPointerException("Tried to get an unplaced product");
 
         return this.productPosition.getY();
     }
 
     public Point2D getProductPosition() {
-        if(productPosition == null)
+        if(productPosition.equals(new Point2D(-1, -1)))
             throw new NullPointerException("Tried to get an unplaced product");
 
         return productPosition;
@@ -61,7 +49,6 @@ public class Product extends Rectangle {
 
     public void setProductPosition(Point2D productPosition) {
         this.productPosition = productPosition;
-        setDesign();
     }
 
 }

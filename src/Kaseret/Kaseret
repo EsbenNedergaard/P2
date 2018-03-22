@@ -1,0 +1,88 @@
+ public void addProduct(Product product, int productPosition) {
+        checkForIllegalProductPostion(productPosition);
+
+        Point2D placementPoint = createProductPlacementPoint(productPosition);
+        // Check if position contains a product
+        if(containsProduct(placementPoint))
+            throw new IllegalProductPositionException("Place contains a product");
+
+        product.setProductPosition(placementPoint);
+        productList.add(product);
+    }
+
+
+    @Override
+    public boolean containsProduct(Point2D point) {
+        for(Product item : productList) {
+            if(item.getProductPosition().equals(point))
+                return true;
+        }
+        return false;
+    }
+
+
+
+
+        while(i < getRackLength() && !found) {
+            Point2D productPoint = createProductPlacementPoint(i);
+            if(!containsProduct(productPoint)) {
+                product.setProductPosition(productPoint);
+                productList.add(product);
+                found = true;
+            }
+            i++;
+        }
+
+
+
+
+    void checkForIllegalProductPostion(int productPosition){
+        // Check if position is negative
+        if(productPosition < 0)
+            throw new IllegalProductPositionException("The product position cannot be negative");
+
+        // Check if rackRow position is in rackRow
+        if(productPosition > getRackLength())
+            throw new IllegalProductPositionException("The product position was too high");
+    }
+
+
+
+        @Override
+        public Product getProduct(int id) {
+            for(Product item : productList) {
+                if(item.getById() == id)
+                    return item;
+            }
+            // Product does not exist
+            throw new ProductDoesNotExistException();
+        }
+
+
+rackList.add(new HorizontalRack(AISLE_LENGTH, new Point2D(AISLE_PADDING, 0)));
+        rackList.add(new HorizontalRack(AISLE_LENGTH, new Point2D(AISLE_PADDING, 2)));
+        rackList.add(new HorizontalRack(AISLE_LENGTH, new Point2D(AISLE_PADDING, 3)));
+        rackList.add(new HorizontalRack(AISLE_LENGTH, new Point2D(AISLE_PADDING, 5)));
+        rackList.add(new HorizontalRack(AISLE_LENGTH, new Point2D(AISLE_PADDING, 6)));
+        rackList.add(new HorizontalRack(AISLE_LENGTH, new Point2D(AISLE_PADDING, 8)));
+        rackList.add(new HorizontalRack(AISLE_LENGTH, new Point2D(AISLE_PADDING, 9)));
+        rackList.add(new HorizontalRack(AISLE_LENGTH, new Point2D(AISLE_PADDING, 11)));
+
+
+        try {
+            rackList.get(0).addProduct(new Product("Apple", 1));
+            rackList.get(0).addProduct(new Product("Orange", 2));
+            rackList.get(0).addProduct(new Product("Grapes", 3));
+            //rackRow.addProduct(new Product("Orange", 10));
+        } catch (IllegalProductPositionException | FullRackException e) {
+            System.out.println(e.toString());
+        }
+
+        try {
+            rackList.get(1).addProduct(new Product("Pear", 5));
+            rackList.get(1).addProduct(new Product("Orange", 10));
+            rackList.get(1).addProduct(new Product("Grapes", 17));
+            //rackRow.addProduct(new Product("Orange", 10));
+        } catch (IllegalProductPositionException | FullRackException e) {
+            System.out.println(e.toString());
+        }

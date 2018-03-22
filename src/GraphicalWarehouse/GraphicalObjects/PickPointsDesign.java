@@ -3,7 +3,6 @@ package GraphicalWarehouse.GraphicalObjects;
 import Geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 
 import static Warehouse.GUIWarehouse.TILE_SIZE;
 

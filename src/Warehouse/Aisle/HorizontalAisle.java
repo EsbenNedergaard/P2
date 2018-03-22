@@ -60,7 +60,7 @@ public class HorizontalAisle implements Aisle {
     }
 
     @Override
-    public List<Point2D> getPickingPoints(List<Product> productList) {
+    public List<Point2D> getPickingPoints(List<Product> productPickList) {
         return null;
     }
 

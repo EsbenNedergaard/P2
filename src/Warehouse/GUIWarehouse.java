@@ -6,7 +6,6 @@ import javafx.stage.Stage;
 
 
 public class GUIWarehouse extends Application {
-
     private Warehouse warehouse;
     private GraphicalWarehouse graphicalWarehouse;
 

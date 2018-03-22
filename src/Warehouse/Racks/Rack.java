@@ -56,8 +56,16 @@ public class Rack {
         if(that == null || this.getClass() != that.getClass()) return false;
 
         Rack thatRack = (Rack) that;
+        if ((this.productList.size() != thatRack.productList.size()) || (thatRack.maxAmtProductsInRack != this.getMaxAmtProductsInRack())) {
+            return false;
+        }
+        for (int i = 0; i<this.productList.size(); i++) {
+            if (!(this.productList.get(i).equals(thatRack.productList.get(i)))) {
+                return false;
+            }
+        }
 
-        return  thatRack.getProductList().equals(this.productList) && thatRack.maxAmtProductsInRack == this.getMaxAmtProductsInRack();
+        return  true;
     }
 
 }

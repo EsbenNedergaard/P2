@@ -4,6 +4,7 @@ import Exceptions.FullRackException;
 import Warehouse.Product;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Rack {
     private int maxAmtProductsInRack;
@@ -39,4 +40,24 @@ public class Rack {
     public Product getProduct(int ListIndex) {
         return productList.get(ListIndex);
     }
+
+    public int getMaxAmtProductsInRack() {
+        return this.maxAmtProductsInRack;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(maxAmtProductsInRack) + Objects.hash(productList);
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if(this == that) return true;
+        if(that == null || this.getClass() != that.getClass()) return false;
+
+        Rack thatRack = (Rack) that;
+
+        return  thatRack.getProductList().equals(this.productList) && thatRack.maxAmtProductsInRack == this.getMaxAmtProductsInRack();
+    }
+
 }

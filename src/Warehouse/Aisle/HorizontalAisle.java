@@ -2,8 +2,8 @@ package Warehouse.Aisle;
 
 import Geometry.Point2D;
 import Warehouse.Product;
-import Warehouse.ProductContainer.HorizontalRack;
-import Warehouse.ProductContainer.Rack;
+import Warehouse.ProductContainer.HorizontalRackRow;
+import Warehouse.ProductContainer.RackRow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ public class HorizontalAisle implements Aisle {
     private int aisleLength;
     private Point2D startPoint;
     private Point2D endPoint;
-    private List<Rack> RackList = new ArrayList<>();
+    private List<RackRow> rackRowList = new ArrayList<>();
 
 
     public HorizontalAisle(int aisleLength, Point2D startPoint) {
@@ -23,10 +23,10 @@ public class HorizontalAisle implements Aisle {
         this.endPoint = new Point2D(startPoint.getX() + aisleLength - 1, startPoint.getY());
 
         Point2D firstRackStartPoint = new Point2D(startPoint.getX() + 1, startPoint.getY() - 1);
-        RackList.add(new HorizontalRack(aisleLength - 2, firstRackStartPoint));
+        rackRowList.add(new HorizontalRackRow(aisleLength - 2, firstRackStartPoint));
 
         Point2D secondRackStartPoint = new Point2D(startPoint.getX() + 1, startPoint.getY() + 1);
-        RackList.add(new HorizontalRack(aisleLength - 2, secondRackStartPoint));
+        rackRowList.add(new HorizontalRackRow(aisleLength - 2, secondRackStartPoint));
     }
 
     @Override
@@ -45,18 +45,18 @@ public class HorizontalAisle implements Aisle {
     }
 
     @Override
-    public Rack getFirstRack() {
-        return this.RackList.get(0);
+    public RackRow getFirstRack() {
+        return this.rackRowList.get(0);
     }
 
     @Override
-    public Rack getSecondRack() {
-        return this.RackList.get(1);
+    public RackRow getSecondRack() {
+        return this.rackRowList.get(1);
     }
 
     @Override
-    public List<Rack> getRackList() {
-        return this.RackList;
+    public List<RackRow> getRackRowList() {
+        return this.rackRowList;
     }
 
     @Override

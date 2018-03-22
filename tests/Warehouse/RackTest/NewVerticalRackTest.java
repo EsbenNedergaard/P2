@@ -1,15 +1,10 @@
 package Warehouse.RackTest;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import Exceptions.IllegalRackDimensionException;
-import Warehouse.ProductContainer.Rack;
-import Warehouse.ProductContainer.VerticalRack;
-import Geometry.Point2D;
-import org.junit.jupiter.api.Test;
 
 public class NewVerticalRackTest {
 /*
-    Rack testRack;
+    RackRow testRack;
 
     // Testing a length that is one longer than the height of the warehouse.
     @Test

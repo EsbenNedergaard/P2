@@ -41,7 +41,7 @@
         if(productPosition < 0)
             throw new IllegalProductPositionException("The product position cannot be negative");
 
-        // Check if rack position is in rack
+        // Check if rackRow position is in rackRow
         if(productPosition > getRackLength())
             throw new IllegalProductPositionException("The product position was too high");
     }
@@ -73,7 +73,7 @@ rackList.add(new HorizontalRack(AISLE_LENGTH, new Point2D(AISLE_PADDING, 0)));
             rackList.get(0).addProduct(new Product("Apple", 1));
             rackList.get(0).addProduct(new Product("Orange", 2));
             rackList.get(0).addProduct(new Product("Grapes", 3));
-            //rack.addProduct(new Product("Orange", 10));
+            //rackRow.addProduct(new Product("Orange", 10));
         } catch (IllegalProductPositionException | FullRackException e) {
             System.out.println(e.toString());
         }
@@ -82,7 +82,7 @@ rackList.add(new HorizontalRack(AISLE_LENGTH, new Point2D(AISLE_PADDING, 0)));
             rackList.get(1).addProduct(new Product("Pear", 5));
             rackList.get(1).addProduct(new Product("Orange", 10));
             rackList.get(1).addProduct(new Product("Grapes", 17));
-            //rack.addProduct(new Product("Orange", 10));
+            //rackRow.addProduct(new Product("Orange", 10));
         } catch (IllegalProductPositionException | FullRackException e) {
             System.out.println(e.toString());
         }

@@ -9,12 +9,12 @@ import java.util.List;
 
 import static Warehouse.GUIWarehouse.TILE_SIZE;
 
-public abstract class Rack extends Rectangle implements ProductContainer {
+public abstract class RackRow extends Rectangle implements ProductContainer {
     private int rackLength;
     private Point2D startPoint;
     private List<Product> productList = new ArrayList<>();
 
-    Rack(int rackLength, Point2D startPoint) {
+    RackRow(int rackLength, Point2D startPoint) {
         this.rackLength = rackLength;
         this.startPoint = startPoint;
     }

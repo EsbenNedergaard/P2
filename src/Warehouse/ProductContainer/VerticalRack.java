@@ -11,7 +11,7 @@ import java.util.List;
 
 import static Warehouse.GUIWarehouse.TILE_SIZE;
 
-public class VerticalRack /*extends Rack*/ {
+public class VerticalRack /*extends RackRow*/ {
     /*public VerticalRack(String name, int length, Point2D startPoint, int widthWarehouse, int heightWarehouse) {
         super(name, length, startPoint, widthWarehouse, heightWarehouse);
 

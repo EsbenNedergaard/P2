@@ -1,12 +1,9 @@
 package Warehouse;
 
-import Exceptions.FullRackException;
-import Exceptions.IllegalProductPositionException;
 import Geometry.Point2D;
 import Warehouse.Aisle.Aisle;
 import Warehouse.Aisle.HorizontalAisle;
-import Warehouse.ProductContainer.HorizontalRack;
-import Warehouse.ProductContainer.Rack;
+import Warehouse.ProductContainer.RackRow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,12 +31,12 @@ public class Warehouse22b implements Warehouse {
     }
 
     @Override
-    public List<Rack> getRackList() {
-        List<Rack> tempRackList = new ArrayList<>();
+    public List<RackRow> getRackList() {
+        List<RackRow> tempRackRowList = new ArrayList<>();
         for(Aisle aisleElement : aisleList) {
-            tempRackList.addAll(aisleElement.getRackList());
+            tempRackRowList.addAll(aisleElement.getRackRowList());
         }
-        return tempRackList;
+        return tempRackRowList;
     }
 
     @Override

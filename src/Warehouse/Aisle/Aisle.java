@@ -2,7 +2,7 @@ package Warehouse.Aisle;
 
 import Geometry.Point2D;
 import Warehouse.Product;
-import Warehouse.ProductContainer.Rack;
+import Warehouse.ProductContainer.RackRow;
 
 import java.util.List;
 
@@ -13,9 +13,9 @@ public interface Aisle {
     Point2D getStartPoint();
     Point2D getEndPoint();
 
-    Rack getFirstRack();
-    Rack getSecondRack();
-    List<Rack> getRackList();
+    RackRow getFirstRack();
+    RackRow getSecondRack();
+    List<RackRow> getRackRowList();
 
     List<Point2D> getPickingPoints(List<Product> productPickList);
     boolean doesItContainProductID(int id); //Should be used to look through the racks an see if it contains the product, and then we can add the products point to teh pickingpoints.

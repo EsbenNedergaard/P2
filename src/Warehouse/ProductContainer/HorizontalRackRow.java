@@ -1,12 +1,8 @@
 package Warehouse.ProductContainer;
 import Geometry.Point2D;
-import javafx.scene.paint.Color;
 
-
-import static Warehouse.GUIWarehouse.TILE_SIZE;
-
-public class HorizontalRack extends Rack {
-    public HorizontalRack(int length, Point2D startPoint) {
+public class HorizontalRackRow extends RackRow {
+    public HorizontalRackRow(int length, Point2D startPoint) {
         super(length, startPoint);
     }
 

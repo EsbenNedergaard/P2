@@ -15,6 +15,6 @@ public class PickPointsDesign extends Circle {
 
         setOpacity(0.5);
 
-        setFill(Color.valueOf("red"));
+        setFill(Color.valueOf("blue"));
     }
 }

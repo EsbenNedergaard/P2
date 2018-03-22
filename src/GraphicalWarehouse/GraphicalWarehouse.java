@@ -1,9 +1,11 @@
 package GraphicalWarehouse;
 
 import Geometry.Point2D;
+import GraphicalWarehouse.GraphicalObjects.PickPointsDesign;
 import GraphicalWarehouse.GraphicalObjects.ProductDesign;
 import GraphicalWarehouse.GraphicalObjects.RackDesign;
 import GraphicalWarehouse.GraphicalObjects.Tile;
+import Warehouse.Aisle.Aisle;
 import Warehouse.ProductContainer.Rack;
 import Warehouse.Warehouse;
 import Warehouse.Product;
@@ -14,7 +16,6 @@ import javafx.scene.layout.Pane;
 import static Warehouse.GUIWarehouse.TILE_SIZE;
 
 public class GraphicalWarehouse {
-
     private Warehouse warehouse;
     private int WIDTH_WAREHOUSE;
     private int HEIGHT_WAREHOUSE;
@@ -28,7 +29,7 @@ public class GraphicalWarehouse {
     }
 
     // Returns a group of graphical tiles which represents the warehouse floor
-    public Group getTileGroup() {
+    private Group getTileGroup() {
         // Create a group to the graphical tiles
         Group tileGroup = new Group();
 
@@ -42,7 +43,7 @@ public class GraphicalWarehouse {
         return tileGroup;
     }
 
-    public Group getRackGroup() {
+    private Group getRackGroup() {
         // Create a group of graphical racks
         Group rackGroup = new Group();
 
@@ -56,7 +57,7 @@ public class GraphicalWarehouse {
         return rackGroup;
     }
 
-    public Group getProductGroup() {
+    private Group getProductGroup() {
         // Create a group of graphical products
         Group productGroup = new Group();
 
@@ -68,21 +69,37 @@ public class GraphicalWarehouse {
                 // Put the product into the group
                 productGroup.getChildren().add(graphicProduct);
             }
-
         }
 
         return productGroup;
     }
 
+    private Group getPickPointGroup() {
+        Group pickPointGroup = new Group();
+
+        for(Aisle aisleElement : warehouse.getAisleList()) {
+            // Setup the design for the points
+            PickPointsDesign startPointDesign = new PickPointsDesign(aisleElement.getStartPoint());
+            PickPointsDesign endPointDesign = new PickPointsDesign(aisleElement.getEndPoint());
+
+            // Puts the points into the group
+            pickPointGroup.getChildren().addAll(startPointDesign, endPointDesign);
+        }
+
+        return pickPointGroup;
+    }
+
     public Parent getWarehouseGraphics() {
         Pane root = new Pane();
 
+        Group pickPointGroup = getPickPointGroup();
         Group tileGroup = getTileGroup();
         Group rackGroup = getRackGroup();
         Group productGroup = getProductGroup();
 
+
         root.setPrefSize(WIDTH_WAREHOUSE * TILE_SIZE, HEIGHT_WAREHOUSE * TILE_SIZE);
-        root.getChildren().addAll(rackGroup, productGroup, tileGroup);
+        root.getChildren().addAll(pickPointGroup, rackGroup, productGroup, tileGroup);
 
         return root;
     }

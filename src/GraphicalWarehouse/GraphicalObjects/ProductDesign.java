@@ -9,17 +9,11 @@ import static Warehouse.GUIWarehouse.TILE_SIZE;
 public class ProductDesign extends Rectangle {
 
     public ProductDesign(Product product) {
-
         setWidth(TILE_SIZE);
         setHeight(TILE_SIZE);
 
-        try {
-            relocate(product.getProductPosition().getXPixels(), product.getProductPosition().getYPixels());
-        } catch (NullPointerException e) {
-            System.out.println("Some");
-        }
+        relocate(product.getProductPosition().getXPixels(), product.getProductPosition().getYPixels());
 
         setFill(Color.valueOf("green"));
-
     }
 }

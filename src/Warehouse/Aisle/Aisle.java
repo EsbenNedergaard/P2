@@ -9,7 +9,7 @@ import java.util.List;
 //TODO: Lave en liste af aisle, som er sorteret efter deres y-koordianter, og derefter kan vi bare regne afstanden ud mellem to elementer i streg på en liste for at finde afstande mellem punkterne
 
 public interface Aisle {
-    int getAisleLenght();
+    int getAisleLength();
     Point2D getStartPoint();
     Point2D getEndPoint();
 

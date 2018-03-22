@@ -35,11 +35,16 @@ public class Warehouse22b implements Warehouse {
 
     @Override
     public List<Rack> getRackList() {
-        List<Rack> temprackList = new ArrayList<>();
-        for(Aisle AisleElement : aisleList) {
-            temprackList.addAll(AisleElement.getRackList());
+        List<Rack> tempRackList = new ArrayList<>();
+        for(Aisle aisleElement : aisleList) {
+            tempRackList.addAll(aisleElement.getRackList());
         }
-        return temprackList;
+        return tempRackList;
+    }
+
+    @Override
+    public List<Aisle> getAisleList() {
+        return aisleList;
     }
 
     @Override

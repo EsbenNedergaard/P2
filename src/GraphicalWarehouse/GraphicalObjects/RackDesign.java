@@ -9,7 +9,6 @@ import static Warehouse.GUIWarehouse.TILE_SIZE;
 public class RackDesign extends Rectangle {
 
     public RackDesign(Rack rack) {
-
         if(rack.isHorizontal()) {
             setWidth(TILE_SIZE * rack.getRackLength());
             setHeight(TILE_SIZE);

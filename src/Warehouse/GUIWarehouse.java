@@ -20,7 +20,6 @@ public class GUIWarehouse extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
         Scene scene = new Scene(graphicalWarehouse.getWarehouseGraphics());
         primaryStage.setTitle("GUIWarehouse");
         primaryStage.setScene(scene);

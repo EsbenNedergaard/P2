@@ -8,7 +8,7 @@ import java.util.Objects;
 
 import static Warehouse.GUIWarehouse.TILE_SIZE;
 
-public class Product extends Rectangle {
+public class Product {
 
     private String name;
     private int id;

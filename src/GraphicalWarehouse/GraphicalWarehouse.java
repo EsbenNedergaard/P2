@@ -6,7 +6,7 @@ import GraphicalWarehouse.GraphicalObjects.ProductDesign;
 import GraphicalWarehouse.GraphicalObjects.RackRowDesign;
 import GraphicalWarehouse.GraphicalObjects.Tile;
 import Warehouse.Aisle.Aisle;
-import Warehouse.ProductContainer.RackRow;
+import Warehouse.Racks.RackRow;
 import Warehouse.Warehouse;
 import Warehouse.Product;
 import javafx.scene.Group;
@@ -63,7 +63,7 @@ public class GraphicalWarehouse {
 
         for(RackRow rackRowElement : warehouse.getRackRowList()) {
             // Now get the product list from the current rack
-            for(Product productElement : rackRowElement.getProductList()) {
+            for(Product productElement : rackRowElement.getAllProductsInRackRow()) {
                 // Styles the product
                 ProductDesign graphicProduct = new ProductDesign(productElement);
                 // Put the product into the group

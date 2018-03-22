@@ -17,4 +17,5 @@ public interface RackRow {
     Point2D getStartPoint();
     List<Product> getAllProductsInRackRow();
     Rack[] getRackArray();
+    Rack getRackByIndex(int Index);
 }

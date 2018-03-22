@@ -3,7 +3,7 @@ package Warehouse;
 import Geometry.Point2D;
 import Warehouse.Aisle.Aisle;
 import Warehouse.Aisle.HorizontalAisle;
-import Warehouse.ProductContainer.RackRow;
+import Warehouse.Racks.RackRow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,10 +32,8 @@ public class Warehouse22b implements Warehouse {
     }
 
     public void createProducts() {
-
-
-        /*aisleList.get(0).getFirstRackRow().addProduct(new Product("Pear", 1));
-        aisleList.get(0).getFirstRackRow().addProduct(new Product("Apple", 2));*/
+        aisleList.get(0).getFirstRackRow().addProduct(new Product("Pear", 1));
+        aisleList.get(0).getFirstRackRow().addProduct(new Product("Apple", 2));
     }
 
     @Override

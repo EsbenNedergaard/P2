@@ -2,7 +2,7 @@ package Warehouse.Aisle;
 
 import Geometry.Point2D;
 import Warehouse.Product;
-import Warehouse.ProductContainer.RackRow;
+import Warehouse.Racks.RackRow;
 
 import java.util.List;
 

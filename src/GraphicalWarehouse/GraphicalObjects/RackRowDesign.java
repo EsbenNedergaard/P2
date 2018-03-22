@@ -1,6 +1,6 @@
 package GraphicalWarehouse.GraphicalObjects;
 
-import Warehouse.ProductContainer.RackRow;
+import Warehouse.Racks.RackRow;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 

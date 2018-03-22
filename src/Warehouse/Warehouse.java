@@ -1,7 +1,7 @@
 package Warehouse;
 
 import Warehouse.Aisle.Aisle;
-import Warehouse.ProductContainer.RackRow;
+import Warehouse.Racks.RackRow;
 
 import java.util.List;
 

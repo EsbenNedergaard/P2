@@ -5,6 +5,8 @@ import Warehouse.Product;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class RackTest {
@@ -40,8 +42,18 @@ class RackTest {
         assertThrows(FullRackException.class, ()->{
             testRack.addProduct(new Product("b", 3));
         });
-
         assertEquals(2, testRack.getProductList().size());
+    }
+
+    @Test
+    void getProductList() {
+        testRack.addProduct(new Product("a", 1));
+        testRack.addProduct(new Product("b", 2));
+
+        List<Product> tempProductList = testRack.getProductList();
+
+        assertTrue(tempProductList.get(0).equals(new Product("a", 1)));
+        assertTrue(tempProductList.get(1).equals(new Product("b", 2)));
     }
 
 }

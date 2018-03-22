@@ -1,9 +1,11 @@
 package Warehouse.Racks;
 
+import Exceptions.FullRackException;
 import Geometry.Point2D;
 import Warehouse.Product;
 import Warehouse.Racks.Rack;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HorizontalRackRow implements RackRow {
@@ -31,12 +33,18 @@ public class HorizontalRackRow implements RackRow {
 
     @Override
     public void addProduct(Product e) {
-
+        for (Rack rackElement : rackArray) {
+            if (!rackElement.checkIfFull()) {
+                rackElement.addProduct(e);
+                return;
+            }
+        }
+        throw new FullRackException("This rackrow is aldready full");
     }
 
     @Override
     public void addProductToRack(Product product, int rackIndex) {
-
+        rackArray[rackIndex].addProduct(product);
     }
 
     @Override
@@ -56,11 +64,20 @@ public class HorizontalRackRow implements RackRow {
 
     @Override
     public List<Product> getAllProductsInRackRow() {
-        return null;
+        List<Product> productList = new ArrayList<>();
+        for(Rack rackElement : rackArray) {
+            productList.addAll(rackElement.getProductList());
+        }
+        return productList;
     }
 
     @Override
     public Rack[] getRackArray() {
         return this.rackArray;
+    }
+
+    @Override
+    public Rack getRackByIndex(int Index) {
+        return rackArray[Index];
     }
 }

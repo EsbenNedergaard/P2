@@ -12,6 +12,7 @@ public class GUIWarehouse extends Application {
     private static final int SCALE = 5;
     public static final int TILE_SIZE = 5 * SCALE;
 
+    /*TODO: evt ændre til init*/
     public GUIWarehouse() {
         this.warehouse = new Warehouse22b();
         this.graphicalWarehouse = new GraphicalWarehouse(warehouse);

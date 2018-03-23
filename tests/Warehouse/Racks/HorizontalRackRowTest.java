@@ -13,6 +13,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class HorizontalRackRowTest {
     HorizontalRackRow testRow;
 
+
+    //TODO: Flyttes lavning af produkter herop og kalde dem p1, p2 osv. samt lave vores getters om til package private, da de ikke skal bruges andre steder
     @BeforeEach
     public void beforeEach() {
         Point2D startPoint = new Point2D(1,1);

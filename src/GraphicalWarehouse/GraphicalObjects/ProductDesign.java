@@ -6,6 +6,8 @@ import javafx.scene.shape.Rectangle;
 
 import static Warehouse.GUIWarehouse.TILE_SIZE;
 
+
+//TODO: BURDE LAVES OM TIL AT VÆRE RACK DESIGN
 public class ProductDesign extends Rectangle {
 
     public ProductDesign(Product product) {

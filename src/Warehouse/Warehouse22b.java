@@ -9,17 +9,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Warehouse22b implements Warehouse {
+    private int length;
     private int width;
-    private int height;
     private List<Aisle> aisleList = new ArrayList<>();
 
-    public static final int AISLE_LENGTH = 36;
-    public static final int AISLE_PADDING = 4;
+    private static final int AISLE_LENGTH = 36;
+    private static final int AISLE_PADDING = 4;
 
 
-    public Warehouse22b() {
-        width = AISLE_LENGTH + (AISLE_PADDING * 2);
-        height = 12;
+    Warehouse22b() {
+        length = AISLE_LENGTH + (AISLE_PADDING * 2);
+        width = 12;
         createAisleList();
         createProducts();
     }
@@ -31,7 +31,7 @@ public class Warehouse22b implements Warehouse {
         aisleList.add(new HorizontalAisle(AISLE_LENGTH, new Point2D(AISLE_PADDING, 10)));
     }
 
-    public void createProducts() {
+    private void createProducts() {
         aisleList.get(0).getFirstRackRow().addProduct(new Product("Pear", 1));
         aisleList.get(0).getFirstRackRow().addProduct(new Product("Apple", 2));
     }
@@ -51,12 +51,11 @@ public class Warehouse22b implements Warehouse {
     }
 
     @Override
-    public int getHeight() {
-        return this.height;
+    public int getWidth() {
+        return this.width;
     }
 
     @Override
-    public int getWidth() {
-        return this.width;
+    public int getLength() {return this.length;
     }
 }

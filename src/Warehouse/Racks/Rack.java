@@ -12,17 +12,20 @@ public class Rack {
     private int maxAmtProductsInRack;
     private List<Product> productList = new ArrayList<>();
     private Point2D rackPosition;
+    private boolean isTopRackRow;
 
     Rack(int maxAmtProductsInRack, Point2D rackPosition) {
         this.maxAmtProductsInRack = maxAmtProductsInRack;
         this.rackPosition = rackPosition;
+        //this.isTopRackRow = isTopRackRow;
     }
 
-    public void addProduct(Product e) {
+    public void addProduct(Product product) {
         if (checkIfFull()) {
             throw new FullRackException("This rack is already full");
         }
-        this.productList.add(e);
+        product.setRack(this);
+        this.productList.add(product);
     }
 
     public boolean doesItContainProduct(Product product) {

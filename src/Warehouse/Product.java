@@ -1,31 +1,33 @@
 package Warehouse;
 
-import Geometry.Point2D;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+import Warehouse.Racks.Rack;
 
 import java.util.Objects;
 
-import static Warehouse.GUIWarehouse.TILE_SIZE;
-
 public class Product {
-
     private String name;
     private int id;
-    private Point2D productPosition;
+    private Rack rack;
 
     public Product(String name, int id) {
         this.name = name;
         this.id = id;
-        this.productPosition = new Point2D(-1, -1);
+    }
+
+    public void setRack(Rack rack) {
+        this.rack = rack;
     }
 
     public String getName() {
         return name;
     }
 
-    public int getById() {
+    int getId() {
         return id;
+    }
+
+    public Rack getRack() {
+        return rack;
     }
 
     @Override
@@ -40,7 +42,7 @@ public class Product {
 
         Product product = (Product) that;
 
-        return  product.getById() == this.id;
+        return  product.getId() == this.id;
     }
 
 

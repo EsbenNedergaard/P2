@@ -5,7 +5,6 @@ import java.util.Objects;
 import static Warehouse.GUIWarehouse.TILE_SIZE;
 
 public class Point2D {
-
     private int x;
     private int y;
 

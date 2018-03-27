@@ -8,9 +8,9 @@ public class Point2D {
     private int x;
     private int y;
 
-    public Point2D(){
-        int x = -1;
-        int y = -1;
+    public Point2D() {
+        this.x = -1;
+        this.y = -1;
     }
 
     public Point2D(int x, int y) {
@@ -22,6 +22,7 @@ public class Point2D {
         this.x = point.getX();
         this.y = point.getY();
     }
+
 
     public int getX() {
         return x;

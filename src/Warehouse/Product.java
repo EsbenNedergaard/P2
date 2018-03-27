@@ -28,31 +28,6 @@ public class Product {
         return id;
     }
 
-    public int getXCoordinate() {
-        if(productPosition.equals(new Point2D(-1, -1)))
-            throw new NullPointerException("Tried to get an unplaced product");
-
-        return this.productPosition.getX();
-    }
-
-    public int getYCoordinate() {
-        if(productPosition.equals(new Point2D(-1, -1)))
-            throw new NullPointerException("Tried to get an unplaced product");
-
-        return this.productPosition.getY();
-    }
-
-    public Point2D getProductPosition() {
-        if(productPosition.equals(new Point2D(-1, -1)))
-            throw new NullPointerException("Tried to get an unplaced product");
-
-        return productPosition;
-    }
-
-    public void setProductPosition(Point2D productPosition) {
-        this.productPosition = productPosition;
-    }
-
     @Override
     public int hashCode() {
         return Objects.hash(id);

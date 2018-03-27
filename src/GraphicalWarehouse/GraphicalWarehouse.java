@@ -2,7 +2,7 @@ package GraphicalWarehouse;
 
 import Geometry.Point2D;
 import GraphicalWarehouse.GraphicalObjects.PickPointsDesign;
-import GraphicalWarehouse.GraphicalObjects.ProductDesign;
+import GraphicalWarehouse.GraphicalObjects.RackDesign;
 import GraphicalWarehouse.GraphicalObjects.RackRowDesign;
 import GraphicalWarehouse.GraphicalObjects.Tile;
 import Warehouse.Aisle.Aisle;
@@ -61,15 +61,15 @@ public class GraphicalWarehouse {
         // Create a group of graphical products
         Group productGroup = new Group();
 
-        for(RackRow rackRowElement : warehouse.getRackRowList()) {
+        /*for(RackRow rackRowElement : warehouse.getRackRowList()) {
             // Now get the product list from the current rack
             for(Product productElement : rackRowElement.getAllProductsInRackRow()) {
                 // Styles the product
-                ProductDesign graphicProduct = new ProductDesign(productElement);
+                RackDesign graphicProduct = new RackDesign(productElement);
                 // Put the product into the group
                 productGroup.getChildren().add(graphicProduct);
             }
-        }
+        }*/
 
         return productGroup;
     }

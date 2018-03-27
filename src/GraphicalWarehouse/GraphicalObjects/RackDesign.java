@@ -1,6 +1,6 @@
 package GraphicalWarehouse.GraphicalObjects;
 
-import Warehouse.Product;
+import Warehouse.Racks.Rack;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -8,13 +8,15 @@ import static Warehouse.GUIWarehouse.TILE_SIZE;
 
 
 //TODO: BURDE LAVES OM TIL AT VÆRE RACK DESIGN
-public class ProductDesign extends Rectangle {
+public class RackDesign extends Rectangle {
 
-    public ProductDesign(Product product) {
+    public RackDesign(Rack rack) {
+        rack.getProductList().size();
+
         setWidth(TILE_SIZE);
         setHeight(TILE_SIZE);
 
-        relocate(product.getProductPosition().getXPixels(), product.getProductPosition().getYPixels());
+        //relocate(product.getProductPosition().getXPixels(), product.getProductPosition().getYPixels());
 
         setFill(Color.valueOf("green"));
     }

@@ -1,6 +1,8 @@
 package Warehouse.Racks;
 
 import Exceptions.FullRackException;
+import Exceptions.UnplacedRackException;
+import Geometry.Point2D;
 import Warehouse.Product;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,9 +11,11 @@ import java.util.Objects;
 public class Rack {
     private int maxAmtProductsInRack;
     private List<Product> productList = new ArrayList<>();
+    private Point2D rackPosition;
 
-    Rack(int maxAmtProductsInRack) {
+    Rack(int maxAmtProductsInRack, Point2D rackPosition) {
         this.maxAmtProductsInRack = maxAmtProductsInRack;
+        this.rackPosition = rackPosition;
     }
 
     public void addProduct(Product e) {
@@ -45,9 +49,33 @@ public class Rack {
         return this.maxAmtProductsInRack;
     }
 
+
+    public int getXCoordinate() {
+        if(rackPosition.equals(new Point2D(-1, -1)))
+            throw new UnplacedRackException();
+
+        return this.rackPosition.getX();
+    }
+
+    public int getYCoordinate() {
+        if(rackPosition.equals(new Point2D(-1, -1)))
+            throw new UnplacedRackException();
+
+        return this.rackPosition.getY();
+    }
+
+    public Point2D getRackPosition() {
+        if(rackPosition.equals(new Point2D(-1, -1)))
+            throw new UnplacedRackException();
+
+        return rackPosition;
+    }
+
+
+
     @Override
     public int hashCode() {
-        return Objects.hash(maxAmtProductsInRack) + Objects.hash(productList);
+        return Objects.hash(rackPosition);
     }
 
     @Override
@@ -56,16 +84,7 @@ public class Rack {
         if(that == null || this.getClass() != that.getClass()) return false;
 
         Rack thatRack = (Rack) that;
-        if ((this.productList.size() != thatRack.productList.size()) || (thatRack.maxAmtProductsInRack != this.getMaxAmtProductsInRack())) {
-            return false;
-        }
-        for (int i = 0; i<this.productList.size(); i++) {
-            if (!(this.productList.get(i).equals(thatRack.productList.get(i)))) {
-                return false;
-            }
-        }
-
-        return  true;
+        return this.getRackPosition().equals(thatRack.getRackPosition());
     }
 
 }

@@ -22,7 +22,7 @@ public class HorizontalRackRow implements RackRow {
         rackArray = new Rack[rackRowLength];
 
         for(int i = 0; i < rackRowLength; i++) {
-            rackArray[i] = new Rack(maxAmtInSingleRack);
+            rackArray[i] = new Rack(maxAmtInSingleRack, new Point2D(startPoint.getX()+i, startPoint.getY()));
         }
     }
 

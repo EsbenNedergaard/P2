@@ -11,14 +11,19 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class HorizontalRackRowTest {
-    HorizontalRackRow testRow;
+    private HorizontalRackRow testRow;
+    private Rack tempRack1;
+    private Rack tempRack2;
 
-
+    //TODO: SKAL HAVE SAT TESTS OP FOR
     //TODO: Flyttes lavning af produkter herop og kalde dem p1, p2 osv. samt lave vores getters om til package private, da de ikke skal bruges andre steder
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
         Point2D startPoint = new Point2D(1,1);
         testRow = new HorizontalRackRow(startPoint, 2,2);
+
+        tempRack1 = new Rack(2, new Point2D(1,1));
+        tempRack2 = new Rack(2, new Point2D(2,1));
     }
 
     @Test
@@ -29,27 +34,24 @@ class HorizontalRackRowTest {
     @Test
     void getRackArray() {
         Rack[] tempArray = testRow.getRackArray();
-        Rack tempRack = new Rack(2);
 
-        assertTrue(tempRack.equals(tempArray[0]));
-        assertTrue(tempRack.equals(tempArray[1]));
+        assertTrue(tempRack1.equals(tempArray[0]));
+        assertTrue(tempRack2.equals(tempArray[1]));
     }
 
     @Test
     void getRackByIndex() {
-        Rack tempRack = new Rack(2);
-        assertTrue(tempRack.equals(testRow.getRackByIndex(0)));
-        assertTrue(tempRack.equals(testRow.getRackByIndex(1)));
+        assertTrue(tempRack1.equals(testRow.getRackByIndex(0)));
+        assertTrue(tempRack2.equals(testRow.getRackByIndex(1)));
     }
 
     @Test
     void addProduct1() {
         testRow.addProduct(new Product("a", 1));
 
-        Rack tempRack = new Rack(2);
-        tempRack.addProduct(new Product("a", 1));
+        tempRack1.addProduct(new Product("a", 1));
 
-        assertTrue(tempRack.equals(testRow.getRackByIndex(0)));
+        assertTrue(tempRack1.equals(testRow.getRackByIndex(0)));
     }
 
     @Test
@@ -58,11 +60,10 @@ class HorizontalRackRowTest {
         testRow.addProduct(new Product("a", 1));
         testRow.addProduct(new Product("b", 2));
 
-        Rack tempRack = new Rack(2);
-        tempRack.addProduct(new Product("a", 1));
-        tempRack.addProduct(new Product("b", 2));
+        tempRack1.addProduct(new Product("a", 1));
+        tempRack1.addProduct(new Product("b", 2));
 
-        assertTrue(tempRack.equals(testRow.getRackByIndex(0)));
+        assertTrue(tempRack1.equals(testRow.getRackByIndex(0)));
     }
 
     @Test
@@ -72,10 +73,9 @@ class HorizontalRackRowTest {
         testRow.addProduct(new Product("b", 2));
         testRow.addProduct(new Product("c", 3));
 
-        Rack tempRack = new Rack(2);
-        tempRack.addProduct(new Product("c", 3));
+        tempRack2.addProduct(new Product("c", 3));
 
-        assertTrue(tempRack.equals(testRow.getRackByIndex(1)));
+        assertTrue(tempRack2.equals(testRow.getRackByIndex(1)));
     }
 
     @Test
@@ -86,19 +86,16 @@ class HorizontalRackRowTest {
         testRow.addProduct(new Product("c", 3));
         testRow.addProduct(new Product("d", 4));
 
-        assertThrows(FullRackException.class, ()->{
-            testRow.addProduct(new Product("e", 5));
-        });
+        assertThrows(FullRackException.class, ()-> testRow.addProduct(new Product("e", 5)));
     }
 
     @Test
     void addProductToRack1() {
         testRow.addProductToRack(new Product("a", 1), 1);
 
-        Rack tempRack = new Rack(2);
-        tempRack.addProduct(new Product("a", 1));
+        tempRack2.addProduct(new Product("a", 1));
 
-        assertTrue(testRow.getRackByIndex(1).equals(tempRack));
+        assertTrue(tempRack2.equals(testRow.getRackByIndex(1)));
     }
 
     @Test
@@ -107,9 +104,7 @@ class HorizontalRackRowTest {
         testRow.addProductToRack(new Product("a", 1), 1);
         testRow.addProductToRack(new Product("b", 2), 1);
 
-        assertThrows(FullRackException.class, ()->{
-            testRow.addProductToRack(new Product("c", 3), 1);
-        });
+        assertThrows(FullRackException.class, ()-> testRow.addProductToRack(new Product("c", 3), 1));
     }
 
 

@@ -1,6 +1,7 @@
 package Warehouse.Racks;
 
 import Exceptions.FullRackException;
+import Geometry.Point2D;
 import Warehouse.Product;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,11 +11,13 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RackTest {
-    Rack testRack;
+    private Rack testRack;
+
+    //TODO: FÅ SAT TEST OP FOR PUNKTET OG FOR EQUALITY
 
     @BeforeEach
-    public void beforeEach() {
-        testRack = new Rack(2);
+    void beforeEach() {
+        testRack = new Rack(2, new Point2D(1,1));
     }
 
     @Test
@@ -39,9 +42,7 @@ class RackTest {
         testRack.addProduct(new Product("a", 1));
         testRack.addProduct(new Product("b", 2));
 
-        assertThrows(FullRackException.class, ()->{
-            testRack.addProduct(new Product("b", 3));
-        });
+        assertThrows(FullRackException.class, ()-> testRack.addProduct(new Product("b", 3)));
         assertEquals(2, testRack.getProductList().size());
     }
 

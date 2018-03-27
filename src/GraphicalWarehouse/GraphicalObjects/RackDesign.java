@@ -9,14 +9,13 @@ import static Warehouse.GUIWarehouse.TILE_SIZE;
 
 //TODO: BURDE LAVES OM TIL AT VÆRE RACK DESIGN
 public class RackDesign extends Rectangle {
-
     public RackDesign(Rack rack) {
         rack.getProductList().size();
 
         setWidth(TILE_SIZE);
         setHeight(TILE_SIZE);
 
-        //relocate(product.getProductPosition().getXPixels(), product.getProductPosition().getYPixels());
+        relocate(rack.getRackPosition().getXPixels(), rack.getRackPosition().getYPixels());
 
         setFill(Color.valueOf("green"));
     }

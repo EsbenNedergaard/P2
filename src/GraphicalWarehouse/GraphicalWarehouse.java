@@ -6,11 +6,13 @@ import GraphicalWarehouse.GraphicalObjects.RackDesign;
 import GraphicalWarehouse.GraphicalObjects.RackRowDesign;
 import GraphicalWarehouse.GraphicalObjects.Tile;
 import Warehouse.Aisle.Aisle;
+import Warehouse.Racks.Rack;
 import Warehouse.Racks.RackRow;
 import Warehouse.Warehouse;
 import Warehouse.Product;
 import javafx.scene.Group;
 import javafx.scene.Parent;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
 import static Warehouse.GUIWarehouse.TILE_SIZE;
@@ -57,21 +59,21 @@ public class GraphicalWarehouse {
         return rackRowGroup;
     }
 
-    private Group getProductGroup() {
-        // Create a group of graphical products
-        Group productGroup = new Group();
+    private Group getRackGroup() {
+        // Create a group of graphical racks
+        Group rackGroup = new Group();
 
-        /*for(RackRow rackRowElement : warehouse.getRackRowList()) {
-            // Now get the product list from the current rack
-            for(Product productElement : rackRowElement.getAllProductsInRackRow()) {
-                // Styles the product
-                RackDesign graphicProduct = new RackDesign(productElement);
-                // Put the product into the group
-                productGroup.getChildren().add(graphicProduct);
+        for(RackRow rackRowElement : warehouse.getRackRowList()) {
+
+            for (Rack rackElement : rackRowElement.getRackArray()) {
+                RackDesign graphicRack = new RackDesign(rackElement);
+                Label amtProducts = new Label("" + rackElement.getProductList().size());
+                amtProducts.relocate(rackElement.getRackPosition().getXPixels(), rackElement.getRackPosition().getYPixels());
+                rackGroup.getChildren().addAll(graphicRack, amtProducts);
             }
-        }*/
+        }
 
-        return productGroup;
+        return rackGroup;
     }
 
     private Group getPickPointGroup() {
@@ -96,12 +98,12 @@ public class GraphicalWarehouse {
         Group tileGroup = getTileGroup();
         Group rackRowGroup = getRackRowGroup();
         //TODO: skal fixes senere hvor vi laver noget med tal på dem i stedet alt efter hvor mange er ligger på dem
-        //Group productGroup = getProductGroup();
+        Group rackGroup = getRackGroup();
 
 
         root.setPrefSize(WIDTH_WAREHOUSE * TILE_SIZE, HEIGHT_WAREHOUSE * TILE_SIZE);
-        root.getChildren().addAll(pickPointGroup, rackRowGroup, tileGroup);
-        //root.getChildren().addAll(pickPointGroup, rackRowGroup, productGroup, tileGroup);
+        //root.getChildren().addAll(pickPointGroup, rackRowGroup, tileGroup);
+        root.getChildren().addAll(pickPointGroup, rackRowGroup, rackGroup, tileGroup);
 
         return root;
     }

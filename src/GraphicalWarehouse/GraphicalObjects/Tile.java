@@ -17,6 +17,7 @@ public class Tile extends Rectangle {
         // Graphical position of tile
         relocate(point.getXPixels(), point.getYPixels());
         setDesign();
+
     }
 
     public void setDesign() {
@@ -25,6 +26,5 @@ public class Tile extends Rectangle {
         setStroke(Color.valueOf("#b7b7b7"));
         setStrokeWidth(0.5);
     }
-
 }
 

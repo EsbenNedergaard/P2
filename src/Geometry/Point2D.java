@@ -7,6 +7,7 @@ import static Warehouse.GUIWarehouse.TILE_SIZE;
 public class Point2D {
     private int x;
     private int y;
+    private Boolean isObstacle;
 
     public Point2D() {
         this.x = -1;
@@ -22,7 +23,6 @@ public class Point2D {
         this.x = point.getX();
         this.y = point.getY();
     }
-
 
     public int getX() {
         return x;

@@ -5,7 +5,7 @@ import java.util.*;
 public class Graph {
     private ArrayList<Node> closedSet = new ArrayList<>();
     private SortedSet<Node> openSet = new TreeSet<>(new NodeComparator());
-    private ArrayList<Node> allNodes;
+    private ArrayList<Node> allNodes = new ArrayList<>();
 
     public Graph(ArrayList<Node> allNodes) {
         this.allNodes = allNodes;

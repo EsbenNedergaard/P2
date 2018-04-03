@@ -57,16 +57,15 @@ public class Node extends Point2D {
     }
 
     private boolean isNeighbour(Node node) {
-        if (this.getX() == node.getX() + 1 && this.getY() == node.getY()) {
+        if (this.getX() == (node.getX() + 1) && this.getY() == node.getY()) {
             return true;
-        } else if (this.getX() == node.getX() - 1 && this.getY() == node.getY()) {
+        } else if (this.getX() == (node.getX() - 1) && this.getY() == node.getY()) {
             return true;
-        } else if (this.getX() == node.getX() && this.getY() == node.getY() + 1) {
+        } else if (this.getX() == node.getX() && this.getY() == (node.getY() + 1)) {
             return true;
-        } else if (this.getX() == node.getX() && this.getY() == node.getY() - 1) {
+        } else if (this.getX() == node.getX() && this.getY() == (node.getY() - 1)) {
             return true;
         }
-
         return false;
     }
 

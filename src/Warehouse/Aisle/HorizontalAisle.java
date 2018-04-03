@@ -2,8 +2,8 @@ package Warehouse.Aisle;
 
 import Geometry.Point2D;
 import Warehouse.Product;
-import Warehouse.ProductContainer.HorizontalRackRow;
-import Warehouse.ProductContainer.RackRow;
+import Warehouse.Racks.HorizontalRackRow;
+import Warehouse.Racks.RackRow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +23,10 @@ public class HorizontalAisle implements Aisle {
         this.endPoint = new Point2D(startPoint.getX() + aisleLength - 1, startPoint.getY());
 
         Point2D firstRackStartPoint = new Point2D(startPoint.getX() + 1, startPoint.getY() - 1);
-        rackRowList.add(new HorizontalRackRow(aisleLength - 2, firstRackStartPoint));
+        rackRowList.add(new HorizontalRackRow(firstRackStartPoint, aisleLength - 2, 8));
 
         Point2D secondRackStartPoint = new Point2D(startPoint.getX() + 1, startPoint.getY() + 1);
-        rackRowList.add(new HorizontalRackRow(aisleLength - 2, secondRackStartPoint));
+        rackRowList.add(new HorizontalRackRow(secondRackStartPoint, aisleLength - 2,8));
     }
 
     @Override
@@ -45,12 +45,12 @@ public class HorizontalAisle implements Aisle {
     }
 
     @Override
-    public RackRow getFirstRack() {
+    public RackRow getFirstRackRow() {
         return this.rackRowList.get(0);
     }
 
     @Override
-    public RackRow getSecondRack() {
+    public RackRow getSecondRackRow() {
         return this.rackRowList.get(1);
     }
 

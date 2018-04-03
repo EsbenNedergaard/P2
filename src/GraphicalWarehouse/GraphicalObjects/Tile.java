@@ -8,7 +8,6 @@ import javafx.scene.shape.Rectangle;
 import static Warehouse.GUIWarehouse.TILE_SIZE;
 
 public class Tile extends Rectangle {
-
     public Tile(Point2D point) {
         // Pixel width of tile
         setWidth(TILE_SIZE);
@@ -17,6 +16,7 @@ public class Tile extends Rectangle {
         // Graphical position of tile
         relocate(point.getXPixels(), point.getYPixels());
         setDesign();
+
     }
 
     public void setDesign() {
@@ -25,6 +25,5 @@ public class Tile extends Rectangle {
         setStroke(Color.valueOf("#b7b7b7"));
         setStrokeWidth(0.5);
     }
-
 }
 

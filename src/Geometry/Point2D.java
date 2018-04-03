@@ -5,9 +5,15 @@ import java.util.Objects;
 import static Warehouse.GUIWarehouse.TILE_SIZE;
 
 public class Point2D {
-
     private int x;
     private int y;
+    private Boolean obstacle;
+
+    public Point2D() {
+        this.x = -1;
+        this.y = -1;
+        this.obstacle = false;
+    }
 
     public Point2D(int x, int y) {
         this.x = x;
@@ -17,6 +23,7 @@ public class Point2D {
     public Point2D(Point2D point) {
         this.x = point.getX();
         this.y = point.getY();
+        this.obstacle = point.isObstacle();
     }
 
     public int getX() {
@@ -33,6 +40,10 @@ public class Point2D {
 
     public int getYPixels() {
         return y * TILE_SIZE;
+    }
+
+    public boolean isObstacle(){
+        return obstacle;
     }
 
     @Override

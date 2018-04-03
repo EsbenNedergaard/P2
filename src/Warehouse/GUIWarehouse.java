@@ -12,7 +12,13 @@ public class GUIWarehouse extends Application {
     private static final int SCALE = 5;
     public static final int TILE_SIZE = 5 * SCALE;
 
-    public GUIWarehouse() {
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+
+    @Override
+    public void init() throws Exception {
         this.warehouse = new Warehouse22b();
         this.graphicalWarehouse = new GraphicalWarehouse(warehouse);
     }
@@ -23,10 +29,6 @@ public class GUIWarehouse extends Application {
         primaryStage.setTitle("GUIWarehouse");
         primaryStage.setScene(scene);
         primaryStage.show();
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }
 

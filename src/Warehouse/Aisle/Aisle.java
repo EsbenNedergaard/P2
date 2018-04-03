@@ -2,7 +2,7 @@ package Warehouse.Aisle;
 
 import Geometry.Point2D;
 import Warehouse.Product;
-import Warehouse.ProductContainer.RackRow;
+import Warehouse.Racks.RackRow;
 
 import java.util.List;
 
@@ -13,8 +13,8 @@ public interface Aisle {
     Point2D getStartPoint();
     Point2D getEndPoint();
 
-    RackRow getFirstRack();
-    RackRow getSecondRack();
+    RackRow getFirstRackRow();
+    RackRow getSecondRackRow();
     List<RackRow> getRackRowList();
 
     List<Point2D> getPickingPoints(List<Product> productPickList);

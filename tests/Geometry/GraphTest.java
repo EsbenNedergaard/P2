@@ -6,7 +6,7 @@ import java.util.*;
 
 class GraphTest {
 
-    @Test
+    /*@Test
     public void testAlgorithm() {
         ArrayList<Node> inputSet = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
@@ -26,6 +26,6 @@ class GraphTest {
             System.out.println(i + ". (" + n.getX() + ", " + n.getY() + ")");
             i++;
         }
-    }
+    }*/
 
 }

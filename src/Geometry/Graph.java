@@ -20,18 +20,18 @@ public class Graph {
             else{
                 node.setDistanceToInf();
             }
-            node.setDistanceToEnd(node);
+            node.setDistanceToEnd(end);
             node.setNeighbourNodes(allNodes);
         }
 
         while(!openSet.isEmpty()){
             Node current = openSet.first();
-
+            openSet.remove(openSet.first());
             if(current.equals(end)){
                 end = current;
                 break;
             }
-            openSet.remove(current);
+
             closedSet.add(current);
 
             for (Node neighbour : current.getNeighbourNodes()){
@@ -41,7 +41,7 @@ public class Graph {
                 openSet.add(neighbour);
 
                 //A better path exists
-                if(current.getDistanceFromStart() + 1 <= neighbour.getDistanceFromStart()){
+                if(current.getDistanceFromStart() + 1 < neighbour.getDistanceFromStart()){
                     neighbour.setCameFrom(current);
                     neighbour.setDistanceFromStart(current.getDistanceFromStart() + 1);
                 }

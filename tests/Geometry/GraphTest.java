@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test;
 import java.util.*;
 
 class GraphTest {
-    private final int GRID_HEIGHT = 3;
-    private final int GRID_LENGTH = 3;
+    private final int GRID_HEIGHT = 4;
+    private final int GRID_LENGTH = 4;
 
 
     @Test

@@ -4,11 +4,12 @@ import java.util.*;
 
 public class Graph {
     private ArrayList<Node> closedSet = new ArrayList<>();
-    private SortedSet<Node> openSet = new TreeSet<>(new NodeComparator());
+    private PriorityQueue<Node> openSet;
     private ArrayList<Node> allNodes = new ArrayList<>();
 
     public Graph(ArrayList<Node> allNodes) {
         this.allNodes = allNodes;
+        openSet = new PriorityQueue<>(allNodes.size(), new NodeComparator());
     }
 
     public ArrayList<Node> findShortestRoute(Node start, Node end){
@@ -25,8 +26,7 @@ public class Graph {
         }
 
         while(!openSet.isEmpty()){
-            Node current = openSet.first();
-            openSet.remove(openSet.first());
+            Node current = openSet.poll();
             if(current.equals(end)){
                 end = current;
                 break;
@@ -39,7 +39,9 @@ public class Graph {
                 if (closedSet.contains(neighbour)){
                     continue;
                 }
-                openSet.add(neighbour);
+                if (!openSet.contains(neighbour)) {
+                    openSet.add(neighbour);
+                }
 
                 //A better path exists
                 if(current.getDistanceFromStart() + 1 < neighbour.getDistanceFromStart()){

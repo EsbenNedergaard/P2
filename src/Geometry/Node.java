@@ -10,7 +10,7 @@ import java.util.Set;
   nemmeste ville nok være at lave en liste af "right end points" og en liste af "left end points" også kan bare tjekke om varens y-koordinat stemmer overens med
   et endepunkt, så kører vi bare igennem et punkt efter et andet, og tager dem med lavest f-værdi som er naboer til vores nuværende punkt indtil vi når slutpunktet  */
 
-public class Node extends Point2D {
+public class Node extends Point2D implements Comparable<Node> {
     private static final int INFINITY = 1000000;
     private int distanceFromStart;
     private int distanceToEnd;
@@ -79,4 +79,9 @@ public class Node extends Point2D {
         return distanceFromStart + distanceToEnd;
     }
 
+    @Override
+    public int compareTo(Node that) {
+        NodeComparator myComp = new NodeComparator();
+        return myComp.compare(this, that);
+    }
 }

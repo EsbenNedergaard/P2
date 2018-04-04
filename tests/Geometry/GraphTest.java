@@ -20,7 +20,7 @@ class GraphTest {
         Graph testGraph = new Graph(inputSet);
 
         Node startNode = new Node(new Point2D(0, 0));
-        Node endNode = new Node(new Point2D(2, 2));
+        Node endNode = new Node(new Point2D(3, 3));
 
         ArrayList<Node> testResultRoute = testGraph.findShortestRoute(startNode, endNode);
 

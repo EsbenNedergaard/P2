@@ -1,0 +1,63 @@
+package Geometry;
+
+import java.util.Objects;
+
+import static Warehouse.GUIWarehouse.TILE_SIZE;
+
+public class Point2D {
+    private int x;
+    private int y;
+    private Boolean obstacle;
+
+    public Point2D() {
+        this.x = -1;
+        this.y = -1;
+        this.obstacle = false;
+    }
+
+    public Point2D(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public Point2D(Point2D point) {
+        this.x = point.getX();
+        this.y = point.getY();
+        this.obstacle = point.isObstacle();
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getXPixels() {
+        return x * TILE_SIZE;
+    }
+
+    public int getYPixels() {
+        return y * TILE_SIZE;
+    }
+
+    public boolean isObstacle(){
+        return obstacle;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x) + Objects.hash(y);
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if(this == that) return true;
+        if(that == null || this.getClass() != that.getClass()) return false;
+
+        Point2D point = (Point2D) that;
+
+        return point.getX() == this.x && point.getY() == this.y;
+    }
+}

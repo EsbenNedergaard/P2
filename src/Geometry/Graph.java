@@ -3,16 +3,27 @@ package Geometry;
 import java.util.*;
 
 public class Graph {
-    private ArrayList<Node> closedSet = new ArrayList<>();
+    private ArrayList<Node> closedSet;
     private PriorityQueue<Node> openSet;
-    private ArrayList<Node> allNodes = new ArrayList<>();
+    private ArrayList<Node> allNodes;
 
     public Graph(ArrayList<Node> allNodes) {
         this.allNodes = allNodes;
         openSet = new PriorityQueue<>(allNodes.size(), new NodeComparator());
+        closedSet = new ArrayList<>();
+        for(Node node : allNodes) {
+            node.setNeighbourNodes(allNodes);
+        }
     }
 
     public ArrayList<Node> findShortestRoute(Node start, Node end){
+        //Makes sure the sets are empty before the algorithm begins
+        openSet.clear();
+        closedSet.clear();
+
+        //Sets starting values to all nodes
+        //First node gets distance 0, other nodes get distance infinity
+        //All nodes gets an estimated distance to the end node
         for(Node node : allNodes){
             if (node.equals(start)) {
                 node.setDistanceFromStart(0);
@@ -22,18 +33,21 @@ public class Graph {
                 node.setDistanceToInf();
             }
             node.setDistanceToEnd(end);
-            node.setNeighbourNodes(allNodes);
         }
 
+        //Runs till all nodes have been visited or till we find the end node
         while(!openSet.isEmpty()){
+            //Retrieves next node to visit and adds it to the closed set
             Node current = openSet.poll();
+            closedSet.add(current);
+
+            //We have reached the destination
             if(current.equals(end)){
                 end = current;
                 break;
             }
 
-            closedSet.add(current);
-
+            //Checks if there exists a better path through current node to its neighbours
             for (Node neighbour : current.getNeighbourNodes()){
                 //We check if the current node is in the already checked nodes (closed set)
                 if (closedSet.contains(neighbour)){
@@ -53,19 +67,22 @@ public class Graph {
         return constructPath(start, end);
     }
 
+    //Constructs the shortest route as a list of nodes
     private ArrayList<Node> constructPath(Node start, Node end){
 
         ArrayList<Node> path = new ArrayList<>();
 
+        //First node is the destination
         Node next = end;
 
+        //Backtracks untill we meet the start node
         while(!next.equals(start)){
             path.add(next);
             next = next.getCameFrom();
         }
-
         path.add(start);
 
+        //Reverses the list so that end node is the last element
         Collections.reverse(path);
 
         return path;

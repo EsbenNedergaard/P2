@@ -47,14 +47,14 @@ public class Node extends Point2D {
     }
 
     public void setDistanceToEnd(Node endNode) {
-        int Xdistance = Math.abs(endNode.getX() - this.getX());
-        int Ydistance = Math.abs(endNode.getY() - this.getY());
+        int xDistance = Math.abs(endNode.getX() - this.getX());
+        int yDistance = Math.abs(endNode.getY() - this.getY());
 
-        this.distanceToEnd = Xdistance + Ydistance;
+        this.distanceToEnd = xDistance + yDistance;
     }
 
     public void setNeighbourNodes(ArrayList<Node> allNodes) {
-        neighbourNodes = new ArrayList<Node>();
+        neighbourNodes = new ArrayList<>();
         for (Node node : allNodes) {
             if (this.isNeighbour(node)) {
                 neighbourNodes.add(node);

@@ -14,7 +14,7 @@ public class Rack {
     private Point2D rackPosition;
     private boolean isTopRackRow;
 
-    Rack(int maxAmtProductsInRack, Point2D rackPosition) {
+    public Rack(int maxAmtProductsInRack, Point2D rackPosition) {
         this.maxAmtProductsInRack = maxAmtProductsInRack;
         this.rackPosition = rackPosition;
         //this.isTopRackRow = isTopRackRow;

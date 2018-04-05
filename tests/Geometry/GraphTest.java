@@ -10,7 +10,7 @@ class GraphTest {
 
 
     @Test
-    public void testAlgorithm() {
+    private void testAlgorithm() {
         ArrayList<Node> inputSet = new ArrayList<>();
         for (int i = 0; i < GRID_HEIGHT; i++) {
             for (int j = 0; j < GRID_LENGTH; j++) {
@@ -25,7 +25,7 @@ class GraphTest {
         Graph testGraph = new Graph(inputSet);
 
         ArrayList<Node> testResultRoute = new ArrayList<>();
-        for (int i = 0; i < 1000000; i++) {
+        for (int i = 0; i < 100; i++) {
             System.out.println("Attempt: " + i);
             testResultRoute = testGraph.findShortestRoute(startNode, endNode);
         }

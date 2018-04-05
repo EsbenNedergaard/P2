@@ -16,7 +16,7 @@ class GraphTest {
         for (int k = 0; k < MAX_TIME; k++) {
             for (int i = 0; i < GRID_HEIGHT; i++) {
                 for (int j = 0; j < GRID_LENGTH; j++) {
-                    if (!(i == 8 && j > 4) && !(i == 1 && j < 5) && !(i == 3 && j > 1) && !(i == 1 && j == 5  && k == 6) && !(i == 0 && j == 3  && k == 4) && !(i == 1 && j == 6  && k == 7) && !(i == 1 && j == 7  && k == 8) && !(i == 1 && j == 8  && k == 9) && !(i == 1 && j == 9  && k == 10)) {
+                    if (!(i == 8 && j > 4) && !(i == 1 && j < 5) && !(i == 3 && j > 1) && !(i == 1 && j == 5  && k == 6) && !(i == 0 && j == 3  && k == 4)) {
                         inputSet.add(new Node(new Point2D(j, i), k));
                     }
                 }

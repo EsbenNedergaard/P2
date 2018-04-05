@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test;
 import java.util.*;
 
 class GraphTest {
-    private final int GRID_HEIGHT = 100;
-    private final int GRID_LENGTH = 100;
+    private final int GRID_HEIGHT = 42;
+    private final int GRID_LENGTH = 16;
 
 
     @Test
@@ -20,12 +20,12 @@ class GraphTest {
 
 
         Node startNode = new Node(new Point2D(0, 0));
-        Node endNode = new Node(new Point2D(99, 99));
+        Node endNode = new Node(new Point2D(41, 15));
 
         Graph testGraph = new Graph(inputSet);
 
         ArrayList<Node> testResultRoute = new ArrayList<>();
-        for (int i = 0; i < 10000; i++) {
+        for (int i = 0; i < 1000000; i++) {
             System.out.println("Attempt: " + i);
             testResultRoute = testGraph.findShortestRoute(startNode, endNode);
         }

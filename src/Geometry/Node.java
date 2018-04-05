@@ -16,6 +16,7 @@ public class Node extends Point2D implements Comparable<Node> {
     private int distanceToEnd;
     private Node cameFrom;
     private ArrayList<Node> neighbourNodes;
+    String nodeType;
 
     public Node(Point2D p) {
         super(p);

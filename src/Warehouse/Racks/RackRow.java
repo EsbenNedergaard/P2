@@ -18,4 +18,7 @@ public interface RackRow {
     List<Product> getAllProductsInRackRow();
     Rack[] getRackArray();
     Rack getRackByIndex(int Index);
+
+    int hashCode();
+    boolean equals(Object that);
 }

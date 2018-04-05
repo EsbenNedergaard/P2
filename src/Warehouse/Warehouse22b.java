@@ -1,5 +1,6 @@
 package Warehouse;
 
+import Geometry.Node;
 import Geometry.Point2D;
 import Warehouse.Aisle.Aisle;
 import Warehouse.Aisle.HorizontalAisle;
@@ -11,7 +12,9 @@ import java.util.List;
 public class Warehouse22b implements Warehouse {
     private int length;
     private int width;
-    private List<Aisle> aisleList = new ArrayList<>();
+    private List<Aisle> aisleList;
+    private List<Node> nodeList;
+
 
     private static final int AISLE_LENGTH = 36;
     private static final int AISLE_PADDING = 4;
@@ -20,20 +23,40 @@ public class Warehouse22b implements Warehouse {
     Warehouse22b() {
         length = AISLE_LENGTH + (AISLE_PADDING * 2);
         width = 12;
+        createNodeGrid();
         createAisleList();
         createProducts();
     }
 
     public void createAisleList() {
-        aisleList.add(new HorizontalAisle(AISLE_LENGTH, new Point2D(AISLE_PADDING, 1)));
-        aisleList.add(new HorizontalAisle(AISLE_LENGTH, new Point2D(AISLE_PADDING, 4)));
-        aisleList.add(new HorizontalAisle(AISLE_LENGTH, new Point2D(AISLE_PADDING, 7)));
-        aisleList.add(new HorizontalAisle(AISLE_LENGTH, new Point2D(AISLE_PADDING, 10)));
+        aisleList = new ArrayList<>();
+        Aisle aisle1 = new HorizontalAisle(AISLE_LENGTH, new Point2D(AISLE_PADDING, 1));
+        Aisle aisle2 = new HorizontalAisle(AISLE_LENGTH, new Point2D(AISLE_PADDING, 4));
+        Aisle aisle3 = new HorizontalAisle(AISLE_LENGTH, new Point2D(AISLE_PADDING, 7));
+        Aisle aisle4 = new HorizontalAisle(AISLE_LENGTH, new Point2D(AISLE_PADDING, 10));
+        aisleList.add(aisle1);
+        aisleList.add(aisle2);
+        aisleList.add(aisle3);
+        aisleList.add(aisle4);
+
+        for(Aisle element : aisleList) {
+            element.updateNodeGrid(nodeList);
+        }
     }
 
     private void createProducts() {
-        aisleList.get(0).getFirstRackRow().addProduct(new Product("Pear", 1));
-        aisleList.get(0).getFirstRackRow().addProduct(new Product("Apple", 2));
+        aisleList.get(0).getFirstRackRow().addProduct(new Product(1));
+        aisleList.get(0).getFirstRackRow().addProduct(new Product(2));
+    }
+
+    private void createNodeGrid(){
+        nodeList = new ArrayList<>();
+        for(int j = 0; j < width; j++) {
+            for(int i = 0; i < length; i++) {
+                nodeList.add(new Node(new Point2D(i, j)));
+            }
+        }
+
     }
 
     @Override
@@ -48,6 +71,11 @@ public class Warehouse22b implements Warehouse {
     @Override
     public List<Aisle> getAisleList() {
         return aisleList;
+    }
+
+    @Override
+    public List<Node> getNodeList() {
+        return this.nodeList;
     }
 
     @Override

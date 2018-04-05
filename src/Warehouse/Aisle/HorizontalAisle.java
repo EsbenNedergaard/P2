@@ -1,8 +1,10 @@
 package Warehouse.Aisle;
 
+import Geometry.Node;
 import Geometry.Point2D;
 import Warehouse.Product;
 import Warehouse.Racks.HorizontalRackRow;
+import Warehouse.Racks.Rack;
 import Warehouse.Racks.RackRow;
 
 import java.util.ArrayList;
@@ -13,7 +15,6 @@ public class HorizontalAisle implements Aisle {
     private Point2D startPoint;
     private Point2D endPoint;
     private List<RackRow> rackRowList = new ArrayList<>();
-
 
     public HorizontalAisle(int aisleLength, Point2D startPoint) {
         //TODO: Sæt exceptions op for når for lang en gang og et punkt placeret forkert
@@ -27,6 +28,19 @@ public class HorizontalAisle implements Aisle {
 
         Point2D secondRackStartPoint = new Point2D(startPoint.getX() + 1, startPoint.getY() + 1);
         rackRowList.add(new HorizontalRackRow(secondRackStartPoint, aisleLength - 2,8));
+    }
+
+    @Override
+    public void updateNodeGrid(List<Node> nodeGrid) {
+        for (RackRow rackRowElement : rackRowList) {
+            for(Rack rackElement : rackRowElement.getRackArray()) {
+                for (Node nodeElement : nodeGrid) {
+                    if (nodeElement.getX() == rackElement.getXCoordinate() && nodeElement.getY() == rackElement.getYCoordinate()) {
+                        nodeElement.setNodeType("Obstacle");
+                    }
+                }
+            }
+        }
     }
 
     @Override

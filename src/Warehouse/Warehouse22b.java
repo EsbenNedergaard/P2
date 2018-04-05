@@ -32,8 +32,8 @@ public class Warehouse22b implements Warehouse {
     }
 
     private void createProducts() {
-        aisleList.get(0).getFirstRackRow().addProduct(new Product("Pear", 1));
-        aisleList.get(0).getFirstRackRow().addProduct(new Product("Apple", 2));
+        aisleList.get(0).getFirstRackRow().addProduct(new Product(1));
+        aisleList.get(0).getFirstRackRow().addProduct(new Product(2));
     }
 
     @Override

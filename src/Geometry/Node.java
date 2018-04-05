@@ -1,9 +1,6 @@
 package Geometry;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 /*TODO: få lavet et nabo-system i forhold til vores varehus, som ved hvilke punkter man kan gå fra og til, da det gør vi kan være ligeglade
   med, hvilke punkter vi ikke kan gå igennem, hvis vi bare har ende punkterne af gangene, og kan afgøre, fra hvilke punkter man kan gå til andre punkter,
@@ -16,9 +13,19 @@ public class Node extends Point2D implements Comparable<Node> {
     private int distanceToEnd;
     private Node cameFrom;
     private ArrayList<Node> neighbourNodes;
+    private int time;
+
+    public Node(Point2D p, int time) {
+        super(p);
+        this.time = time;
+    }
 
     public Node(Point2D p) {
         super(p);
+    }
+
+    public int getTime() {
+        return time;
     }
 
     public int getDistanceFromStart() {
@@ -62,16 +69,19 @@ public class Node extends Point2D implements Comparable<Node> {
     }
 
     private boolean isNeighbour(Node node) {
-        if ((this.getX() == node.getX() + 1) && this.getY() == node.getY()) {
-            return true;
-        } else if ((this.getX() == node.getX() - 1) && this.getY() == node.getY()) {
-            return true;
-        } else if (this.getX() == node.getX() && this.getY() == (node.getY() + 1)) {
-            return true;
-        } else if (this.getX() == node.getX() && (this.getY() == node.getY() - 1)) {
-            return true;
+        if (this.getTime() + 1 == node.getTime()) {
+            if (this.getX() == node.getX() + 1 && this.getY() == node.getY()) {
+                return true;
+            } else if (this.getX() == node.getX() - 1 && this.getY() == node.getY()) {
+                return true;
+            } else if (this.getX() == node.getX() && this.getY() == node.getY() + 1) {
+                return true;
+            } else if (this.getX() == node.getX() && this.getY() == node.getY() - 1) {
+                return true;
+            } else if (this.getX() == node.getY() && this.getY() == node.getY()) {
+                return true;
+            }
         }
-
         return false;
     }
 

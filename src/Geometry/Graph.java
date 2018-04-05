@@ -43,7 +43,7 @@ public class Graph {
             closedSet.add(current);
 
             //We have reached the destination
-            if (current.equals(end)) {
+            if (current.getX() == end.getX() && current.getY() == end.getY()) {
                 end = current;
                 break;
             }

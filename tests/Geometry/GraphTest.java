@@ -10,7 +10,7 @@ class GraphTest {
 
 
     @Test
-    private void testAlgorithm() {
+    void testAlgorithm() {
         ArrayList<Node> inputSet = new ArrayList<>();
         for (int i = 0; i < GRID_HEIGHT; i++) {
             for (int j = 0; j < GRID_LENGTH; j++) {

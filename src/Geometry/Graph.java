@@ -1,47 +1,65 @@
 package Geometry;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.PriorityQueue;
 
 public class Graph {
-    private ArrayList<Node> closedSet = new ArrayList<>();
-    private SortedSet<Node> openSet = new TreeSet<>(new NodeComparator());
+    private ArrayList<Node> closedSet;
+    private PriorityQueue<Node> openSet;
     private ArrayList<Node> allNodes;
 
     public Graph(ArrayList<Node> allNodes) {
         this.allNodes = allNodes;
+        openSet = new PriorityQueue<>(allNodes.size(), new NodeComparator());
+        closedSet = new ArrayList<>();
+        for (Node node : allNodes) {
+            node.setNeighbourNodes(allNodes);
+        }
     }
 
-    public ArrayList<Node> findShortestRoute(Node start, Node end){
-        for(Node node : allNodes){
+    public ArrayList<Node> findShortestRoute(Node start, Node end) {
+        //Makes sure the sets are empty before the algorithm begins
+        openSet.clear();
+        closedSet.clear();
+
+        //Sets starting values to all nodes
+        //First node gets distance 0, other nodes get distance infinity
+        //All nodes gets an estimated distance to the end node
+        for (Node node : allNodes) {
             if (node.equals(start)) {
                 node.setDistanceFromStart(0);
                 openSet.add(node);
-            }
-            else{
+            } else {
                 node.setDistanceToInf();
             }
-            node.setDistanceToEnd(node);
-            node.setNeighbourNodes(allNodes);
+            node.setDistanceToEnd(end);
         }
 
-        while(!openSet.isEmpty()){
-            Node current = openSet.first();
+        //Runs till all nodes have been visited or till we find the end node
+        while (!openSet.isEmpty()) {
+            //Retrieves next node to visit and adds it to the closed set
+            Node current = openSet.poll();
+            closedSet.add(current);
 
-            if(current.equals(end)){
+            //We have reached the destination
+            if (current.equals(end)) {
                 end = current;
                 break;
             }
-            openSet.remove(current);
-            closedSet.add(current);
 
-            for (Node neighbour : current.getNeighbourNodes()){
-                if (closedSet.contains(neighbour)){
+            //Checks if there exists a better path through current node to its neighbours
+            for (Node neighbour : current.getNeighbourNodes()) {
+                //We check if the current node is in the already checked nodes (closed set)
+                if (closedSet.contains(neighbour)) {
                     continue;
                 }
-                openSet.add(neighbour);
+                if (!openSet.contains(neighbour)) {
+                    openSet.add(neighbour);
+                }
 
                 //A better path exists
-                if(current.getDistanceFromStart() + 1 <= neighbour.getDistanceFromStart()){
+                if (current.getDistanceFromStart() + 1 < neighbour.getDistanceFromStart()) {
                     neighbour.setCameFrom(current);
                     neighbour.setDistanceFromStart(current.getDistanceFromStart() + 1);
                 }
@@ -50,19 +68,22 @@ public class Graph {
         return constructPath(start, end);
     }
 
-    private ArrayList<Node> constructPath(Node start, Node end){
+    //Constructs the shortest route as a list of nodes
+    private ArrayList<Node> constructPath(Node start, Node end) {
 
         ArrayList<Node> path = new ArrayList<>();
 
+        //First node is the destination
         Node next = end;
 
-        while(!next.equals(start)){
+        //Backtracks untill we meet the start node
+        while (!next.equals(start)) {
             path.add(next);
             next = next.getCameFrom();
         }
-
         path.add(start);
 
+        //Reverses the list so that end node is the last element
         Collections.reverse(path);
 
         return path;

@@ -16,10 +16,11 @@ public class Node extends Point2D {
     private int distanceToEnd;
     private Node cameFrom;
     private ArrayList<Node> neighbourNodes;
-    String nodeType;
+    String nodeType; //We have nodeType instead of boolean obstacle in case we want other types later
 
     public Node(Point2D p) {
         super(p);
+        nodeType = "walkable";
     }
 
     public int getDistanceFromStart() {
@@ -78,5 +79,13 @@ public class Node extends Point2D {
 
     public int getTotalDistance() {
         return distanceFromStart + distanceToEnd;
+    }
+
+    public void setNodeType(String nodeType) {
+        this.nodeType = nodeType;
+    }
+
+    public boolean isObstacle() {
+        return nodeType.equals("Obstacle");
     }
 }

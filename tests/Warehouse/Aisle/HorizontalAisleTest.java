@@ -3,8 +3,11 @@ package Warehouse.Aisle;
 import Geometry.Point2D;
 import Warehouse.Racks.HorizontalRackRow;
 import Warehouse.Racks.Rack;
+import Warehouse.Racks.RackRow;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,12 +15,18 @@ class HorizontalAisleTest {
     private HorizontalAisle testAisle01;
     private HorizontalRackRow testFirstRackRow01;
     private HorizontalRackRow testSecondRackRow01;
+    private ArrayList<RackRow> testRackRowList;
 
     @BeforeEach
     void setUp() {
         testAisle01 = new HorizontalAisle(30, new Point2D(0,5));
+
         testFirstRackRow01 = new HorizontalRackRow(new Point2D(1, 4), 28, 8);
         testSecondRackRow01 = new HorizontalRackRow(new Point2D(1, 6), 28, 8);
+
+        testRackRowList = new ArrayList<>();
+        testRackRowList.add(testFirstRackRow01);
+        testRackRowList.add(testSecondRackRow01);
     }
 
     @Test
@@ -37,22 +46,19 @@ class HorizontalAisleTest {
 
     @Test
     void getFirstRackRow01() {
-        // Test if every rack in firstRackRow is as expected
-        Rack[] rackArray = testAisle01.getFirstRackRow().getRackArray();
-        int i = 0;
-        for (Rack element : rackArray) {
-            assertTrue(element.equals(new Rack(8, new Point2D(1 + i, 4))));
-            i++;
-        }
+        assertEquals(testFirstRackRow01, testAisle01.getFirstRackRow());
     }
 
     @Test
     void getSecondRackRow01() {
+        assertEquals(testSecondRackRow01, testAisle01.getSecondRackRow());
     }
 
     @Test
     void getRackRowList01() {
+        assertEquals(testRackRowList, testAisle01.getRackRowList());
     }
+
 
     @Test
     void getPickingPoints01() {

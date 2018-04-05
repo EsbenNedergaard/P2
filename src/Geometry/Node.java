@@ -20,6 +20,7 @@ public class Node extends Point2D {
 
     public Node(Point2D p) {
         super(p);
+        nodeType = "walkable";
     }
 
     public int getDistanceFromStart() {
@@ -78,5 +79,13 @@ public class Node extends Point2D {
 
     public int getTotalDistance() {
         return distanceFromStart + distanceToEnd;
+    }
+
+    public void setNodeType(String nodeType) {
+        this.nodeType = nodeType;
+    }
+
+    public boolean isObstacle() {
+        return nodeType.equals("Obstacle");
     }
 }

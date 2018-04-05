@@ -35,7 +35,7 @@ class GraphTest {
         }
         int i = 0;
         for (Node n : testResultRoute) {
-            System.out.println(i + ". (" + n.getX() + ", " + n.getY() + ", " + n.getTime() + ")");
+            System.out.println(i + ". (" + n.getX() + ", " + n.getY() + ", " + n.getDistanceFromStart() + ")");
             i++;
         }
     }

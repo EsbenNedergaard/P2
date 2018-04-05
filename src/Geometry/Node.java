@@ -17,6 +17,12 @@ public class Node extends Point2D {
     private int time;
     String nodeType; //We have nodeType instead of boolean obstacle in case we want other types later
 
+    public Node(Point2D p) {
+        super(p);
+        nodeType = "walkable";
+    }
+
+
     public Node(Point2D p, int time) {
        super(p);
        this.time = time;

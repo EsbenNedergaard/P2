@@ -13,7 +13,7 @@ public class Warehouse22b implements Warehouse {
     private int length;
     private int width;
     private List<Aisle> aisleList;
-    private Node[][] nodeGrid;
+    private List<Node> nodeList;
 
 
     private static final int AISLE_LENGTH = 36;
@@ -34,11 +34,14 @@ public class Warehouse22b implements Warehouse {
         Aisle aisle2 = new HorizontalAisle(AISLE_LENGTH, new Point2D(AISLE_PADDING, 4));
         Aisle aisle3 = new HorizontalAisle(AISLE_LENGTH, new Point2D(AISLE_PADDING, 7));
         Aisle aisle4 = new HorizontalAisle(AISLE_LENGTH, new Point2D(AISLE_PADDING, 10));
-
         aisleList.add(aisle1);
         aisleList.add(aisle2);
         aisleList.add(aisle3);
         aisleList.add(aisle4);
+
+        for(Aisle element : aisleList) {
+            element.updateNodeGrid(nodeList);
+        }
     }
 
     private void createProducts() {
@@ -47,13 +50,13 @@ public class Warehouse22b implements Warehouse {
     }
 
     private void createNodeGrid(){
-        nodeGrid = new Node[length][width];
-
-        for(int i = 0; i < length; i++) {
-            for(int j = 0; j < width; j++) {
-                nodeGrid[i][j] = new Node(new Point2D(i, j));
+        nodeList = new ArrayList<>();
+        for(int j = 0; j < width; j++) {
+            for(int i = 0; i < length; i++) {
+                nodeList.add(new Node(new Point2D(i, j)));
             }
         }
+
     }
 
     @Override
@@ -68,6 +71,11 @@ public class Warehouse22b implements Warehouse {
     @Override
     public List<Aisle> getAisleList() {
         return aisleList;
+    }
+
+    @Override
+    public List<Node> getNodeList() {
+        return this.nodeList;
     }
 
     @Override

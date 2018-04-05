@@ -16,7 +16,7 @@ public class Node extends Point2D {
     private int distanceToEnd;
     private Node cameFrom;
     private ArrayList<Node> neighbourNodes;
-    String nodeType;
+    String nodeType; //We have nodeType instead of boolean obstacle in case we want other types later
 
     public Node(Point2D p) {
         super(p);

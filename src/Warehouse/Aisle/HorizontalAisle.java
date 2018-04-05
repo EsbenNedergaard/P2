@@ -31,10 +31,14 @@ public class HorizontalAisle implements Aisle {
     }
 
     @Override
-    public void updateNodeGrid(Node[][] nodeGrid) {
+    public void updateNodeGrid(List<Node> nodeGrid) {
         for (RackRow rackRowElement : rackRowList) {
             for(Rack rackElement : rackRowElement.getRackArray()) {
-                nodeGrid[rackElement.getRackPosition().getX()][rackElement.getRackPosition().getY()].setNodeType("Obstacle");
+                for (Node nodeElement : nodeGrid) {
+                    if (nodeElement.getX() == rackElement.getXCoordinate() && nodeElement.getY() == rackElement.getYCoordinate()) {
+                        nodeElement.setNodeType("Obstacle");
+                    }
+                }
             }
         }
     }

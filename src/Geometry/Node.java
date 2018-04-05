@@ -1,9 +1,7 @@
 package Geometry;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Objects;
 
 /*TODO: få lavet et nabo-system i forhold til vores varehus, som ved hvilke punkter man kan gå fra og til, da det gør vi kan være ligeglade
   med, hvilke punkter vi ikke kan gå igennem, hvis vi bare har ende punkterne af gangene, og kan afgøre, fra hvilke punkter man kan gå til andre punkter,
@@ -16,11 +14,17 @@ public class Node extends Point2D {
     private int distanceToEnd;
     private Node cameFrom;
     private ArrayList<Node> neighbourNodes;
+    private int time;
     String nodeType; //We have nodeType instead of boolean obstacle in case we want other types later
 
-    public Node(Point2D p) {
-        super(p);
-        nodeType = "walkable";
+    public Node(Point2D p, int time) {
+       super(p);
+       this.time = time;
+       nodeType = "walkable";
+    }
+
+    public int getTime() {
+        return time;
     }
 
     public int getDistanceFromStart() {
@@ -64,16 +68,19 @@ public class Node extends Point2D {
     }
 
     private boolean isNeighbour(Node node) {
-        if ((this.getX() == node.getX() + 1) && this.getY() == node.getY()) {
-            return true;
-        } else if ((this.getX() == node.getX() - 1) && this.getY() == node.getY()) {
-            return true;
-        } else if (this.getX() == node.getX() && this.getY() == (node.getY() + 1)) {
-            return true;
-        } else if (this.getX() == node.getX() && (this.getY() == node.getY() - 1)) {
-            return true;
+        if (this.getTime() + 1 == node.getTime()) {
+            if (this.getX() == node.getX() + 1 && this.getY() == node.getY()) {
+                return true;
+            } else if (this.getX() == node.getX() - 1 && this.getY() == node.getY()) {
+                return true;
+            } else if (this.getX() == node.getX() && this.getY() == node.getY() + 1) {
+                return true;
+            } else if (this.getX() == node.getX() && this.getY() == node.getY() - 1) {
+                return true;
+            } else if (this.getX() == node.getX() && this.getY() == node.getY()) {
+                return true;
+            }
         }
-
         return false;
     }
 
@@ -81,6 +88,21 @@ public class Node extends Point2D {
         return distanceFromStart + distanceToEnd;
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Node node = (Node) o;
+        return this.getTime() == node.getTime();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getTime());
+    }
+  
     public void setNodeType(String nodeType) {
         this.nodeType = nodeType;
     }

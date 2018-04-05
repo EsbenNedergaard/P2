@@ -43,7 +43,7 @@ public class Graph {
             closedSet.add(current);
 
             //We have reached the destination
-            if (current.equals(end)) {
+            if (current.getX() == end.getX() && current.getY() == end.getY()) {
                 end = current;
                 break;
             }
@@ -76,7 +76,7 @@ public class Graph {
         //First node is the destination
         Node next = end;
 
-        //Backtracks untill we meet the start node
+        //Backtracks till we meet the start node
         while (!next.equals(start)) {
             path.add(next);
             next = next.getCameFrom();

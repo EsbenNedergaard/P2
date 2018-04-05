@@ -2,11 +2,12 @@ package Geometry;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.*;
+import java.util.ArrayList;
 
 class GraphTest {
     private final int GRID_HEIGHT = 42;
     private final int GRID_LENGTH = 16;
+    private final int MAX_TIME = GRID_HEIGHT * GRID_LENGTH;
 
 
     @Test

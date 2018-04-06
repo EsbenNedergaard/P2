@@ -1,5 +1,6 @@
 package Warehouse;
 
+import Exceptions.FullRackException;
 import Geometry.Node;
 import Geometry.Point2D;
 import Warehouse.Aisle.Aisle;
@@ -45,8 +46,22 @@ public class Warehouse22b implements Warehouse {
     }
 
     private void createProducts() {
-        aisleList.get(0).getFirstRackRow().addProduct(new Product(1));
-        aisleList.get(0).getFirstRackRow().addProduct(new Product(2));
+        //aisleList.get(0).getFirstRackRow().addProduct(new Product(1));
+        //aisleList.get(0).getFirstRackRow().addProduct(new Product(2));
+
+        int i = 0;
+        for (Aisle aisleElement : aisleList) {
+            try {
+                while (true) {
+                    aisleElement.addProduct(new Product(i));
+                    i++;
+                }
+            }
+
+            catch (FullRackException exc) {
+                System.out.println("Aisle is full!");
+            }
+        }
     }
 
     private void createNodeGrid(){

@@ -40,7 +40,7 @@ public class HorizontalRackRow implements RackRow {
                 return;
             }
         }
-        throw new FullRackException("This rackrow is aldready full");
+        throw new FullRackException("This rackrow is already full");
     }
 
     @Override

@@ -1,8 +1,11 @@
 package Geometry;
 
+import Warehouse.Warehouse;
+import Warehouse.Warehouse22b;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 class GraphTest {
     private final int GRID_HEIGHT = 10;
@@ -39,5 +42,25 @@ class GraphTest {
             System.out.println(i + ". (" + n.getX() + ", " + n.getY() + ") time: " + n.getTime());
             i++;
         }
+    }
+
+    @Test
+    void testOnWareHouse() {
+        Warehouse testWarehouse = new Warehouse22b();
+        List<Node> warehouseNodeList = testWarehouse.getNodeList();
+
+        //Here we remove all the obstacles
+        for (Node element : warehouseNodeList) {
+            if (element.isObstacle()) {
+                warehouseNodeList.remove(element);
+            }
+        }
+
+        //Then we add the time layers
+        for(int i = 0; i < MAX_TIME; i++) {
+
+        }
+
+
     }
 }

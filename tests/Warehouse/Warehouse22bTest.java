@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 class Warehouse22bTest {
-    Warehouse22b testWarehouse = new Warehouse22b();
+    private Warehouse22b testWarehouse = new Warehouse22b();
 
     @Test
     void createAisleList() {
@@ -29,7 +29,7 @@ class Warehouse22bTest {
     }
 
     @Test
-    void getNodeGrid() {
+    void getNodeList() {
         List<Node> temp = testWarehouse.getNodeList();
         int currY = 0;
 

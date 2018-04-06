@@ -20,7 +20,7 @@ public class Warehouse22b implements Warehouse {
     private static final int AISLE_PADDING = 4;
 
 
-    Warehouse22b() {
+    public Warehouse22b() {
         length = AISLE_LENGTH + (AISLE_PADDING * 2);
         width = 12;
         createNodeGrid();

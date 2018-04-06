@@ -12,7 +12,6 @@ public interface Warehouse {
     List<RackRow> getRackRowList();
     List<Node> getNodeList();
 
-
     int getWidth();
     int getLength();
 }

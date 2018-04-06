@@ -7,6 +7,7 @@ import Warehouse.Racks.Rack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class HorizontalRackRow implements RackRow {
     private Point2D startPoint;
@@ -79,5 +80,20 @@ public class HorizontalRackRow implements RackRow {
     @Override
     public Rack getRackByIndex(int Index) {
         return rackArray[Index];
+    }
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(startPoint) + Objects.hash(rackRowLength);
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if(this == that) return true;
+        if(that == null || this.getClass() != that.getClass()) return false;
+
+        RackRow thatRackRow = (RackRow) that;
+        return this.getStartPoint().equals(thatRackRow.getStartPoint()) && this.getRackRowLength() == thatRackRow.getRackRowLength();
     }
 }

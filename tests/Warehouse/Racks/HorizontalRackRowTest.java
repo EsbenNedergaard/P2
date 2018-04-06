@@ -30,11 +30,11 @@ class HorizontalRackRowTest {
         rack0 = new Rack(2, new Point2D(1,1));
         rack1 = new Rack(2, new Point2D(2,1));
 
-        product1 = new Product("a", 1);
-        product2 = new Product("b", 2);
-        product3 = new Product("c", 3);
-        product4 = new Product("d", 4);
-        product5 = new Product("e", 5);
+        product1 = new Product(1);
+        product2 = new Product(2);
+        product3 = new Product(3);
+        product4 = new Product(4);
+        product5 = new Product(5);
     }
 
     @Test

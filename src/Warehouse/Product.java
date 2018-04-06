@@ -5,21 +5,15 @@ import Warehouse.Racks.Rack;
 import java.util.Objects;
 
 public class Product {
-    private String name;
     private int id;
     private Rack rack;
 
-    public Product(String name, int id) {
-        this.name = name;
+    public Product(int id) {
         this.id = id;
     }
 
     public void setRack(Rack rack) {
         this.rack = rack;
-    }
-
-    public String getName() {
-        return name;
     }
 
     int getId() {
@@ -44,6 +38,4 @@ public class Product {
 
         return  product.getId() == this.id;
     }
-
-
 }

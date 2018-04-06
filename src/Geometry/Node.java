@@ -1,6 +1,7 @@
 package Geometry;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /*TODO: få lavet et nabo-system i forhold til vores varehus, som ved hvilke punkter man kan gå fra og til, da det gør vi kan være ligeglade
@@ -15,14 +16,25 @@ public class Node extends Point2D {
     private Node cameFrom;
     private ArrayList<Node> neighbourNodes;
     private int time;
-
-    public Node(Point2D p, int time) {
-        super(p);
-        this.time = time;
-    }
+    String nodeType; //We have nodeType instead of boolean obstacle in case we want other types later
 
     public Node(Point2D p) {
         super(p);
+        this.time = 0;
+        nodeType = "walkable";
+    }
+
+
+    public Node(Point2D p, int time) {
+       super(p);
+       this.time = time;
+       nodeType = "walkable";
+    }
+
+    public Node(Node n, int time) {
+        this.setX(n.getX());
+        this.setY(n.getY());
+        this.time = time;
     }
 
     public int getTime() {
@@ -54,14 +66,14 @@ public class Node extends Point2D {
     }
 
     public void setDistanceToEnd(Node endNode) {
-        int Xdistance = Math.abs(endNode.getX() - this.getX());
-        int Ydistance = Math.abs(endNode.getY() - this.getY());
+        int xDistance = Math.abs(endNode.getX() - this.getX());
+        int yDistance = Math.abs(endNode.getY() - this.getY());
 
-        this.distanceToEnd = Xdistance + Ydistance;
+        this.distanceToEnd = xDistance + yDistance;
     }
 
-    public void setNeighbourNodes(ArrayList<Node> allNodes) {
-        neighbourNodes = new ArrayList<Node>();
+    public void setNeighbourNodes(List<Node> allNodes) {
+        neighbourNodes = new ArrayList<>();
         for (Node node : allNodes) {
             if (this.isNeighbour(node)) {
                 neighbourNodes.add(node);
@@ -90,6 +102,7 @@ public class Node extends Point2D {
         return distanceFromStart + distanceToEnd;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -101,7 +114,14 @@ public class Node extends Point2D {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(super.hashCode(), getTime());
+    }
+  
+    public void setNodeType(String nodeType) {
+        this.nodeType = nodeType;
+    }
+
+    public boolean isObstacle() {
+        return nodeType.equals("Obstacle");
     }
 }

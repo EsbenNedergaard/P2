@@ -19,6 +19,7 @@ public class Node extends Point2D {
 
     public Node(Point2D p) {
         super(p);
+        this.time = 0;
         nodeType = "walkable";
     }
 

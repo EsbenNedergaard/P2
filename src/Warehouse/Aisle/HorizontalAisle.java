@@ -76,7 +76,27 @@ public class HorizontalAisle implements Aisle {
 
     @Override
     public List<Point2D> getPickingPoints(List<Product> productPickList) {
-        return null;
+        List<Point2D> pickingPointList = new ArrayList<>();
+
+        for (Product productElement : productPickList)
+        {
+            RackRow rackRowElement = getFirstRackRow();
+            int rackIndex = rackRowElement.doesItContainProduct(productElement);
+            if (rackIndex != -1) {
+                Point2D rackPosition = rackRowElement.getRackByIndex(rackIndex).getRackPosition();
+                pickingPointList.add(new Point2D(rackPosition.getX(), rackPosition.getY() + 1));
+            }
+
+
+            rackRowElement = getSecondRackRow();
+            rackIndex = rackRowElement.doesItContainProduct(productElement);
+            if (rackIndex != -1) {
+                Point2D rackPosition = rackRowElement.getRackByIndex(rackIndex).getRackPosition();
+                pickingPointList.add(new Point2D(rackPosition.getX(), rackPosition.getY() - 1));
+            }
+        }
+
+        return pickingPointList;
     }
 
     @Override

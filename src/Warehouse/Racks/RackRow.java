@@ -11,7 +11,7 @@ public interface RackRow {
     void addProduct(Product e);
     void addProductToRack(Product product, int rackIndex);
 
-    boolean doesItContainProduct(Product e);
+    int doesItContainProduct(Product e);
 
     int getRackRowLength();
     Point2D getStartPoint();

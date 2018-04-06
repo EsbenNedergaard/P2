@@ -9,10 +9,18 @@ import Warehouse.Aisle.Aisle;
 import Warehouse.Racks.Rack;
 import Warehouse.Racks.RackRow;
 import Warehouse.Warehouse;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.DepthTest;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+
+import java.awt.*;
 
 import static Warehouse.GUIWarehouse.TILE_SIZE;
 
@@ -66,7 +74,13 @@ public class GraphicalWarehouse {
 
             for (Rack rackElement : rackRowElement.getRackArray()) {
                 RackDesign graphicRack = new RackDesign(rackElement);
+
                 Label amtProducts = new Label("" + rackElement.getProductList().size());
+                amtProducts.setPadding(new Insets(5, 5, 5, 8));
+                amtProducts.setTextFill(Color.valueOf("black"));
+                if (rackElement.getProductList().size() == 0)
+                    amtProducts.setVisible(false);
+
                 amtProducts.relocate(rackElement.getRackPosition().getXPixels(), rackElement.getRackPosition().getYPixels());
                 rackGroup.getChildren().addAll(graphicRack, amtProducts);
             }

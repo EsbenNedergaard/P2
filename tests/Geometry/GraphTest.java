@@ -49,6 +49,7 @@ class GraphTest {
         Warehouse testWarehouse = new Warehouse22b();
         List<Node> warehouseNodeList = testWarehouse.getNodeList();
 
+
         //Here we remove all the obstacles
         for (Node element : warehouseNodeList) {
             if (element.isObstacle()) {
@@ -56,11 +57,14 @@ class GraphTest {
             }
         }
 
+
+        List<Node> inputSet = new ArrayList<>();
+
         //Then we add the time layers
         for(int i = 0; i < MAX_TIME; i++) {
-
+                for(Node element : warehouseNodeList) {
+                    inputSet.add(new Node(element, i));
+                }
         }
-
-
     }
 }

@@ -30,6 +30,12 @@ public class Node extends Point2D {
        nodeType = "walkable";
     }
 
+    public Node(Node n, int time) {
+        this.setX(n.getX());
+        this.setY(n.getY());
+        this.time = time;
+    }
+
     public int getTime() {
         return time;
     }

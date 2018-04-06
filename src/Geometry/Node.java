@@ -1,6 +1,7 @@
 package Geometry;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /*TODO: få lavet et nabo-system i forhold til vores varehus, som ved hvilke punkter man kan gå fra og til, da det gør vi kan være ligeglade
@@ -71,7 +72,7 @@ public class Node extends Point2D {
         this.distanceToEnd = xDistance + yDistance;
     }
 
-    public void setNeighbourNodes(ArrayList<Node> allNodes) {
+    public void setNeighbourNodes(List<Node> allNodes) {
         neighbourNodes = new ArrayList<>();
         for (Node node : allNodes) {
             if (this.isNeighbour(node)) {

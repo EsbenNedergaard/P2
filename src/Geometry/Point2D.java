@@ -7,12 +7,10 @@ import static Warehouse.GUIWarehouse.TILE_SIZE;
 public class Point2D {
     private int x;
     private int y;
-    private Boolean obstacle;
 
     public Point2D() {
         this.x = -1;
         this.y = -1;
-        this.obstacle = false;
     }
 
     public Point2D(int x, int y) {
@@ -23,7 +21,6 @@ public class Point2D {
     public Point2D(Point2D point) {
         this.x = point.getX();
         this.y = point.getY();
-        this.obstacle = point.isObstacle();
     }
 
     public int getX() {
@@ -34,16 +31,20 @@ public class Point2D {
         return y;
     }
 
+    protected void setX(int x) {
+        this.x = x;
+    }
+
+    protected void setY(int y) {
+        this.y = y;
+    }
+
     public int getXPixels() {
         return x * TILE_SIZE;
     }
 
     public int getYPixels() {
         return y * TILE_SIZE;
-    }
-
-    public boolean isObstacle(){
-        return obstacle;
     }
 
     @Override

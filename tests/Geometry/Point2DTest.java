@@ -7,13 +7,12 @@ import static Warehouse.GUIWarehouse.TILE_SIZE;
 import static org.junit.jupiter.api.Assertions.*;
 
 class Point2DTest {
-
-    Point2D point1;
-    Point2D point2;
-    Point2D point3;
+    private Point2D point1;
+    private Point2D point2;
+    private Point2D point3;
 
     @BeforeEach
-    public void setUp() {
+    void beforeEach() {
         point1 = new Point2D(1, 1);
         point2 = new Point2D(7, 5);
         point3 = new Point2D();
@@ -81,16 +80,27 @@ class Point2DTest {
 
     @Test
     void equals01() {
-        assertTrue(point1.equals(new Point2D(1, 1)));
+        assertEquals(new Point2D(1,1), point1);
     }
 
     @Test
     void equals02() {
-        assertTrue(point2.equals(new Point2D(7, 5)));
+        assertEquals(new Point2D(7,5), point2);
     }
 
     @Test
     void equals03() {
-        assertTrue(point3.equals(new Point2D(-1, -1)));
+        assertEquals(new Point2D(-1, -1), point3);
+    }
+
+    @Test
+    void equals04() {
+        assertNotEquals(new Point2D(100, 100), point1);
+    }
+
+    @Test
+    void copyConstructor(){
+        Point2D temp = new Point2D(point1);
+        assertEquals(point1, temp);
     }
 }

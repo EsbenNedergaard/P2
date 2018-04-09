@@ -1,26 +1,16 @@
 package GraphicalWarehouse;
 
 import Geometry.Point2D;
-import GraphicalWarehouse.GraphicalObjects.PickPointsDesign;
-import GraphicalWarehouse.GraphicalObjects.RackDesign;
-import GraphicalWarehouse.GraphicalObjects.RackRowDesign;
-import GraphicalWarehouse.GraphicalObjects.Tile;
+import GraphicalWarehouse.GraphicalObjects.*;
 import Warehouse.Aisle.Aisle;
-import Warehouse.Racks.Rack;
-import Warehouse.Racks.RackRow;
+import Warehouse.Racks.*;
 import Warehouse.Warehouse;
+import javafx.animation.AnimationTimer;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.DepthTest;
-import javafx.scene.Group;
-import javafx.scene.Parent;
+import javafx.scene.*;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
-
-import java.awt.*;
 
 import static Warehouse.GUIWarehouse.TILE_SIZE;
 
@@ -28,6 +18,12 @@ public class GraphicalWarehouse {
     private Warehouse warehouse;
     private int LENGTH_WAREHOUSE;
     private int WIDTH_WAREHOUSE;
+
+    // Graphic groups
+    private Group tileGroup;
+    private Group pickPointGroup;
+    private Group rackRowGroup;
+    private Group rackGroup;
 
     //private Group orderPickerGroup = new Group();
 
@@ -40,7 +36,7 @@ public class GraphicalWarehouse {
     // Returns a group of graphical tiles which represents the warehouse floor
     private Group getTileGroup() {
         // Create a group to the graphical tiles
-        Group tileGroup = new Group();
+        tileGroup = new Group();
 
         for (int x = 0; x < LENGTH_WAREHOUSE; x++) {
             for (int y = 0; y < WIDTH_WAREHOUSE; y++) {
@@ -76,10 +72,11 @@ public class GraphicalWarehouse {
                 RackDesign graphicRack = new RackDesign(rackElement);
 
                 Label amtProducts = new Label("" + rackElement.getProductList().size());
-                amtProducts.setPadding(new Insets(5, 5, 5, 8));
-                amtProducts.setTextFill(Color.valueOf("black"));
+                amtProducts.setPadding(new Insets(4, 5, 5, 8));
+                amtProducts.setTextFill(Color.valueOf("white"));
                 if (rackElement.getProductList().size() == 0)
                     amtProducts.setVisible(false);
+                graphicRack.getStyleClass().add("rack-element");
 
                 amtProducts.relocate(rackElement.getRackPosition().getXPixels(), rackElement.getRackPosition().getYPixels());
                 rackGroup.getChildren().addAll(graphicRack, amtProducts);
@@ -107,15 +104,13 @@ public class GraphicalWarehouse {
     public Parent getWarehouseGraphics() {
         Pane root = new Pane();
 
-        Group pickPointGroup = getPickPointGroup();
-        Group tileGroup = getTileGroup();
-        Group rackRowGroup = getRackRowGroup();
-        //TODO: skal fixes senere hvor vi laver noget med tal på dem i stedet alt efter hvor mange er ligger på dem
-        Group rackGroup = getRackGroup();
-
+        pickPointGroup = getPickPointGroup();
+        tileGroup = getTileGroup();
+        rackRowGroup = getRackRowGroup();
+        rackGroup = getRackGroup();
 
         root.setPrefSize(LENGTH_WAREHOUSE * TILE_SIZE, WIDTH_WAREHOUSE * TILE_SIZE);
-        //root.getChildren().addAll(pickPointGroup, rackRowGroup, tileGroup);
+
         root.getChildren().addAll(pickPointGroup, rackRowGroup, rackGroup, tileGroup);
 
         return root;

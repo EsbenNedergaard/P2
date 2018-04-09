@@ -20,6 +20,6 @@ public class RackRowDesign extends Rectangle {
         // Relocates the rackRow to its position
         relocate(rackRow.getStartPoint().getXPixels(), rackRow.getStartPoint().getYPixels());
         // Color fill
-        setFill(Color.valueOf("yellow"));
+        setFill(Color.valueOf("#d0d2d3"));
     }
 }

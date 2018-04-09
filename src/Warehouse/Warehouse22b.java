@@ -46,11 +46,13 @@ public class Warehouse22b implements Warehouse {
     }
 
     private void createProducts() {
-       // aisleList.get(0).getFirstRackRow().addProduct(new Product(1));
-       // aisleList.get(1).getSecondRackRow().getRackByIndex(5).addProduct(new Product(2));
+
+        aisleList.get(0).getFirstRackRow().addProduct(new Product(1));
+        aisleList.get(0).getFirstRackRow().addProduct(new Product(3));
+        aisleList.get(1).getSecondRackRow().getRackByIndex(5).addProduct(new Product(2));
 
 
-        int i = 0;
+        /*int i = 0;
         for (Aisle aisleElement : aisleList) {
             try {
                 while (true) {
@@ -62,7 +64,7 @@ public class Warehouse22b implements Warehouse {
             catch (FullRackException exc) {
                 System.out.println("Aisle is full!");
             }
-        }
+        }*/
     }
 
     private void createNodeGrid(){

@@ -46,10 +46,13 @@ public class Warehouse22b implements Warehouse {
     }
 
     private void createProducts() {
-        //aisleList.get(0).getFirstRackRow().addProduct(new Product(1));
-        //aisleList.get(0).getFirstRackRow().addProduct(new Product(2));
 
-        int i = 0;
+        aisleList.get(0).getFirstRackRow().addProduct(new Product(1));
+        aisleList.get(0).getFirstRackRow().addProduct(new Product(3));
+        aisleList.get(1).getSecondRackRow().getRackByIndex(5).addProduct(new Product(2));
+
+
+        /*int i = 0;
         for (Aisle aisleElement : aisleList) {
             try {
                 while (true) {
@@ -61,7 +64,7 @@ public class Warehouse22b implements Warehouse {
             catch (FullRackException exc) {
                 System.out.println("Aisle is full!");
             }
-        }
+        }*/
     }
 
     private void createNodeGrid(){
@@ -81,6 +84,16 @@ public class Warehouse22b implements Warehouse {
             tempRackRowList.addAll(aisleElement.getRackRowList());
         }
         return tempRackRowList;
+    }
+
+    @Override
+    public List<Point2D> getPickingPoints(List<Product> productPickList) {
+        List<Point2D> pickingPointList = new ArrayList<>();
+        for (Aisle aisleElement : aisleList) {
+            pickingPointList.addAll(aisleElement.getPickingPoints(productPickList));
+        }
+
+        return pickingPointList;
     }
 
     @Override

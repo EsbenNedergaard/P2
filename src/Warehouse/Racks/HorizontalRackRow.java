@@ -40,7 +40,7 @@ public class HorizontalRackRow implements RackRow {
                 return;
             }
         }
-        throw new FullRackException("This rackrow is aldready full");
+        throw new FullRackException("This rackrow is already full");
     }
 
     @Override
@@ -49,8 +49,14 @@ public class HorizontalRackRow implements RackRow {
     }
 
     @Override
-    public boolean doesItContainProduct(Product e) {
-        return false;
+    public int doesItContainProduct(Product e) {
+        for (int i = 0; i < rackArray.length; i++) {
+            if (rackArray[i].doesItContainProduct(e)) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 
     @Override

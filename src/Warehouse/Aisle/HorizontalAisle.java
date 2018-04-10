@@ -1,5 +1,6 @@
 package Warehouse.Aisle;
 
+import Exceptions.FullRackException;
 import Geometry.Node;
 import Geometry.Point2D;
 import Warehouse.Product;
@@ -75,11 +76,44 @@ public class HorizontalAisle implements Aisle {
 
     @Override
     public List<Point2D> getPickingPoints(List<Product> productPickList) {
-        return null;
+        List<Point2D> pickingPointList = new ArrayList<>();
+
+        for (Product productElement : productPickList)
+        {
+            RackRow rackRowElement = getFirstRackRow();
+            int rackIndex = rackRowElement.doesItContainProduct(productElement);
+            if (rackIndex != -1) {
+                Point2D rackPosition = rackRowElement.getRackByIndex(rackIndex).getRackPosition();
+                pickingPointList.add(new Point2D(rackPosition.getX(), rackPosition.getY() + 1));
+            }
+
+
+            rackRowElement = getSecondRackRow();
+            rackIndex = rackRowElement.doesItContainProduct(productElement);
+            if (rackIndex != -1) {
+                Point2D rackPosition = rackRowElement.getRackByIndex(rackIndex).getRackPosition();
+                pickingPointList.add(new Point2D(rackPosition.getX(), rackPosition.getY() - 1));
+            }
+        }
+
+        return pickingPointList;
     }
 
     @Override
     public boolean doesItContainProductID(int id) {
         return false;
+    }
+
+    @Override
+    public void addProduct(Product e) {
+        for (RackRow rackRowElement : rackRowList) {
+            for (Rack rackElement : rackRowElement.getRackArray()) {
+                if (!rackElement.checkIfFull()) {
+                    rackElement.addProduct(e);
+                    return;
+                }
+            }
+        }
+        throw new FullRackException("This aisle is already full");
     }
 }

@@ -54,14 +54,14 @@ public class Graph {
                 if (closedSet.contains(neighbour)) {
                     continue;
                 }
-                if (!openSet.contains(neighbour)) {
-                    openSet.add(neighbour);
-                }
 
                 //A better path exists
                 if (current.getDistanceFromStart() + 1 < neighbour.getDistanceFromStart()) {
                     neighbour.setCameFrom(current);
                     neighbour.setDistanceFromStart(current.getDistanceFromStart() + 1);
+                }
+                if (!openSet.contains(neighbour)) {
+                    openSet.add(neighbour);
                 }
             }
         }

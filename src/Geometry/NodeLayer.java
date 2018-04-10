@@ -21,7 +21,7 @@ public class NodeLayer {
 
     private void setUpNodeReferences(){
         for (Node element : this.nodeList) {
-            //element.setTimeLayer(this);
+            element.setTimeLayer(this);
         }
     }
 

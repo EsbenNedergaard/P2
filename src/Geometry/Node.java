@@ -16,6 +16,7 @@ public class Node extends Point2D {
     private Node cameFrom;
     private ArrayList<Node> neighbourNodes;
     private int time;
+    private NodeLayer timeLayer;
     String nodeType; //We have nodeType instead of boolean obstacle in case we want other types later
 
     public Node(Point2D p) {
@@ -39,7 +40,11 @@ public class Node extends Point2D {
     }
 
     public int getTime() {
-        return time;
+        if (timeLayer == null) {
+            //TODO: make exception
+            throw new NullPointerException("You tried to get time from an node that isent in a time layer");
+        }
+        return timeLayer.getTime();
     }
 
     public int getDistanceFromStart() {
@@ -52,6 +57,11 @@ public class Node extends Point2D {
 
     public Node getCameFrom() {
         return cameFrom;
+    }
+
+
+    public void setTimeLayer(NodeLayer timeLayer) {
+        this.timeLayer = timeLayer;
     }
 
     public void setCameFrom(Node cameFrom) {
@@ -83,7 +93,7 @@ public class Node extends Point2D {
     }
 
     private boolean isNeighbour(Node node) {
-        if (this.getTime() + 1 == node.getTime()) {
+        //if (this.getTime() + 1 == node.getTime()) {
             if (this.getX() == node.getX() + 1 && this.getY() == node.getY()) {
                 return true;
             } else if (this.getX() == node.getX() - 1 && this.getY() == node.getY()) {
@@ -94,8 +104,9 @@ public class Node extends Point2D {
                 return true;
             } else if (this.getX() == node.getX() && this.getY() == node.getY()) {
                 return true;
+
             }
-        }
+        //}
         return false;
     }
 

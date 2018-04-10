@@ -9,6 +9,7 @@ public class Graph {
     private ArrayList<Node> closedSet;
     private PriorityQueue<Node> openSet;
     private ArrayList<Node> allNodes;
+    private List<NodeLayer> nodeLayerList;
 
 
 
@@ -24,7 +25,7 @@ public class Graph {
 
     public Graph(NodeLayer baseLayer, int maxTime) {
         this.allNodes = new ArrayList<>();
-        List<NodeLayer> nodeLayerList = new ArrayList<>();
+        this.nodeLayerList = new ArrayList<>();
 
         for (int i = 0; i < maxTime; i++) {
             NodeLayer tempNodeLayer = new NodeLayer(baseLayer.getNodeList(), i);
@@ -43,6 +44,8 @@ public class Graph {
         //Makes sure the sets are empty before the algorithm begins
         openSet.clear();
         closedSet.clear();
+
+        start.setTimeLayer(nodeLayerList.get(0));
 
         //Sets starting values to all nodes
         //First node gets distance 0, other nodes get distance infinity

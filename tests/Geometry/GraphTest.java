@@ -17,18 +17,18 @@ class GraphTest {
     void testAlgorithm() {
         ArrayList<Node> inputSet = new ArrayList<>();
         for (int k = 0; k < MAX_TIME; k++) {
-            for (int i = 0; i < GRID_HEIGHT; i++) {
-                for (int j = 0; j < GRID_LENGTH; j++) {
-                    //if (!(i == 8 && j > 4) && !(i == 1 && j < 5) && !(i == 3 && j > 1) && !(i == 1 && j == 5  && k == 6) && !(i == 0 && j == 3  && k == 4)) {
+            for (int j = 0; j < GRID_LENGTH; j++) {
+                for (int i = 0; i < GRID_HEIGHT; i++) {
+                    if (!(i == 8 && j > 4) && !(i == 1 && j < 5) && !(i == 3 && j > 1) && !(i == 1 && j == 5  && k == 6) && !(i == 0 && j == 3  && k == 4)) {
                         inputSet.add(new Node(new Point2D(j, i), k));
-                    //}
+                    }
                 }
             }
         }
 
         Node startNode = new Node(new Point2D(0, 0), 0);
-        //Node endNode = new Node(new Point2D(GRID_HEIGHT - 1, GRID_LENGTH - 1));
-        Node endNode = new Node(new Point2D(3, 3));
+        Node endNode = new Node(new Point2D(GRID_HEIGHT - 1, GRID_LENGTH - 1));
+        //Node endNode = new Node(new Point2D(3, 3));
 
         Graph testGraph = new Graph(inputSet);
 
@@ -75,6 +75,39 @@ class GraphTest {
         Node endNode = new Node(new Point2D(3,3));
 
         Graph testGraph = new Graph(inputSet);
+
+        ArrayList<Node> testResultRoute = new ArrayList<>();
+        for (int i = 0; i < 1; i++) {
+            System.out.println("Attempt: " + i);
+            testResultRoute = testGraph.findShortestRoute(startNode, endNode);
+        }
+
+        //Printing the lists of points
+        int i = 0;
+        for (Node n : testResultRoute) {
+            System.out.println(i + ". (" + n.getX() + ", " + n.getY() + ") time: " + n.getTime());
+            i++;
+        }
+
+    }
+
+
+    @Test
+    void testNodeLayer(){
+        ArrayList<Node> inputSet = new ArrayList<>();
+        for (int i = 0; i < GRID_LENGTH; i++) {
+            for (int j = 0; j < GRID_HEIGHT; j++) {
+                inputSet.add(new Node(new Point2D(i, j)));
+            }
+        }
+
+        NodeLayer baseLayer = new NodeLayer(inputSet, 0);
+
+        Node startNode = new Node(new Point2D(0, 0), 0);
+        //Node endNode = new Node(new Point2D((testWarehouse.getLength() - 1), (testWarehouse.getWidth() - 1)));
+        Node endNode = new Node(new Point2D(3,3));
+
+        Graph testGraph = new Graph(baseLayer, MAX_TIME);
 
         ArrayList<Node> testResultRoute = new ArrayList<>();
         for (int i = 0; i < 1; i++) {

@@ -21,7 +21,7 @@ public class Node extends Point2D {
     public Node(Point2D p) {
         super(p);
         this.time = 0;
-        nodeType = "walkable";
+        this.nodeType = "walkable";
     }
 
 
@@ -35,6 +35,7 @@ public class Node extends Point2D {
         this.setX(n.getX());
         this.setY(n.getY());
         this.time = time;
+        this.nodeType = "walkable";
     }
 
     public int getTime() {
@@ -72,9 +73,9 @@ public class Node extends Point2D {
         this.distanceToEnd = xDistance + yDistance;
     }
 
-    public void setNeighbourNodes(List<Node> allNodes) {
+    public void setNeighbourNodes(List<Node> possibleNeighbours) {
         neighbourNodes = new ArrayList<>();
-        for (Node node : allNodes) {
+        for (Node node : possibleNeighbours) {
             if (this.isNeighbour(node)) {
                 neighbourNodes.add(node);
             }

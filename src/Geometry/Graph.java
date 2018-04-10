@@ -2,6 +2,7 @@ package Geometry;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.PriorityQueue;
 
 public class Graph {
@@ -9,13 +10,33 @@ public class Graph {
     private PriorityQueue<Node> openSet;
     private ArrayList<Node> allNodes;
 
+
+
+
     public Graph(ArrayList<Node> allNodes) {
+        this.openSet = new PriorityQueue<>(allNodes.size(), new NodeComparator());
+        this.closedSet = new ArrayList<>();
         this.allNodes = allNodes;
-        openSet = new PriorityQueue<>(allNodes.size(), new NodeComparator());
-        closedSet = new ArrayList<>();
         for (Node node : allNodes) {
             node.setNeighbourNodes(allNodes);
         }
+    }
+
+    public Graph(NodeLayer baseLayer, int maxTime) {
+        this.allNodes = new ArrayList<>();
+        List<NodeLayer> nodeLayerList = new ArrayList<>();
+
+        for (int i = 0; i < maxTime; i++) {
+            NodeLayer tempNodeLayer = new NodeLayer(baseLayer.getNodeList(), i);
+            nodeLayerList.add(tempNodeLayer);
+            if (i != 0) {
+                nodeLayerList.get(i-1).setAllNeighbourNodesForLayer(nodeLayerList.get(i));
+            }
+            allNodes.addAll(nodeLayerList.get(i).getNodeList());
+        }
+
+        this.openSet = new PriorityQueue<>(allNodes.size(), new NodeComparator());
+        this.closedSet = new ArrayList<>();
     }
 
     public ArrayList<Node> findShortestRoute(Node start, Node end) {

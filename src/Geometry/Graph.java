@@ -2,26 +2,38 @@ package Geometry;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.PriorityQueue;
 
 public class Graph {
     private ArrayList<Node> closedSet;
     private PriorityQueue<Node> openSet;
     private ArrayList<Node> allNodes;
+    private List<NodeLayer> nodeLayerList;
 
-    public Graph(ArrayList<Node> allNodes) {
-        this.allNodes = allNodes;
-        openSet = new PriorityQueue<>(allNodes.size(), new NodeComparator());
-        closedSet = new ArrayList<>();
-        for (Node node : allNodes) {
-            node.setNeighbourNodes(allNodes);
+    public Graph(BaseLayer baseLayer, int maxTime) {
+        this.allNodes = new ArrayList<>();
+        this.nodeLayerList = new ArrayList<>();
+
+        for (int i = 0; i < maxTime; i++) {
+            NodeLayer tempNodeLayer = new NodeLayer(baseLayer.getNodeList(), i);
+            nodeLayerList.add(tempNodeLayer);
+            if (i != 0) {
+                nodeLayerList.get(i-1).setAllNeighbourNodesForLayer(nodeLayerList.get(i));
+            }
+            allNodes.addAll(nodeLayerList.get(i).getNodeList());
         }
+
+        this.openSet = new PriorityQueue<>(allNodes.size(), new NodeComparator());
+        this.closedSet = new ArrayList<>();
     }
 
     public ArrayList<Node> findShortestRoute(Node start, Node end) {
         //Makes sure the sets are empty before the algorithm begins
         openSet.clear();
         closedSet.clear();
+
+        start.setTimeLayer(nodeLayerList.get(0));
 
         //Sets starting values to all nodes
         //First node gets distance 0, other nodes get distance infinity

@@ -24,8 +24,10 @@ public class GraphicalWarehouse {
     private Group pickPointGroup;
     private Group rackRowGroup;
     private Group rackGroup;
+    private Group orderPickerGroup;
 
-    //private Group orderPickerGroup = new Group();
+    // Animation timer
+    private AnimationTimer timer;
 
     public GraphicalWarehouse(Warehouse warehouse) {
         this.warehouse = warehouse;
@@ -74,9 +76,9 @@ public class GraphicalWarehouse {
                 Label amtProducts = new Label("" + rackElement.getProductList().size());
                 amtProducts.setPadding(new Insets(4, 5, 5, 8));
                 amtProducts.setTextFill(Color.valueOf("white"));
+
                 if (rackElement.getProductList().size() == 0)
                     amtProducts.setVisible(false);
-                graphicRack.getStyleClass().add("rack-element");
 
                 amtProducts.relocate(rackElement.getRackPosition().getXPixels(), rackElement.getRackPosition().getYPixels());
                 rackGroup.getChildren().addAll(graphicRack, amtProducts);
@@ -101,6 +103,12 @@ public class GraphicalWarehouse {
         return pickPointGroup;
     }
 
+    private Group getOrderPickerGroup() {
+        Group orderPickerGroup = new Group();
+        orderPickerGroup.getChildren().add(new OrderPickerDesign());
+        return orderPickerGroup;
+    }
+
     public Parent getWarehouseGraphics() {
         Pane root = new Pane();
 
@@ -108,12 +116,25 @@ public class GraphicalWarehouse {
         tileGroup = getTileGroup();
         rackRowGroup = getRackRowGroup();
         rackGroup = getRackGroup();
+        orderPickerGroup = getOrderPickerGroup();
 
         root.setPrefSize(LENGTH_WAREHOUSE * TILE_SIZE, WIDTH_WAREHOUSE * TILE_SIZE);
 
-        root.getChildren().addAll(pickPointGroup, rackRowGroup, rackGroup, tileGroup);
+        root.getChildren().addAll(orderPickerGroup, pickPointGroup, rackRowGroup, rackGroup, tileGroup);
+
+        timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                onUpdate();
+            }
+        };
+        timer.start();
 
         return root;
     }
+
+    private void onUpdate() {
+    }
+
 
 }

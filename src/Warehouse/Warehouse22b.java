@@ -16,7 +16,6 @@ public class Warehouse22b implements Warehouse {
     private List<Aisle> aisleList;
     private List<Node> nodeList;
 
-
     private static final int AISLE_LENGTH = 36;
     private static final int AISLE_PADDING = 4;
 

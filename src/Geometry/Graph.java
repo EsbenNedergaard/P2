@@ -12,8 +12,6 @@ public class Graph {
     private List<NodeLayer> nodeLayerList;
 
 
-
-
     public Graph(ArrayList<Node> allNodes) {
         this.openSet = new PriorityQueue<>(allNodes.size(), new NodeComparator());
         this.closedSet = new ArrayList<>();

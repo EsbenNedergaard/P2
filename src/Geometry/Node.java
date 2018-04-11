@@ -15,27 +15,23 @@ public class Node extends Point2D {
     private int distanceToEnd;
     private Node cameFrom;
     private ArrayList<Node> neighbourNodes;
-    private int time;
     private NodeLayer timeLayer;
     String nodeType; //We have nodeType instead of boolean obstacle in case we want other types later
 
     public Node(Point2D p) {
         super(p);
-        this.time = 0;
         this.nodeType = "walkable";
     }
 
 
     public Node(Point2D p, int time) {
        super(p);
-       this.time = time;
        nodeType = "walkable";
     }
 
-    public Node(Node n, int time) {
+    public Node(Node n) {
         this.setX(n.getX());
         this.setY(n.getY());
-        this.time = time;
         this.nodeType = "walkable";
     }
 

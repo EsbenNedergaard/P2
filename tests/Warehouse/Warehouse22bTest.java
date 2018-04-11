@@ -2,7 +2,6 @@ package Warehouse;
 
 import Geometry.Node;
 import Geometry.Point2D;
-import Warehouse.Order.Order;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -62,10 +61,11 @@ class Warehouse22bTest {
         List<Product> productPickList = new ArrayList<>();
         productPickList.add(product1);
         productPickList.add(product2);
-        Order order1 = new Order(1, productPickList);
+        productPickList.add(product1);
+        productPickList.add(product2);
 
 
-        for (Point2D pickPoint : testWarehouse.getPickingPoints(order1)) {
+        for (Point2D pickPoint : testWarehouse.getPickingPoints(productPickList)) {
             System.out.println(pickPoint.getX() + ", " + pickPoint.getY());
         }
 

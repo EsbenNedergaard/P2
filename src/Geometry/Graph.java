@@ -11,16 +11,6 @@ public class Graph {
     private ArrayList<Node> allNodes;
     private List<NodeLayer> nodeLayerList;
 
-
-    public Graph(ArrayList<Node> allNodes) {
-        this.openSet = new PriorityQueue<>(allNodes.size(), new NodeComparator());
-        this.closedSet = new ArrayList<>();
-        this.allNodes = allNodes;
-        for (Node node : allNodes) {
-            node.setNeighbourNodes(allNodes);
-        }
-    }
-
     public Graph(NodeLayer baseLayer, int maxTime) {
         this.allNodes = new ArrayList<>();
         this.nodeLayerList = new ArrayList<>();

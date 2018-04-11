@@ -29,6 +29,16 @@ public class Warehouse22b implements Warehouse {
         createProducts();
     }
 
+    private void createNodeGrid(){
+        nodeList = new ArrayList<>();
+        for(int j = 0; j < width; j++) {
+            for(int i = 0; i < length; i++) {
+                nodeList.add(new Node(new Point2D(i, j)));
+            }
+        }
+
+    }
+
     public void createAisleList() {
         aisleList = new ArrayList<>();
         Aisle aisle1 = new HorizontalAisle(AISLE_LENGTH, new Point2D(AISLE_PADDING, 1));
@@ -48,8 +58,8 @@ public class Warehouse22b implements Warehouse {
     private void createProducts() {
 
         aisleList.get(0).getFirstRackRow().addProduct(new Product(1));
-        aisleList.get(0).getFirstRackRow().addProduct(new Product(3));
-        aisleList.get(1).getSecondRackRow().getRackByIndex(5).addProduct(new Product(2));
+        aisleList.get(0).getFirstRackRow().addProduct(new Product(2));
+        aisleList.get(1).getSecondRackRow().getRackByIndex(5).addProduct(new Product(3));
 
 
         /*int i = 0;
@@ -67,15 +77,6 @@ public class Warehouse22b implements Warehouse {
         }*/
     }
 
-    private void createNodeGrid(){
-        nodeList = new ArrayList<>();
-        for(int j = 0; j < width; j++) {
-            for(int i = 0; i < length; i++) {
-                nodeList.add(new Node(new Point2D(i, j)));
-            }
-        }
-
-    }
 
     @Override
     public List<RackRow> getRackRowList() {
@@ -89,6 +90,7 @@ public class Warehouse22b implements Warehouse {
     @Override
     public List<Point2D> getPickingPoints(List<Product> productPickList) {
         List<Point2D> pickingPointList = new ArrayList<>();
+
         for (Aisle aisleElement : aisleList) {
             pickingPointList.addAll(aisleElement.getPickingPoints(productPickList));
         }

@@ -35,6 +35,10 @@ public class SpaceTimeGrid {
         return maxTime;
     }
 
+    public BaseLayer getBaseLayer() {
+        return baseLayer;
+    }
+
     public List<Node> getAllNodes(){
         List<Node> allNodes = new ArrayList<>();
         for(NodeLayer element : nodeLayerList){

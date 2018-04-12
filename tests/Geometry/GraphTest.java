@@ -29,7 +29,7 @@ class GraphTest {
 
         BaseLayer baseLayer = new BaseLayer(inputSet);
 
-        Node startNode = new Node(new Point2D(0, 0), 0);
+        Node startNode = new Node(new Point2D(0, 0));
         Node endNode = new Node(new Point2D(GRID_HEIGHT - 1, GRID_LENGTH - 1));
 
         Graph testGraph = new Graph(baseLayer, MAX_TIME);
@@ -75,7 +75,7 @@ class GraphTest {
 
         BaseLayer baseLayer = new BaseLayer(warehouseNodeList);
 
-        Node startNode = new Node(new Point2D(0, 0), 0);
+        Node startNode = new Node(new Point2D(0, 0));
         //Node endNode = new Node(new Point2D((testWarehouse.getLength() - 1), (testWarehouse.getWidth() - 1)));
         Node endNode = new Node(new Point2D(15,4));
 

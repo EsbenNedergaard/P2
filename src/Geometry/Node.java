@@ -30,8 +30,7 @@ public class Node extends Point2D {
         this.nodeType = "walkable";
     }
 
-    private boolean isNeighbour(Node node) {
-        //if (this.getTime() + 1 == node.getTime()) {
+    boolean isNeighbour(Node node) {
             if (this.getX() == node.getX() + 1 && this.getY() == node.getY()) {
                 return true;
             } else if (this.getX() == node.getX() - 1 && this.getY() == node.getY()) {
@@ -42,9 +41,7 @@ public class Node extends Point2D {
                 return true;
             } else if (this.getX() == node.getX() && this.getY() == node.getY()) {
                 return true;
-
             }
-        //}
         return false;
     }
 
@@ -95,7 +92,6 @@ public class Node extends Point2D {
     public Node getCameFrom() {
         return cameFrom;
     }
-
 
     public void setTimeLayer(NodeLayer timeLayer) {
         this.timeLayer = timeLayer;

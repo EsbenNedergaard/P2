@@ -65,8 +65,6 @@ class GraphTest {
 
     @Test
     void testOnWareHouse() {
-        //TODO: something is very wrong right here need to add the layer stuff again the route is fucked for some reason
-        //TJEK EVT OM LISTEN AF NODER ER ORDENTLIGa
         Warehouse testWarehouse = new Warehouse22b();
         final int GRID_HEIGHT = testWarehouse.getWidth();
         final int GRID_LENGTH = testWarehouse.getLength();
@@ -76,8 +74,8 @@ class GraphTest {
         BaseLayer baseLayer = new BaseLayer(warehouseNodeList);
 
         Node startNode = new Node(new Point2D(0, 0), 0);
-        //Node endNode = new Node(new Point2D((testWarehouse.getLength() - 1), (testWarehouse.getWidth() - 1)));
-        Node endNode = new Node(new Point2D(15,4));
+        Node endNode = new Node(new Point2D((testWarehouse.getLength() - 1), (testWarehouse.getWidth() - 1)));
+        //Node endNode = new Node(new Point2D(15,4));
 
         Graph testGraph = new Graph(baseLayer, MAX_TIME);
 

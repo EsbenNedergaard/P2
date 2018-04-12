@@ -1,5 +1,7 @@
 package Geometry;
 
+import Exceptions.NodeDoesNotExistException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -37,6 +39,33 @@ public class NodeLayer {
 
     public List<Node> getNodeList() {
         return nodeList;
+    }
+
+    public Node getNodePointer(int x, int y) {
+        for(Node n : nodeList) {
+            if(x == n.getX() && y == n.getY()) {
+                return n;
+            }
+        }
+        throw new NodeDoesNotExistException("A node with x: " + x + " and y: " + y + ", does not exist");
+    }
+
+    public void removeNode(Node n){
+        //TODO: check what happens when you try to remove an element that is'nt in the list
+        nodeList.remove(n);
+    }
+
+    public void removeNodeFromNeighbourLists(Node n){
+        for(Node element : nodeList) {
+            for (Node neighbour : element.getNeighbourNodes()) {
+                if(n.equals(neighbour)) {
+                    element.getNeighbourNodes().remove(neighbour);
+                    break;
+                    /*We need this break because we remove an element from the Neighbour-loop that we are running through
+                    otherwise the for-each loop will crash*/
+                }
+            }
+        }
     }
 
     @Override

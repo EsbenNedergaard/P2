@@ -16,7 +16,7 @@ public class Node extends Point2D {
     private Node cameFrom;
     private ArrayList<Node> neighbourNodes;
     private NodeLayer timeLayer;
-    private String nodeType; //We have nodeType instead of boolean obstacle in case we want other types later
+    private String nodeType; //TODO: Make this into enums
 
     public Node(Point2D p) {
         super(p);

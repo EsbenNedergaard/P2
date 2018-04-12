@@ -6,15 +6,17 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 public class Graph {
-    private ArrayList<Node> closedSet;
+    private List<Node> closedSet;
     private PriorityQueue<Node> openSet;
-    private ArrayList<Node> allNodes;
+    private List<Node> allNodes;
     private List<NodeLayer> nodeLayerList;
     private int maxTime;
 
     public Graph(BaseLayer baseLayer, int maxTime) {
+        this.maxTime = maxTime;
         this.allNodes = new ArrayList<>();
         this.nodeLayerList = new ArrayList<>();
+        this.closedSet = new ArrayList<>();
 
         for (int i = 0; i < maxTime; i++) {
             NodeLayer tempNodeLayer = new NodeLayer(baseLayer.getNodeList(), i);
@@ -26,8 +28,15 @@ public class Graph {
         }
 
         this.openSet = new PriorityQueue<>(allNodes.size(), new NodeComparator());
+    }
+
+    public Graph(SpaceGraph spaceGraph) {
+        this.maxTime = spaceGraph.getMaxTime();
+        this.allNodes = spaceGraph.getAllNodes();
+        this.nodeLayerList = spaceGraph.getNodeLayerList();
         this.closedSet = new ArrayList<>();
-        this.maxTime = maxTime;
+        this.openSet = new PriorityQueue<>(allNodes.size(), new NodeComparator());
+
     }
 
     public ArrayList<Node> findShortestRoute(Node start, Node end) {

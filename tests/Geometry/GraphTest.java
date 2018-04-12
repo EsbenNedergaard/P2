@@ -28,11 +28,15 @@ class GraphTest {
         }
 
         BaseLayer baseLayer = new BaseLayer(inputSet);
+        SpaceGraph spaceGraph = new SpaceGraph(baseLayer, MAX_TIME);
+
 
         Node startNode = new Node(new Point2D(0, 0), 0);
         Node endNode = new Node(new Point2D(GRID_HEIGHT - 1, GRID_LENGTH - 1));
 
-        Graph testGraph = new Graph(baseLayer, MAX_TIME);
+        //Graph testGraph = new Graph(baseLayer, MAX_TIME);
+        Graph testGraph = new Graph(spaceGraph);
+
 
         ArrayList<Node> testResultRoute = new ArrayList<>();
         for (int i = 0; i < 1; i++) {
@@ -107,3 +111,4 @@ class GraphTest {
         }
     }
 }
+

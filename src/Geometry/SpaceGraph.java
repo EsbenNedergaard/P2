@@ -24,6 +24,14 @@ public class SpaceGraph {
         }
     }
 
+    public List<NodeLayer> getNodeLayerList() {
+        return nodeLayerList;
+    }
+
+    public int getMaxTime() {
+        return maxTime;
+    }
+
     public List<Node> getAllNodes(){
         List<Node> allNodes = new ArrayList<>();
         for(NodeLayer element : nodeLayerList){

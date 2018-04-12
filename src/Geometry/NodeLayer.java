@@ -39,6 +39,14 @@ public class NodeLayer {
         return nodeList;
     }
 
+    public void removeNodeFromNodeLayer(Node n){
+        for(Node node : nodeList){
+            if (node.equals(n)){
+                nodeList.remove(node);
+            }
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

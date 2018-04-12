@@ -12,8 +12,7 @@ public class Graph {
     private List<NodeLayer> nodeLayerList;
     private int maxTime;
 
-
-    public Graph(NodeLayer baseLayer, int maxTime) {
+    public Graph(BaseLayer baseLayer, int maxTime) {
         this.allNodes = new ArrayList<>();
         this.nodeLayerList = new ArrayList<>();
 

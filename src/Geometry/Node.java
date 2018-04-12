@@ -23,7 +23,6 @@ public class Node extends Point2D {
         this.nodeType = "walkable";
     }
 
-
     public Node(Point2D p, int time) {
        super(p);
        nodeType = "walkable";
@@ -38,7 +37,7 @@ public class Node extends Point2D {
     public int getTime() {
         if (timeLayer == null) {
             //TODO: make exception
-            throw new NullPointerException("You tried to get time from an node that isent in a time layer");
+            throw new NullPointerException("You tried to get time from a node that is'nt in a time layer");
         }
         return timeLayer.getTime();
     }

@@ -10,16 +10,8 @@ public class Graph {
     private PriorityQueue<Node> openSet;
     private ArrayList<Node> allNodes;
     private List<NodeLayer> nodeLayerList;
+    private int maxTime;
 
-
-    public Graph(ArrayList<Node> allNodes) {
-        this.openSet = new PriorityQueue<>(allNodes.size(), new NodeComparator());
-        this.closedSet = new ArrayList<>();
-        this.allNodes = allNodes;
-        for (Node node : allNodes) {
-            node.setNeighbourNodes(allNodes);
-        }
-    }
 
     public Graph(NodeLayer baseLayer, int maxTime) {
         this.allNodes = new ArrayList<>();
@@ -36,6 +28,7 @@ public class Graph {
 
         this.openSet = new PriorityQueue<>(allNodes.size(), new NodeComparator());
         this.closedSet = new ArrayList<>();
+        this.maxTime = maxTime;
     }
 
     public ArrayList<Node> findShortestRoute(Node start, Node end) {
@@ -60,6 +53,7 @@ public class Graph {
 
         //Runs till all nodes have been visited or till we find the end node
         while (!openSet.isEmpty()) {
+
             //Retrieves next node to visit and adds it to the closed set
             Node current = openSet.poll();
             closedSet.add(current);
@@ -68,6 +62,10 @@ public class Graph {
             if (current.getX() == end.getX() && current.getY() == end.getY()) {
                 end = current;
                 break;
+            }
+
+            if (current.getTime() >= maxTime){
+                throw new NullPointerException("Checked a field outside timelayer.");
             }
 
             //Checks if there exists a better path through current node to its neighbours

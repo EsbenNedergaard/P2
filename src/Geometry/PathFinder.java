@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 public class PathFinder {
-    SpaceTimeGrid spaceTimeGrid;
+    private SpaceTimeGrid spaceTimeGrid;
     private List<Node> closedSet;
     private PriorityQueue<Node> openSet;
 
@@ -21,6 +21,7 @@ public class PathFinder {
     }
 
     public ArrayList<Node> findShortestRoute(Node start, Node end) throws RouteNotPossibleException {
+        //TODO: Lav noget så RouteNotPossibleException bliver castet på at start eller end ligger på et permanent obstacle
         //Sets starting values to all nodes
         this.setStartValues(start, end);
 
@@ -36,7 +37,7 @@ public class PathFinder {
                 break;
             }
 
-            //TODO: Lav egen exception RouteNotPossibleException
+
             if (spaceTimeGrid.getMaxTime() <= (current.getTime() + 1)){
                 throw new RouteNotPossibleException("Did not find an route in the given time");
             }

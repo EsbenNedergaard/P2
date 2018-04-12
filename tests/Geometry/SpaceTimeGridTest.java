@@ -3,6 +3,7 @@ package Geometry;
 import Exceptions.RouteNotPossibleException;
 import Warehouse.Warehouse;
 import Warehouse.Warehouse22b;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -10,35 +11,43 @@ import java.util.List;
 
 class SpaceTimeGridTest {
     private final int MAX_TIME = 100;
+    private final int GRID_HEIGHT = 10;
+    private final int GRID_LENGTH = 10;
+    private List<Node> inputSet;
+
+    @BeforeEach
+    void beforeEach() {
+        inputSet = new ArrayList<>();
+        for (int x = 0; x < GRID_LENGTH; x++) {
+            for (int y = 0; y < GRID_HEIGHT; y++) {
+                Node temp = new Node(new Point2D(x, y));
+                inputSet.add(temp);
+            }
+        }
+    }
+
+
 
     //THIS PROB DOES NOT WORK ANYMORE
     @Test
     void testAlgorithm() {
-        final int GRID_HEIGHT = 10;
-        final int GRID_LENGTH = 10;
-        ArrayList<Node> inputSet = new ArrayList<>();
-
-        for (int x = 0; x < GRID_LENGTH; x++) {
-            for (int y = 0; y < GRID_HEIGHT; y++) {
-                Node temp = new Node(new Point2D(x, y));
-                if ((y == 1 && x < 5)|| (y == 8 && x > 1) || (x == 5 && (1 < y && y < 6)) || (x == 1 && (3 <= y && y < 8))) {
-                    temp.setNodeType("Obstacle");
-                }
-                inputSet.add(temp);
+        //Setting in obstacles
+        for (Node n : inputSet) {
+            int x = n.getX();
+            int y = n.getY();
+            if ((y == 1 && x < 5)|| (y == 8 && x > 1) || (x == 5 && (1 < y && y < 6)) || (x == 1 && (3 <= y && y < 8))) {
+                n.setNodeType("Obstacle");
             }
         }
-
         BaseLayer baseLayer = new BaseLayer(inputSet);
         SpaceTimeGrid spaceTimeGrid = new SpaceTimeGrid(baseLayer, MAX_TIME);
-
 
         Node startNode = new Node(new Point2D(0, 0));
         Node endNode = new Node(new Point2D(GRID_HEIGHT - 1, GRID_LENGTH - 1));
 
         PathFinder testPathFinder = new PathFinder(spaceTimeGrid);
 
-
-        ArrayList<Node> testResultRoute = new ArrayList<>();
+        List<Node> testResultRoute = new ArrayList<>();
         for (int i = 0; i < 1; i++) {
             System.out.println("Attempt: " + i);
             try {
@@ -48,29 +57,10 @@ class SpaceTimeGridTest {
                 System.out.println(e.toString());
             }
         }
-      
 
-        Character[][] graphic = new Character[GRID_LENGTH][GRID_HEIGHT];
-        for(int x = 0; x < GRID_LENGTH; x++) {
-            for (int y = 0; y < GRID_HEIGHT; y++) {
-                graphic[x][y] = ' ';
-            }
-        }
+        TempRoutePrinter printer = new TempRoutePrinter(testResultRoute, baseLayer);
+        printer.printRoute(GRID_LENGTH, GRID_HEIGHT);
 
-        for(Node n : testResultRoute) {
-            graphic[n.getX()][n.getY()] = 'o';
-        }
-        for(Node n : baseLayer.getStationaryObstacles()) {
-            graphic[n.getX()][n.getY()] = 'x';
-        }
-
-        for(int y = 0; y < GRID_HEIGHT; y++) {
-            for (int x = 0; x < GRID_LENGTH; x++) {
-                System.out.print(graphic[x][y] + " ");
-            }
-            System.out.println();
-        }
-        System.out.println();
     }
 
     @Test

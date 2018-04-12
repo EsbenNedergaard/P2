@@ -20,7 +20,7 @@ public class PathFinder {
         this.openSet = new PriorityQueue<>(spaceTimeGrid.getAllNodes().size(), new NodeComparator());
     }
 
-    public ArrayList<Node> findShortestRoute(Node start, Node end) throws RouteNotPossibleException {
+    public List<Node> findShortestRoute(Node start, Node end) throws RouteNotPossibleException {
         //TODO: Lav noget så RouteNotPossibleException bliver castet på at start eller end ligger på et permanent obstacle
         this.checkStartAndEndNode(start, end);
 
@@ -97,7 +97,7 @@ public class PathFinder {
     }
 
     //Constructs the shortest route as a list of nodes
-    private ArrayList<Node> constructPath(Node start, Node end) {
+    private List<Node> constructPath(Node start, Node end) {
         ArrayList<Node> path = new ArrayList<>();
 
         //First node is the destination

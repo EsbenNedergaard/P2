@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RouteTestWarehouse {
+class RouteTestWarehouse {
     private final int MAX_TIME = 100;
 
     @Test
@@ -29,7 +29,7 @@ public class RouteTestWarehouse {
 
         PathFinder testPathFinder = new PathFinder(spaceTimeGrid);
 
-        ArrayList<Node> testResultRoute = new ArrayList<>();
+        List<Node> testResultRoute = new ArrayList<>();
         try {
             testResultRoute = testPathFinder.findShortestRoute(startNode, endNode);
         }
@@ -37,26 +37,8 @@ public class RouteTestWarehouse {
             System.out.println(e.toString());
         }
 
-        Character[][] graphic = new Character[GRID_LENGTH][GRID_HEIGHT];
-        for(int x = 0; x < GRID_LENGTH; x++) {
-            for (int y = 0; y < GRID_HEIGHT; y++) {
-                graphic[x][y] = ' ';
-            }
-        }
-
-        for(Node n : testResultRoute) {
-            graphic[n.getX()][n.getY()] = 'o';
-        }
-        for(Node n : baseLayer.getStationaryObstacles()) {
-            graphic[n.getX()][n.getY()] = 'x';
-        }
-
-        for(int y = 0; y < GRID_HEIGHT; y++) {
-            for (int x = 0; x < GRID_LENGTH; x++) {
-                System.out.print(graphic[x][y] + " ");
-            }
-            System.out.println();
-        }
+        TempRoutePrinter printer = new TempRoutePrinter(testResultRoute, baseLayer);
+        printer.printRoute(GRID_LENGTH, GRID_HEIGHT);
     }
 
 }

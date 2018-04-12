@@ -32,7 +32,7 @@ class GraphTest {
         SpaceTimeGrid spaceTimeGrid = new SpaceTimeGrid(baseLayer, MAX_TIME);
 
 
-        Node startNode = new Node(new Point2D(0, 0), 0);
+        Node startNode = new Node(new Point2D(0, 0));
         Node endNode = new Node(new Point2D(GRID_HEIGHT - 1, GRID_LENGTH - 1));
 
         PathFinder testPathFinder = new PathFinder(spaceTimeGrid);
@@ -84,9 +84,10 @@ class GraphTest {
         BaseLayer baseLayer = new BaseLayer(warehouseNodeList);
         SpaceTimeGrid spaceTimeGrid = new SpaceTimeGrid(baseLayer, MAX_TIME);
 
-        Node startNode = new Node(new Point2D(0, 0), 0);
-        Node endNode = new Node(new Point2D((testWarehouse.getLength() - 1), (testWarehouse.getWidth() - 1)));
-        //Node endNode = new Node(new Point2D(15,4));
+
+        Node startNode = new Node(new Point2D(0, 0));
+        //Node endNode = new Node(new Point2D((testWarehouse.getLength() - 1), (testWarehouse.getWidth() - 1)));
+        Node endNode = new Node(new Point2D(15,4));
 
         PathFinder testPathFinder = new PathFinder(spaceTimeGrid);
 

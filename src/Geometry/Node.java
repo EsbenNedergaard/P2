@@ -31,8 +31,6 @@ public class Node extends Point2D {
     }
 
     private boolean isNeighbour(Node node) {
-        //TODO: få lavet et tjek om den indsendte node er i det næste lag
-
         if (this.getTime() + 1 == node.getTime()) {
             if (this.getX() == node.getX() + 1 && this.getY() == node.getY()) {
                 return true;
@@ -96,7 +94,6 @@ public class Node extends Point2D {
     public Node getCameFrom() {
         return cameFrom;
     }
-
 
     public void setTimeLayer(NodeLayer timeLayer) {
         this.timeLayer = timeLayer;

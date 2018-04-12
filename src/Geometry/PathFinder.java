@@ -20,8 +20,10 @@ public class PathFinder {
         this.openSet = new PriorityQueue<>(spaceTimeGrid.getAllNodes().size(), new NodeComparator());
     }
 
-    public ArrayList<Node> findShortestRoute(Node start, Node end) throws RouteNotPossibleException {
+    public List<Node> findShortestRoute(Node start, Node end) throws RouteNotPossibleException {
         //TODO: Lav noget så RouteNotPossibleException bliver castet på at start eller end ligger på et permanent obstacle
+        this.checkStartAndEndNode(start, end);
+
         //Sets starting values to all nodes
         this.setStartValues(start, end);
 
@@ -62,6 +64,17 @@ public class PathFinder {
         return constructPath(start, end);
     }
 
+    private void checkStartAndEndNode(Node start, Node end) throws RouteNotPossibleException {
+        for(Node obstacle : spaceTimeGrid.getBaseLayer().getStationaryObstacles()){
+            if (obstacle.getX() == start.getX() && obstacle.getY() == start.getY()) {
+                throw new RouteNotPossibleException("The start point was placed on top of a permanent obstacle");
+            }
+            else if (obstacle.getX() == end.getX() && obstacle.getY() == end.getY()) {
+                throw new RouteNotPossibleException("The end point was placed on top of a permanent obstacle");
+            }
+        }
+    }
+
     private void setStartValues(Node start, Node end) {
         //Makes sure the sets are empty before the algorithm begins
         openSet.clear();
@@ -84,7 +97,7 @@ public class PathFinder {
     }
 
     //Constructs the shortest route as a list of nodes
-    private ArrayList<Node> constructPath(Node start, Node end) {
+    private List<Node> constructPath(Node start, Node end) {
         ArrayList<Node> path = new ArrayList<>();
 
         //First node is the destination

@@ -2,26 +2,40 @@ package Geometry;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.PriorityQueue;
 
 public class Graph {
     private ArrayList<Node> closedSet;
     private PriorityQueue<Node> openSet;
     private ArrayList<Node> allNodes;
+    private List<NodeLayer> nodeLayerList;
+    private int maxTime;
 
-    public Graph(ArrayList<Node> allNodes) {
-        this.allNodes = allNodes;
-        openSet = new PriorityQueue<>(allNodes.size(), new NodeComparator());
-        closedSet = new ArrayList<>();
-        for (Node node : allNodes) {
-            node.setNeighbourNodes(allNodes);
+    public Graph(BaseLayer baseLayer, int maxTime) {
+        this.allNodes = new ArrayList<>();
+        this.nodeLayerList = new ArrayList<>();
+
+        for (int i = 0; i < maxTime; i++) {
+            NodeLayer tempNodeLayer = new NodeLayer(baseLayer.getNodeList(), i);
+            nodeLayerList.add(tempNodeLayer);
+            if (i != 0) {
+                nodeLayerList.get(i-1).setAllNeighbourNodesForLayer(nodeLayerList.get(i));
+            }
+            allNodes.addAll(nodeLayerList.get(i).getNodeList());
         }
+
+        this.openSet = new PriorityQueue<>(allNodes.size(), new NodeComparator());
+        this.closedSet = new ArrayList<>();
+        this.maxTime = maxTime;
     }
 
     public ArrayList<Node> findShortestRoute(Node start, Node end) {
         //Makes sure the sets are empty before the algorithm begins
         openSet.clear();
         closedSet.clear();
+
+        start.setTimeLayer(nodeLayerList.get(0));
 
         //Sets starting values to all nodes
         //First node gets distance 0, other nodes get distance infinity
@@ -38,6 +52,7 @@ public class Graph {
 
         //Runs till all nodes have been visited or till we find the end node
         while (!openSet.isEmpty()) {
+
             //Retrieves next node to visit and adds it to the closed set
             Node current = openSet.poll();
             closedSet.add(current);
@@ -46,6 +61,10 @@ public class Graph {
             if (current.getX() == end.getX() && current.getY() == end.getY()) {
                 end = current;
                 break;
+            }
+
+            if (current.getTime() >= maxTime){
+                throw new NullPointerException("Checked a field outside timelayer.");
             }
 
             //Checks if there exists a better path through current node to its neighbours

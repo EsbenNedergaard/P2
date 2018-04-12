@@ -15,30 +15,31 @@ public class Node extends Point2D {
     private int distanceToEnd;
     private Node cameFrom;
     private ArrayList<Node> neighbourNodes;
-    private int time;
+    private NodeLayer timeLayer;
     String nodeType; //We have nodeType instead of boolean obstacle in case we want other types later
 
     public Node(Point2D p) {
         super(p);
-        this.time = 0;
-        nodeType = "walkable";
+        this.nodeType = "walkable";
     }
-
 
     public Node(Point2D p, int time) {
        super(p);
-       this.time = time;
        nodeType = "walkable";
     }
 
-    public Node(Node n, int time) {
+    public Node(Node n) {
         this.setX(n.getX());
         this.setY(n.getY());
-        this.time = time;
+        this.nodeType = "walkable";
     }
 
     public int getTime() {
-        return time;
+        if (timeLayer == null) {
+            //TODO: make exception
+            throw new NullPointerException("You tried to get time from a node that is'nt in a time layer");
+        }
+        return timeLayer.getTime();
     }
 
     public int getDistanceFromStart() {
@@ -51,6 +52,11 @@ public class Node extends Point2D {
 
     public Node getCameFrom() {
         return cameFrom;
+    }
+
+
+    public void setTimeLayer(NodeLayer timeLayer) {
+        this.timeLayer = timeLayer;
     }
 
     public void setCameFrom(Node cameFrom) {
@@ -72,9 +78,9 @@ public class Node extends Point2D {
         this.distanceToEnd = xDistance + yDistance;
     }
 
-    public void setNeighbourNodes(List<Node> allNodes) {
+    public void setNeighbourNodes(List<Node> possibleNeighbours) {
         neighbourNodes = new ArrayList<>();
-        for (Node node : allNodes) {
+        for (Node node : possibleNeighbours) {
             if (this.isNeighbour(node)) {
                 neighbourNodes.add(node);
             }
@@ -82,7 +88,7 @@ public class Node extends Point2D {
     }
 
     private boolean isNeighbour(Node node) {
-        if (this.getTime() + 1 == node.getTime()) {
+        //if (this.getTime() + 1 == node.getTime()) {
             if (this.getX() == node.getX() + 1 && this.getY() == node.getY()) {
                 return true;
             } else if (this.getX() == node.getX() - 1 && this.getY() == node.getY()) {
@@ -93,8 +99,9 @@ public class Node extends Point2D {
                 return true;
             } else if (this.getX() == node.getX() && this.getY() == node.getY()) {
                 return true;
+
             }
-        }
+        //}
         return false;
     }
 

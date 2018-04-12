@@ -15,73 +15,24 @@ public class Node extends Point2D {
     private int distanceToEnd;
     private Node cameFrom;
     private ArrayList<Node> neighbourNodes;
-    private int time;
+    private NodeLayer timeLayer;
     String nodeType; //We have nodeType instead of boolean obstacle in case we want other types later
 
     public Node(Point2D p) {
         super(p);
-        this.time = 0;
-        nodeType = "walkable";
+        this.nodeType = "walkable";
     }
 
-
-    public Node(Point2D p, int time) {
-       super(p);
-       this.time = time;
-       nodeType = "walkable";
-    }
-
-    public Node(Node n, int time) {
+    // For copying nodes
+    public Node(Node n) {
         this.setX(n.getX());
         this.setY(n.getY());
-        this.time = time;
-    }
-
-    public int getTime() {
-        return time;
-    }
-
-    public int getDistanceFromStart() {
-        return distanceFromStart;
-    }
-
-    public ArrayList<Node> getNeighbourNodes() {
-        return neighbourNodes;
-    }
-
-    public Node getCameFrom() {
-        return cameFrom;
-    }
-
-    public void setCameFrom(Node cameFrom) {
-        this.cameFrom = cameFrom;
-    }
-
-    public void setDistanceFromStart(int distanceFromStart) {
-        this.distanceFromStart = distanceFromStart;
-    }
-
-    public void setDistanceToInf() {
-        this.distanceFromStart = INFINITY;
-    }
-
-    public void setDistanceToEnd(Node endNode) {
-        int xDistance = Math.abs(endNode.getX() - this.getX());
-        int yDistance = Math.abs(endNode.getY() - this.getY());
-
-        this.distanceToEnd = xDistance + yDistance;
-    }
-
-    public void setNeighbourNodes(List<Node> allNodes) {
-        neighbourNodes = new ArrayList<>();
-        for (Node node : allNodes) {
-            if (this.isNeighbour(node)) {
-                neighbourNodes.add(node);
-            }
-        }
+        this.nodeType = "walkable";
     }
 
     private boolean isNeighbour(Node node) {
+        //TODO: få lavet et tjek om den indsendte node er i det næste lag
+
         if (this.getTime() + 1 == node.getTime()) {
             if (this.getX() == node.getX() + 1 && this.getY() == node.getY()) {
                 return true;
@@ -116,12 +67,72 @@ public class Node extends Point2D {
     public int hashCode() {
         return Objects.hash(super.hashCode(), getTime());
     }
-  
-    public void setNodeType(String nodeType) {
-        this.nodeType = nodeType;
-    }
 
     public boolean isObstacle() {
         return nodeType.equals("Obstacle");
     }
+
+
+    public int getTime() {
+        if (timeLayer == null) {
+            //TODO: make exception
+            throw new NullPointerException("You tried to get time from a node that is'nt in a time layer");
+        }
+        return timeLayer.getTime();
+    }
+
+    public NodeLayer getTimeLayer() {
+        return timeLayer;
+    }
+
+    public int getDistanceFromStart() {
+        return distanceFromStart;
+    }
+
+    public ArrayList<Node> getNeighbourNodes() {
+        return neighbourNodes;
+    }
+
+    public Node getCameFrom() {
+        return cameFrom;
+    }
+
+
+    public void setTimeLayer(NodeLayer timeLayer) {
+        this.timeLayer = timeLayer;
+    }
+
+    public void setCameFrom(Node cameFrom) {
+        this.cameFrom = cameFrom;
+    }
+
+    public void setDistanceFromStart(int distanceFromStart) {
+        this.distanceFromStart = distanceFromStart;
+    }
+
+    public void setDistanceToInf() {
+        this.distanceFromStart = INFINITY;
+    }
+
+    public void setDistanceToEnd(Node endNode) {
+        int xDistance = Math.abs(endNode.getX() - this.getX());
+        int yDistance = Math.abs(endNode.getY() - this.getY());
+
+        this.distanceToEnd = xDistance + yDistance;
+    }
+
+    public void setNeighbourNodes(List<Node> possibleNeighbours) {
+        neighbourNodes = new ArrayList<>();
+        for (Node node : possibleNeighbours) {
+            if (this.isNeighbour(node)) {
+                neighbourNodes.add(node);
+            }
+        }
+    }
+
+    public void setNodeType(String nodeType) {
+        this.nodeType = nodeType;
+    }
 }
+
+

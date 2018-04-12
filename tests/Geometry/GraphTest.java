@@ -1,5 +1,6 @@
 package Geometry;
 
+import Exceptions.RouteNotPossibleException;
 import Warehouse.Warehouse;
 import Warehouse.Warehouse22b;
 import org.junit.jupiter.api.Test;
@@ -28,16 +29,24 @@ class GraphTest {
         }
 
         BaseLayer baseLayer = new BaseLayer(inputSet);
+        SpaceTimeGrid spaceTimeGrid = new SpaceTimeGrid(baseLayer, MAX_TIME);
+
 
         Node startNode = new Node(new Point2D(0, 0));
         Node endNode = new Node(new Point2D(GRID_HEIGHT - 1, GRID_LENGTH - 1));
 
-        Graph testGraph = new Graph(baseLayer, MAX_TIME);
+        PathFinder testPathFinder = new PathFinder(spaceTimeGrid);
+
 
         ArrayList<Node> testResultRoute = new ArrayList<>();
         for (int i = 0; i < 1; i++) {
             System.out.println("Attempt: " + i);
-            testResultRoute = testGraph.findShortestRoute(startNode, endNode);
+            try {
+                testResultRoute = testPathFinder.findShortestRoute(startNode, endNode);
+            }
+            catch (RouteNotPossibleException e) {
+                System.out.println(e.toString());
+            }
         }
       
 
@@ -61,12 +70,11 @@ class GraphTest {
             }
             System.out.println();
         }
+        System.out.println();
     }
 
     @Test
     void testOnWareHouse() {
-        //TODO: something is very wrong right here need to add the layer stuff again the route is fucked for some reason
-        //TJEK EVT OM LISTEN AF NODER ER ORDENTLIGa
         Warehouse testWarehouse = new Warehouse22b();
         final int GRID_HEIGHT = testWarehouse.getWidth();
         final int GRID_LENGTH = testWarehouse.getLength();
@@ -74,17 +82,21 @@ class GraphTest {
         List<Node> warehouseNodeList = testWarehouse.getNodeList();
 
         BaseLayer baseLayer = new BaseLayer(warehouseNodeList);
+        SpaceTimeGrid spaceTimeGrid = new SpaceTimeGrid(baseLayer, MAX_TIME);
+
 
         Node startNode = new Node(new Point2D(0, 0));
         //Node endNode = new Node(new Point2D((testWarehouse.getLength() - 1), (testWarehouse.getWidth() - 1)));
         Node endNode = new Node(new Point2D(15,4));
 
-        Graph testGraph = new Graph(baseLayer, MAX_TIME);
+        PathFinder testPathFinder = new PathFinder(spaceTimeGrid);
 
         ArrayList<Node> testResultRoute = new ArrayList<>();
-        for (int i = 0; i < 1; i++) {
-            System.out.println("Attempt: " + i);
-            testResultRoute = testGraph.findShortestRoute(startNode, endNode);
+        try {
+            testResultRoute = testPathFinder.findShortestRoute(startNode, endNode);
+        }
+        catch (RouteNotPossibleException e) {
+            System.out.println(e.toString());
         }
 
         Character[][] graphic = new Character[GRID_LENGTH][GRID_HEIGHT];
@@ -109,3 +121,4 @@ class GraphTest {
         }
     }
 }
+

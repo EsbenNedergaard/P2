@@ -1,58 +1,32 @@
 package Geometry;
 
+import Exceptions.RouteNotPossibleException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.PriorityQueue;
 
-public class Graph {
-    private ArrayList<Node> closedSet;
+public class PathFinder {
+    private SpaceTimeGrid spaceTimeGrid;
+    private List<Node> closedSet;
     private PriorityQueue<Node> openSet;
-    private ArrayList<Node> allNodes;
-    private List<NodeLayer> nodeLayerList;
-    private int maxTime;
 
-    public Graph(BaseLayer baseLayer, int maxTime) {
-        this.allNodes = new ArrayList<>();
-        this.nodeLayerList = new ArrayList<>();
-
-        for (int i = 0; i < maxTime; i++) {
-            NodeLayer tempNodeLayer = new NodeLayer(baseLayer.getNodeList(), i);
-            nodeLayerList.add(tempNodeLayer);
-            if (i != 0) {
-                nodeLayerList.get(i-1).setAllNeighbourNodesForLayer(nodeLayerList.get(i));
-            }
-            allNodes.addAll(nodeLayerList.get(i).getNodeList());
-        }
-
-        this.openSet = new PriorityQueue<>(allNodes.size(), new NodeComparator());
+    public PathFinder(SpaceTimeGrid spaceTimeGrid) {
+        this.spaceTimeGrid = spaceTimeGrid;
         this.closedSet = new ArrayList<>();
-        this.maxTime = maxTime;
+
+        //We set the openSet to in worst case be cable of containing all nodes
+        this.openSet = new PriorityQueue<>(spaceTimeGrid.getAllNodes().size(), new NodeComparator());
     }
 
-    public ArrayList<Node> findShortestRoute(Node start, Node end) {
-        //Makes sure the sets are empty before the algorithm begins
-        openSet.clear();
-        closedSet.clear();
-
-        start.setTimeLayer(nodeLayerList.get(0));
-
+    public ArrayList<Node> findShortestRoute(Node start, Node end) throws RouteNotPossibleException {
+        //TODO: Lav noget så RouteNotPossibleException bliver castet på at start eller end ligger på et permanent obstacle
         //Sets starting values to all nodes
-        //First node gets distance 0, other nodes get distance infinity
-        //All nodes gets an estimated distance to the end node
-        for (Node node : allNodes) {
-            if (node.equals(start)) {
-                node.setDistanceFromStart(0);
-                openSet.add(node);
-            } else {
-                node.setDistanceToInf();
-            }
-            node.setDistanceToEnd(end);
-        }
+        this.setStartValues(start, end);
 
         //Runs till all nodes have been visited or till we find the end node
         while (!openSet.isEmpty()) {
-
             //Retrieves next node to visit and adds it to the closed set
             Node current = openSet.poll();
             closedSet.add(current);
@@ -63,8 +37,9 @@ public class Graph {
                 break;
             }
 
-            if (current.getTime() >= maxTime){
-                throw new NullPointerException("Checked a field outside timelayer.");
+
+            if (spaceTimeGrid.getMaxTime() <= (current.getTime() + 1)){
+                throw new RouteNotPossibleException("Did not find an route in the given time");
             }
 
             //Checks if there exists a better path through current node to its neighbours
@@ -87,9 +62,29 @@ public class Graph {
         return constructPath(start, end);
     }
 
+    private void setStartValues(Node start, Node end) {
+        //Makes sure the sets are empty before the algorithm begins
+        openSet.clear();
+        closedSet.clear();
+
+        //We set the start-point to reference the first layer.
+        start.setTimeLayer(spaceTimeGrid.getNodeLayerList().get(0));
+
+        for (Node node : spaceTimeGrid.getAllNodes()) {
+            if (node.equals(start)) {
+                //First node gets distance 0, other nodes get distance infinity
+                node.setDistanceFromStart(0);
+                openSet.add(node);
+            } else {
+                node.setDistanceToInf();
+            }
+            //All nodes gets an estimated distance to the end node
+            node.setDistanceToEnd(end);
+        }
+    }
+
     //Constructs the shortest route as a list of nodes
     private ArrayList<Node> constructPath(Node start, Node end) {
-
         ArrayList<Node> path = new ArrayList<>();
 
         //First node is the destination

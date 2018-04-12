@@ -13,8 +13,6 @@ class RouteTestWarehouse {
     @Test
     void testOnWareHouse() {
         Warehouse testWarehouse = new Warehouse22b();
-        final int GRID_HEIGHT = testWarehouse.getWidth();
-        final int GRID_LENGTH = testWarehouse.getLength();
 
         List<Node> warehouseNodeList = testWarehouse.getNodeList();
 
@@ -38,7 +36,7 @@ class RouteTestWarehouse {
         }
 
         TempRoutePrinter printer = new TempRoutePrinter(testResultRoute, baseLayer);
-        printer.printRoute(GRID_LENGTH, GRID_HEIGHT);
+        printer.printRoute(testWarehouse.getLength(), testWarehouse.getWidth());
     }
 
 }

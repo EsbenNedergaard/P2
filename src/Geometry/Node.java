@@ -23,16 +23,54 @@ public class Node extends Point2D {
         this.nodeType = "walkable";
     }
 
-    public Node(Point2D p, int time) {
-       super(p);
-       nodeType = "walkable";
-    }
-
+    // For copying nodes
     public Node(Node n) {
         this.setX(n.getX());
         this.setY(n.getY());
         this.nodeType = "walkable";
     }
+
+    private boolean isNeighbour(Node node) {
+        //if (this.getTime() + 1 == node.getTime()) {
+            if (this.getX() == node.getX() + 1 && this.getY() == node.getY()) {
+                return true;
+            } else if (this.getX() == node.getX() - 1 && this.getY() == node.getY()) {
+                return true;
+            } else if (this.getX() == node.getX() && this.getY() == node.getY() + 1) {
+                return true;
+            } else if (this.getX() == node.getX() && this.getY() == node.getY() - 1) {
+                return true;
+            } else if (this.getX() == node.getX() && this.getY() == node.getY()) {
+                return true;
+
+            }
+        //}
+        return false;
+    }
+
+    public int getTotalDistance() {
+        return distanceFromStart + distanceToEnd;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Node node = (Node) o;
+        return this.getTime() == node.getTime();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getTime());
+    }
+
+    public boolean isObstacle() {
+        return nodeType.equals("Obstacle");
+    }
+
 
     public int getTime() {
         if (timeLayer == null) {
@@ -40,6 +78,10 @@ public class Node extends Point2D {
             throw new NullPointerException("You tried to get time from a node that is'nt in a time layer");
         }
         return timeLayer.getTime();
+    }
+
+    public NodeLayer getTimeLayer() {
+        return timeLayer;
     }
 
     public int getDistanceFromStart() {
@@ -87,48 +129,9 @@ public class Node extends Point2D {
         }
     }
 
-    private boolean isNeighbour(Node node) {
-        //if (this.getTime() + 1 == node.getTime()) {
-            if (this.getX() == node.getX() + 1 && this.getY() == node.getY()) {
-                return true;
-            } else if (this.getX() == node.getX() - 1 && this.getY() == node.getY()) {
-                return true;
-            } else if (this.getX() == node.getX() && this.getY() == node.getY() + 1) {
-                return true;
-            } else if (this.getX() == node.getX() && this.getY() == node.getY() - 1) {
-                return true;
-            } else if (this.getX() == node.getX() && this.getY() == node.getY()) {
-                return true;
-
-            }
-        //}
-        return false;
-    }
-
-    public int getTotalDistance() {
-        return distanceFromStart + distanceToEnd;
-    }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        Node node = (Node) o;
-        return this.getTime() == node.getTime();
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), getTime());
-    }
-  
     public void setNodeType(String nodeType) {
         this.nodeType = nodeType;
     }
-
-    public boolean isObstacle() {
-        return nodeType.equals("Obstacle");
-    }
 }
+
+

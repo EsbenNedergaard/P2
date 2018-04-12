@@ -50,11 +50,19 @@ public class SpaceTimeGrid {
 
 
     public void removeNode(Node n){
-        //TODO: lave så man fjerner noten og tjekke om den bliver fjernet fra neighbour også
-        /*for(Node node : nodeList){
-            if (node.equals(n)){
-                nodeList.remove(node);
+        for (NodeLayer nodeLayerElement : nodeLayerList) {
+            if (n.getTime() == nodeLayerElement.getTime()) {
+                for(Node nodeElement : nodeLayerElement.getNodeList()) {
+                    if (n.equals(nodeElement)) {
+                        nodeLayerElement.getNodeList().remove(n);
+                        return;
+                    }
+                }
+                /*If there wasn't a node in the NodeLayer with the same time as the node, that was equal to the node,
+                  then there wont be any so we might as well return*/
+                return;
             }
-        }*/
+        }
+        throw new IllegalArgumentException("This node does not exist");
     }
 }

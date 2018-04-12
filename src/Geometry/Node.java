@@ -16,23 +16,14 @@ public class Node extends Point2D {
     private Node cameFrom;
     private ArrayList<Node> neighbourNodes;
     private NodeLayer timeLayer;
-    String nodeType; //We have nodeType instead of boolean obstacle in case we want other types later
+    private String nodeType; //We have nodeType instead of boolean obstacle in case we want other types later
 
     public Node(Point2D p) {
         super(p);
         this.nodeType = "walkable";
     }
 
-    // For copying nodes
-    public Node(Node n) {
-        this.setX(n.getX());
-        this.setY(n.getY());
-        this.nodeType = "walkable";
-    }
-
     private boolean isNeighbour(Node node) {
-        //TODO: få lavet et tjek om den indsendte node er i det næste lag
-
         if (this.getTime() + 1 == node.getTime()) {
             if (this.getX() == node.getX() + 1 && this.getY() == node.getY()) {
                 return true;

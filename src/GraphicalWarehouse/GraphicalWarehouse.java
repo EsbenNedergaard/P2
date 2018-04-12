@@ -190,6 +190,6 @@ public class GraphicalWarehouse {
     private void onUpdate() {
         UPDATE_COUNTER++;
 
-        orderPickerTest.movePicker(UPDATE_COUNTER);
+        orderPickerTest.move(UPDATE_COUNTER);
     }
 }

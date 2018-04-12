@@ -11,7 +11,6 @@ public class OrderPickerGraphics extends Rectangle {
     private final static double UPDATE_VALUE = 30.0;
     private final static double MOVE_DISTANCE_PER_UPDATE = TILE_SIZE / UPDATE_VALUE;
 
-    // Others
     private List<Node> routeList;
     // This is actually the point were it came from
     private int indexOfLastPoint;
@@ -33,13 +32,13 @@ public class OrderPickerGraphics extends Rectangle {
     }
 
     // Call this in a update method
-    // For every call it will movePicker towards the end of the route
-    // Return true if the movePicker was successful and false when the route is finished
-    public boolean movePicker(final int UPDATE_COUNTER) {
+    // For every call it will move towards the end of the route
+    // Return true if the move was successful and false when the route is finished
+    public boolean move(final int UPDATE_COUNTER) {
 
-        if(routeList.size() > 0) {
+        if(indexOfLastPoint < routeList.size() - 2) {
 
-            // If the picker is at the target point then movePicker on to next
+            // If the picker is at the target point then move on to next target
             if(UPDATE_COUNTER % UPDATE_VALUE == 0)
                 indexOfLastPoint++;
 
@@ -58,9 +57,11 @@ public class OrderPickerGraphics extends Rectangle {
                     setTranslateY(getTranslateY() - MOVE_DISTANCE_PER_UPDATE);
 
             }
+
             return true;
 
         } else {
+            // The route is done
             return false;
         }
     }
@@ -69,9 +70,12 @@ public class OrderPickerGraphics extends Rectangle {
         return this.routeList.get(indexOfLastPoint);
     }
 
-    // Returns the node were the picker should movePicker towards
+    // Returns the node were the picker should move towards
     private Node getTargetNode() {
         int indexOfTargetNode = indexOfLastPoint + 1;
+
+        if(indexOfTargetNode >= routeList.size())
+            throw new IndexOutOfBoundsException("Index out of bound");
 
         return this.routeList.get(indexOfTargetNode);
     }

@@ -49,7 +49,7 @@ public class OrderPickerGraphics extends Rectangle {
                 else
                     setTranslateX(getTranslateX() - MOVE_DISTANCE_PER_UPDATE);
 
-            } else {
+            } else if(changeInYCoordinate()) {
 
                 if(getLastPointPosition().getY() < getTargetNode().getY())
                     setTranslateY(getTranslateY() + MOVE_DISTANCE_PER_UPDATE);
@@ -59,6 +59,7 @@ public class OrderPickerGraphics extends Rectangle {
             }
 
             return true;
+            // The else block is where it would be when in waiting position
 
         } else {
             // The route is done
@@ -78,11 +79,6 @@ public class OrderPickerGraphics extends Rectangle {
             throw new IndexOutOfBoundsException("Index out of bound");
 
         return this.routeList.get(indexOfTargetNode);
-    }
-
-    private boolean inWaitingPosition() {
-        return getLastPointPosition().getXPixels() == getTargetNode().getXPixels() &&
-               getLastPointPosition().getYPixels() == getTargetNode().getYPixels();
     }
 
     private boolean changeInXCoordinate() {

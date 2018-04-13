@@ -31,6 +31,7 @@ public class GraphicalWarehouse {
     private Group orderPickerGroup;
 
     private OrderPickerGraphics orderPickerTest;
+    private OrderPickerGraphics orderPickerTest2;
 
 
     private List<Node> routeNodesList = new ArrayList<>();
@@ -55,7 +56,9 @@ public class GraphicalWarehouse {
 
         routeNodesList.add(new Node(new Point2D(i, 1)));
         routeNodesList.add(new Node(new Point2D(i, 2)));
+        routeNodesList.add(new Node(new Point2D(i, 2)));
         routeNodesList.add(new Node(new Point2D(i, 3)));
+        routeNodesList.add(new Node(new Point2D(i, 4)));
         routeNodesList.add(new Node(new Point2D(i, 4)));
 
         for(i = 38; i > 4; i--) {
@@ -72,7 +75,9 @@ public class GraphicalWarehouse {
 
         routeNodesList.add(new Node(new Point2D(i, 7)));
         routeNodesList.add(new Node(new Point2D(i, 8)));
+        routeNodesList.add(new Node(new Point2D(i, 8)));
         routeNodesList.add(new Node(new Point2D(i, 9)));
+        routeNodesList.add(new Node(new Point2D(i, 10)));
         routeNodesList.add(new Node(new Point2D(i, 10)));
 
         for(i = 38; i > 4; i--) {
@@ -189,7 +194,7 @@ public class GraphicalWarehouse {
 
     private void onUpdate() {
         UPDATE_COUNTER++;
-
+        orderPickerTest2.move(UPDATE_COUNTER);
         orderPickerTest.move(UPDATE_COUNTER);
     }
 }

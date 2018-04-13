@@ -8,7 +8,7 @@ import static Warehouse.GUIWarehouse.TILE_SIZE;
 
 public class OrderPickerGraphics extends Rectangle {
 
-    private final static double UPDATE_VALUE = 30.0;
+    private final static double UPDATE_VALUE = 30;
     private final static double MOVE_DISTANCE_PER_UPDATE = TILE_SIZE / UPDATE_VALUE;
 
     private List<Node> routeList;
@@ -25,7 +25,7 @@ public class OrderPickerGraphics extends Rectangle {
         this.routeList = routeList;
 
         // When the object is first created, the index must be 0
-        this.indexOfLastPoint = 0;
+        this.indexOfLastPoint = 1;
 
         relocate(routeList.get(0).getX() * TILE_SIZE, routeList.get(0).getY() * TILE_SIZE);
 
@@ -36,27 +36,32 @@ public class OrderPickerGraphics extends Rectangle {
     // Return true if the move was successful and false when the route is finished
     public boolean move(final int UPDATE_COUNTER) {
 
-        if(indexOfLastPoint < routeList.size() - 2) {
+        if(indexOfLastPoint < routeList.size()) {
 
             // If the picker is at the target point then move on to next target
-            if(UPDATE_COUNTER % UPDATE_VALUE == 0)
-                indexOfLastPoint++;
 
             if(changeInXCoordinate()) {
 
-                if(getLastPointPosition().getX() < getTargetNode().getX())
+                if(getLastPointPosition().getX() < getTargetNode().getX()) {
                     setTranslateX(getTranslateX() + MOVE_DISTANCE_PER_UPDATE);
-                else
+                }
+                else {
                     setTranslateX(getTranslateX() - MOVE_DISTANCE_PER_UPDATE);
+                }
 
             } else if(changeInYCoordinate()) {
 
-                if(getLastPointPosition().getY() < getTargetNode().getY())
+                if(getLastPointPosition().getY() < getTargetNode().getY()) {
                     setTranslateY(getTranslateY() + MOVE_DISTANCE_PER_UPDATE);
-                else
+                }
+                else {
                     setTranslateY(getTranslateY() - MOVE_DISTANCE_PER_UPDATE);
+                }
 
             }
+
+            if(UPDATE_COUNTER % UPDATE_VALUE == 0)
+                indexOfLastPoint++;
 
             return true;
             // The else block is where it would be when in waiting position
@@ -68,12 +73,12 @@ public class OrderPickerGraphics extends Rectangle {
     }
 
     private Node getLastPointPosition() {
-        return this.routeList.get(indexOfLastPoint);
+        return this.routeList.get(indexOfLastPoint - 1);
     }
 
     // Returns the node were the picker should move towards
     private Node getTargetNode() {
-        int indexOfTargetNode = indexOfLastPoint + 1;
+        int indexOfTargetNode = indexOfLastPoint;
 
         if(indexOfTargetNode >= routeList.size())
             throw new IndexOutOfBoundsException("Index out of bound");
@@ -90,6 +95,5 @@ public class OrderPickerGraphics extends Rectangle {
         return getLastPointPosition().getYPixels() != getTargetNode().getYPixels() &&
                getLastPointPosition().getXPixels() == getTargetNode().getXPixels();
     }
-
 
 }

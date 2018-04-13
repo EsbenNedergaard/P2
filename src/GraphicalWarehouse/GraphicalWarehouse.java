@@ -218,7 +218,8 @@ public class GraphicalWarehouse {
 
     private void onUpdate() {
         UPDATE_COUNTER++;
-        orderPickerTest2.move(UPDATE_COUNTER);
-        orderPickerTest.move(UPDATE_COUNTER);
+
+        if(orderPickerTest2.move(UPDATE_COUNTER));
+        if(orderPickerTest.move(UPDATE_COUNTER));
     }
 }

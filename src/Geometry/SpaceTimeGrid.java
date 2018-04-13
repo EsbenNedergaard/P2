@@ -60,7 +60,7 @@ public class SpaceTimeGrid {
     }
 
     public void removeNode(Node n){
-        //TODO: make it so it removes is from the neighbourlists
+        //TODO: update this so it use the pointer getter instead
         for(int i = 0; i < nodeLayerList.size(); i++) {
             if (n.getTime() == nodeLayerList.get(i).getTime()) {
                 if (i > 0) {

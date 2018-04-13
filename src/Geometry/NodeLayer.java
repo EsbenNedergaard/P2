@@ -27,6 +27,15 @@ public class NodeLayer {
         }
     }
 
+    public Node getNodePointer(int x, int y) {
+        for(Node n : nodeList) {
+            if(x == n.getX() && y == n.getY()) {
+                return n;
+            }
+        }
+        throw new NodeDoesNotExistException("A node with x: " + x + " and y: " + y + ", does not exist");
+    }
+
     public void setAllNeighbourNodesForLayer(NodeLayer nextNodeLayer) {
         for (Node node : this.getNodeList()) {
            node.setNeighbourNodes(nextNodeLayer.getNodeList());
@@ -39,15 +48,6 @@ public class NodeLayer {
 
     public List<Node> getNodeList() {
         return nodeList;
-    }
-
-    public Node getNodePointer(int x, int y) {
-        for(Node n : nodeList) {
-            if(x == n.getX() && y == n.getY()) {
-                return n;
-            }
-        }
-        throw new NodeDoesNotExistException("A node with x: " + x + " and y: " + y + ", does not exist");
     }
 
     public void removeNode(Node n){

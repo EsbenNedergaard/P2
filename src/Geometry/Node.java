@@ -1,5 +1,7 @@
 package Geometry;
 
+import Exceptions.IsNotValidNodeTypeException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -9,6 +11,7 @@ import java.util.Objects;
   nemmeste ville nok være at lave en liste af "right end points" og en liste af "left end points" også kan bare tjekke om varens y-koordinat stemmer overens med
   et endepunkt, så kører vi bare igennem et punkt efter et andet, og tager dem med lavest f-værdi som er naboer til vores nuværende punkt indtil vi når slutpunktet  */
 
+
 public class Node extends Point2D {
     private static final int INFINITY = 1000000;
     private int distanceFromStart;
@@ -16,18 +19,18 @@ public class Node extends Point2D {
     private Node cameFrom;
     private ArrayList<Node> neighbourNodes;
     private NodeLayer timeLayer;
-    String nodeType; //We have nodeType instead of boolean obstacle in case we want other types later
+    NodeType nodeType;
 
     public Node(Point2D p) {
         super(p);
-        this.nodeType = "walkable";
+        this.nodeType = NodeType.WALKABLE;
     }
 
     // For copying nodes
     public Node(Node n) {
         this.setX(n.getX());
         this.setY(n.getY());
-        this.nodeType = "walkable";
+        this.nodeType = NodeType.WALKABLE;
     }
 
     boolean isNeighbour(Node node) {
@@ -65,8 +68,9 @@ public class Node extends Point2D {
         return Objects.hash(super.hashCode(), getTime());
     }
 
+
     public boolean isObstacle() {
-        return nodeType.equals("Obstacle");
+        return nodeType.equals(NodeType.OBSTACLE);
     }
 
 
@@ -96,6 +100,10 @@ public class Node extends Point2D {
 
     public int getDistanceToEnd() {
         return distanceToEnd;
+    }
+
+    public NodeType getNodeType() {
+        return nodeType;
     }
 
     public void setTimeLayer(NodeLayer timeLayer) {
@@ -130,8 +138,16 @@ public class Node extends Point2D {
         }
     }
 
-    public void setNodeType(String nodeType) {
-        this.nodeType = nodeType;
+    public void setNodeType(NodeType nodeType) {
+
+        switch (nodeType) {
+            case OBSTACLE:
+                this.nodeType = NodeType.OBSTACLE;
+            case WALKABLE:
+                this.nodeType = NodeType.WALKABLE;
+            default:
+                throw new IsNotValidNodeTypeException();
+        }
     }
 }
 

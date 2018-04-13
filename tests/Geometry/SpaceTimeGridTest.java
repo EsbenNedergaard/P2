@@ -35,7 +35,7 @@ class SpaceTimeGridTest {
             int x = n.getX();
             int y = n.getY();
             if ((y == 1 && x < 5)|| (y == 8 && x > 1) || (x == 5 && (1 < y && y < 6)) || (x == 1 && (3 <= y && y < 8))) {
-                n.setNodeType("Obstacle");
+                n.setNodeType(NodeType.OBSTACLE);
             }
         }
         BaseLayer baseLayer = new BaseLayer(inputSet);
@@ -65,7 +65,7 @@ class SpaceTimeGridTest {
     void testIllegalEndPoint(){
         for(Node n : inputSet) {
             if (n.getX() == 9 && n.getY() == 9) {
-                n.setNodeType("Obstacle");
+                n.setNodeType(NodeType.OBSTACLE);
             }
         }
 
@@ -84,7 +84,7 @@ class SpaceTimeGridTest {
     void testIllegalStartPoint(){
         for(Node n : inputSet) {
             if (n.getX() == 0 && n.getY() == 0) {
-                n.setNodeType("Obstacle");
+                n.setNodeType(NodeType.OBSTACLE);
             }
         }
         BaseLayer baseLayer = new BaseLayer(inputSet);
@@ -102,7 +102,7 @@ class SpaceTimeGridTest {
     void testBoxedInPoint(){
         for(Node n : inputSet) {
             if ((n.getX() == 1 && n.getY() == 0) || (n.getX() == 0 && n.getY() == 1) ){
-                n.setNodeType("Obstacle");
+                n.setNodeType(NodeType.OBSTACLE);
             }
         }
         BaseLayer baseLayer = new BaseLayer(inputSet);

@@ -1,5 +1,6 @@
 package Geometry;
 
+import static Geometry.NodeType.WALKABLE;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -121,5 +122,10 @@ class NodeTest {
         // Expect the sum of the difference between the two point coordinates: (1,1), (3,3), which is 2 + 2 = 4
         assertEquals(4, node1.getDistanceToEnd());
 
+    }
+
+    @Test
+    void testConstructor(){
+        assertEquals(WALKABLE, node1.getNodeType());
     }
 }

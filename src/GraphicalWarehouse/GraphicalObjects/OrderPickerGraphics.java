@@ -38,8 +38,6 @@ public class OrderPickerGraphics extends Rectangle {
 
         if(indexOfLastPoint < routeList.size()) {
 
-            // If the picker is at the target point then move on to next target
-
             if(changeInXCoordinate()) {
 
                 if(getLastPointPosition().getX() < getTargetNode().getX()) {
@@ -59,12 +57,13 @@ public class OrderPickerGraphics extends Rectangle {
                 }
 
             }
+            // The else block is where it would be when in waiting position
 
+            // If the picker is at the target point then move on to next target
             if(UPDATE_COUNTER % UPDATE_VALUE == 0)
                 indexOfLastPoint++;
 
             return true;
-            // The else block is where it would be when in waiting position
 
         } else {
             // The route is done

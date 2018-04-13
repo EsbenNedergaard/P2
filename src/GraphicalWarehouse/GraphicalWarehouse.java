@@ -32,10 +32,10 @@ public class GraphicalWarehouse {
 
     private OrderPickerGraphics orderPickerTest;
     private OrderPickerGraphics orderPickerTest2;
+    private OrderPickerGraphics orderPickerTest3;
 
-
-    private List<Node> routeNodesList = new ArrayList<>();
-    private List<Node> routeNodesList2 = new ArrayList<>();
+    private GenerateRandomPickingRoute
+            randomPickingRoute = new GenerateRandomPickingRoute();
 
     // Animation timer
     private AnimationTimer timer;
@@ -45,71 +45,6 @@ public class GraphicalWarehouse {
         this.warehouse = warehouse;
         this.LENGTH_WAREHOUSE = warehouse.getLength();
         this.WIDTH_WAREHOUSE = warehouse.getWidth();
-    }
-
-    // TODO: Delete this method
-    private void fillRandomNodes() {
-        int i;
-
-        for(i = 0; i <= 38; i++) {
-            routeNodesList.add(new Node(new Point2D(i, 1)));
-        }
-
-        routeNodesList.add(new Node(new Point2D(i, 1)));
-        routeNodesList.add(new Node(new Point2D(i, 2)));
-        routeNodesList.add(new Node(new Point2D(i, 2)));
-        routeNodesList.add(new Node(new Point2D(i, 3)));
-        routeNodesList.add(new Node(new Point2D(i, 4)));
-        routeNodesList.add(new Node(new Point2D(i, 4)));
-
-        for(i = 38; i > 4; i--) {
-            routeNodesList.add(new Node(new Point2D(i, 4)));
-        }
-
-        routeNodesList.add(new Node(new Point2D(i, 4)));
-        routeNodesList.add(new Node(new Point2D(i, 5)));
-        routeNodesList.add(new Node(new Point2D(i, 6)));
-
-        for(i = 4; i <= 38; i++) {
-            routeNodesList.add(new Node(new Point2D(i, 7)));
-        }
-
-        routeNodesList.add(new Node(new Point2D(i, 7)));
-        routeNodesList.add(new Node(new Point2D(i, 8)));
-        routeNodesList.add(new Node(new Point2D(i, 8)));
-        routeNodesList.add(new Node(new Point2D(i, 9)));
-        routeNodesList.add(new Node(new Point2D(i, 10)));
-        routeNodesList.add(new Node(new Point2D(i, 10)));
-
-        for(i = 38; i >= 4; i--) {
-            routeNodesList.add(new Node(new Point2D(i, 10)));
-        }
-
-        //for(Node item : routeNodesList) {
-         //   System.out.println(item.getX() + "," + item.getY());
-        //}
-
-    }
-
-    private void fillRandomNodes2() {
-        routeNodesList2.add(new Node(new Point2D(1, 1)));
-        routeNodesList2.add(new Node(new Point2D(1, 2)));
-        routeNodesList2.add(new Node(new Point2D(1, 3)));
-        routeNodesList2.add(new Node(new Point2D(1, 4)));
-        routeNodesList2.add(new Node(new Point2D(1, 5)));
-        routeNodesList2.add(new Node(new Point2D(1, 6)));
-        routeNodesList2.add(new Node(new Point2D(1, 7)));
-        routeNodesList2.add(new Node(new Point2D(2, 7)));
-        routeNodesList2.add(new Node(new Point2D(3, 7)));
-        routeNodesList2.add(new Node(new Point2D(4, 7)));
-        routeNodesList2.add(new Node(new Point2D(5, 7)));
-        routeNodesList2.add(new Node(new Point2D(6, 7)));
-        routeNodesList2.add(new Node(new Point2D(7, 7)));
-        routeNodesList2.add(new Node(new Point2D(8, 7)));
-        routeNodesList2.add(new Node(new Point2D(9, 7)));
-        routeNodesList2.add(new Node(new Point2D(10, 7)));
-        routeNodesList2.add(new Node(new Point2D(11, 7)));
-        routeNodesList2.add(new Node(new Point2D(12, 7)));
     }
 
     // Returns a group of graphical tiles which represents the warehouse floor
@@ -182,18 +117,16 @@ public class GraphicalWarehouse {
 
     private Group getOrderPickerGroup() {
         Group orderPickerGroup = new Group();
-        orderPickerTest = new OrderPickerGraphics(routeNodesList);
-        orderPickerTest2 = new OrderPickerGraphics(routeNodesList2);
+        orderPickerTest = new OrderPickerGraphics(randomPickingRoute.getRoute1());
+        orderPickerTest2 = new OrderPickerGraphics(randomPickingRoute.getRoute2());
+        orderPickerTest3 = new OrderPickerGraphics(randomPickingRoute.getRoute3());
 
-        orderPickerGroup.getChildren().addAll(orderPickerTest, orderPickerTest2);
+        orderPickerGroup.getChildren().addAll(orderPickerTest, orderPickerTest2, orderPickerTest3);
         return orderPickerGroup;
     }
 
     public Parent getWarehouseGraphics() {
         Pane root = new Pane();
-
-        fillRandomNodes();
-        fillRandomNodes2();
 
         pickPointGroup = getPickPointGroup();
         tileGroup = getTileGroup();
@@ -219,7 +152,14 @@ public class GraphicalWarehouse {
     private void onUpdate() {
         UPDATE_COUNTER++;
 
-        if(orderPickerTest2.move(UPDATE_COUNTER));
-        if(orderPickerTest.move(UPDATE_COUNTER));
+        if(!orderPickerTest.move(UPDATE_COUNTER)) {
+            System.out.println("picker 1 is done");
+        }
+        if(!orderPickerTest2.move(UPDATE_COUNTER)) {
+            System.out.println("picker 2 is done");
+        }
+        if(!orderPickerTest3.move(UPDATE_COUNTER)) {
+            System.out.println("picker 3 is done");
+        }
     }
 }

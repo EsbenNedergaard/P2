@@ -35,6 +35,7 @@ public class GraphicalWarehouse {
 
 
     private List<Node> routeNodesList = new ArrayList<>();
+    private List<Node> routeNodesList2 = new ArrayList<>();
 
     // Animation timer
     private AnimationTimer timer;
@@ -88,6 +89,27 @@ public class GraphicalWarehouse {
          //   System.out.println(item.getX() + "," + item.getY());
         //}
 
+    }
+
+    private void fillRandomNodes2() {
+        routeNodesList2.add(new Node(new Point2D(1, 1)));
+        routeNodesList2.add(new Node(new Point2D(1, 2)));
+        routeNodesList2.add(new Node(new Point2D(1, 3)));
+        routeNodesList2.add(new Node(new Point2D(1, 4)));
+        routeNodesList2.add(new Node(new Point2D(1, 5)));
+        routeNodesList2.add(new Node(new Point2D(1, 6)));
+        routeNodesList2.add(new Node(new Point2D(1, 7)));
+        routeNodesList2.add(new Node(new Point2D(2, 7)));
+        routeNodesList2.add(new Node(new Point2D(3, 7)));
+        routeNodesList2.add(new Node(new Point2D(4, 7)));
+        routeNodesList2.add(new Node(new Point2D(5, 7)));
+        routeNodesList2.add(new Node(new Point2D(6, 7)));
+        routeNodesList2.add(new Node(new Point2D(7, 7)));
+        routeNodesList2.add(new Node(new Point2D(8, 7)));
+        routeNodesList2.add(new Node(new Point2D(9, 7)));
+        routeNodesList2.add(new Node(new Point2D(10, 7)));
+        routeNodesList2.add(new Node(new Point2D(11, 7)));
+        routeNodesList2.add(new Node(new Point2D(12, 7)));
     }
 
     // Returns a group of graphical tiles which represents the warehouse floor
@@ -161,8 +183,9 @@ public class GraphicalWarehouse {
     private Group getOrderPickerGroup() {
         Group orderPickerGroup = new Group();
         orderPickerTest = new OrderPickerGraphics(routeNodesList);
+        orderPickerTest2 = new OrderPickerGraphics(routeNodesList2);
 
-        orderPickerGroup.getChildren().add(orderPickerTest);
+        orderPickerGroup.getChildren().addAll(orderPickerTest, orderPickerTest2);
         return orderPickerGroup;
     }
 
@@ -170,6 +193,7 @@ public class GraphicalWarehouse {
         Pane root = new Pane();
 
         fillRandomNodes();
+        fillRandomNodes2();
 
         pickPointGroup = getPickPointGroup();
         tileGroup = getTileGroup();

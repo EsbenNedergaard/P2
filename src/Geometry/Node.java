@@ -30,7 +30,7 @@ public class Node extends Point2D {
         this.nodeType = "walkable";
     }
 
-    private boolean isNeighbour(Node node) {
+    boolean isNeighbour(Node node) {
         if (this.getTime() + 1 == node.getTime()) {
             if (this.getX() == node.getX() + 1 && this.getY() == node.getY()) {
                 return true;
@@ -50,7 +50,6 @@ public class Node extends Point2D {
     public int getTotalDistance() {
         return distanceFromStart + distanceToEnd;
     }
-
 
     @Override
     public boolean equals(Object o) {
@@ -93,6 +92,10 @@ public class Node extends Point2D {
 
     public Node getCameFrom() {
         return cameFrom;
+    }
+
+    public int getDistanceToEnd() {
+        return distanceToEnd;
     }
 
     public void setTimeLayer(NodeLayer timeLayer) {

@@ -103,7 +103,23 @@ class NodeTest {
 
         nodeLayer1.setAllNeighbourNodesForLayer(nodeLayer2);
 
+        //This should be element (0,0)
+        node1 = nodeLayer1.getNodeList().get(0);
 
-        assertTrue(node1.isNeighbour(node2));
+        //Layer2 element 1 is (0,1)
+        assertTrue(node1.isNeighbour(nodeLayer2.getNodeList().get(1)));
+
+        //Layer2 element 2 is (0,2)
+        assertFalse(node1.isNeighbour(nodeLayer2.getNodeList().get(2)));
+    }
+
+    @Test
+    void testMethod_setDistanceToEnd(){
+        Node endNode = new Node(new Point2D(3,3));
+        node1.setDistanceToEnd(endNode);
+
+        // Expect the sum of the difference between the two point coordinates: (1,1), (3,3), which is 2 + 2 = 4
+        assertEquals(4, node1.getDistanceToEnd());
+
     }
 }

@@ -53,15 +53,27 @@ class SpaceTimeGridTest {
 
     @Test
     void removeNode() {
-        //We make a pointer to (0,0) in the first layer
-        Node temp = spaceTimeGrid.getNodeLayerList().get(0).getNodeList().get(0);
+
+    }
+
+    @Test
+    void removeNeighbourNode() {
+        //We make a pointer to (0,0), (0, 1) and (1,0) in the first layer
+        Node temp1 = spaceTimeGrid.getNodePointer(0,0,0);
+        Node temp2 = spaceTimeGrid.getNodePointer(0,1,0);
+        Node temp3 = spaceTimeGrid.getNodePointer(1,0,0);
 
         //We make a pointer to (0,0) in the second layer
-        Node nodeToRemove = spaceTimeGrid.getNodeLayerList().get(1).getNodeList().get(0);
+        Node nodeToRemove = spaceTimeGrid.getNodePointer(0,0,1);
 
-        assertEquals(3,  temp.getNeighbourNodes().size());
+        assertEquals(3,  temp1.getNeighbourNodes().size());
+        assertEquals(4,  temp2.getNeighbourNodes().size());
+        assertEquals(4,  temp3.getNeighbourNodes().size());
+
         spaceTimeGrid.removeNode(nodeToRemove);
-        assertEquals(2, temp.getNeighbourNodes().size());
-        System.out.println("TEST");
+        assertEquals(2, temp1.getNeighbourNodes().size());
+        assertEquals(3, temp2.getNeighbourNodes().size());
+        assertEquals(3, temp3.getNeighbourNodes().size());
     }
+
 }

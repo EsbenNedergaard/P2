@@ -23,7 +23,7 @@ public class NodeLayer {
 
     private void setUpNodeReferences(){
         for (Node element : this.nodeList) {
-            element.setTimeLayer(this);
+            element.setNodeLayer(this);
         }
     }
 
@@ -51,23 +51,10 @@ public class NodeLayer {
     }
 
     public void removeNode(Node n){
-        //TODO: check what happens when you try to remove an element that is'nt in the list
         nodeList.remove(n);
     }
 
-    public void removeNodeFromNeighbourLists(Node n){
-        for(Node element : nodeList) {
-            for (Node neighbour : element.getNeighbourNodes()) {
-                if(n.equals(neighbour)) {
-                    element.getNeighbourNodes().remove(neighbour);
-                    break;
-                    /*We need this break because we remove an element from the Neighbour-loop that we are running through
-                    otherwise the for-each loop will crash*/
-                }
-            }
-        }
-    }
-
+    //TODO: overveje om der skal være noget mere som gør NodeLayer ens
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

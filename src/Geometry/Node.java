@@ -10,7 +10,7 @@ public class Node extends Point2D {
     private int distanceToEnd;
     private Node cameFrom;
     private ArrayList<Node> neighbourNodes;
-    private NodeLayer timeLayer;
+    private NodeLayer nodeLayerPointer;
     private String nodeType; //TODO: Make this into enums
 
     public Node(Point2D p) {
@@ -45,15 +45,15 @@ public class Node extends Point2D {
     }
 
     public int getTime() {
-        if (timeLayer == null) {
+        if (nodeLayerPointer == null) {
             //TODO: make exception
             throw new NullPointerException("You tried to get time from a node that is'nt in a time layer");
         }
-        return timeLayer.getTime();
+        return nodeLayerPointer.getTime();
     }
 
-    public NodeLayer getTimeLayer() {
-        return timeLayer;
+    public NodeLayer getNodeLayerPointer() {
+        return nodeLayerPointer;
     }
 
     public int getDistanceFromStart() {
@@ -72,8 +72,8 @@ public class Node extends Point2D {
         return distanceToEnd;
     }
 
-    public void setTimeLayer(NodeLayer timeLayer) {
-        this.timeLayer = timeLayer;
+    public void setNodeLayer(NodeLayer nodeLayerPointer) {
+        this.nodeLayerPointer = nodeLayerPointer;
     }
 
     public void setCameFrom(Node cameFrom) {

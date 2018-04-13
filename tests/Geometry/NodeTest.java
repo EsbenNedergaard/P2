@@ -37,13 +37,13 @@ class NodeTest {
         NodeLayer nodeLayer = new NodeLayer(nodeList, 0);
 
 
-        nodeToTest1.setTimeLayer(nodeLayer);
-        nodeToTest2.setTimeLayer(nodeLayer);
+        nodeToTest1.setNodeLayer(nodeLayer);
+        nodeToTest2.setNodeLayer(nodeLayer);
 
-        node1.setTimeLayer(nodeLayer);
-        node2.setTimeLayer(nodeLayer);
+        node1.setNodeLayer(nodeLayer);
+        node2.setNodeLayer(nodeLayer);
 
-        assertTrue(nodeLayer.equals(node1.getTimeLayer()));
+        assertTrue(nodeLayer.equals(node1.getNodeLayerPointer()));
     }
 
     @Test
@@ -56,11 +56,11 @@ class NodeTest {
         NodeLayer nodeLayer = new NodeLayer(nodeList,0);
 
 
-        nodeToTest1.setTimeLayer(nodeLayer);
-        nodeToTest2.setTimeLayer(nodeLayer);
+        nodeToTest1.setNodeLayer(nodeLayer);
+        nodeToTest2.setNodeLayer(nodeLayer);
 
-        node1.setTimeLayer(nodeLayer);
-        node2.setTimeLayer(nodeLayer);
+        node1.setNodeLayer(nodeLayer);
+        node2.setNodeLayer(nodeLayer);
 
 
         assertEquals(node1, nodeToTest1);
@@ -81,7 +81,7 @@ class NodeTest {
 
         NodeLayer nodeLayer = new NodeLayer(nodeList, 2);
 
-        node.setTimeLayer(nodeLayer);
+        node.setNodeLayer(nodeLayer);
 
         assertEquals(2, node.getTime());
     }

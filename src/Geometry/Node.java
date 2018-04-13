@@ -44,7 +44,6 @@ public class Node extends Point2D {
         return distanceFromStart + distanceToEnd;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -88,6 +87,9 @@ public class Node extends Point2D {
         return cameFrom;
     }
 
+    public int getDistanceToEnd() {
+        return distanceToEnd;
+    }
 
     public void setTimeLayer(NodeLayer timeLayer) {
         this.timeLayer = timeLayer;

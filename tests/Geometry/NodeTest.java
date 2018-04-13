@@ -15,13 +15,13 @@ class NodeTest {
     Node node2;
 
     @BeforeEach
-    public void setupObjects(){
+    void setupObjects(){
         node1 = new Node(new Point2D(1, 1));
         node2 = new Node(node1);
     }
 
     @Test
-    public void testSetter_setTimeLayer(){
+    void testSetter_setTimeLayer(){
         Node nodeToTest1 = new Node(new Point2D(1,1));
         Node nodeToTest2 = new Node(new Point2D(2, 2));
 
@@ -47,7 +47,7 @@ class NodeTest {
     }
 
     @Test
-    public void testEquality(){
+    void testEquality(){
         Node nodeToTest1 = new Node(new Point2D(1,1));
         Node nodeToTest2 = new Node(new Point2D(2, 2));
 
@@ -71,7 +71,7 @@ class NodeTest {
     }
 
     @Test
-    public void testGetter_getTime(){
+    void testGetter_getTime(){
         assertThrows(NullPointerException.class, ()-> node1.getTime());
         assertThrows(NullPointerException.class, ()-> node2.getTime());
 
@@ -86,4 +86,40 @@ class NodeTest {
         assertEquals(2, node.getTime());
     }
 
+    @Test
+    void testMethod_isNeighbour(){
+
+        List<Node> nodeList = new ArrayList<>();
+
+        for(int x = 0; x < 30; x++){
+            for(int y = 0; y < 30; y++) {
+                Node node = new Node(new Point2D(x, y));
+                nodeList.add(node);
+            }
+        }
+
+        NodeLayer nodeLayer1 = new NodeLayer(nodeList, 1);
+        NodeLayer nodeLayer2 = new NodeLayer(nodeList, 2);
+
+        nodeLayer1.setAllNeighbourNodesForLayer(nodeLayer2);
+
+        //This should be element (0,0)
+        node1 = nodeLayer1.getNodeList().get(0);
+
+        //Layer2 element 1 is (0,1)
+        assertTrue(node1.isNeighbour(nodeLayer2.getNodeList().get(1)));
+
+        //Layer2 element 2 is (0,2)
+        assertFalse(node1.isNeighbour(nodeLayer2.getNodeList().get(2)));
+    }
+
+    @Test
+    void testMethod_setDistanceToEnd(){
+        Node endNode = new Node(new Point2D(3,3));
+        node1.setDistanceToEnd(endNode);
+
+        // Expect the sum of the difference between the two point coordinates: (1,1), (3,3), which is 2 + 2 = 4
+        assertEquals(4, node1.getDistanceToEnd());
+
+    }
 }

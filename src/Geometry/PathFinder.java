@@ -41,7 +41,7 @@ public class PathFinder {
 
 
             if (spaceTimeGrid.getMaxTime() <= (current.getTime() + 1)){
-                throw new RouteNotPossibleException("Did not find an route in the given time");
+                throw new RouteNotPossibleException("Did not find a route in the given time");
             }
 
             //Checks if there exists a better path through current node to its neighbours

@@ -16,21 +16,14 @@ public class Node extends Point2D {
     private Node cameFrom;
     private ArrayList<Node> neighbourNodes;
     private NodeLayer timeLayer;
-    String nodeType; //We have nodeType instead of boolean obstacle in case we want other types later
+    private String nodeType; //TODO: Make this into enums
 
     public Node(Point2D p) {
         super(p);
         this.nodeType = "walkable";
     }
 
-    // For copying nodes
-    public Node(Node n) {
-        this.setX(n.getX());
-        this.setY(n.getY());
-        this.nodeType = "walkable";
-    }
-
-    boolean isNeighbour(Node node) {
+    private boolean isNeighbour(Node node) {
         if (this.getTime() + 1 == node.getTime()) {
             if (this.getX() == node.getX() + 1 && this.getY() == node.getY()) {
                 return true;

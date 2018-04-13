@@ -1,24 +1,23 @@
 package Geometry;
 
-import Exceptions.RouteNotPossibleException;
-import Warehouse.Warehouse;
-import Warehouse.Warehouse22b;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class SpaceTimeGridTest {
-    private final int MAX_TIME = 100;
-    private final int GRID_HEIGHT = 10;
-    private final int GRID_LENGTH = 10;
-    private List<Node> inputSet;
+    private final int MAX_TIME = 3;
+    private final int GRID_HEIGHT = 3;
+    private final int GRID_LENGTH = 3;
+    private SpaceTimeGrid spaceTimeGrid;
+
 
     @BeforeEach
     void beforeEach() {
+        List<Node> inputSet;
         inputSet = new ArrayList<>();
         for (int x = 0; x < GRID_LENGTH; x++) {
             for (int y = 0; y < GRID_HEIGHT; y++) {
@@ -26,94 +25,43 @@ class SpaceTimeGridTest {
                 inputSet.add(temp);
             }
         }
+
+        BaseLayer baseLayer = new BaseLayer(inputSet);
+        spaceTimeGrid = new SpaceTimeGrid(baseLayer, MAX_TIME);
     }
 
     @Test
-    void testAlgorithm() {
-        //Setting in obstacles
-        for (Node n : inputSet) {
-            int x = n.getX();
-            int y = n.getY();
-            if ((y == 1 && x < 5)|| (y == 8 && x > 1) || (x == 5 && (1 < y && y < 6)) || (x == 1 && (3 <= y && y < 8))) {
-                n.setNodeType("Obstacle");
-            }
-        }
-        BaseLayer baseLayer = new BaseLayer(inputSet);
-        SpaceTimeGrid spaceTimeGrid = new SpaceTimeGrid(baseLayer, MAX_TIME);
-
-        Node startNode = new Node(new Point2D(0, 0));
-        Node endNode = new Node(new Point2D(GRID_HEIGHT - 1, GRID_LENGTH - 1));
-
-        PathFinder testPathFinder = new PathFinder(spaceTimeGrid);
-
-        List<Node> testResultRoute = new ArrayList<>();
-        for (int i = 0; i < 1; i++) {
-            System.out.println("Attempt: " + i);
-            try {
-                testResultRoute = testPathFinder.findShortestRoute(startNode, endNode);
-            }
-            catch (RouteNotPossibleException e) {
-                System.out.println(e.toString());
-            }
-        }
-
-        TempRoutePrinter printer = new TempRoutePrinter(testResultRoute, baseLayer);
-        printer.printRoute(GRID_LENGTH, GRID_HEIGHT);
+    void getNodeLayerList() {
     }
 
     @Test
-    void testIllegalEndPoint(){
-        for(Node n : inputSet) {
-            if (n.getX() == 9 && n.getY() == 9) {
-                n.setNodeType("Obstacle");
-            }
-        }
-
-        BaseLayer baseLayer = new BaseLayer(inputSet);
-        SpaceTimeGrid spaceTimeGrid = new SpaceTimeGrid(baseLayer, MAX_TIME);
-
-        Node startNode = new Node(new Point2D(0, 0));
-        Node endNode = new Node(new Point2D(9, 9));
-
-        PathFinder testPathFinder = new PathFinder(spaceTimeGrid);
-
-        assertThrows(RouteNotPossibleException.class, ()-> testPathFinder.findShortestRoute(startNode, endNode));
+    void getMaxTime() {
     }
 
     @Test
-    void testIllegalStartPoint(){
-        for(Node n : inputSet) {
-            if (n.getX() == 0 && n.getY() == 0) {
-                n.setNodeType("Obstacle");
-            }
-        }
-        BaseLayer baseLayer = new BaseLayer(inputSet);
-        SpaceTimeGrid spaceTimeGrid = new SpaceTimeGrid(baseLayer, MAX_TIME);
-
-        Node startNode = new Node(new Point2D(0, 0));
-        Node endNode = new Node(new Point2D(9, 9));
-
-        PathFinder testPathFinder = new PathFinder(spaceTimeGrid);
-
-        assertThrows(RouteNotPossibleException.class, ()-> testPathFinder.findShortestRoute(startNode, endNode));
+    void getBaseLayer() {
     }
 
     @Test
-    void testBoxedInPoint(){
-        for(Node n : inputSet) {
-            if ((n.getX() == 1 && n.getY() == 0) || (n.getX() == 0 && n.getY() == 1) ){
-                n.setNodeType("Obstacle");
-            }
-        }
-        BaseLayer baseLayer = new BaseLayer(inputSet);
-        SpaceTimeGrid spaceTimeGrid = new SpaceTimeGrid(baseLayer, MAX_TIME);
+    void getAllNodes() {
+    }
 
-        Node startNode = new Node(new Point2D(0, 0));
-        Node endNode = new Node(new Point2D(9, 9));
+    @Test
+    void getNodePointer(){
 
-        PathFinder testPathFinder = new PathFinder(spaceTimeGrid);
+    }
 
-        assertThrows(RouteNotPossibleException.class, ()-> testPathFinder.findShortestRoute(startNode, endNode));
+    @Test
+    void removeNode() {
+        //We make a pointer to (0,0) in the first layer
+        Node temp = spaceTimeGrid.getNodeLayerList().get(0).getNodeList().get(0);
+
+        //We make a pointer to (0,0) in the second layer
+        Node nodeToRemove = spaceTimeGrid.getNodeLayerList().get(1).getNodeList().get(0);
+
+        assertEquals(3,  temp.getNeighbourNodes().size());
+        spaceTimeGrid.removeNode(nodeToRemove);
+        assertEquals(2, temp.getNeighbourNodes().size());
+        System.out.println("TEST");
     }
 }
-

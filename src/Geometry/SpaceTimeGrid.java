@@ -1,5 +1,7 @@
 package Geometry;
 
+import Exceptions.NodeDoesNotExistException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,13 +50,27 @@ public class SpaceTimeGrid {
         return allNodes;
     }
 
+    public Node getNodePointer(int x, int y, int time) {
+        for (NodeLayer nodeLayer : nodeLayerList) {
+            if(time == nodeLayer.getTime()) {
+                return nodeLayer.getNodePointer(x, y);
+            }
+        }
+        throw new NodeDoesNotExistException("There was no NodeLayer in the graph with the time " + time);
+    }
 
     public void removeNode(Node n){
-        //TODO: lave så man fjerner noten og tjekke om den bliver fjernet fra neighbour også
-        /*for(Node node : nodeList){
-            if (node.equals(n)){
-                nodeList.remove(node);
+        //TODO: make it so it removes is from the neighbourlists
+        for(int i = 0; i < nodeLayerList.size(); i++) {
+            if (n.getTime() == nodeLayerList.get(i).getTime()) {
+                if (i > 0) {
+                    nodeLayerList.get(i-1).removeNodeFromNeighbourLists(n);
+                }
+                nodeLayerList.get(i).removeNode(n);
+                return;
             }
-        }*/
+        }
+
+        throw new IllegalArgumentException("This node does not exist in the graph");
     }
 }

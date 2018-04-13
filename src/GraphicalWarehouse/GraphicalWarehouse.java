@@ -81,7 +81,7 @@ public class GraphicalWarehouse {
         routeNodesList.add(new Node(new Point2D(i, 10)));
         routeNodesList.add(new Node(new Point2D(i, 10)));
 
-        for(i = 38; i > 4; i--) {
+        for(i = 38; i >= 4; i--) {
             routeNodesList.add(new Node(new Point2D(i, 10)));
         }
 

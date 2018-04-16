@@ -1,8 +1,16 @@
 package Geometry;
 
+import Exceptions.IsNotValidNodeTypeException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+/*TODO: få lavet et nabo-system i forhold til vores varehus, som ved hvilke punkter man kan gå fra og til, da det gør vi kan være ligeglade
+  med, hvilke punkter vi ikke kan gå igennem, hvis vi bare har ende punkterne af gangene, og kan afgøre, fra hvilke punkter man kan gå til andre punkter,
+  nemmeste ville nok være at lave en liste af "right end points" og en liste af "left end points" også kan bare tjekke om varens y-koordinat stemmer overens med
+  et endepunkt, så kører vi bare igennem et punkt efter et andet, og tager dem med lavest f-værdi som er naboer til vores nuværende punkt indtil vi når slutpunktet  */
+
 
 public class Node extends Point2D {
     private static final int INFINITY = 1000000;
@@ -11,13 +19,13 @@ public class Node extends Point2D {
     private Node cameFrom;
     private ArrayList<Node> neighbourNodes;
     private NodeLayer timeLayer;
-    private String nodeType; //TODO: Make this into enums
+    NodeType nodeType;
 
     public Node(Point2D p) {
         super(p);
-        this.nodeType = "walkable";
-        this.neighbourNodes = new ArrayList<>();
+        this.nodeType = NodeType.WALKABLE;
     }
+
 
     boolean isNeighbour(Node node) {
         if (this.getTime() + 1 == node.getTime()) {
@@ -40,9 +48,25 @@ public class Node extends Point2D {
         return distanceFromStart + distanceToEnd;
     }
 
-    public boolean isObstacle() {
-        return nodeType.equals("Obstacle");
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Node node = (Node) o;
+        return this.getTime() == node.getTime();
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getTime());
+    }
+
+
+    public boolean isObstacle() {
+        return nodeType.equals(NodeType.OBSTACLE);
+    }
+
 
     public int getTime() {
         if (timeLayer == null) {
@@ -70,6 +94,10 @@ public class Node extends Point2D {
 
     public int getDistanceToEnd() {
         return distanceToEnd;
+    }
+
+    public NodeType getNodeType() {
+        return nodeType;
     }
 
     public void setTimeLayer(NodeLayer timeLayer) {
@@ -104,24 +132,17 @@ public class Node extends Point2D {
         }
     }
 
-    public void setNodeType(String nodeType) {
-        this.nodeType = nodeType;
-    }
+    public void setNodeType(NodeType nodeType) {
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        Node node = (Node) o;
-        return this.getTime() == node.getTime();
+        switch (nodeType) {
+            case OBSTACLE:
+                this.nodeType = NodeType.OBSTACLE;
+            case WALKABLE:
+                this.nodeType = NodeType.WALKABLE;
+            default:
+                throw new IsNotValidNodeTypeException();
+        }
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), getTime());
-    }
-
 }
 
 

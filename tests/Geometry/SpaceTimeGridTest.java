@@ -26,22 +26,48 @@ class SpaceTimeGridTest {
             }
         }
 
+    @Test
+    void testAlgorithm() {
+        //Setting in obstacles
+        for (Node n : inputSet) {
+            int x = n.getX();
+            int y = n.getY();
+            if ((y == 1 && x < 5)|| (y == 8 && x > 1) || (x == 5 && (1 < y && y < 6)) || (x == 1 && (3 <= y && y < 8))) {
+                n.setNodeType(NodeType.OBSTACLE);
+            }
+        }
         BaseLayer baseLayer = new BaseLayer(inputSet);
         spaceTimeGrid = new SpaceTimeGrid(baseLayer, MAX_TIME);
     }
 
     @Test
-    void getNodeLayerList() {
+    void testIllegalEndPoint(){
+        for(Node n : inputSet) {
+            if (n.getX() == 9 && n.getY() == 9) {
+                n.setNodeType(NodeType.OBSTACLE);
+            }
+        }
+
+        BaseLayer baseLayer = new BaseLayer(inputSet);
+        SpaceTimeGrid spaceTimeGrid = new SpaceTimeGrid(baseLayer, MAX_TIME);
+
+        Node startNode = new Node(new Point2D(0, 0));
+        Node endNode = new Node(new Point2D(9, 9));
+
+        PathFinder testPathFinder = new PathFinder(spaceTimeGrid);  
     }
 
     @Test
-    void getMaxTime() {
+    void testIllegalStartPoint(){
+        for(Node n : inputSet) {
+            if (n.getX() == 0 && n.getY() == 0) {
+                n.setNodeType(NodeType.OBSTACLE);
+            }
+        }
+        BaseLayer baseLayer = new BaseLayer(inputSet);
+        SpaceTimeGrid spaceTimeGrid = new SpaceTimeGrid(baseLayer, MAX_TIME);
     }
-
-    @Test
-    void getBaseLayer() {
-    }
-
+     
     @Test
     void getAllNodes() {
     }
@@ -49,19 +75,5 @@ class SpaceTimeGridTest {
     @Test
     void getNodePointer(){
 
-    }
-
-    @Test
-    void removeNode() {
-        //We make a pointer to (0,0) in the first layer
-        Node temp = spaceTimeGrid.getNodeLayerList().get(0).getNodeList().get(0);
-
-        //We make a pointer to (0,0) in the second layer
-        Node nodeToRemove = spaceTimeGrid.getNodeLayerList().get(1).getNodeList().get(0);
-
-        assertEquals(3,  temp.getNeighbourNodes().size());
-        spaceTimeGrid.removeNode(nodeToRemove);
-        assertEquals(2, temp.getNeighbourNodes().size());
-        System.out.println("TEST");
     }
 }

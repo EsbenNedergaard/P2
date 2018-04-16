@@ -26,12 +26,6 @@ public class Node extends Point2D {
         this.nodeType = NodeType.WALKABLE;
     }
 
-    // For copying nodes
-    public Node(Node n) {
-        this.setX(n.getX());
-        this.setY(n.getY());
-        this.nodeType = NodeType.WALKABLE;
-    }
 
     boolean isNeighbour(Node node) {
         if (this.getTime() + 1 == node.getTime()) {

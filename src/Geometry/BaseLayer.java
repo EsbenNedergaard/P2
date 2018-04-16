@@ -7,7 +7,6 @@ public class BaseLayer {
     private List<Node> nodeList = new ArrayList<>();
     private List<Node> stationaryObstacles = new ArrayList<>();
 
-
     public BaseLayer(List<Node> nodeList) {
         for (Node n : nodeList) {
             if (n.isObstacle()) {
@@ -18,7 +17,6 @@ public class BaseLayer {
             }
         }
     }
-
 
     public List<Node> getNodeList() {
         return nodeList;

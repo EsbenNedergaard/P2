@@ -60,17 +60,23 @@ public class SpaceTimeGrid {
     }
 
     public void removeNode(Node n){
-        //TODO: update this so it use the pointer getter instead
-        for(int i = 0; i < nodeLayerList.size(); i++) {
-            if (n.getTime() == nodeLayerList.get(i).getTime()) {
-                if (i > 0) {
-                    nodeLayerList.get(i-1).removeNodeFromNeighbourLists(n);
+        if(n.getTime() != 0) {
+            this.removeNodeFromNeighbourLists(nodeLayerList.get(n.getTime() - 1), n);
+        }
+        n.getNodeLayerPointer().removeNode(n);
+    }
+
+    void removeNodeFromNeighbourLists(NodeLayer earlierNodeLayer, Node neighbourToRemove){
+        for(Node node : earlierNodeLayer.getNodeList()) {
+            for (Node neighbour : node.getNeighbourNodes()) {
+                if(neighbourToRemove.equals(neighbour)) {
+                    node.getNeighbourNodes().remove(neighbour);
+                    break;
+                    /*We need this break because we remove an element from the Neighbour-loop that we are running through
+                    otherwise the for-each loop will crash*/
                 }
-                nodeLayerList.get(i).removeNode(n);
-                return;
             }
         }
-
-        throw new IllegalArgumentException("This node does not exist in the graph");
     }
+
 }

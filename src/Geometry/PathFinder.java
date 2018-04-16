@@ -81,7 +81,7 @@ public class PathFinder {
         closedSet.clear();
 
         //We set the start-point to reference the first layer.
-        start.setTimeLayer(spaceTimeGrid.getNodeLayerList().get(0));
+        start.setNodeLayer(spaceTimeGrid.getNodeLayerList().get(0));
 
         for (Node node : spaceTimeGrid.getAllNodes()) {
             if (node.equals(start)) {

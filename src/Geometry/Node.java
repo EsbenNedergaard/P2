@@ -18,6 +18,7 @@ public class Node extends Point2D {
     private int distanceToEnd;
     private Node cameFrom;
     private ArrayList<Node> neighbourNodes;
+    private NodeLayer nodeLayerPointer;
     private NodeLayer timeLayer;
     private NodeType nodeType;
 
@@ -69,15 +70,15 @@ public class Node extends Point2D {
 
 
     public int getTime() {
-        if (timeLayer == null) {
+        if (nodeLayerPointer == null) {
             //TODO: make exception
-            throw new NullPointerException("You tried to get time from a node that is'nt in a time layer");
+            throw new NullPointerException("You tried to get time from a node that is no,,t in a time layer");
         }
-        return timeLayer.getTime();
+        return nodeLayerPointer.getTime();
     }
 
-    public NodeLayer getTimeLayer() {
-        return timeLayer;
+    public NodeLayer getNodeLayerPointer() {
+        return nodeLayerPointer;
     }
 
     public int getDistanceFromStart() {
@@ -96,12 +97,12 @@ public class Node extends Point2D {
         return distanceToEnd;
     }
 
+    public void setNodeLayer(NodeLayer nodeLayerPointer) {
+        this.nodeLayerPointer = nodeLayerPointer;
+    }
+  
     public NodeType getNodeType() {
         return nodeType;
-    }
-
-    public void setTimeLayer(NodeLayer timeLayer) {
-        this.timeLayer = timeLayer;
     }
 
     public void setCameFrom(Node cameFrom) {

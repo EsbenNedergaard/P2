@@ -29,7 +29,9 @@ class RouteTestWarehouse {
 
         List<Node> testResultRoute = new ArrayList<>();
         try {
-            testResultRoute = testPathFinder.findShortestRoute(startNode, endNode);
+            for (int i = 0; i < 1000000; i++) {
+                testResultRoute = testPathFinder.findShortestRoute(startNode, endNode);
+            }
         }
         catch (RouteNotPossibleException e) {
             System.out.println(e.toString());

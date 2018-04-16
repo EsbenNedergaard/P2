@@ -1,5 +1,6 @@
 package Geometry;
 
+import Exceptions.NodeDoesNotExistException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,8 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SpaceTimeGridTest {
     private final int MAX_TIME = 3;
-    private final int GRID_HEIGHT = 3;
-    private final int GRID_LENGTH = 3;
+    private final int GRID_SIZE = 3;
     private SpaceTimeGrid spaceTimeGrid;
 
 
@@ -19,8 +19,8 @@ class SpaceTimeGridTest {
     void beforeEach() {
         List<Node> inputSet;
         inputSet = new ArrayList<>();
-        for (int x = 0; x < GRID_LENGTH; x++) {
-            for (int y = 0; y < GRID_HEIGHT; y++) {
+        for (int x = 0; x < GRID_SIZE; x++) {
+            for (int y = 0; y < GRID_SIZE; y++) {
                 Node temp = new Node(new Point2D(x, y));
                 inputSet.add(temp);
             }
@@ -29,6 +29,45 @@ class SpaceTimeGridTest {
         BaseLayer baseLayer = new BaseLayer(inputSet);
         spaceTimeGrid = new SpaceTimeGrid(baseLayer, MAX_TIME);
     }
+
+    //We check that they actually point at the same object
+    @Test
+    void getNodePointer1(){
+        Node tempNodePointer = spaceTimeGrid.getNodePointer(0, 0,0);
+
+        assertTrue(tempNodePointer == spaceTimeGrid.getNodeLayerList().get(0).getNodeList().get(0));
+    }
+
+    //We check if we can change the x value inside the layer through the pointer
+    @Test
+    void getNodePointer2() {
+        Node tempNodePointer = spaceTimeGrid.getNodePointer(0, 0, 0);
+        tempNodePointer.setX(1);
+
+        assertEquals(1, spaceTimeGrid.getNodeLayerList().get(0).getNodeList().get(0).getX());
+    }
+
+    //We do the same for the y value
+    @Test
+    void getNodePointer3() {
+        Node tempNodePointer = spaceTimeGrid.getNodePointer(0, 0, 0);
+        tempNodePointer.setY(1);
+
+        assertEquals(1, spaceTimeGrid.getNodeLayerList().get(0).getNodeList().get(0).getY());
+    }
+
+    //Testing that we cant get a pointer to a node outside grid
+    @Test
+    void getNodePointer4() {
+        assertThrows(NodeDoesNotExistException.class, ()-> spaceTimeGrid.getNodePointer(GRID_SIZE+1, GRID_SIZE+1, 0));
+    }
+
+    //Testing with a too high time
+    @Test
+    void getNodePointer5() {
+        assertThrows(NodeDoesNotExistException.class, ()-> spaceTimeGrid.getNodePointer(1, 1, MAX_TIME+1));
+    }
+
 
     @Test
     void getNodeLayerList() {
@@ -46,10 +85,6 @@ class SpaceTimeGridTest {
     void getAllNodes() {
     }
 
-    @Test
-    void getNodePointer(){
-
-    }
 
     @Test
     void removeNode() {

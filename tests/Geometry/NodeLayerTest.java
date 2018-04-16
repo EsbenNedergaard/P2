@@ -55,7 +55,7 @@ class NodeLayerTest {
         assertEquals(1, testLayer1.getNodeList().get(0).getY());
     }
 
-
+    //Testing that we cant get a pointer to a node outside layer
     @Test
     void getNodePointer4() {
         assertThrows(NodeDoesNotExistException.class, ()-> testLayer1.getNodePointer(GRID_SIZE+1, GRID_SIZE+1));
@@ -127,7 +127,7 @@ class NodeLayerTest {
         testLayer1.removeNode(testLayer2.getNodePointer(1,1));
         assertEquals(tempNodeList, testLayer1.getNodeList());
     }
-    
+
     @Test
     void equals() {
     }

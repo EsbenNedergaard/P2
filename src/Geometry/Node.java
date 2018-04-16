@@ -47,7 +47,7 @@ public class Node extends Point2D {
     public int getTime() {
         if (nodeLayerPointer == null) {
             //TODO: make exception
-            throw new NullPointerException("You tried to get time from a node that is'nt in a time layer");
+            throw new NullPointerException("You tried to get time from a node that is no,,t in a time layer");
         }
         return nodeLayerPointer.getTime();
     }

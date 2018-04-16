@@ -19,7 +19,7 @@ public class Node extends Point2D {
     private Node cameFrom;
     private ArrayList<Node> neighbourNodes;
     private NodeLayer timeLayer;
-    NodeType nodeType;
+    private NodeType nodeType;
 
     public Node(Point2D p) {
         super(p);
@@ -133,12 +133,13 @@ public class Node extends Point2D {
     }
 
     public void setNodeType(NodeType nodeType) {
-
         switch (nodeType) {
             case OBSTACLE:
                 this.nodeType = NodeType.OBSTACLE;
+                break;
             case WALKABLE:
                 this.nodeType = NodeType.WALKABLE;
+                break;
             default:
                 throw new IsNotValidNodeTypeException();
         }

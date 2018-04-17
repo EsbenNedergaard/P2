@@ -16,7 +16,6 @@ public class Warehouse22b implements Warehouse {
     private List<Aisle> aisleList;
     private List<Node> nodeList;
 
-
     private static final int AISLE_LENGTH = 36;
     private static final int AISLE_PADDING = 4;
 
@@ -27,6 +26,16 @@ public class Warehouse22b implements Warehouse {
         createNodeGrid();
         createAisleList();
         createProducts();
+    }
+
+    private void createNodeGrid(){
+        nodeList = new ArrayList<>();
+        for(int j = 0; j < width; j++) {
+            for(int i = 0; i < length; i++) {
+                nodeList.add(new Node(new Point2D(i, j)));
+            }
+        }
+
     }
 
     public void createAisleList() {
@@ -47,12 +56,12 @@ public class Warehouse22b implements Warehouse {
 
     private void createProducts() {
 
-        aisleList.get(0).getFirstRackRow().addProduct(new Product(1));
-        aisleList.get(0).getFirstRackRow().addProduct(new Product(3));
-        aisleList.get(1).getSecondRackRow().getRackByIndex(5).addProduct(new Product(2));
+//        aisleList.get(0).getFirstRackRow().addProduct(new Product(1));
+//        aisleList.get(0).getFirstRackRow().addProduct(new Product(2));
+//        aisleList.get(1).getSecondRackRow().getRackByIndex(5).addProduct(new Product(3));
 
 
-        /*int i = 0;
+        int i = 1;
         for (Aisle aisleElement : aisleList) {
             try {
                 while (true) {
@@ -64,18 +73,9 @@ public class Warehouse22b implements Warehouse {
             catch (FullRackException exc) {
                 System.out.println("Aisle is full!");
             }
-        }*/
-    }
-
-    private void createNodeGrid(){
-        nodeList = new ArrayList<>();
-        for(int j = 0; j < width; j++) {
-            for(int i = 0; i < length; i++) {
-                nodeList.add(new Node(new Point2D(i, j)));
-            }
         }
-
     }
+
 
     @Override
     public List<RackRow> getRackRowList() {
@@ -89,6 +89,7 @@ public class Warehouse22b implements Warehouse {
     @Override
     public List<Point2D> getPickingPoints(List<Product> productPickList) {
         List<Point2D> pickingPointList = new ArrayList<>();
+
         for (Aisle aisleElement : aisleList) {
             pickingPointList.addAll(aisleElement.getPickingPoints(productPickList));
         }

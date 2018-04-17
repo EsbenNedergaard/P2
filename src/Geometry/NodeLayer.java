@@ -1,5 +1,7 @@
 package Geometry;
 
+import Exceptions.NodeDoesNotExistException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -9,7 +11,7 @@ public class NodeLayer {
     private int time;
 
     public NodeLayer(List<Node> nodeList, int time) {
-        if (nodeList.size() <= 0) {
+        if (nodeList.size() < 0) {
             throw new IllegalArgumentException();
         }
         for(Node element : nodeList) {
@@ -21,8 +23,17 @@ public class NodeLayer {
 
     private void setUpNodeReferences(){
         for (Node element : this.nodeList) {
-            element.setTimeLayer(this);
+            element.setNodeLayer(this);
         }
+    }
+
+    public Node getNodePointer(int x, int y) {
+        for(Node n : nodeList) {
+            if(x == n.getX() && y == n.getY()) {
+                return n;
+            }
+        }
+        throw new NodeDoesNotExistException("A node with x: " + x + " and y: " + y + ", does not exist");
     }
 
     public void setAllNeighbourNodesForLayer(NodeLayer nextNodeLayer) {
@@ -39,14 +50,11 @@ public class NodeLayer {
         return nodeList;
     }
 
-    public void removeNodeFromNodeLayer(Node n){
-        for(Node node : nodeList){
-            if (node.equals(n)){
-                nodeList.remove(node);
-            }
-        }
+    public void removeNode(Node n){
+        nodeList.remove(n);
     }
 
+    //TODO: overveje om der skal være noget mere som gør NodeLayer ens
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

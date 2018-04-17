@@ -11,7 +11,7 @@ public class NodeLayer {
     private int time;
 
     public NodeLayer(List<Node> nodeList, int time) {
-        if (nodeList.size() < 0) {
+        if (nodeList == null || nodeList.size() < 0) {
             throw new IllegalArgumentException();
         }
         for(Node element : nodeList) {

@@ -3,7 +3,6 @@ package Warehouse.Racks;
 import Exceptions.FullRackException;
 import Geometry.Point2D;
 import Warehouse.Product;
-import Warehouse.Racks.Rack;
 
 import java.util.ArrayList;
 import java.util.List;

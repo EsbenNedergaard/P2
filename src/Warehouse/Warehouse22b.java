@@ -1,6 +1,5 @@
 package Warehouse;
 
-import Exceptions.FullRackException;
 import Geometry.Node;
 import Geometry.Point2D;
 import Warehouse.Aisle.Aisle;

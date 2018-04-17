@@ -1,6 +1,5 @@
 package Warehouse;
 
-import Exceptions.FullRackException;
 import Geometry.Node;
 import Geometry.Point2D;
 import Warehouse.Aisle.Aisle;
@@ -41,7 +40,7 @@ public class Warehouse22b implements Warehouse {
         aisleList.add(aisle4);
 
         for(Aisle element : aisleList) {
-            element.updateNodeGrid(nodeList);
+            element.setRacksAsObstacles(nodeList);
         }
     }
 

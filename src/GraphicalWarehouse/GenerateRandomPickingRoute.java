@@ -6,9 +6,9 @@ import Geometry.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
-/* THIS CLASS HAS NO FUNCTION IN THE PROGRAM
- * ITS ONLY JOB IS TO GENERATE SOME CUSTOM RANDOM
- * PICKING ROUTES FOR TESTS */
+/* THIS CLASS HAS NO FUNCTION IN THE PROGRAM       *
+ * ITS ONLY JOB IS TO GENERATE SOME CUSTOM RANDOM  *
+ * PICKING ROUTES FOR TESTS                        */
 
 public class GenerateRandomPickingRoute {
 

@@ -10,7 +10,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class Warehouse22bTest {
-    private Warehouse22b testWarehouse = new Warehouse22b();
+    private Dexion testWarehouse = new Dexion();
 
     @Test
     void createAisleList() {

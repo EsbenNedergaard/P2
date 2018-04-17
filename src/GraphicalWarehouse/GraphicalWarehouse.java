@@ -9,7 +9,11 @@ import Warehouse.Warehouse;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Insets;
 import javafx.scene.*;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
@@ -29,6 +33,7 @@ public class GraphicalWarehouse {
     private Group rackRowGroup;
     private Group rackGroup;
     private Group orderPickerGroup;
+    private Group interactionFieldGroup;
 
     private OrderPickerGraphics orderPickerTest;
     private OrderPickerGraphics orderPickerTest2;
@@ -125,18 +130,45 @@ public class GraphicalWarehouse {
         return orderPickerGroup;
     }
 
+    private Group getInteractionFieldGroup() {
+        GridPane gridpane = new GridPane();
+        Label heading = new Label("Add list to queue");
+        Button addToQueButton = new Button("Add to queue");
+        Button launchButton = new Button("Launch");
+        TextField inputField = new TextField("Hejsa");
+
+        gridpane.add(heading, 1, 1);
+        gridpane.add(inputField, 1, 2, 4, 2);
+        gridpane.add(addToQueButton, 5, 2);
+        //gridpane.add(launchButton, 5, 3);
+
+        gridpane.getStyleClass().add("grid-pane");
+
+        return new Group(gridpane);
+
+    }
+
     public Parent getWarehouseGraphics() {
         Pane root = new Pane();
+        BorderPane borderPane = new BorderPane();
+        Group simulationElementsGroup = new Group();
 
         pickPointGroup = getPickPointGroup();
         tileGroup = getTileGroup();
         rackRowGroup = getRackRowGroup();
         rackGroup = getRackGroup();
         orderPickerGroup = getOrderPickerGroup();
+        interactionFieldGroup = getInteractionFieldGroup();
 
-        root.setPrefSize(LENGTH_WAREHOUSE * TILE_SIZE, WIDTH_WAREHOUSE * TILE_SIZE);
+        // Add all elements for the simulation
+        simulationElementsGroup.getChildren().addAll(pickPointGroup, rackRowGroup, rackGroup, tileGroup, orderPickerGroup);
 
-        root.getChildren().addAll(pickPointGroup, rackRowGroup, rackGroup, tileGroup, orderPickerGroup);
+        borderPane.setTop(simulationElementsGroup);
+        borderPane.setBottom(interactionFieldGroup);
+
+        root.setPrefSize(LENGTH_WAREHOUSE * TILE_SIZE, WIDTH_WAREHOUSE * TILE_SIZE * 2);
+
+        root.getChildren().addAll(borderPane);
 
         timer = new AnimationTimer() {
             @Override

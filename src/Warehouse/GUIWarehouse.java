@@ -1,6 +1,5 @@
 package Warehouse;
 import GraphicalWarehouse.GraphicalWarehouse;
-import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -20,13 +19,14 @@ public class GUIWarehouse extends Application {
 
     @Override
     public void init() throws Exception {
-        this.warehouse = new Warehouse22b();
+        this.warehouse = new Dexion();
         this.graphicalWarehouse = new GraphicalWarehouse(warehouse);
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         Scene scene = new Scene(graphicalWarehouse.getWarehouseGraphics());
+        scene.getStylesheets().add("GraphicalWarehouse/Styles/stylesheet.css");
         primaryStage.setTitle("GUIWarehouse");
         primaryStage.setScene(scene);
         primaryStage.show();

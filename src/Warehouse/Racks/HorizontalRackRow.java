@@ -13,12 +13,10 @@ public class HorizontalRackRow implements RackRow {
     private Point2D startPoint;
     private int rackRowLength;
     private Rack[] rackArray;
-    private int maxAmtInSingleRack;
 
     public HorizontalRackRow(Point2D startPoint, int rackRowLength, int maxAmtInSingleRack) {
         this.startPoint = startPoint;
         this.rackRowLength = rackRowLength;
-        this.maxAmtInSingleRack = maxAmtInSingleRack;
 
         rackArray = new Rack[rackRowLength];
 

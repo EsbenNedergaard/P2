@@ -5,6 +5,7 @@ import Geometry.Node;
 import Geometry.Point2D;
 import Warehouse.Aisle.Aisle;
 import Warehouse.Aisle.HorizontalAisle;
+import Warehouse.Racks.Rack;
 import Warehouse.Racks.RackRow;
 
 import java.util.ArrayList;
@@ -63,15 +64,13 @@ public class Warehouse22b implements Warehouse {
 
         int i = 1;
         for (Aisle aisleElement : aisleList) {
-            try {
-                while (true) {
-                    aisleElement.addProduct(new Product(i));
-                    i++;
+            for (RackRow rackRowElement : aisleElement.getRackRowList()) {
+                for (Rack rackElement : rackRowElement.getRackArray()) {
+                    while (!rackElement.checkIfFull()) {
+                        rackElement.addProduct(new Product(i));
+                        i++;
+                    }
                 }
-            }
-
-            catch (FullRackException exc) {
-                System.out.println("Aisle is full!");
             }
         }
     }

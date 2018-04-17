@@ -122,4 +122,27 @@ class SpaceTimeGridTest {
         assertEquals(3, temp2.getNeighbourNodes().size());
         assertEquals(3, temp3.getNeighbourNodes().size());
     }
+
+    @Test
+    void removeRoute() {
+        NodeLayer layer0 = new NodeLayer(spaceTimeGrid.getNodeLayerList().get(0).getNodeList(), 0);
+        NodeLayer layer1 = new NodeLayer(spaceTimeGrid.getNodeLayerList().get(1).getNodeList(), 1);
+        NodeLayer layer2 = new NodeLayer(spaceTimeGrid.getNodeLayerList().get(2).getNodeList(), 2);
+
+        layer0.removeNode(layer0.getNodePointer(0,0));
+        layer1.removeNode(layer1.getNodePointer(0,0));
+        layer1.removeNode(layer1.getNodePointer(0,1));
+        layer2.removeNode(layer2.getNodePointer(0,1));
+        layer2.removeNode(layer2.getNodePointer(0,2));
+
+        List<Node> route = new ArrayList<>();
+        route.add(spaceTimeGrid.getNodePointer(0,0,0));
+        route.add(spaceTimeGrid.getNodePointer(0,1,1));
+        route.add(spaceTimeGrid.getNodePointer(0,2,2));
+        spaceTimeGrid.removeRoute(route);
+
+        assertEquals(layer0, spaceTimeGrid.getNodeLayerList().get(0));
+        assertEquals(layer1, spaceTimeGrid.getNodeLayerList().get(1));
+        assertEquals(layer2, spaceTimeGrid.getNodeLayerList().get(2));
+    }
 }

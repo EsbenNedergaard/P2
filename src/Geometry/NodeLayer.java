@@ -64,16 +64,20 @@ public class NodeLayer {
         if (this.getTime() != nodeLayer.getTime()) {
             return false;
         }
+        if (this.getNodeList().size() != nodeLayer.getNodeList().size()) {
+            return false;
+        }
+
         /*We check if there is a node in the layer with the same x and y coordinate for every node in our current layer*/
         try{
             for(Node node : this.getNodeList()) {
                 nodeLayer.getNodePointer(node.getX(), node.getY());
             }
-            return true;
         }
         catch (NodeDoesNotExistException e) {
             return false;
         }
+        return true;
     }
 
     @Override

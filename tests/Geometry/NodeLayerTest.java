@@ -13,11 +13,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class NodeLayerTest {
     private NodeLayer testLayer1;
     private NodeLayer testLayer2;
+    private List<Node> nodeList;
     private final int GRID_SIZE = 3;
 
     @BeforeEach
     void beforeEach(){
-        List<Node> nodeList = new ArrayList<>();
+        nodeList = new ArrayList<>();
         for(int x = 0; x < GRID_SIZE; x++){
             for(int y = 0; y < GRID_SIZE; y++) {
                 Node node = new Node(new Point2D(x, y));
@@ -107,16 +108,9 @@ class NodeLayerTest {
 
     @Test
     void getNodeList() {
-        List<Node> tempNodeList = new ArrayList<>();
-        for(int x = 0; x < GRID_SIZE; x++){
-            for(int y = 0; y < GRID_SIZE; y++) {
-                Node node = new Node(new Point2D(x, y));
-                tempNodeList.add(node);
-            }
-        }
-        for(int i = 0; i < tempNodeList.size(); i++) {
-            assertEquals(tempNodeList.get(i).getX(), testLayer1.getNodeList().get(i).getX());
-            assertEquals(tempNodeList.get(i).getY(), testLayer1.getNodeList().get(i).getY());
+        for(int i = 0; i < nodeList.size(); i++) {
+            assertEquals(nodeList.get(i).getX(), testLayer1.getNodeList().get(i).getX());
+            assertEquals(nodeList.get(i).getY(), testLayer1.getNodeList().get(i).getY());
         }
     }
 
@@ -139,7 +133,37 @@ class NodeLayerTest {
         assertEquals(tempNodeList, testLayer1.getNodeList());
     }
 
+
     @Test
-    void equals() {
+    void equals1() {
+        //We create a nodeLayer in the same way as for testLayer1 so they should be equal
+        NodeLayer temp = new NodeLayer(nodeList, 0);
+
+        assertEquals(temp, testLayer1);
     }
+
+    @Test
+    void equals2() {
+        NodeLayer temp = new NodeLayer(nodeList, 0);
+        temp.removeNode(temp.getNodePointer(0,0));
+
+        assertNotEquals(temp, testLayer1);
+    }
+
+    @Test
+    void equals3() {
+        NodeLayer temp = new NodeLayer(nodeList, 0);
+        testLayer1.removeNode(temp.getNodePointer(0,0));
+
+        assertNotEquals(temp, testLayer1);
+    }
+
+    //We test that our 2 test layers should not be equal because they have different times*/
+    @Test
+    void equals4() {
+        assertNotEquals(testLayer1, testLayer2);
+    }
+
+
+
 }

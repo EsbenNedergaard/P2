@@ -2,6 +2,7 @@ package Warehouse.Aisle;
 
 import Exceptions.FullRackException;
 import Geometry.Node;
+import Geometry.NodeType;
 import Geometry.Point2D;
 import Warehouse.Product;
 import Warehouse.Racks.HorizontalRackRow;
@@ -37,7 +38,7 @@ public class HorizontalAisle implements Aisle {
             for(Rack rackElement : rackRowElement.getRackArray()) {
                 for (Node nodeElement : nodeGrid) {
                     if (nodeElement.getX() == rackElement.getXCoordinate() && nodeElement.getY() == rackElement.getYCoordinate()) {
-                        nodeElement.setNodeType("Obstacle");
+                        nodeElement.setNodeType(NodeType.OBSTACLE);
                     }
                 }
             }

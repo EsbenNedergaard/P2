@@ -85,11 +85,13 @@ public class OrderPickerGraphics extends Rectangle {
         return this.routeList.get(indexOfTargetNode);
     }
 
+    // Return true if two points has different x values
     private boolean changeInXCoordinate() {
         return getLastPointPosition().getXPixels() != getTargetNode().getXPixels() &&
                getLastPointPosition().getYPixels() == getTargetNode().getYPixels();
     }
 
+    // Return true if two points has different y values
     private boolean changeInYCoordinate() {
         return getLastPointPosition().getYPixels() != getTargetNode().getYPixels() &&
                getLastPointPosition().getXPixels() == getTargetNode().getXPixels();

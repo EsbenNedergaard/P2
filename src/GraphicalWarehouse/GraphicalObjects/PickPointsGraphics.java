@@ -6,8 +6,8 @@ import javafx.scene.shape.Circle;
 
 import static Warehouse.GUIWarehouse.TILE_SIZE;
 
-public class PickPointsDesign extends Circle {
-    public PickPointsDesign(Point2D pickPoint) {
+public class PickPointsGraphics extends Circle {
+    public PickPointsGraphics(Point2D pickPoint) {
         setRadius(TILE_SIZE * 0.3);
         setTranslateX(pickPoint.getXPixels() + 0.5 * TILE_SIZE);
         setTranslateY(pickPoint.getYPixels() + 0.5 * TILE_SIZE);

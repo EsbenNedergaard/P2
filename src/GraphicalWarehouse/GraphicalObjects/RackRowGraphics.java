@@ -6,9 +6,9 @@ import javafx.scene.shape.Rectangle;
 
 import static Warehouse.GUIWarehouse.TILE_SIZE;
 
-public class RackRowDesign extends Rectangle {
+public class RackRowGraphics extends Rectangle {
 
-    public RackRowDesign(RackRow rackRow) {
+    public RackRowGraphics(RackRow rackRow) {
         if(rackRow.isHorizontal()) {
             setWidth(TILE_SIZE * rackRow.getRackRowLength());
             setHeight(TILE_SIZE);

@@ -1,5 +1,6 @@
 package GraphicalWarehouse;
 
+import Geometry.Node;
 import Geometry.Point2D;
 import GraphicalWarehouse.GraphicalObjects.*;
 import Warehouse.Aisle.Aisle;
@@ -11,6 +12,9 @@ import javafx.scene.*;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static Warehouse.GUIWarehouse.TILE_SIZE;
 
@@ -24,8 +28,18 @@ public class GraphicalWarehouse {
     private Group pickPointGroup;
     private Group rackRowGroup;
     private Group rackGroup;
+    private Group orderPickerGroup;
 
-    //private Group orderPickerGroup = new Group();
+    private OrderPickerGraphics orderPickerTest;
+    private OrderPickerGraphics orderPickerTest2;
+    private OrderPickerGraphics orderPickerTest3;
+
+    private GenerateRandomPickingRoute
+            randomPickingRoute = new GenerateRandomPickingRoute();
+
+    // Animation timer
+    private AnimationTimer timer;
+    private int UPDATE_COUNTER = 0;
 
     public GraphicalWarehouse(Warehouse warehouse) {
         this.warehouse = warehouse;
@@ -54,7 +68,7 @@ public class GraphicalWarehouse {
 
         for(RackRow rackRowElement : warehouse.getRackRowList()) {
             // Styles the rack
-            RackRowDesign graphicRack = new RackRowDesign(rackRowElement);
+            RackRowGraphics graphicRack = new RackRowGraphics(rackRowElement);
             // Puts the rack into the group
             rackRowGroup.getChildren().add(graphicRack);
         }
@@ -69,14 +83,14 @@ public class GraphicalWarehouse {
         for(RackRow rackRowElement : warehouse.getRackRowList()) {
 
             for (Rack rackElement : rackRowElement.getRackArray()) {
-                RackDesign graphicRack = new RackDesign(rackElement);
+                RackGraphics graphicRack = new RackGraphics(rackElement);
 
                 Label amtProducts = new Label("" + rackElement.getProductList().size());
                 amtProducts.setPadding(new Insets(4, 5, 5, 8));
                 amtProducts.setTextFill(Color.valueOf("white"));
+
                 if (rackElement.getProductList().size() == 0)
                     amtProducts.setVisible(false);
-                graphicRack.getStyleClass().add("rack-element");
 
                 amtProducts.relocate(rackElement.getRackPosition().getXPixels(), rackElement.getRackPosition().getYPixels());
                 rackGroup.getChildren().addAll(graphicRack, amtProducts);
@@ -91,14 +105,24 @@ public class GraphicalWarehouse {
 
         for(Aisle aisleElement : warehouse.getAisleList()) {
             // Setup the design for the points
-            PickPointsDesign startPointDesign = new PickPointsDesign(aisleElement.getStartPoint());
-            PickPointsDesign endPointDesign = new PickPointsDesign(aisleElement.getEndPoint());
+            PickPointsGraphics startPointDesign = new PickPointsGraphics(aisleElement.getStartPoint());
+            PickPointsGraphics endPointDesign = new PickPointsGraphics(aisleElement.getEndPoint());
 
             // Puts the points into the group
             pickPointGroup.getChildren().addAll(startPointDesign, endPointDesign);
         }
 
         return pickPointGroup;
+    }
+
+    private Group getOrderPickerGroup() {
+        Group orderPickerGroup = new Group();
+        orderPickerTest = new OrderPickerGraphics(randomPickingRoute.getRoute1());
+        orderPickerTest2 = new OrderPickerGraphics(randomPickingRoute.getRoute2());
+        orderPickerTest3 = new OrderPickerGraphics(randomPickingRoute.getRoute3());
+
+        orderPickerGroup.getChildren().addAll(orderPickerTest, orderPickerTest2, orderPickerTest3);
+        return orderPickerGroup;
     }
 
     public Parent getWarehouseGraphics() {
@@ -108,12 +132,34 @@ public class GraphicalWarehouse {
         tileGroup = getTileGroup();
         rackRowGroup = getRackRowGroup();
         rackGroup = getRackGroup();
+        orderPickerGroup = getOrderPickerGroup();
 
         root.setPrefSize(LENGTH_WAREHOUSE * TILE_SIZE, WIDTH_WAREHOUSE * TILE_SIZE);
 
-        root.getChildren().addAll(pickPointGroup, rackRowGroup, rackGroup, tileGroup);
+        root.getChildren().addAll(pickPointGroup, rackRowGroup, rackGroup, tileGroup, orderPickerGroup);
+
+        timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                onUpdate();
+            }
+        };
+        timer.start();
 
         return root;
     }
 
+    private void onUpdate() {
+        UPDATE_COUNTER++;
+
+        if(!orderPickerTest.move(UPDATE_COUNTER)) {
+            System.out.println("picker 1 is done");
+        }
+        if(!orderPickerTest2.move(UPDATE_COUNTER)) {
+            System.out.println("picker 2 is done");
+        }
+        if(!orderPickerTest3.move(UPDATE_COUNTER)) {
+            System.out.println("picker 3 is done");
+        }
+    }
 }

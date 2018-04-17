@@ -29,6 +29,11 @@ class NodeLayerTest {
         testLayer2 = new NodeLayer(nodeList, 1);
     }
 
+    @Test
+    void testSetupReferences() {
+
+    }
+
     //We check that they actually point at the same object
     @Test
     void getNodePointer1() {

@@ -77,6 +77,8 @@ class SpaceTimeGridTest {
 
     }
 
+
+    //TODO: make better assertEquals in the end.
     @Test
     void removeNeighbourNode() {
         //We make a pointer to (0,0), (0, 1) and (1,0) in the first layer

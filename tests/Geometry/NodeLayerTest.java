@@ -29,9 +29,15 @@ class NodeLayerTest {
         testLayer2 = new NodeLayer(nodeList, 1);
     }
 
+
+    //Testing that we setup our reference correctly
     @Test
     void testSetupReferences() {
+        Node temp = new Node(new Point2D(1,1));
+        assertThrows(NullPointerException.class, ()-> temp.getTime());
 
+        temp.setNodeLayer(testLayer1);
+        assertEquals(0, temp.getTime());
     }
 
     //We check that they actually point at the same object

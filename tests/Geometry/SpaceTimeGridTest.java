@@ -71,12 +71,25 @@ class SpaceTimeGridTest {
     void getAllNodes() {
     }
 
+    @Test
+    void getMaxTime() {
+        assertEquals(MAX_TIME, spaceTimeGrid.getMaxTime());
+    }
+
+    @Test
+    void getBaseLayer() {
+
+    }
 
     @Test
     void removeNode() {
 
-    }
+        assertEquals(9, spaceTimeGrid.getNodeLayerList().get(0).getNodeList().size());
 
+        spaceTimeGrid.removeNode(spaceTimeGrid.getNodePointer(0,0,0));
+
+        assertEquals(8, spaceTimeGrid.getNodeLayerList().get(0).getNodeList().size());
+    }
 
     //TODO: make better assertEquals in the end.
     @Test

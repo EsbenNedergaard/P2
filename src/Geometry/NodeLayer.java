@@ -61,11 +61,23 @@ public class NodeLayer {
         if (o == null || getClass() != o.getClass()) return false;
         NodeLayer nodeLayer = (NodeLayer) o;
 
-        return this.getTime() == nodeLayer.getTime();
+        if (this.getTime() != nodeLayer.getTime()) {
+            return false;
+        }
+        /*We check if there is a node in the layer with the same x and y coordinate for every node in our current layer*/
+        try{
+            for(Node node : this.getNodeList()) {
+                nodeLayer.getNodePointer(node.getX(), node.getY());
+            }
+            return true;
+        }
+        catch (NodeDoesNotExistException e) {
+            return false;
+        }
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getTime());
+        return Objects.hash(getTime()) + Objects.hash(getNodeList());
     }
 }

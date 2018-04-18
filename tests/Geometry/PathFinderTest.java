@@ -11,7 +11,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PathFinderTest {
-    private final int MAX_TIME = 50;
+    private final int MAX_TIME = 250;
     private final int GRID_SIZE = 10;
     private SpaceTimeGrid spaceTimeGrid;
     private List<Node> inputSet;
@@ -65,6 +65,13 @@ class PathFinderTest {
         Node endNode = new Node(new Point2D(GRID_SIZE-1,GRID_SIZE-1));
 
         PathFinder testPathFinder = new PathFinder(spaceTimeGrid);
+
+        List<Node> testNonPermantObstruction = new ArrayList<>();
+        for(int i = 0; i < MAX_TIME/2; i++) {
+            testNonPermantObstruction.add(testPathFinder.getSpaceTimeGrid().getNodePointer(1, 2, i));
+        }
+        testPathFinder.removeRoute(testNonPermantObstruction);
+
         List<Node> testResultRoute = new ArrayList<>();
         try {
             testResultRoute = testPathFinder.findShortestRoute(startNode, endNode);
@@ -73,8 +80,8 @@ class PathFinderTest {
             System.out.println(e.toString());
         }
 
-
-        testPathFinder.removeRoute(testResultRoute);
+        TempRoutePrinter printer = new TempRoutePrinter(testResultRoute, baseLayer);
+        printer.printRoute(GRID_SIZE, GRID_SIZE);
         //TODO: make some asserts here
     }
 

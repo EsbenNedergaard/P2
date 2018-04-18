@@ -16,6 +16,7 @@ class PathFinderTest {
     private final int START_TIME = 0;
     private SpaceTimeGrid spaceTimeGrid;
     private List<Node> inputSet;
+    private BaseLayer baseLayer;
 
     @BeforeEach
     void beforeEach() {
@@ -35,13 +36,12 @@ class PathFinderTest {
                 n.setNodeType(NodeType.OBSTACLE);
             }
         }
+        baseLayer = new BaseLayer(inputSet);
+        spaceTimeGrid = new SpaceTimeGrid(baseLayer, MAX_TIME);
     }
 
     @Test
     void testAlgorithm() {
-        BaseLayer baseLayer = new BaseLayer(inputSet);
-        spaceTimeGrid = new SpaceTimeGrid(baseLayer, MAX_TIME);
-
         Node startNode = new Node(new Point2D(0, 0));
         Node endNode = new Node(new Point2D(GRID_SIZE-1,GRID_SIZE-1));
 
@@ -59,9 +59,6 @@ class PathFinderTest {
 
     @Test
     void testRemoveRoute() {
-        BaseLayer baseLayer = new BaseLayer(inputSet);
-        spaceTimeGrid = new SpaceTimeGrid(baseLayer, MAX_TIME);
-
         Node startNode = new Node(new Point2D(0, 0));
         Node endNode = new Node(new Point2D(GRID_SIZE-1,GRID_SIZE-1));
 
@@ -94,9 +91,8 @@ class PathFinderTest {
                 n.setNodeType(NodeType.OBSTACLE);
             }
         }
-
-        BaseLayer baseLayer = new BaseLayer(inputSet);
-        SpaceTimeGrid spaceTimeGrid = new SpaceTimeGrid(baseLayer, MAX_TIME);
+        baseLayer = new BaseLayer(inputSet);
+        spaceTimeGrid = new SpaceTimeGrid(baseLayer, MAX_TIME);
 
         Node startNode = new Node(new Point2D(0, 0));
         Node endNode = new Node(new Point2D(GRID_SIZE-1, GRID_SIZE-1));
@@ -113,8 +109,8 @@ class PathFinderTest {
                 n.setNodeType(NodeType.OBSTACLE);
             }
         }
-        BaseLayer baseLayer = new BaseLayer(inputSet);
-        SpaceTimeGrid spaceTimeGrid = new SpaceTimeGrid(baseLayer, MAX_TIME);
+        baseLayer = new BaseLayer(inputSet);
+        spaceTimeGrid = new SpaceTimeGrid(baseLayer, MAX_TIME);
 
         Node startNode = new Node(new Point2D(0, 0));
         Node endNode = new Node(new Point2D(GRID_SIZE-1, GRID_SIZE-1));
@@ -132,8 +128,8 @@ class PathFinderTest {
                 n.setNodeType(NodeType.OBSTACLE);
             }
         }
-        BaseLayer baseLayer = new BaseLayer(inputSet);
-        SpaceTimeGrid spaceTimeGrid = new SpaceTimeGrid(baseLayer, MAX_TIME);
+        baseLayer = new BaseLayer(inputSet);
+        spaceTimeGrid = new SpaceTimeGrid(baseLayer, MAX_TIME);
 
         Node startNode = new Node(new Point2D(0, 0));
         Node endNode = new Node(new Point2D(GRID_SIZE-1, GRID_SIZE-1));
@@ -145,9 +141,6 @@ class PathFinderTest {
 
     @Test
     void testStartPointOutsideGrid1(){
-        BaseLayer baseLayer = new BaseLayer(inputSet);
-        SpaceTimeGrid spaceTimeGrid = new SpaceTimeGrid(baseLayer, MAX_TIME);
-
         Node startNode = new Node(new Point2D(-1, -1));
         Node endNode = new Node(new Point2D(GRID_SIZE-1, GRID_SIZE-1));
 
@@ -158,9 +151,6 @@ class PathFinderTest {
 
     @Test
     void testStartPointOutsideGrid2(){
-        BaseLayer baseLayer = new BaseLayer(inputSet);
-        SpaceTimeGrid spaceTimeGrid = new SpaceTimeGrid(baseLayer, MAX_TIME);
-
         Node startNode = new Node(new Point2D(GRID_SIZE, GRID_SIZE));
         Node endNode = new Node(new Point2D(GRID_SIZE-1, GRID_SIZE-1));
 
@@ -171,9 +161,6 @@ class PathFinderTest {
 
     @Test
     void testEndPointOutsideGrid1(){
-        BaseLayer baseLayer = new BaseLayer(inputSet);
-        SpaceTimeGrid spaceTimeGrid = new SpaceTimeGrid(baseLayer, MAX_TIME);
-
         Node startNode = new Node(new Point2D(0, 0));
         Node endNode = new Node(new Point2D(-1, -1));
 
@@ -184,9 +171,6 @@ class PathFinderTest {
 
     @Test
     void testEndPointOutsideGrid2(){
-        BaseLayer baseLayer = new BaseLayer(inputSet);
-        SpaceTimeGrid spaceTimeGrid = new SpaceTimeGrid(baseLayer, MAX_TIME);
-
         Node startNode = new Node(new Point2D(0, 0));
         Node endNode = new Node(new Point2D(GRID_SIZE, GRID_SIZE));
 
@@ -194,7 +178,4 @@ class PathFinderTest {
 
         assertThrows(RouteNotPossibleException.class, ()-> testPathFinder.findShortestRoute(startNode, endNode, START_TIME));
     }
-
-
-
 }

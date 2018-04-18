@@ -2,44 +2,42 @@ package Geometry;
 
 import Exceptions.RouteNotPossibleException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FastestRoute {
     private final Node startNode = new Node(new Point2D(0, 0));
     private List<Point2D> pickingList;
-    private SpaceTimeGrid grid;
-    private List<Node> fastestRoute;
-    private List<Node> tempFastestRoute;
+    private PathFinder path;
+
 
     public FastestRoute(List<Point2D> pickingList, SpaceTimeGrid grid) {
         this.pickingList = pickingList;
-        this.grid = grid;
-        fastestRoute.add(startNode);
+        this.path = new PathFinder(grid);
     }
 
     public List<Node> getFastestRoute(){
+        List<Node> fastestRoute = new ArrayList<>();
 
-        PathFinder path = new PathFinder(grid);
-        Node endNode = new Node(pickingList.get(0));
-
-
-
-        try {
-            int listSize = pickingList.size();
-            for(int i = 0; i < listSize; i++) {
-                tempFastestRoute = path.findShortestRoute(startNode, new Node(pickingList.get(i)), 0);
-                if(tempFastestRoute.size() < fastestRoute.size()){
-                    fastestRoute = tempFastestRoute;
-                }
-            }
-            fastestRoute.add(startNode);
-
-        } catch (RouteNotPossibleException e) {
-            e.getMessage();
+        List<Node> tempRoute = this.getRouteThroughPickPoints();
+        if(fastestRoute.size() == 0 || tempRoute.size() < fastestRoute.size()){
+            fastestRoute = tempRoute;
         }
-
-
-
         return fastestRoute;
+    }
+
+     List<Node> getRouteThroughPickPoints(){
+        List<Node> tempRoute = new ArrayList<>();
+        Node currStart = startNode;
+        try {
+            for(Point2D endPoint : pickingList) {
+                tempRoute.addAll(path.findShortestRoute(currStart, new Node(endPoint), tempRoute.size()));
+                currStart = tempRoute.get(tempRoute.size() - 1);
+                tempRoute.remove(currStart);
+            }
+        } catch (RouteNotPossibleException e) {
+            System.out.println(e.getMessage());
+        }
+        return tempRoute;
     }
 }

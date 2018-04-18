@@ -12,7 +12,7 @@ public class RouteNotPossibleException extends Exception {
     }
 
     @Override
-    public String toString() {
+    public String getMessage() {
         return errorMsg;
     }
 }

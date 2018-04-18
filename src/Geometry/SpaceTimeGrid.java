@@ -66,14 +66,24 @@ public class SpaceTimeGrid {
         n.getNodeLayerPointer().removeNode(n);
     }
 
-    void removeNodeFromNeighbourLists(NodeLayer earlierNodeLayer, Node neighbourToRemove){
+    public void removeRoute(List<Node> route) {
+        for(int i = 0; i < route.size(); i++) {
+            Node temp = route.get(i);
+            if (i + 1 != maxTime) {
+                removeNode(this.getNodePointer(temp.getX(), temp.getY(), i + 1));
+            }
+            removeNode(route.get(i));
+        }
+    }
+
+    private void removeNodeFromNeighbourLists(NodeLayer earlierNodeLayer, Node neighbourToRemove){
         for(Node node : earlierNodeLayer.getNodeList()) {
             for (Node neighbour : node.getNeighbourNodes()) {
                 if(neighbourToRemove.equals(neighbour)) {
                     node.getNeighbourNodes().remove(neighbour);
-                    break;
                     /*We need this break because we remove an element from the Neighbour-loop that we are running through
                     otherwise the for-each loop will crash*/
+                    break;
                 }
             }
         }

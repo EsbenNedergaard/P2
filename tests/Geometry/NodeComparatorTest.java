@@ -34,6 +34,5 @@ class NodeComparatorTest {
         NodeComparator compareElement = new NodeComparator();
 
         assertTrue(compareElement.compare(firstNode, secondNode) == 0);
-
     }
 }

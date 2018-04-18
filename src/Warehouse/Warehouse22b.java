@@ -71,7 +71,7 @@ public class Warehouse22b implements Warehouse {
             }
 
             catch (FullRackException exc) {
-                System.out.println("Aisle is full!");
+                System.out.println(exc.toString());
             }
         }
     }

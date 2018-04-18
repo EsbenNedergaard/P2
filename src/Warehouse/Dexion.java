@@ -94,6 +94,17 @@ public class Dexion implements Warehouse {
     }
 
     @Override
+    public List<Point2D> getPickingPointsFromIDs(List<Integer> productIDList) {
+        List<Product> productPickList = new ArrayList<>();
+
+        for (int i : productIDList) {
+            productPickList.add(new Product(i));
+        }
+
+        return getPickingPoints(productPickList);
+    }
+
+    @Override
     public List<Aisle> getAisleList() {
         return aisleList;
     }

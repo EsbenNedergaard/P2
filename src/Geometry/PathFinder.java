@@ -20,6 +20,10 @@ public class PathFinder {
         this.openSet = new PriorityQueue<>(spaceTimeGrid.getAllNodes().size(), new NodeComparator());
     }
 
+    public void removeRoute(List<Node> route) {
+        spaceTimeGrid.removeRoute(route);
+    }
+
     public List<Node> findShortestRoute(Node start, Node end) throws RouteNotPossibleException {
         //TODO: Lav noget så RouteNotPossibleException bliver castet på at start eller end ligger på et permanent obstacle
         this.checkStartAndEndNode(start, end);

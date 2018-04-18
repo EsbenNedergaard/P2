@@ -25,11 +25,8 @@ class PathFinderTest {
                 inputSet.add(temp);
             }
         }
-    }
 
-    @Test
-    void testAlgorithm() {
-        //Setting in obstacles
+        //Setting in standard obstacles
         for (Node n : inputSet) {
             int x = n.getX();
             int y = n.getY();
@@ -37,6 +34,10 @@ class PathFinderTest {
                 n.setNodeType(NodeType.OBSTACLE);
             }
         }
+    }
+
+    @Test
+    void testAlgorithm() {
         BaseLayer baseLayer = new BaseLayer(inputSet);
         spaceTimeGrid = new SpaceTimeGrid(baseLayer, MAX_TIME);
 
@@ -56,7 +57,30 @@ class PathFinderTest {
     }
 
     @Test
+    void testRemoveRoute() {
+        BaseLayer baseLayer = new BaseLayer(inputSet);
+        spaceTimeGrid = new SpaceTimeGrid(baseLayer, MAX_TIME);
+
+        Node startNode = new Node(new Point2D(0, 0));
+        Node endNode = new Node(new Point2D(GRID_SIZE-1,GRID_SIZE-1));
+
+        PathFinder testPathFinder = new PathFinder(spaceTimeGrid);
+        List<Node> testResultRoute = new ArrayList<>();
+        try {
+            testResultRoute = testPathFinder.findShortestRoute(startNode, endNode);
+        }
+        catch (RouteNotPossibleException e) {
+            System.out.println(e.toString());
+        }
+
+
+        testPathFinder.removeRoute(testResultRoute);
+        //TODO: make some asserts here
+    }
+
+    @Test
     void testIllegalEndPoint(){
+        //Adding some extra obstacles
         for(Node n : inputSet) {
             if (n.getX() == 9 && n.getY() == 9) {
                 n.setNodeType(NodeType.OBSTACLE);
@@ -75,6 +99,7 @@ class PathFinderTest {
 
     @Test
     void testIllegalStartPoint(){
+        //Adding some extra obstacles
         for(Node n : inputSet) {
             if (n.getX() == 0 && n.getY() == 0) {
                 n.setNodeType(NodeType.OBSTACLE);
@@ -93,6 +118,7 @@ class PathFinderTest {
 
     @Test
     void testBoxedInPoint(){
+        //Adding some extra obstacles
         for(Node n : inputSet) {
             if ((n.getX() == 1 && n.getY() == 0) || (n.getX() == 0 && n.getY() == 1) ){
                 n.setNodeType(NodeType.OBSTACLE);
@@ -160,5 +186,7 @@ class PathFinderTest {
 
         assertThrows(RouteNotPossibleException.class, ()-> testPathFinder.findShortestRoute(startNode, endNode));
     }
+
+
 
 }

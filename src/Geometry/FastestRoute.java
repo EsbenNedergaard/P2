@@ -23,13 +23,11 @@ public class FastestRoute {
         Node endNode = new Node(pickingList.get(0));
 
 
+
         try {
             int listSize = pickingList.size();
-
             for(int i = 0; i < listSize; i++) {
-
-                tempFastestRoute = path.findShortestRoute(startNode, endNode);
-
+                tempFastestRoute = path.findShortestRoute(startNode, new Node(pickingList.get(i)), 0);
                 if(tempFastestRoute.size() < fastestRoute.size()){
                     fastestRoute = tempFastestRoute;
                 }

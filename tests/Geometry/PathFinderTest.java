@@ -11,8 +11,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PathFinderTest {
-    private final int MAX_TIME = 250;
+    private final int MAX_TIME = 50;
     private final int GRID_SIZE = 10;
+    private final int START_TIME = 0;
     private SpaceTimeGrid spaceTimeGrid;
     private List<Node> inputSet;
 
@@ -47,7 +48,7 @@ class PathFinderTest {
         PathFinder testPathFinder = new PathFinder(spaceTimeGrid);
         List<Node> testResultRoute = new ArrayList<>();
         try {
-            testResultRoute = testPathFinder.findShortestRoute(startNode, endNode);
+            testResultRoute = testPathFinder.findShortestRoute(startNode, endNode, START_TIME);
         }
         catch (RouteNotPossibleException e) {
             System.out.println(e.toString());
@@ -66,15 +67,15 @@ class PathFinderTest {
 
         PathFinder testPathFinder = new PathFinder(spaceTimeGrid);
 
-        List<Node> testNonPermantObstruction = new ArrayList<>();
+        List<Node> testNonPermanentObstruction = new ArrayList<>();
         for(int i = 0; i < MAX_TIME/2; i++) {
-            testNonPermantObstruction.add(testPathFinder.getSpaceTimeGrid().getNodePointer(1, 2, i));
+            testNonPermanentObstruction.add(testPathFinder.getSpaceTimeGrid().getNodePointer(1, 2, i));
         }
-        testPathFinder.removeRoute(testNonPermantObstruction);
+        testPathFinder.removeRoute(testNonPermanentObstruction);
 
         List<Node> testResultRoute = new ArrayList<>();
         try {
-            testResultRoute = testPathFinder.findShortestRoute(startNode, endNode);
+            testResultRoute = testPathFinder.findShortestRoute(startNode, endNode, START_TIME);
         }
         catch (RouteNotPossibleException e) {
             System.out.println(e.toString());
@@ -101,7 +102,7 @@ class PathFinderTest {
         Node endNode = new Node(new Point2D(GRID_SIZE-1, GRID_SIZE-1));
 
         PathFinder testPathFinder = new PathFinder(spaceTimeGrid);
-        assertThrows(RouteNotPossibleException.class, ()-> testPathFinder.findShortestRoute(startNode, endNode));
+        assertThrows(RouteNotPossibleException.class, ()-> testPathFinder.findShortestRoute(startNode, endNode, START_TIME));
     }
 
     @Test
@@ -120,7 +121,7 @@ class PathFinderTest {
 
         PathFinder testPathFinder = new PathFinder(spaceTimeGrid);
 
-        assertThrows(RouteNotPossibleException.class, ()-> testPathFinder.findShortestRoute(startNode, endNode));
+        assertThrows(RouteNotPossibleException.class, ()-> testPathFinder.findShortestRoute(startNode, endNode, START_TIME));
     }
 
     @Test
@@ -139,7 +140,7 @@ class PathFinderTest {
 
         PathFinder testPathFinder = new PathFinder(spaceTimeGrid);
 
-        assertThrows(RouteNotPossibleException.class, ()-> testPathFinder.findShortestRoute(startNode, endNode));
+        assertThrows(RouteNotPossibleException.class, ()-> testPathFinder.findShortestRoute(startNode, endNode, START_TIME));
     }
 
     @Test
@@ -152,7 +153,7 @@ class PathFinderTest {
 
         PathFinder testPathFinder = new PathFinder(spaceTimeGrid);
 
-        assertThrows(RouteNotPossibleException.class, ()-> testPathFinder.findShortestRoute(startNode, endNode));
+        assertThrows(RouteNotPossibleException.class, ()-> testPathFinder.findShortestRoute(startNode, endNode, START_TIME));
     }
 
     @Test
@@ -165,7 +166,7 @@ class PathFinderTest {
 
         PathFinder testPathFinder = new PathFinder(spaceTimeGrid);
 
-        assertThrows(RouteNotPossibleException.class, ()-> testPathFinder.findShortestRoute(startNode, endNode));
+        assertThrows(RouteNotPossibleException.class, ()-> testPathFinder.findShortestRoute(startNode, endNode, START_TIME));
     }
 
     @Test
@@ -178,7 +179,7 @@ class PathFinderTest {
 
         PathFinder testPathFinder = new PathFinder(spaceTimeGrid);
 
-        assertThrows(RouteNotPossibleException.class, ()-> testPathFinder.findShortestRoute(startNode, endNode));
+        assertThrows(RouteNotPossibleException.class, ()-> testPathFinder.findShortestRoute(startNode, endNode, START_TIME));
     }
 
     @Test
@@ -191,7 +192,7 @@ class PathFinderTest {
 
         PathFinder testPathFinder = new PathFinder(spaceTimeGrid);
 
-        assertThrows(RouteNotPossibleException.class, ()-> testPathFinder.findShortestRoute(startNode, endNode));
+        assertThrows(RouteNotPossibleException.class, ()-> testPathFinder.findShortestRoute(startNode, endNode, START_TIME));
     }
 
 

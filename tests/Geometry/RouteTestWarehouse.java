@@ -30,7 +30,7 @@ class RouteTestWarehouse {
         List<Node> testResultRoute = new ArrayList<>();
         try {
             for (int i = 0; i < 100; i++) {
-                testResultRoute = testPathFinder.findShortestRoute(startNode, endNode);
+                testResultRoute = testPathFinder.findShortestRoute(startNode, endNode, 0);
             }
         }
         catch (RouteNotPossibleException e) {

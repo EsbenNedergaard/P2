@@ -11,7 +11,7 @@ public class NodeLayer {
     private int time;
 
     public NodeLayer(List<Node> nodeList, int time) {
-        if (nodeList.size() < 0) {
+        if (nodeList == null || nodeList.size() < 0) {
             throw new IllegalArgumentException();
         }
         for(Node element : nodeList) {
@@ -61,11 +61,27 @@ public class NodeLayer {
         if (o == null || getClass() != o.getClass()) return false;
         NodeLayer nodeLayer = (NodeLayer) o;
 
-        return this.getTime() == nodeLayer.getTime();
+        if (this.getTime() != nodeLayer.getTime()) {
+            return false;
+        }
+        if (this.getNodeList().size() != nodeLayer.getNodeList().size()) {
+            return false;
+        }
+
+        /*We check if there is a node in the layer with the same x and y coordinate for every node in our current layer*/
+        try{
+            for(Node node : this.getNodeList()) {
+                nodeLayer.getNodePointer(node.getX(), node.getY());
+            }
+        }
+        catch (NodeDoesNotExistException e) {
+            return false;
+        }
+        return true;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getTime());
+        return Objects.hash(getTime()) + Objects.hash(getNodeList());
     }
 }

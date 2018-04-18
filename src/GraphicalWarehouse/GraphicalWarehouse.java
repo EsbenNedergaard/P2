@@ -129,6 +129,7 @@ public class GraphicalWarehouse {
         List<Point2D> pickPoints = new ArrayList<>();
         pickPoints.add(new Point2D(0,0));
         pickPoints.add(new Point2D(0,10));
+        //pickPoints.add(new Point2D(42,0));
         pickPoints.add(new Point2D(30,4));
         pickPoints.add(new Point2D(42,10));
 

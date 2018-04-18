@@ -21,7 +21,8 @@ public class HorizontalAisle implements Aisle {
     private List<RackRow> rackRowList = new ArrayList<>();
 
     public HorizontalAisle(int aisleLength, Point2D startPoint) {
-        //TODO: Sæt exceptions op for når for lang en gang og et punkt placeret forkert
+        //TODO: Sæt exceptions op for når for lang en gang og et punkt placeret forkert\
+
         this.aisleLength = aisleLength;
         this.startPoint = startPoint;
 

@@ -20,6 +20,14 @@ public class PathFinder {
         this.openSet = new PriorityQueue<>(spaceTimeGrid.getAllNodes().size(), new NodeComparator());
     }
 
+    public SpaceTimeGrid getSpaceTimeGrid() {
+        return spaceTimeGrid;
+    }
+
+    public void removeRoute(List<Node> route) {
+        spaceTimeGrid.removeRoute(route);
+    }
+
     public List<Node> findShortestRoute(Node start, Node end) throws RouteNotPossibleException {
         //TODO: Lav noget så RouteNotPossibleException bliver castet på at start eller end ligger på et permanent obstacle
         this.checkStartAndEndNode(start, end);
@@ -65,12 +73,21 @@ public class PathFinder {
     }
 
     private void checkStartAndEndNode(Node start, Node end) throws RouteNotPossibleException {
-        for(Node obstacle : spaceTimeGrid.getBaseLayer().getStationaryObstacles()){
-            if (obstacle.getX() == start.getX() && obstacle.getY() == start.getY()) {
-                throw new RouteNotPossibleException("The start point was placed on top of a permanent obstacle");
-            }
-            else if (obstacle.getX() == end.getX() && obstacle.getY() == end.getY()) {
-                throw new RouteNotPossibleException("The end point was placed on top of a permanent obstacle");
+        //We check that the start point is inside the grid
+        if ((start.getX() < 0 || start.getY() < 0) || (spaceTimeGrid.getBaseLayer().getMaxX() < start.getX() || spaceTimeGrid.getBaseLayer().getMaxY() < start.getY())) {
+            throw new RouteNotPossibleException("The start point was placed outside the SpaceTimeGrid");
+        }
+        else if ((end.getX() < 0 || end.getY() < 0) || (spaceTimeGrid.getBaseLayer().getMaxX() < end.getX() || spaceTimeGrid.getBaseLayer().getMaxY() < end.getY() )) {
+            throw new RouteNotPossibleException("The end point was placed outside the SpaceTimeGrid");
+        }
+        else {
+            for(Node obstacle : spaceTimeGrid.getBaseLayer().getStationaryObstacles()){
+                if (obstacle.getX() == start.getX() && obstacle.getY() == start.getY()) {
+                    throw new RouteNotPossibleException("The start point was placed on top of a permanent obstacle");
+                }
+                else if (obstacle.getX() == end.getX() && obstacle.getY() == end.getY()) {
+                    throw new RouteNotPossibleException("The end point was placed on top of a permanent obstacle");
+                }
             }
         }
     }

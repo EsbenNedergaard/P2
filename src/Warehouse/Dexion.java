@@ -1,10 +1,10 @@
 package Warehouse;
 
-import Exceptions.FullRackException;
 import Geometry.Node;
 import Geometry.Point2D;
 import Warehouse.Aisle.Aisle;
 import Warehouse.Aisle.HorizontalAisle;
+import Warehouse.Racks.Rack;
 import Warehouse.Racks.RackRow;
 
 import java.util.ArrayList;
@@ -58,20 +58,16 @@ public class Dexion implements Warehouse {
 
 //        aisleList.get(0).getFirstRackRow().addProduct(new Product(1));
 //        aisleList.get(0).getFirstRackRow().addProduct(new Product(2));
-//        aisleList.get(1).getSecondRackRow().getRackByIndex(5).addProduct(new Product(3));
-
-
+//        aisleList.get(1).getSecondRackRow().getRackByIndex(5).addProduct(new Product(3));d
         int i = 1;
         for (Aisle aisleElement : aisleList) {
-            try {
-                while (true) {
-                    aisleElement.addProduct(new Product(i));
-                    i++;
+            for (RackRow rackRowElement : aisleElement.getRackRowList()) {
+                for (Rack rackElement : rackRowElement.getRackArray()) {
+                    while (!rackElement.checkIfFull()) {
+                        rackElement.addProduct(new Product(i));
+                        i++;
+                    }
                 }
-            }
-
-            catch (FullRackException exc) {
-                System.out.println("Aisle is full!");
             }
         }
     }

@@ -71,12 +71,36 @@ class SpaceTimeGridTest {
     void getAllNodes() {
     }
 
+    @Test
+    void getMaxTime() {
+        assertEquals(MAX_TIME, spaceTimeGrid.getMaxTime());
+    }
 
     @Test
-    void removeNode() {
+    void getBaseLayer() {
 
     }
 
+    @Test
+    void removeNode() {
+        //We make a nodeList that does not contain (0,0)
+        List<Node> nodeList = new ArrayList<>();
+        for (int x = 0; x < GRID_SIZE; x++) {
+            for (int y = 0; y < GRID_SIZE; y++) {
+                if (!(x == 0 && y == 0)) {
+                    Node temp = new Node(new Point2D(x, y));
+                    nodeList.add(temp);
+                }
+            }
+        }
+        NodeLayer temp = new NodeLayer(nodeList, 0);
+
+        assertNotEquals(temp, spaceTimeGrid.getNodeLayerList().get(0));
+
+        //We then remove (0,0), and check that the nodeLayers are equal, which means we removed the correct node.
+        spaceTimeGrid.removeNode(spaceTimeGrid.getNodePointer(0,0,0));
+        assertEquals(temp, spaceTimeGrid.getNodeLayerList().get(0));
+    }
 
     //TODO: make better assertEquals in the end.
     @Test
@@ -97,5 +121,28 @@ class SpaceTimeGridTest {
         assertEquals(2, temp1.getNeighbourNodes().size());
         assertEquals(3, temp2.getNeighbourNodes().size());
         assertEquals(3, temp3.getNeighbourNodes().size());
+    }
+
+    @Test
+    void removeRoute() {
+        NodeLayer layer0 = new NodeLayer(spaceTimeGrid.getNodeLayerList().get(0).getNodeList(), 0);
+        NodeLayer layer1 = new NodeLayer(spaceTimeGrid.getNodeLayerList().get(1).getNodeList(), 1);
+        NodeLayer layer2 = new NodeLayer(spaceTimeGrid.getNodeLayerList().get(2).getNodeList(), 2);
+
+        layer0.removeNode(layer0.getNodePointer(0,0));
+        layer1.removeNode(layer1.getNodePointer(0,0));
+        layer1.removeNode(layer1.getNodePointer(0,1));
+        layer2.removeNode(layer2.getNodePointer(0,1));
+        layer2.removeNode(layer2.getNodePointer(0,2));
+
+        List<Node> route = new ArrayList<>();
+        route.add(spaceTimeGrid.getNodePointer(0,0,0));
+        route.add(spaceTimeGrid.getNodePointer(0,1,1));
+        route.add(spaceTimeGrid.getNodePointer(0,2,2));
+        spaceTimeGrid.removeRoute(route);
+
+        assertEquals(layer0, spaceTimeGrid.getNodeLayerList().get(0));
+        assertEquals(layer1, spaceTimeGrid.getNodeLayerList().get(1));
+        assertEquals(layer2, spaceTimeGrid.getNodeLayerList().get(2));
     }
 }

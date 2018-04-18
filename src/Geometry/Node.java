@@ -19,7 +19,6 @@ public class Node extends Point2D {
     private Node cameFrom;
     private ArrayList<Node> neighbourNodes;
     private NodeLayer nodeLayerPointer;
-    private NodeLayer timeLayer;
     private NodeType nodeType;
 
     public Node(Point2D p) {

@@ -3,7 +3,6 @@ package Warehouse.Racks;
 import Exceptions.FullRackException;
 import Geometry.Point2D;
 import Warehouse.Product;
-import Warehouse.Racks.Rack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,12 +12,10 @@ public class HorizontalRackRow implements RackRow {
     private Point2D startPoint;
     private int rackRowLength;
     private Rack[] rackArray;
-    private int maxAmtInSingleRack;
 
     public HorizontalRackRow(Point2D startPoint, int rackRowLength, int maxAmtInSingleRack) {
         this.startPoint = startPoint;
         this.rackRowLength = rackRowLength;
-        this.maxAmtInSingleRack = maxAmtInSingleRack;
 
         rackArray = new Rack[rackRowLength];
 

@@ -7,24 +7,21 @@ import java.util.List;
 
 public class FastestRoute {
     private final Point2D startingPoint = new Node(new Point2D(0, 0));
-    private List<Point2D> pickingList;
     private List<Node> bestRoute;
     private PathFinder path;
 
 
-    public FastestRoute(List<Point2D> pickingList, SpaceTimeGrid grid) {
-        this.pickingList = pickingList;
+    public FastestRoute(SpaceTimeGrid grid) {
         this.path = new PathFinder(grid);
+    }
+
+    public List<Node> calculateBestRoute(List<Point2D> pickingList) {
         this.bestRoute = new ArrayList<>();
-    }
-
-    public List<Node> getBestRoute(){
-        return this.bestRoute;
-    }
-
-    public void calculateBestRoute() {
         List<Node> temp = new ArrayList<>();
+
         proc(startingPoint, pickingList, temp);
+
+        return this.bestRoute;
     }
 
     private void proc(Point2D currStart, List<Point2D> listRemaining, List<Node> currRoute) {
@@ -53,7 +50,7 @@ public class FastestRoute {
         }
     }
 
-     List<Node> getRouteThroughPickPoints(){
+     List<Node> getRouteThroughPickPoints(List<Point2D> pickingList){
         List<Node> tempRoute = new ArrayList<>();
         Point2D currStart = startingPoint;
         try {

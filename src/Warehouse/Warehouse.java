@@ -1,5 +1,6 @@
 package Warehouse;
 
+import Geometry.BaseLayer;
 import Geometry.Node;
 import Geometry.Point2D;
 import Warehouse.Aisle.Aisle;
@@ -11,7 +12,7 @@ public interface Warehouse {
     void createAisleList();
     List<Aisle> getAisleList();
     List<RackRow> getRackRowList();
-    List<Node> getNodeList();
+    BaseLayer getBaseLayer();
     List<Point2D> getPickingPoints(List<Product> productPickList);
 
     int getWidth();

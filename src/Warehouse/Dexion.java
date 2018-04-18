@@ -1,5 +1,6 @@
 package Warehouse;
 
+import Geometry.BaseLayer;
 import Geometry.Node;
 import Geometry.Point2D;
 import Warehouse.Aisle.Aisle;
@@ -99,8 +100,8 @@ public class Dexion implements Warehouse {
     }
 
     @Override
-    public List<Node> getNodeList() {
-        return this.nodeList;
+    public BaseLayer getBaseLayer() {
+        return new BaseLayer(this.nodeList);
     }
 
     @Override

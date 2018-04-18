@@ -1,12 +1,12 @@
 package GraphicalWarehouse;
 
+import Geometry.*;
 import Geometry.Node;
-import Geometry.Point2D;
 import GraphicalWarehouse.GraphicalObjects.*;
 import GraphicalWarehouse.InteractionHandler.WarehouseInteracter;
 import Warehouse.Aisle.Aisle;
 import Warehouse.Racks.*;
-import Warehouse.Warehouse;
+import Warehouse.*;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Insets;
 import javafx.scene.*;
@@ -126,11 +126,26 @@ public class GraphicalWarehouse {
 
     private Group getOrderPickerGroup() {
         Group orderPickerGroup = new Group();
-        orderPickerTest = new OrderPickerGraphics(randomPickingRoute.getRoute1());
-        orderPickerTest2 = new OrderPickerGraphics(randomPickingRoute.getRoute2());
-        orderPickerTest3 = new OrderPickerGraphics(randomPickingRoute.getRoute3());
+        List<Point2D> pickPoints = new ArrayList<>();
+        pickPoints.add(new Point2D(0,0));
+        pickPoints.add(new Point2D(0,10));
+        pickPoints.add(new Point2D(30,4));
+        pickPoints.add(new Point2D(42,10));
 
-        orderPickerGroup.getChildren().addAll(orderPickerTest, orderPickerTest2, orderPickerTest3);
+        Warehouse testWarehouse = new Dexion();
+        BaseLayer baseLayer = testWarehouse.getBaseLayer();
+        SpaceTimeGrid spaceTimeGrid = new SpaceTimeGrid(baseLayer, 500);
+
+        FastestRoute routeFinder = new FastestRoute(spaceTimeGrid);
+        List<Node> testRoute = routeFinder.calculateBestRoute(pickPoints);
+
+        orderPickerTest = new OrderPickerGraphics(testRoute);
+        //orderPickerTest2 = new OrderPickerGraphics(randomPickingRoute.getRoute2());
+        //orderPickerTest3 = new OrderPickerGraphics(randomPickingRoute.getRoute3());
+
+        //orderPickerGroup.getChildren().addAll(orderPickerTest, orderPickerTest2, orderPickerTest3);
+        orderPickerGroup.getChildren().add(orderPickerTest);
+
         return orderPickerGroup;
     }
 
@@ -188,7 +203,7 @@ public class GraphicalWarehouse {
         UPDATE_COUNTER++;
 
         if(orderPickerTest.move(UPDATE_COUNTER));
-        if(orderPickerTest2.move(UPDATE_COUNTER));
-        if(orderPickerTest3.move(UPDATE_COUNTER));
+        //if(orderPickerTest2.move(UPDATE_COUNTER));
+        //if(orderPickerTest3.move(UPDATE_COUNTER));
     }
 }

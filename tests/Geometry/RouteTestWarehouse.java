@@ -13,10 +13,7 @@ class RouteTestWarehouse {
     @Test
     void testOnWareHouse() {
         Warehouse testWarehouse = new Dexion();
-
-        List<Node> warehouseNodeList = testWarehouse.getNodeList();
-
-        BaseLayer baseLayer = new BaseLayer(warehouseNodeList);
+        BaseLayer baseLayer = testWarehouse.getBaseLayer();
         SpaceTimeGrid spaceTimeGrid = new SpaceTimeGrid(baseLayer, MAX_TIME);
 
 

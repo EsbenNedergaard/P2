@@ -1,6 +1,7 @@
 package GraphicalWarehouse.GraphicalObjects;
 
 import Geometry.Node;
+import Geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import java.util.List;
@@ -8,7 +9,7 @@ import static Warehouse.GUIWarehouse.TILE_SIZE;
 
 public class OrderPickerGraphics extends Rectangle {
 
-    private final static double UPDATE_VALUE = 30;
+    private final static double UPDATE_VALUE = 5;
     private final static double MOVE_DISTANCE_PER_UPDATE = TILE_SIZE / UPDATE_VALUE;
 
     private List<Node> routeList;
@@ -26,8 +27,8 @@ public class OrderPickerGraphics extends Rectangle {
         // When the object is first created, the index must be 0
         this.indexOfLastPoint = 1;
 
-        relocate(routeList.get(0).getX() * TILE_SIZE, routeList.get(0).getY() * TILE_SIZE);
-
+        setTranslateX(routeList.get(0).getX() * TILE_SIZE);
+        setTranslateY(routeList.get(0).getY() * TILE_SIZE);
     }
 
     // Call this in a update method
@@ -57,8 +58,12 @@ public class OrderPickerGraphics extends Rectangle {
             // The else block is where it would be when in waiting position
 
             // If the picker is at the target point then move on to next target
-            if (UPDATE_COUNTER % UPDATE_VALUE == 0)
+            if (UPDATE_COUNTER % UPDATE_VALUE == 0) {
+                // Force picker to target point when moving on to next
+                setTranslateX(getTargetNode().getXPixels());
+                setTranslateY(getTargetNode().getYPixels());
                 indexOfLastPoint++;
+            }
 
             return true;
 
@@ -80,6 +85,10 @@ public class OrderPickerGraphics extends Rectangle {
             throw new IndexOutOfBoundsException("Index out of bound");
 
         return this.routeList.get(indexOfTargetNode);
+    }
+
+    Point2D getCurrentPosition() {
+        return new Point2D((int) getTranslateX() / TILE_SIZE, (int) getTranslateY() / TILE_SIZE);
     }
 
     // Return true if two points has different x values

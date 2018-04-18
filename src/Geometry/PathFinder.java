@@ -31,9 +31,9 @@ public class PathFinder {
         spaceTimeGrid.removeRoute(route);
     }
 
-    public List<Node> findShortestRoute(Node start, Node end, int startTime) throws RouteNotPossibleException {
-        this.startNode = start;
-        this.endNode = end;
+    public List<Node> findShortestRoute(Point2D start, Point2D end, int startTime) throws RouteNotPossibleException {
+        this.startNode =  new Node(start);
+        this.endNode = new Node (end);
         this.startTime = startTime;
         //TODO: Lav noget med startTime cast af exception her
         this.checkStartAndEndNode();
@@ -48,8 +48,8 @@ public class PathFinder {
             closedSet.add(current);
 
             //We have reached the destination
-            if (current.getX() == end.getX() && current.getY() == end.getY()) {
-                end = current;
+            if (current.getX() == endNode.getX() && current.getY() == endNode.getY()) {
+                endNode = current;
                 break;
             }
 
@@ -75,7 +75,7 @@ public class PathFinder {
                 }
             }
         }
-        return constructPath(start, end);
+        return constructPath(startNode, endNode);
     }
 
     private void checkStartAndEndNode() throws RouteNotPossibleException {

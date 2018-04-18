@@ -54,4 +54,16 @@ class FastestRouteTest {
         TempRoutePrinter printer = new TempRoutePrinter(fastestRoute, baseLayer);
         printer.printRoute(GRID_SIZE, GRID_SIZE);
     }
+
+    @Test
+    void calculateBestRoute(){
+        List<Node> fastestRoute = new ArrayList<>();
+        FastestRoute routeFinder = new FastestRoute(pickingList, spaceTimeGrid);
+        routeFinder.calculateBestRoute();
+        fastestRoute = routeFinder.getBestRoute();
+
+        TempRoutePrinter printer = new TempRoutePrinter(fastestRoute, baseLayer);
+        printer.printRoute(GRID_SIZE, GRID_SIZE);
+
+    }
 }

@@ -67,11 +67,24 @@ public class WarehouseInteracter {
         // Clear data in productIDListBuffer
         productIDListBuffer.clear();
 
+    }
 
+    private void showAlert(String contentText, Alert.AlertType type) {
+        Alert alert = new Alert(type);
+        alert.setContentText(contentText);
+        alert.show();
+    }
+
+    private boolean isNumeric(char c) {
+        return c >= '0' && c <= '9';
     }
 
     private void clearInputField() {
         this.inputField.clear();
+    }
+
+    public List<Integer> getProductIDListBuffer() {
+        return this.productIDListBuffer;
     }
 
     public TextField getInputField() {
@@ -86,14 +99,6 @@ public class WarehouseInteracter {
         return launchButton;
     }
 
-    private void showAlert(String contentText, Alert.AlertType type) {
-        Alert alert = new Alert(type);
-        alert.setContentText(contentText);
-        alert.show();
-    }
 
-    private boolean isNumeric(char c) {
-        return c >= '0' && c <= '9';
-    }
 
 }

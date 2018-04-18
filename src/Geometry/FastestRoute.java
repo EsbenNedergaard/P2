@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FastestRoute {
-    private final Node startNode = new Node(new Point2D(0, 0));
+    private final Point2D startPoint = new Node(new Point2D(0, 0));
     private List<Point2D> pickingList;
     private PathFinder path;
 
@@ -28,10 +28,12 @@ public class FastestRoute {
 
      List<Node> getRouteThroughPickPoints(){
         List<Node> tempRoute = new ArrayList<>();
-        Node currStart = startNode;
+        Point2D currStart = startPoint;
         try {
             for(Point2D endPoint : pickingList) {
-                tempRoute.addAll(path.findShortestRoute(currStart, new Node(endPoint), tempRoute.size()));
+                int timeAfterRoute = tempRoute.size();
+
+                tempRoute.addAll(path.findShortestRoute(currStart, endPoint, timeAfterRoute));
                 currStart = tempRoute.get(tempRoute.size() - 1);
                 tempRoute.remove(currStart);
             }

@@ -1,25 +1,18 @@
 package GraphicalWarehouse;
 
-import Geometry.Node;
 import Geometry.Point2D;
 import GraphicalWarehouse.GraphicalObjects.*;
-import GraphicalWarehouse.InteractionHandler.WarehouseInteracter;
 import Warehouse.Aisle.Aisle;
 import Warehouse.Racks.*;
 import Warehouse.Warehouse;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Insets;
 import javafx.scene.*;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static Warehouse.GUIWarehouse.SCALE;
 import static Warehouse.GUIWarehouse.TILE_SIZE;
@@ -37,7 +30,7 @@ public class GraphicalWarehouse {
     private Group orderPickerGroup;
     private Group interactionFieldGroup;
 
-    private WarehouseInteracter interacter = new WarehouseInteracter();
+    private InteractionGraphics interactionGraphics = new InteractionGraphics();
 
     private OrderPickerGraphics orderPickerTest;
     private OrderPickerGraphics orderPickerTest2;
@@ -135,19 +128,24 @@ public class GraphicalWarehouse {
     }
 
     private Group getInteractionFieldGroup() {
+        BorderPane borderPane = new BorderPane();
         GridPane gridpane = new GridPane();
         gridpane.setMinWidth(TILE_SIZE * WIDTH_WAREHOUSE * SCALE);
+        gridpane.setHgap(10);
         Label heading = new Label("Add product list to queue. Product id separated by comma");
         heading.getStyleClass().add("heading-label");
 
         gridpane.add(heading, 1, 1, 5, 1);
-        gridpane.add(interacter.getInputField(), 1, 2, 4, 2);
-        gridpane.add(interacter.getAddDataButton(), 5, 2);
+        gridpane.add(interactionGraphics.getInputField(), 1, 2, 4, 2);
+        gridpane.add(interactionGraphics.getAddDataButton(), 5, 2);
         //gridpane.add(launchButton, 5, 5);
 
-        gridpane.getStyleClass().add("grid-pane");
+        borderPane.getStyleClass().add("interaction-border-pane");
 
-        return new Group(gridpane);
+        borderPane.setRight(gridpane);
+        borderPane.setLeft(interactionGraphics.getTable());
+
+        return new Group(borderPane);
 
     }
 
@@ -169,7 +167,7 @@ public class GraphicalWarehouse {
         borderPane.setTop(simulationElementsGroup);
         borderPane.setBottom(interactionFieldGroup);
 
-        root.setPrefSize(LENGTH_WAREHOUSE * TILE_SIZE, WIDTH_WAREHOUSE * TILE_SIZE * 2);
+        root.setPrefSize(LENGTH_WAREHOUSE * TILE_SIZE, WIDTH_WAREHOUSE * TILE_SIZE * 2.43);
 
         root.getChildren().addAll(borderPane);
 

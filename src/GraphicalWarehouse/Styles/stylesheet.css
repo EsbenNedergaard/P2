@@ -1,3 +1,11 @@
 .grid-pane {
     -fx-padding: 30px;
 }
+
+.text-field {
+    -fx-pref-width: 500px;
+}
+
+.heading-label {
+    -fx-padding: 0px 0px 10px 0px;
+}

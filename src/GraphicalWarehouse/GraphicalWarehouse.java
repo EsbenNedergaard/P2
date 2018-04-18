@@ -3,6 +3,7 @@ package GraphicalWarehouse;
 import Geometry.Node;
 import Geometry.Point2D;
 import GraphicalWarehouse.GraphicalObjects.*;
+import GraphicalWarehouse.InteractionHandler.WarehouseInteracter;
 import Warehouse.Aisle.Aisle;
 import Warehouse.Racks.*;
 import Warehouse.Warehouse;
@@ -20,6 +21,7 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import static Warehouse.GUIWarehouse.SCALE;
 import static Warehouse.GUIWarehouse.TILE_SIZE;
 
 public class GraphicalWarehouse {
@@ -34,6 +36,8 @@ public class GraphicalWarehouse {
     private Group rackGroup;
     private Group orderPickerGroup;
     private Group interactionFieldGroup;
+
+    private WarehouseInteracter interacter = new WarehouseInteracter();
 
     private OrderPickerGraphics orderPickerTest;
     private OrderPickerGraphics orderPickerTest2;
@@ -132,15 +136,14 @@ public class GraphicalWarehouse {
 
     private Group getInteractionFieldGroup() {
         GridPane gridpane = new GridPane();
-        Label heading = new Label("Add list to queue");
-        Button addToQueButton = new Button("Add to queue");
-        Button launchButton = new Button("Launch");
-        TextField inputField = new TextField("Hejsa");
+        gridpane.setMinWidth(TILE_SIZE * WIDTH_WAREHOUSE * SCALE);
+        Label heading = new Label("Add product list to queue. Product id separated by comma");
+        heading.getStyleClass().add("heading-label");
 
-        gridpane.add(heading, 1, 1);
-        gridpane.add(inputField, 1, 2, 4, 2);
-        gridpane.add(addToQueButton, 5, 2);
-        //gridpane.add(launchButton, 5, 3);
+        gridpane.add(heading, 1, 1, 5, 1);
+        gridpane.add(interacter.getInputField(), 1, 2, 4, 2);
+        gridpane.add(interacter.getAddDataButton(), 5, 2);
+        //gridpane.add(launchButton, 5, 5);
 
         gridpane.getStyleClass().add("grid-pane");
 
@@ -184,14 +187,8 @@ public class GraphicalWarehouse {
     private void onUpdate() {
         UPDATE_COUNTER++;
 
-        if(!orderPickerTest.move(UPDATE_COUNTER)) {
-            System.out.println("picker 1 is done");
-        }
-        if(!orderPickerTest2.move(UPDATE_COUNTER)) {
-            System.out.println("picker 2 is done");
-        }
-        if(!orderPickerTest3.move(UPDATE_COUNTER)) {
-            System.out.println("picker 3 is done");
-        }
+        if(orderPickerTest.move(UPDATE_COUNTER));
+        if(orderPickerTest2.move(UPDATE_COUNTER));
+        if(orderPickerTest3.move(UPDATE_COUNTER));
     }
 }

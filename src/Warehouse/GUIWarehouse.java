@@ -9,7 +9,7 @@ public class GUIWarehouse extends Application {
     private Warehouse warehouse;
     private GraphicalWarehouse graphicalWarehouse;
 
-    private static final int SCALE = 5;
+    public static final int SCALE = 5;
     public static final int TILE_SIZE = 5 * SCALE;
 
     public static void main(String[] args) {

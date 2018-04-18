@@ -12,6 +12,8 @@ import Warehouse.Racks.RackRow;
 import java.util.ArrayList;
 import java.util.List;
 
+import static Geometry.NodeType.OBSTACLE;
+
 public class HorizontalAisle implements Aisle {
     private int aisleLength;
     private Point2D startPoint;
@@ -34,12 +36,12 @@ public class HorizontalAisle implements Aisle {
     }
 
     @Override
-    public void updateNodeGrid(List<Node> nodeGrid) {
+    public void setRacksAsObstacles(List<Node> nodeGrid) {
         for (RackRow rackRowElement : rackRowList) {
             for(Rack rackElement : rackRowElement.getRackArray()) {
                 for (Node nodeElement : nodeGrid) {
                     if (nodeElement.getX() == rackElement.getXCoordinate() && nodeElement.getY() == rackElement.getYCoordinate()) {
-                        nodeElement.setNodeType(NodeType.OBSTACLE);
+                        nodeElement.setNodeType(OBSTACLE);
                     }
                 }
             }
@@ -80,8 +82,8 @@ public class HorizontalAisle implements Aisle {
     public List<Point2D> getPickingPoints(List<Product> productPickList) {
         List<Point2D> pickingPointList = new ArrayList<>();
 
-        for (Product productElement : productPickList)
-        {
+        for (Product productElement : productPickList) {
+
             RackRow rackRowElement = getFirstRackRow();
             int rackIndex = rackRowElement.doesItContainProduct(productElement);
             if (rackIndex != -1) {

@@ -12,7 +12,7 @@ class RouteTestWarehouse {
 
     @Test
     void testOnWareHouse() {
-        Warehouse testWarehouse = new Warehouse22b();
+        Warehouse testWarehouse = new Dexion();
 
         List<Node> warehouseNodeList = testWarehouse.getNodeList();
 

@@ -12,7 +12,6 @@ public class OrderPickerGraphics extends Rectangle {
     private final static double MOVE_DISTANCE_PER_UPDATE = TILE_SIZE / UPDATE_VALUE;
 
     private List<Node> routeList;
-    // This is actually the point were it came from
     private int indexOfLastPoint;
 
     public OrderPickerGraphics(List<Node> routeList) {
@@ -36,23 +35,21 @@ public class OrderPickerGraphics extends Rectangle {
     // Return true if the move was successful and false when the route is finished
     public boolean move(final int UPDATE_COUNTER) {
 
-        if(indexOfLastPoint < routeList.size()) {
+        if (indexOfLastPoint < routeList.size()) {
 
-            if(changeInXCoordinate()) {
-
-                if(getLastPointPosition().getX() < getTargetNode().getX()) {
+            if (changeInXCoordinate()) {
+                // Then move current picker in X direction
+                if (getLastPointPosition().getX() < getTargetNode().getX()) {
                     setTranslateX(getTranslateX() + MOVE_DISTANCE_PER_UPDATE);
-                }
-                else {
+                }  else {
                     setTranslateX(getTranslateX() - MOVE_DISTANCE_PER_UPDATE);
                 }
 
-            } else if(changeInYCoordinate()) {
-
-                if(getLastPointPosition().getY() < getTargetNode().getY()) {
+            } else if (changeInYCoordinate()) {
+                // Then move current picker in Y direction
+                if (getLastPointPosition().getY() < getTargetNode().getY()) {
                     setTranslateY(getTranslateY() + MOVE_DISTANCE_PER_UPDATE);
-                }
-                else {
+                } else {
                     setTranslateY(getTranslateY() - MOVE_DISTANCE_PER_UPDATE);
                 }
 
@@ -60,7 +57,7 @@ public class OrderPickerGraphics extends Rectangle {
             // The else block is where it would be when in waiting position
 
             // If the picker is at the target point then move on to next target
-            if(UPDATE_COUNTER % UPDATE_VALUE == 0)
+            if (UPDATE_COUNTER % UPDATE_VALUE == 0)
                 indexOfLastPoint++;
 
             return true;
@@ -79,7 +76,7 @@ public class OrderPickerGraphics extends Rectangle {
     private Node getTargetNode() {
         int indexOfTargetNode = indexOfLastPoint;
 
-        if(indexOfTargetNode >= routeList.size())
+        if (indexOfTargetNode >= routeList.size())
             throw new IndexOutOfBoundsException("Index out of bound");
 
         return this.routeList.get(indexOfTargetNode);

@@ -10,7 +10,7 @@ import Warehouse.Racks.RackRow;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Warehouse22b implements Warehouse {
+public class Dexion implements Warehouse {
     private int length;
     private int width;
     private List<Aisle> aisleList;
@@ -20,7 +20,7 @@ public class Warehouse22b implements Warehouse {
     private static final int AISLE_PADDING = 4;
 
 
-    public Warehouse22b() {
+    public Dexion() {
         length = AISLE_LENGTH + (AISLE_PADDING * 2);
         width = 12;
         createNodeGrid();
@@ -50,7 +50,7 @@ public class Warehouse22b implements Warehouse {
         aisleList.add(aisle4);
 
         for(Aisle element : aisleList) {
-            element.updateNodeGrid(nodeList);
+            element.setRacksAsObstacles(nodeList);
         }
     }
 

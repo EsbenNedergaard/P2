@@ -3,19 +3,25 @@ package GraphicalWarehouse;
 import Geometry.Node;
 import Geometry.Point2D;
 import GraphicalWarehouse.GraphicalObjects.*;
+import GraphicalWarehouse.InteractionHandler.WarehouseInteracter;
 import Warehouse.Aisle.Aisle;
 import Warehouse.Racks.*;
 import Warehouse.Warehouse;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Insets;
 import javafx.scene.*;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static Warehouse.GUIWarehouse.SCALE;
 import static Warehouse.GUIWarehouse.TILE_SIZE;
 
 public class GraphicalWarehouse {
@@ -29,6 +35,9 @@ public class GraphicalWarehouse {
     private Group rackRowGroup;
     private Group rackGroup;
     private Group orderPickerGroup;
+    private Group interactionFieldGroup;
+
+    private WarehouseInteracter interacter = new WarehouseInteracter();
 
     private OrderPickerGraphics orderPickerTest;
     private OrderPickerGraphics orderPickerTest2;
@@ -125,18 +134,44 @@ public class GraphicalWarehouse {
         return orderPickerGroup;
     }
 
+    private Group getInteractionFieldGroup() {
+        GridPane gridpane = new GridPane();
+        gridpane.setMinWidth(TILE_SIZE * WIDTH_WAREHOUSE * SCALE);
+        Label heading = new Label("Add product list to queue. Product id separated by comma");
+        heading.getStyleClass().add("heading-label");
+
+        gridpane.add(heading, 1, 1, 5, 1);
+        gridpane.add(interacter.getInputField(), 1, 2, 4, 2);
+        gridpane.add(interacter.getAddDataButton(), 5, 2);
+        //gridpane.add(launchButton, 5, 5);
+
+        gridpane.getStyleClass().add("grid-pane");
+
+        return new Group(gridpane);
+
+    }
+
     public Parent getWarehouseGraphics() {
         Pane root = new Pane();
+        BorderPane borderPane = new BorderPane();
+        Group simulationElementsGroup = new Group();
 
         pickPointGroup = getPickPointGroup();
         tileGroup = getTileGroup();
         rackRowGroup = getRackRowGroup();
         rackGroup = getRackGroup();
         orderPickerGroup = getOrderPickerGroup();
+        interactionFieldGroup = getInteractionFieldGroup();
 
-        root.setPrefSize(LENGTH_WAREHOUSE * TILE_SIZE, WIDTH_WAREHOUSE * TILE_SIZE);
+        // Add all elements for the simulation
+        simulationElementsGroup.getChildren().addAll(pickPointGroup, rackRowGroup, rackGroup, tileGroup, orderPickerGroup);
 
-        root.getChildren().addAll(pickPointGroup, rackRowGroup, rackGroup, tileGroup, orderPickerGroup);
+        borderPane.setTop(simulationElementsGroup);
+        borderPane.setBottom(interactionFieldGroup);
+
+        root.setPrefSize(LENGTH_WAREHOUSE * TILE_SIZE, WIDTH_WAREHOUSE * TILE_SIZE * 2);
+
+        root.getChildren().addAll(borderPane);
 
         timer = new AnimationTimer() {
             @Override
@@ -152,14 +187,8 @@ public class GraphicalWarehouse {
     private void onUpdate() {
         UPDATE_COUNTER++;
 
-        if(!orderPickerTest.move(UPDATE_COUNTER)) {
-            System.out.println("picker 1 is done");
-        }
-        if(!orderPickerTest2.move(UPDATE_COUNTER)) {
-            System.out.println("picker 2 is done");
-        }
-        if(!orderPickerTest3.move(UPDATE_COUNTER)) {
-            System.out.println("picker 3 is done");
-        }
+        if(orderPickerTest.move(UPDATE_COUNTER));
+        if(orderPickerTest2.move(UPDATE_COUNTER));
+        if(orderPickerTest3.move(UPDATE_COUNTER));
     }
 }

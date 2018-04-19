@@ -8,11 +8,11 @@ public class IllegalRackDimensionException extends RuntimeException {
     }
 
     public IllegalRackDimensionException() {
-        this.errorMsg = "This is not a legal rack dimension";
+        this.errorMsg = "Not a legal rack dimension";
     }
 
     @Override
-    public String toString() {
+    public String getMessage() {
         return errorMsg;
     }
 }

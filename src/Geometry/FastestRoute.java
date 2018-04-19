@@ -31,22 +31,47 @@ public class FastestRoute {
                 currRoute.addAll(path.findShortestRoute(currStart, startingPoint, timeAfterRoute));
 
                 if(bestRoute.size() == 0 || currRoute.size() < bestRoute.size()){
-                    bestRoute = currRoute;
+                    bestRoute = new ArrayList<>(currRoute);
                 }
             } else {
                 for (Point2D n : listRemaining) {
                     int timeAfterRoute = currRoute.size();
-                    currRoute.addAll(path.findShortestRoute(currStart, n, timeAfterRoute));
+                    List<Node> nextRoute = new ArrayList<>(currRoute);
+                    nextRoute.addAll(path.findShortestRoute(currStart, n, timeAfterRoute));
 
                     List<Point2D> nextList = new ArrayList<>(listRemaining);
-                    nextList.remove(0);
-                    Point2D nextStart = currRoute.get(currRoute.size() - 1);
-                    currRoute.remove(nextStart);
-                    proc(nextStart, nextList, new ArrayList<>(currRoute));
+                    nextList.remove(n);
+                    //Point2D nextStart = currRoute.get(currRoute.size() - 1);
+                    //currRoute.remove(nextStart);
+                    proc(n, nextList, nextRoute);
                 }
             }
         } catch (RouteNotPossibleException e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    public void testFakulitet(List<Integer> integerList){
+        List<Integer> collectedList = new ArrayList<>();
+
+        testProcedure(integerList, collectedList);
+    }
+
+    private void testProcedure(List<Integer> integerList, List<Integer> collectedList) {
+        if(integerList.isEmpty()) {
+            for(Integer i : collectedList) {
+                System.out.print(i + ", ");
+            }
+            System.out.println();
+        }
+        for(Integer i : integerList) {
+            List<Integer> newList = new ArrayList<>(integerList);
+            newList.remove(i);
+
+            List<Integer> newCollectedList = new ArrayList<>();
+            newCollectedList.addAll(collectedList);
+            newCollectedList.add(i);
+            testProcedure(newList, newCollectedList);
         }
     }
 

@@ -1,18 +1,16 @@
 package GraphicalWarehouse;
 
 import Geometry.*;
+
 import Geometry.Node;
 import GraphicalWarehouse.GraphicalObjects.*;
-import GraphicalWarehouse.InteractionHandler.WarehouseInteracter;
 import Warehouse.Aisle.Aisle;
 import Warehouse.Racks.*;
 import Warehouse.*;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Insets;
 import javafx.scene.*;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -37,7 +35,7 @@ public class GraphicalWarehouse {
     private Group orderPickerGroup;
     private Group interactionFieldGroup;
 
-    private WarehouseInteracter interacter = new WarehouseInteracter();
+    private InteractionGraphics interactionGraphics = new InteractionGraphics();
 
     private OrderPickerGraphics orderPickerTest;
     private OrderPickerGraphics orderPickerTest2;
@@ -127,11 +125,13 @@ public class GraphicalWarehouse {
     private Group getOrderPickerGroup() {
         Group orderPickerGroup = new Group();
         List<Point2D> pickPoints = new ArrayList<>();
-        pickPoints.add(new Point2D(0,0));
-        pickPoints.add(new Point2D(0,10));
-        //pickPoints.add(new Point2D(42,0));
-        pickPoints.add(new Point2D(30,4));
-        pickPoints.add(new Point2D(42,10));
+        pickPoints.add(new Point2D(0,11));
+        pickPoints.add(new Point2D(42,0));
+        pickPoints.add(new Point2D(42,11));
+        pickPoints.add(new Point2D(10,1));
+        pickPoints.add(new Point2D(7, 7));
+        //pickPoints.add(new Point2D(30, 10));
+        pickPoints.add(new Point2D(15, 4));
 
         Warehouse testWarehouse = new Dexion();
         BaseLayer baseLayer = testWarehouse.getBaseLayer();
@@ -140,6 +140,11 @@ public class GraphicalWarehouse {
         FastestRoute routeFinder = new FastestRoute(spaceTimeGrid);
         List<Node> testRoute = routeFinder.calculateBestRoute(pickPoints);
 
+        for(Node n : testRoute) {
+            System.out.println(n.getX() + ", " + n.getY());
+        }
+        TempRoutePrinter printer = new TempRoutePrinter(testRoute, baseLayer);
+        printer.printRoute(testWarehouse.getLength(), testWarehouse.getWidth());
         orderPickerTest = new OrderPickerGraphics(testRoute);
         //orderPickerTest2 = new OrderPickerGraphics(randomPickingRoute.getRoute2());
         //orderPickerTest3 = new OrderPickerGraphics(randomPickingRoute.getRoute3());
@@ -151,19 +156,24 @@ public class GraphicalWarehouse {
     }
 
     private Group getInteractionFieldGroup() {
+        BorderPane borderPane = new BorderPane();
         GridPane gridpane = new GridPane();
         gridpane.setMinWidth(TILE_SIZE * WIDTH_WAREHOUSE * SCALE);
+        gridpane.setHgap(10);
         Label heading = new Label("Add product list to queue. Product id separated by comma");
         heading.getStyleClass().add("heading-label");
 
         gridpane.add(heading, 1, 1, 5, 1);
-        gridpane.add(interacter.getInputField(), 1, 2, 4, 2);
-        gridpane.add(interacter.getAddDataButton(), 5, 2);
+        gridpane.add(interactionGraphics.getInputField(), 1, 2, 4, 2);
+        gridpane.add(interactionGraphics.getAddDataButton(), 5, 2);
         //gridpane.add(launchButton, 5, 5);
 
-        gridpane.getStyleClass().add("grid-pane");
+        borderPane.getStyleClass().add("interaction-border-pane");
 
-        return new Group(gridpane);
+        borderPane.setRight(gridpane);
+        borderPane.setLeft(interactionGraphics.getTable());
+
+        return new Group(borderPane);
 
     }
 
@@ -185,7 +195,7 @@ public class GraphicalWarehouse {
         borderPane.setTop(simulationElementsGroup);
         borderPane.setBottom(interactionFieldGroup);
 
-        root.setPrefSize(LENGTH_WAREHOUSE * TILE_SIZE, WIDTH_WAREHOUSE * TILE_SIZE * 2);
+        root.setPrefSize(LENGTH_WAREHOUSE * TILE_SIZE, WIDTH_WAREHOUSE * TILE_SIZE * 2.43);
 
         root.getChildren().addAll(borderPane);
 

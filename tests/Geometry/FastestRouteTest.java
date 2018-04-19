@@ -65,4 +65,16 @@ class FastestRouteTest {
         printer.printRoute(GRID_SIZE, GRID_SIZE);
 
     }
+
+    @Test
+    void testFakulitet() {
+        FastestRoute routeFinder = new FastestRoute(spaceTimeGrid);
+
+        List<Integer> integerList = new ArrayList<>();
+        for(int i = 0; i < 3; i++) {
+            integerList.add(i);
+        }
+
+        routeFinder.testFakulitet(integerList);
+    }
 }

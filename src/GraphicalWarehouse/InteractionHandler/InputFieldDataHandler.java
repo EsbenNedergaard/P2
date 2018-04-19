@@ -15,7 +15,7 @@ public class InputFieldDataHandler {
 
     // This method takes a string of product id's, clears product buffer,
     // adds new result to the productIDListBuffer and returns it
-    public void generateProductIDList(String inputString) {
+    public void generateProductIDList(String inputString){
 
         productIDListBuffer.clear();
 
@@ -52,6 +52,7 @@ public class InputFieldDataHandler {
 
     }
 
+    // Generates a product ID string
     public String generateProductIDString() {
 
         String productIDString = "";
@@ -80,7 +81,7 @@ public class InputFieldDataHandler {
     }
 
     private boolean isNumeric(char c) {
-        return c >= '0' && c <= '9';
+        return '0' <= c && c <= '9';
     }
 
 }

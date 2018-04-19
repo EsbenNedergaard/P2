@@ -34,12 +34,9 @@ public class GraphicalWarehouse {
     private Group rackGroup;
     private Group orderPickerGroup;
     private Group interactionFieldGroup;
+    private List<OrderPickerGraphics> orderPickerList;
 
     private InteractionGraphics interactionGraphics = new InteractionGraphics();
-
-    private OrderPickerGraphics orderPickerTest;
-    private OrderPickerGraphics orderPickerTest2;
-    private OrderPickerGraphics orderPickerTest3;
 
     private GenerateRandomPickingRoute
             randomPickingRoute = new GenerateRandomPickingRoute();
@@ -52,6 +49,7 @@ public class GraphicalWarehouse {
         this.warehouse = warehouse;
         this.LENGTH_WAREHOUSE = warehouse.getLength();
         this.WIDTH_WAREHOUSE = warehouse.getWidth();
+        this.orderPickerList = new ArrayList<>();
     }
 
     // Returns a group of graphical tiles which represents the warehouse floor
@@ -124,35 +122,24 @@ public class GraphicalWarehouse {
 
     private Group getOrderPickerGroup() {
         Group orderPickerGroup = new Group();
-        List<Point2D> pickPoints = new ArrayList<>();
-        //pickPoints.add(new Point2D(0,11));
-        pickPoints.add(new Point2D(42,0));
-        pickPoints.add(new Point2D(42,11));
-        pickPoints.add(new Point2D(10,1));
-        //pickPoints.add(new Point2D(7, 7));
-        pickPoints.add(new Point2D(30, 10));
-        pickPoints.add(new Point2D(15, 4));
 
-        Warehouse testWarehouse = new Dexion();
-        BaseLayer baseLayer = testWarehouse.getBaseLayer();
-        SpaceTimeGrid spaceTimeGrid = new SpaceTimeGrid(baseLayer, 500);
 
-        FastestRoute routeFinder = new FastestRoute(spaceTimeGrid);
-        List<Node> testRoute = routeFinder.calculateBestRoute(pickPoints);
-
-        for(Node n : testRoute) {
-            System.out.println(n.getX() + ", " + n.getY());
-        }
-        TempRoutePrinter printer = new TempRoutePrinter(testRoute, baseLayer);
-        printer.printRoute(testWarehouse.getLength(), testWarehouse.getWidth());
-        orderPickerTest = new OrderPickerGraphics(testRoute);
+        OrderPickerGraphics orderPickerTest;
+        //OrderPickerGraphics orderPickerTest2;
+        //OrderPickerGraphics orderPickerTest3;
+        orderPickerTest = new OrderPickerGraphics(randomPickingRoute.getRoute1());
         //orderPickerTest2 = new OrderPickerGraphics(randomPickingRoute.getRoute2());
         //orderPickerTest3 = new OrderPickerGraphics(randomPickingRoute.getRoute3());
 
-        //orderPickerGroup.getChildren().addAll(orderPickerTest, orderPickerTest2, orderPickerTest3);
-        orderPickerGroup.getChildren().add(orderPickerTest);
-
+        orderPickerList.add(orderPickerTest);
+        //orderPickerList.add(orderPickerTest2);
+        //orderPickerList.add(orderPickerTest3);
+        orderPickerGroup.getChildren().addAll(orderPickerList);
         return orderPickerGroup;
+    }
+
+    public void addPicker(OrderPickerGraphics picker) {
+        orderPickerList.add(picker);
     }
 
     private Group getInteractionFieldGroup() {
@@ -212,8 +199,10 @@ public class GraphicalWarehouse {
 
     private void onUpdate() {
         UPDATE_COUNTER++;
-
-        if(orderPickerTest.move(UPDATE_COUNTER));
+        for(OrderPickerGraphics picker : orderPickerList) {
+            if(picker.move(UPDATE_COUNTER));
+        }
+        //if(orderPickerTest.move(UPDATE_COUNTER));
         //if(orderPickerTest2.move(UPDATE_COUNTER));
         //if(orderPickerTest3.move(UPDATE_COUNTER));
     }

@@ -35,6 +35,8 @@ public class InteractionGraphics {
 
             if(!generatedProductIDs.equals(""))
                 table.add(generatedProductIDs);
+
+            inputField.clear();
         });
     }
 

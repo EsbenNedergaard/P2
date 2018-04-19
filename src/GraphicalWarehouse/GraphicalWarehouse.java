@@ -1,6 +1,8 @@
 package GraphicalWarehouse;
 
 import Geometry.*;
+
+import Geometry.Node;
 import GraphicalWarehouse.GraphicalObjects.*;
 import Warehouse.Aisle.Aisle;
 import Warehouse.Racks.*;
@@ -13,6 +15,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static Warehouse.GUIWarehouse.SCALE;
 import static Warehouse.GUIWarehouse.TILE_SIZE;

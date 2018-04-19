@@ -127,9 +127,8 @@ public class GraphicalWarehouse {
     private Group getOrderPickerGroup() {
         Group orderPickerGroup = new Group();
         List<Point2D> pickPoints = new ArrayList<>();
-        pickPoints.add(new Point2D(0,0));
         pickPoints.add(new Point2D(0,10));
-        //pickPoints.add(new Point2D(42,0));
+        pickPoints.add(new Point2D(42,0));
         pickPoints.add(new Point2D(30,4));
         pickPoints.add(new Point2D(42,10));
 
@@ -140,6 +139,11 @@ public class GraphicalWarehouse {
         FastestRoute routeFinder = new FastestRoute(spaceTimeGrid);
         List<Node> testRoute = routeFinder.calculateBestRoute(pickPoints);
 
+        for(Node n : testRoute) {
+            System.out.println(n.getX() + ", " + n.getY());
+        }
+        TempRoutePrinter printer = new TempRoutePrinter(testRoute, baseLayer);
+        printer.printRoute(testWarehouse.getLength(), testWarehouse.getWidth());
         orderPickerTest = new OrderPickerGraphics(testRoute);
         //orderPickerTest2 = new OrderPickerGraphics(randomPickingRoute.getRoute2());
         //orderPickerTest3 = new OrderPickerGraphics(randomPickingRoute.getRoute3());

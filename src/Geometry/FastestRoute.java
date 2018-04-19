@@ -31,7 +31,7 @@ public class FastestRoute {
                 currRoute.addAll(path.findShortestRoute(currStart, startingPoint, timeAfterRoute));
 
                 if(bestRoute.size() == 0 || currRoute.size() < bestRoute.size()){
-                    bestRoute = currRoute;
+                    bestRoute = new ArrayList<>(currRoute);
                 }
             } else {
                 for (Point2D n : listRemaining) {
@@ -39,9 +39,9 @@ public class FastestRoute {
                     currRoute.addAll(path.findShortestRoute(currStart, n, timeAfterRoute));
 
                     List<Point2D> nextList = new ArrayList<>(listRemaining);
-                    nextList.remove(0);
+                    nextList.remove(n);
                     Point2D nextStart = currRoute.get(currRoute.size() - 1);
-                    currRoute.remove(nextStart);
+                    //currRoute.remove(nextStart);
                     proc(nextStart, nextList, new ArrayList<>(currRoute));
                 }
             }

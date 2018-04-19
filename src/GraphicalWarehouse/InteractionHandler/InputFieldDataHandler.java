@@ -15,7 +15,8 @@ public class InputFieldDataHandler {
 
     // This method takes a string of product id's, clears product buffer,
     // adds new result to the productIDListBuffer and returns it
-    public List<Integer> generateProductIDList(String inputString) {
+    public void generateProductIDList(String inputString) {
+
         productIDListBuffer.clear();
 
         if(inputString.isEmpty())
@@ -44,11 +45,10 @@ public class InputFieldDataHandler {
                 } catch(NumberFormatException e) {
                     showAlert(e.getMessage(), Alert.AlertType.ERROR);
                 }
+
             }
 
         }
-
-        return productIDListBuffer;
 
     }
 
@@ -67,6 +67,10 @@ public class InputFieldDataHandler {
 
         return productIDString;
 
+    }
+
+    public List<Integer> getProductIDList() {
+        return productIDListBuffer;
     }
 
     private void showAlert(String contentText, Alert.AlertType type) {

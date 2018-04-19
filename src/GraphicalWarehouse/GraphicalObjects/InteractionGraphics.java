@@ -26,12 +26,13 @@ public class InteractionGraphics {
 
     private void setEventHandlers() {
 
-        InputFieldDataHandler handler = new InputFieldDataHandler();
+        InputFieldDataHandler textHandler = new InputFieldDataHandler();
 
         // This is when the ADD BUTTON is clicked
         addDataButton.setOnMouseClicked(e -> {
-            List<Integer> tempList = handler.generateProductIDList(inputField.getText());
-            String generatedProductIDs = handler.generateProductIDString();
+            textHandler.generateProductIDList(inputField.getText());
+            List<Integer> tempList = textHandler.getProductIDList();
+            String generatedProductIDs = textHandler.generateProductIDString();
 
             if(!generatedProductIDs.equals(""))
                 table.add(generatedProductIDs);

@@ -19,7 +19,7 @@ class RouteTestWarehouse {
 
         Node startNode = new Node(new Point2D(0, 0));
         //Node endNode = new Node(new Point2D((testWarehouse.getLength() - 1), (testWarehouse.getWidth() - 1)));
-        Node endNode = new Node(new Point2D(15,4));
+        Node endNode = new Node(new Point2D(42,3));
         //Node endNode = new Node(new Point2D(15,5));
 
         PathFinder testPathFinder = new PathFinder(spaceTimeGrid);

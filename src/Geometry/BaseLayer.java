@@ -9,13 +9,11 @@ public class BaseLayer {
     private int maxX;
     private int maxY;
 
-    //TODO: lave tests
-
     public BaseLayer(List<Node> nodeList) {
         maxX = 0;
         maxY = 0;
         for (Node n : nodeList) {
-            /*We check if we have found a higher x or y value*/
+            /* We check if we have found a higher x or y value */
             if (maxX < n.getX()) {
                 maxX = n.getX();
             }

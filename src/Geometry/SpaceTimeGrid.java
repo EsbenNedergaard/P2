@@ -81,12 +81,11 @@ public class SpaceTimeGrid {
             for (Node neighbour : node.getNeighbourNodes()) {
                 if(neighbourToRemove.equals(neighbour)) {
                     node.getNeighbourNodes().remove(neighbour);
-                    /*We need this break because we remove an element from the Neighbour-loop that we are running through
-                    otherwise the for-each loop will crash*/
+                    /* We need this break because we remove an element from the Neighbour-loop that we are running through
+                    otherwise the for-each loop will crash */
                     break;
                 }
             }
         }
     }
-
 }

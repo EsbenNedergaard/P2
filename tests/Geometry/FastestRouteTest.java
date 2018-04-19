@@ -45,17 +45,6 @@ class FastestRouteTest {
     }
 
     @Test
-    void getRouteThroughPickPoints() {
-        List<Node> fastestRoute = new ArrayList<>();
-        FastestRoute routeFinder = new FastestRoute(spaceTimeGrid);
-
-        fastestRoute = routeFinder.getRouteThroughPickPoints(pickingList);
-
-        TempRoutePrinter printer = new TempRoutePrinter(fastestRoute, baseLayer);
-        printer.printRoute(GRID_SIZE, GRID_SIZE);
-    }
-
-    @Test
     void calculateBestRoute(){
         List<Node> fastestRoute = new ArrayList<>();
         FastestRoute routeFinder = new FastestRoute(spaceTimeGrid);
@@ -64,17 +53,5 @@ class FastestRouteTest {
         TempRoutePrinter printer = new TempRoutePrinter(fastestRoute, baseLayer);
         printer.printRoute(GRID_SIZE, GRID_SIZE);
 
-    }
-
-    @Test
-    void testFakulitet() {
-        FastestRoute routeFinder = new FastestRoute(spaceTimeGrid);
-
-        List<Integer> integerList = new ArrayList<>();
-        for(int i = 0; i < 3; i++) {
-            integerList.add(i);
-        }
-
-        routeFinder.testFakulitet(integerList);
     }
 }

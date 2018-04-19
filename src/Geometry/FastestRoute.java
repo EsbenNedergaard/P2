@@ -6,89 +6,60 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FastestRoute {
-    private final Point2D startingPoint = new Node(new Point2D(0, 0));
+    private final Point2D START_POINT = new Node(new Point2D(0, 5));
+    private final Point2D END_POINT = new Node(new Point2D(0, 6));
     private List<Node> bestRoute;
     private PathFinder path;
+    private final int PICKING_TIME = 5;
 
 
     public FastestRoute(SpaceTimeGrid grid) {
         this.path = new PathFinder(grid);
     }
 
+
+    //Method that calculates the best route for the pickingList that it is given
     public List<Node> calculateBestRoute(List<Point2D> pickingList) {
         this.bestRoute = new ArrayList<>();
         List<Node> temp = new ArrayList<>();
 
-        proc(startingPoint, pickingList, temp);
+        bestRouteOfAllRoutes(START_POINT, pickingList, temp);
 
         return this.bestRoute;
     }
 
-    private void proc(Point2D currStart, List<Point2D> listRemaining, List<Node> currRoute) {
+    /*Our recursive function that calls itself with a smaller and smaller version of the list of remaining pick points
+    * and a bigger currRoute plus a new start point*/
+    private void bestRouteOfAllRoutes(Point2D currStart, List<Point2D> remainingPickingPoints, List<Node> currRoute) {
         try {
-            if(listRemaining.isEmpty()) {
+            if(remainingPickingPoints.isEmpty()) {
                 int timeAfterRoute = currRoute.size();
-                currRoute.addAll(path.findShortestRoute(currStart, startingPoint, timeAfterRoute));
+                currRoute.addAll(path.findShortestRoute(currStart, END_POINT, timeAfterRoute));
 
                 if(bestRoute.size() == 0 || currRoute.size() < bestRoute.size()){
                     bestRoute = new ArrayList<>(currRoute);
                 }
             } else {
-                for (Point2D n : listRemaining) {
+                for (Point2D n : remainingPickingPoints) {
                     int timeAfterRoute = currRoute.size();
                     List<Node> nextRoute = new ArrayList<>(currRoute);
                     nextRoute.addAll(path.findShortestRoute(currStart, n, timeAfterRoute));
 
-                    List<Point2D> nextList = new ArrayList<>(listRemaining);
+                    List<Point2D> nextList = new ArrayList<>(remainingPickingPoints);
                     nextList.remove(n);
-                    //Point2D nextStart = currRoute.get(currRoute.size() - 1);
-                    //currRoute.remove(nextStart);
-                    proc(n, nextList, nextRoute);
+
+                    //Adding picking time
+                    for(int i = 0; i < PICKING_TIME - 1; i++) {
+                        Node previousNode = nextRoute.get(nextRoute.size() - 1);
+                        Node waitPoint = path.getSpaceTimeGrid().getNodePointer(previousNode.getX(), previousNode.getY(), previousNode.getTime() + 1);
+                        nextRoute.add(waitPoint);
+                    }
+
+                    bestRouteOfAllRoutes(n, nextList, nextRoute);
                 }
             }
         } catch (RouteNotPossibleException e) {
             System.out.println(e.getMessage());
         }
-    }
-
-    public void testFakulitet(List<Integer> integerList){
-        List<Integer> collectedList = new ArrayList<>();
-
-        testProcedure(integerList, collectedList);
-    }
-
-    private void testProcedure(List<Integer> integerList, List<Integer> collectedList) {
-        if(integerList.isEmpty()) {
-            for(Integer i : collectedList) {
-                System.out.print(i + ", ");
-            }
-            System.out.println();
-        }
-        for(Integer i : integerList) {
-            List<Integer> newList = new ArrayList<>(integerList);
-            newList.remove(i);
-
-            List<Integer> newCollectedList = new ArrayList<>();
-            newCollectedList.addAll(collectedList);
-            newCollectedList.add(i);
-            testProcedure(newList, newCollectedList);
-        }
-    }
-
-     List<Node> getRouteThroughPickPoints(List<Point2D> pickingList){
-        List<Node> tempRoute = new ArrayList<>();
-        Point2D currStart = startingPoint;
-        try {
-            for(Point2D endPoint : pickingList) {
-                int timeAfterRoute = tempRoute.size();
-
-                tempRoute.addAll(path.findShortestRoute(currStart, endPoint, timeAfterRoute));
-                currStart = tempRoute.get(tempRoute.size() - 1);
-                tempRoute.remove(currStart);
-            }
-        } catch (RouteNotPossibleException e) {
-            System.out.println(e.getMessage());
-        }
-        return tempRoute;
     }
 }

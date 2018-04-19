@@ -62,7 +62,7 @@ public class PathFinder {
             for (Node neighbour : current.getNeighbourNodes()) {
                 //We check if the current node is in the already checked nodes (closed set)
                 if (closedSet.contains(neighbour)) {
-                    continue;
+                   continue;
                 }
 
                 //A better path exists

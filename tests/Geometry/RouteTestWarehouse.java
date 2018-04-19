@@ -1,6 +1,7 @@
 package Geometry;
 
 import Exceptions.RouteNotPossibleException;
+import Geometry.*;
 import Warehouse.*;
 import org.junit.jupiter.api.Test;
 

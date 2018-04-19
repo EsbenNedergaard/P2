@@ -11,7 +11,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PathFinderTest {
-    private final int MAX_TIME = 50;
+    private final int MAX_TIME = 250;
     private final int GRID_SIZE = 10;
     private final int START_TIME = 0;
     private SpaceTimeGrid spaceTimeGrid;

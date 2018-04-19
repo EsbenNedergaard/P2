@@ -13,10 +13,7 @@ class RouteTestWarehouse {
     @Test
     void testOnWareHouse() {
         Warehouse testWarehouse = new Dexion();
-
-        List<Node> warehouseNodeList = testWarehouse.getNodeList();
-
-        BaseLayer baseLayer = new BaseLayer(warehouseNodeList);
+        BaseLayer baseLayer = testWarehouse.getBaseLayer();
         SpaceTimeGrid spaceTimeGrid = new SpaceTimeGrid(baseLayer, MAX_TIME);
 
 
@@ -30,7 +27,7 @@ class RouteTestWarehouse {
         List<Node> testResultRoute = new ArrayList<>();
         try {
             for (int i = 0; i < 100; i++) {
-                testResultRoute = testPathFinder.findShortestRoute(startNode, endNode);
+                testResultRoute = testPathFinder.findShortestRoute(startNode, endNode, 0);
             }
         }
         catch (RouteNotPossibleException e) {

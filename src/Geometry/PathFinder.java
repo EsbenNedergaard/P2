@@ -11,6 +11,9 @@ public class PathFinder {
     private SpaceTimeGrid spaceTimeGrid;
     private List<Node> closedSet;
     private PriorityQueue<Node> openSet;
+    private Node startNode;
+    private Node endNode;
+    private int startTime;
 
     public PathFinder(SpaceTimeGrid spaceTimeGrid) {
         this.spaceTimeGrid = spaceTimeGrid;
@@ -28,12 +31,15 @@ public class PathFinder {
         spaceTimeGrid.removeRoute(route);
     }
 
-    public List<Node> findShortestRoute(Node start, Node end) throws RouteNotPossibleException {
-        //TODO: Lav noget så RouteNotPossibleException bliver castet på at start eller end ligger på et permanent obstacle
-        this.checkStartAndEndNode(start, end);
+    public List<Node> findShortestRoute(Point2D start, Point2D end, int startTime) throws RouteNotPossibleException {
+        this.startNode =  new Node(start);
+        this.endNode = new Node (end);
+        this.startTime = startTime;
+        //TODO: Lav noget med startTime cast af exception her
+        this.checkStartAndEndNode();
 
         //Sets starting values to all nodes
-        this.setStartValues(start, end);
+        this.setStartValues();
 
         //Runs till all nodes have been visited or till we find the end node
         while (!openSet.isEmpty()) {
@@ -42,8 +48,8 @@ public class PathFinder {
             closedSet.add(current);
 
             //We have reached the destination
-            if (current.getX() == end.getX() && current.getY() == end.getY()) {
-                end = current;
+            if (current.getX() == endNode.getX() && current.getY() == endNode.getY()) {
+                endNode = current;
                 break;
             }
 
@@ -69,39 +75,39 @@ public class PathFinder {
                 }
             }
         }
-        return constructPath(start, end);
+        return constructPath(startNode, endNode);
     }
 
-    private void checkStartAndEndNode(Node start, Node end) throws RouteNotPossibleException {
+    private void checkStartAndEndNode() throws RouteNotPossibleException {
         //We check that the start point is inside the grid
-        if ((start.getX() < 0 || start.getY() < 0) || (spaceTimeGrid.getBaseLayer().getMaxX() < start.getX() || spaceTimeGrid.getBaseLayer().getMaxY() < start.getY())) {
+        if ((startNode.getX() < 0 || startNode.getY() < 0) || (spaceTimeGrid.getBaseLayer().getMaxX() < startNode.getX() || spaceTimeGrid.getBaseLayer().getMaxY() < startNode.getY())) {
             throw new RouteNotPossibleException("The start point was placed outside the SpaceTimeGrid");
         }
-        else if ((end.getX() < 0 || end.getY() < 0) || (spaceTimeGrid.getBaseLayer().getMaxX() < end.getX() || spaceTimeGrid.getBaseLayer().getMaxY() < end.getY() )) {
+        else if ((endNode.getX() < 0 || endNode.getY() < 0) || (spaceTimeGrid.getBaseLayer().getMaxX() < endNode.getX() || spaceTimeGrid.getBaseLayer().getMaxY() < endNode.getY() )) {
             throw new RouteNotPossibleException("The end point was placed outside the SpaceTimeGrid");
         }
         else {
             for(Node obstacle : spaceTimeGrid.getBaseLayer().getStationaryObstacles()){
-                if (obstacle.getX() == start.getX() && obstacle.getY() == start.getY()) {
+                if (obstacle.getX() == startNode.getX() && obstacle.getY() == startNode.getY()) {
                     throw new RouteNotPossibleException("The start point was placed on top of a permanent obstacle");
                 }
-                else if (obstacle.getX() == end.getX() && obstacle.getY() == end.getY()) {
+                else if (obstacle.getX() == endNode.getX() && obstacle.getY() == endNode.getY()) {
                     throw new RouteNotPossibleException("The end point was placed on top of a permanent obstacle");
                 }
             }
         }
     }
 
-    private void setStartValues(Node start, Node end) {
+    private void setStartValues() {
         //Makes sure the sets are empty before the algorithm begins
         openSet.clear();
         closedSet.clear();
 
         //We set the start-point to reference the first layer.
-        start.setNodeLayer(spaceTimeGrid.getNodeLayerList().get(0));
+        startNode.setNodeLayer(spaceTimeGrid.getNodeLayerList().get(startTime));
 
         for (Node node : spaceTimeGrid.getAllNodes()) {
-            if (node.equals(start)) {
+            if (node.equals(startNode)) {
                 //First node gets distance 0, other nodes get distance infinity
                 node.setDistanceFromStart(0);
                 openSet.add(node);
@@ -109,7 +115,7 @@ public class PathFinder {
                 node.setDistanceToInf();
             }
             //All nodes gets an estimated distance to the end node
-            node.setDistanceToEnd(end);
+            node.setDistanceToEnd(endNode);
         }
     }
 

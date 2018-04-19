@@ -128,8 +128,8 @@ public class GraphicalWarehouse {
         pickPoints.add(new Point2D(0,11));
         pickPoints.add(new Point2D(42,0));
         pickPoints.add(new Point2D(42,11));
-        pickPoints.add(new Point2D(10,1));
-        pickPoints.add(new Point2D(7, 7));
+        //pickPoints.add(new Point2D(10,1));
+        //pickPoints.add(new Point2D(7, 7));
         pickPoints.add(new Point2D(30, 10));
         pickPoints.add(new Point2D(15, 4));
 

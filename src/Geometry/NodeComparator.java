@@ -6,6 +6,13 @@ public class NodeComparator implements Comparator<Node> {
 
     @Override
     public int compare(Node o1, Node o2) {
-        return o1.getTotalDistance() - o2.getTotalDistance();
+
+        int distanceDiff = o1.getTotalDistance() - o2.getTotalDistance();
+
+        if(distanceDiff == 0){
+            return o2.getY() - o1.getY();
+        }
+
+        return distanceDiff;
     }
 }

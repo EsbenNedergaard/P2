@@ -17,6 +17,8 @@ public class FastestRoute {
         this.path = new PathFinder(grid);
     }
 
+
+    //Method that calculates the best route for the pickingList that it is given
     public List<Node> calculateBestRoute(List<Point2D> pickingList) {
         this.bestRoute = new ArrayList<>();
         List<Node> temp = new ArrayList<>();
@@ -26,9 +28,11 @@ public class FastestRoute {
         return this.bestRoute;
     }
 
-    private void bestRouteOfAllRoutes(Point2D currStart, List<Point2D> listRemaining, List<Node> currRoute) {
+    /*Our recursive function that calls itself with a smaller and smaller version of the list of remaining pick points
+    * and a bigger currRoute plus a new start point*/
+    private void bestRouteOfAllRoutes(Point2D currStart, List<Point2D> remainingPickingPoints, List<Node> currRoute) {
         try {
-            if(listRemaining.isEmpty()) {
+            if(remainingPickingPoints.isEmpty()) {
                 int timeAfterRoute = currRoute.size();
                 currRoute.addAll(path.findShortestRoute(currStart, END_POINT, timeAfterRoute));
 
@@ -36,12 +40,12 @@ public class FastestRoute {
                     bestRoute = new ArrayList<>(currRoute);
                 }
             } else {
-                for (Point2D n : listRemaining) {
+                for (Point2D n : remainingPickingPoints) {
                     int timeAfterRoute = currRoute.size();
                     List<Node> nextRoute = new ArrayList<>(currRoute);
                     nextRoute.addAll(path.findShortestRoute(currStart, n, timeAfterRoute));
 
-                    List<Point2D> nextList = new ArrayList<>(listRemaining);
+                    List<Point2D> nextList = new ArrayList<>(remainingPickingPoints);
                     nextList.remove(n);
 
                     //Adding picking time

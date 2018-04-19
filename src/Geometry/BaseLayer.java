@@ -17,7 +17,6 @@ public class BaseLayer {
         for (Node n : nodeList) {
             /*We check if we have found a higher x or y value*/
             if (maxX < n.getX()) {
-
                 maxX = n.getX();
             }
             if (maxY < n.getY()) {

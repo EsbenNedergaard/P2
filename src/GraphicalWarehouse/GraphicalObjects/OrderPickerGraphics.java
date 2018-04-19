@@ -24,7 +24,7 @@ public class OrderPickerGraphics extends Rectangle {
         // Set route list
         this.routeList = routeList;
 
-        // When the object is first created, the index must be 0
+        // When the object is first created, the index must be 1
         this.indexOfLastPoint = 1;
 
         setTranslateX(routeList.get(0).getX() * TILE_SIZE);

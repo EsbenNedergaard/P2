@@ -1,5 +1,4 @@
 package Warehouse;
-import GraphicalWarehouse.GraphicalObjects.OrderPickerGraphics;
 import GraphicalWarehouse.GraphicalWarehouse;
 import javafx.application.Application;
 import javafx.scene.Scene;

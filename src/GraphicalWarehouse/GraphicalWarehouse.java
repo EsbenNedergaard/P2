@@ -29,7 +29,6 @@ public class GraphicalWarehouse {
     private Warehouse warehouse;
     private int LENGTH_WAREHOUSE;
     private int WIDTH_WAREHOUSE;
-
     // Path finder
     private OptimalRouteFinder pathFinder;
     private final int MAX_TIME = 500;
@@ -42,10 +41,9 @@ public class GraphicalWarehouse {
 
     private List<OrderPickerGraphics> orderPickerList;
 
-    private InteractionGraphics interactionGraphics = new InteractionGraphics();
 
-    // Animation timer
-    private AnimationTimer timer;
+    // Animation programTimer
+    private AnimationTimer programTimer;
     private int UPDATE_COUNTER = 0;
 
     public GraphicalWarehouse(Warehouse warehouse) {
@@ -128,17 +126,21 @@ public class GraphicalWarehouse {
 
     private Group getInteractionFieldGroup() {
 
+        InteractionGraphics interactionGraphics = new InteractionGraphics();
         BorderPane borderPane = new BorderPane();
         GridPane gridpane = new GridPane();
+
         gridpane.setMinWidth(TILE_SIZE * WIDTH_WAREHOUSE * SCALE);
         gridpane.setHgap(10);
         Label heading = new Label("Add product list to queue. Product id separated by comma");
         heading.getStyleClass().add("heading-label");
 
+        // Get interaction objects
         Button addRouteButton = interactionGraphics.getAddDataButton();
         Button launchButton = interactionGraphics.getLaunchButton();
         TextField inputField = interactionGraphics.getInputField();
 
+        // Set objects in GridPane
         gridpane.add(heading, 1, 1, 5, 1);
         gridpane.add(inputField, 1, 2, 4, 2);
         gridpane.add(addRouteButton, 5, 2);
@@ -147,42 +149,52 @@ public class GraphicalWarehouse {
         TableGraphics table = (TableGraphics) interactionGraphics.getTable();
 
         borderPane.getStyleClass().add("interaction-border-pane");
-
         borderPane.setRight(gridpane);
         borderPane.setLeft(table);
 
-        setOnButtonClickEvent(addRouteButton, inputField, table);
+        // Set event listeners
+        setOnButtonClickEvent(addRouteButton, inputField, table, launchButton);
 
         return new Group(borderPane);
 
     }
 
-    private void setOnButtonClickEvent(Button addButton, TextField inputField, TableGraphics table) {
-
+    private void setOnButtonClickEvent(Button addButton, TextField inputField, TableGraphics table, Button launchButton) {
+        // Run the same method on button clicked and ENTER pressed
         addButton.setOnMouseClicked(e -> this.actionsForAddProductIDs(inputField, table));
         inputField.setOnKeyPressed(e -> {
             if(e.getCode() == KeyCode.ENTER) {
                 this.actionsForAddProductIDs(inputField, table);
             }
         });
+
+        launchButton.setOnMouseClicked(e -> programTimer.start());
     }
 
     private void actionsForAddProductIDs(TextField inputField, TableGraphics table) {
+
+        // TODO: Create a new task for the heavy calculations
+        // TODO: Put all routes into a list and calculate them in another method
+
         InputFieldDataHandler textHandler = new InputFieldDataHandler();
+        // Get the id list from the input field
         List<Integer> tempProductIDList = textHandler.generateProductIDList(inputField.getText());
-        // Find route for picker
+
+      // Find route for picker
         List<Point2D> pickPointList = this.warehouse.getPickingPointsFromIDs(tempProductIDList);
         List<Node> fastestRoute = this.pathFinder.calculateBestRoute(pickPointList);
+
 
         OrderPickerGraphics orderPicker = new OrderPickerGraphics(fastestRoute);
         addPicker(orderPicker);
 
-        // Add to table
+        // Add to graphical ID table
         String generatedProductIDs = textHandler.generateProductIDString();
 
         if(!generatedProductIDs.equals(""))
             table.add(generatedProductIDs);
 
+        // Clear the input field when done
         inputField.clear();
     }
 
@@ -207,13 +219,12 @@ public class GraphicalWarehouse {
 
         root.getChildren().addAll(borderPane);
 
-        timer = new AnimationTimer() {
+        programTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
                 onUpdate();
             }
         };
-        timer.start();
 
         return root;
     }

@@ -14,7 +14,7 @@ public interface Warehouse {
     List<RackRow> getRackRowList();
     BaseLayer getBaseLayer();
     List<Point2D> getPickingPoints(List<Product> productPickList);
-
+    List<Point2D> getPickingPointsFromIDs(List<Integer> productIDList);
     int getWidth();
     int getLength();
 }

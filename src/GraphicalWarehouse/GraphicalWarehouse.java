@@ -34,6 +34,7 @@ public class GraphicalWarehouse {
     private Group rackGroup;
     private Group orderPickerGroup;
     private Group interactionFieldGroup;
+
     private List<OrderPickerGraphics> orderPickerList;
 
     private InteractionGraphics interactionGraphics = new InteractionGraphics();

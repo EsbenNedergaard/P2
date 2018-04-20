@@ -15,7 +15,7 @@ public class InputFieldDataHandler {
 
     // This method takes a string of product id's, clears product buffer,
     // adds new result to the productIDListBuffer and returns it
-    public void generateProductIDList(String inputString){
+    public List<Integer> generateProductIDList(String inputString){
 
         productIDListBuffer.clear();
 
@@ -49,6 +49,8 @@ public class InputFieldDataHandler {
             }
 
         }
+
+        return productIDListBuffer;
 
     }
 

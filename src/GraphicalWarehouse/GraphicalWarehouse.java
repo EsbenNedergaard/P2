@@ -2,7 +2,6 @@ package GraphicalWarehouse;
 
 import Geometry.*;
 
-import Geometry.Node;
 import GraphicalWarehouse.GraphicalObjects.*;
 import Warehouse.Aisle.Aisle;
 import Warehouse.Racks.*;

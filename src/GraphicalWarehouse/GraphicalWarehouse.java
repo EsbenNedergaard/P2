@@ -31,7 +31,7 @@ public class GraphicalWarehouse {
     private int WIDTH_WAREHOUSE;
 
     // Path finder
-    private FastestRoute pathFinder;
+    private OptimalRouteFinder pathFinder;
     private final int MAX_TIME = 500;
     // Graphic groups
     private Group tileGroup;
@@ -43,9 +43,6 @@ public class GraphicalWarehouse {
     private List<OrderPickerGraphics> orderPickerList;
 
     private InteractionGraphics interactionGraphics = new InteractionGraphics();
-
-    private GenerateRandomPickingRoute
-            randomPickingRoute = new GenerateRandomPickingRoute();
 
     // Animation timer
     private AnimationTimer timer;
@@ -62,7 +59,7 @@ public class GraphicalWarehouse {
 
     private void setupPathFinder() {
         SpaceTimeGrid grid = new SpaceTimeGrid(this.warehouse.getBaseLayer(), MAX_TIME);
-        this.pathFinder = new FastestRoute(grid);
+        this.pathFinder = new OptimalRouteFinder(grid);
     }
 
     // Returns a group of graphical tiles which represents the warehouse floor
@@ -120,7 +117,6 @@ public class GraphicalWarehouse {
 
     private Group getOrderPickerGroup() {
         Group orderPickerGroup = new Group();
-        OrderPickerGraphics orderPickerTest;
 
         return orderPickerGroup;
     }
@@ -175,8 +171,8 @@ public class GraphicalWarehouse {
         InputFieldDataHandler textHandler = new InputFieldDataHandler();
         List<Integer> tempProductIDList = textHandler.generateProductIDList(inputField.getText());
         // Find route for picker
-        List<Point2D> nodeList = this.warehouse.getPickingPointsFromIDs(tempProductIDList);
-        List<Node> fastestRoute = this.pathFinder.calculateBestRoute(nodeList);
+        List<Point2D> pickPointList = this.warehouse.getPickingPointsFromIDs(tempProductIDList);
+        List<Node> fastestRoute = this.pathFinder.calculateBestRoute(pickPointList);
 
         OrderPickerGraphics orderPicker = new OrderPickerGraphics(fastestRoute);
         addPicker(orderPicker);

@@ -26,7 +26,7 @@ public class GUIWarehouse extends Application {
     public void init() {
 
     }
-    //TODO: tidligere havde vi "throws Exception" ved disse snak lige med Tobias om disse er nødvendige
+    //TODO: tidligere havde vi "throws Exception" ved disse snak lige med Tobias om disse er nødve
 
     @Override
     public void start(Stage primaryStage) {

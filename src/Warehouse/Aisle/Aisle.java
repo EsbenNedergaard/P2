@@ -12,14 +12,13 @@ import java.util.List;
 public interface Aisle {
     int getAisleLength();
     Point2D getStartPoint();
-    Point2D getEndPoint();
 
-    RackRow getFirstRackRow();
-    RackRow getSecondRackRow();
+    RackRow getTopRackRow();
+    RackRow getBottomRackRow();
     List<RackRow> getRackRowList();
 
     void addProduct(Product e);
     List<Point2D> getPickingPoints(List<Product> productPickList);
-    boolean doesItContainProductID(int id); //Should be used to look through the racks an see if it contains the product, and then we can add the products point to teh pickingpoints.
+    boolean doesItContainProductID(int id); //Should be used to look through the racks an see if it contains the product, and then we can add the products point to the pickingPoints.
     void setRacksAsObstacles(List<Node> nodeGrid);
 }

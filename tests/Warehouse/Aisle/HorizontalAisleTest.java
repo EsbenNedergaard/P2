@@ -2,7 +2,6 @@ package Warehouse.Aisle;
 
 import Geometry.Point2D;
 import Warehouse.Racks.HorizontalRackRow;
-import Warehouse.Racks.Rack;
 import Warehouse.Racks.RackRow;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,18 +39,13 @@ class HorizontalAisleTest {
     }
 
     @Test
-    void getEndPoint01() {
-        assertEquals(new Point2D(29, 5), testAisle01.getEndPoint());
-    }
-
-    @Test
     void getFirstRackRow01() {
-        assertEquals(testFirstRackRow01, testAisle01.getFirstRackRow());
+        assertEquals(testFirstRackRow01, testAisle01.getTopRackRow());
     }
 
     @Test
     void getSecondRackRow01() {
-        assertEquals(testSecondRackRow01, testAisle01.getSecondRackRow());
+        assertEquals(testSecondRackRow01, testAisle01.getBottomRackRow());
     }
 
     @Test

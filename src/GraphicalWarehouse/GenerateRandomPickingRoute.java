@@ -1,7 +1,7 @@
 package GraphicalWarehouse;
 
-import Geometry.Node;
-import Geometry.Point2D;
+import Geometry.*;
+import Warehouse.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,114 +11,34 @@ import java.util.List;
  * PICKING ROUTES FOR TESTS                        */
 
 public class GenerateRandomPickingRoute {
+    List<Node> route1;
+
+    public GenerateRandomPickingRoute() {
+        createRoute1();
+    }
+
+    public void createRoute1() {
+        List<Point2D> pickPoints1 = new ArrayList<>();
+        FastestRoute routeFinder;
+
+        Warehouse testWarehouse = new Dexion();
+        BaseLayer baseLayer = testWarehouse.getBaseLayer();
+        SpaceTimeGrid spaceTimeGrid = new SpaceTimeGrid(baseLayer, 500);
+        routeFinder = new FastestRoute(spaceTimeGrid);
+
+        pickPoints1.add(new Point2D(0,11));
+        pickPoints1.add(new Point2D(42,0));
+        pickPoints1.add(new Point2D(42,11));
+        pickPoints1.add(new Point2D(10,1));
+        //pickPoints1.add(new Point2D(7, 7));
+        //pickPoints1.add(new Point2D(30, 10));
+        pickPoints1.add(new Point2D(15, 4));
+        this.route1 = routeFinder.calculateBestRoute(pickPoints1);
+    }
+
 
     public List<Node> getRoute1() {
-
-        List<Node> pickingRoute = new ArrayList<>();
-        int i;
-
-        for(i = 0; i <= 38; i++) {
-            pickingRoute.add(new Node(new Point2D(i, 1)));
-        }
-
-        pickingRoute.add(new Node(new Point2D(i, 1)));
-        pickingRoute.add(new Node(new Point2D(i, 2)));
-        pickingRoute.add(new Node(new Point2D(i, 2)));
-        pickingRoute.add(new Node(new Point2D(i, 3)));
-        pickingRoute.add(new Node(new Point2D(i, 4)));
-        pickingRoute.add(new Node(new Point2D(i, 4)));
-
-        for(i = 38; i > 4; i--) {
-            pickingRoute.add(new Node(new Point2D(i, 4)));
-        }
-
-        pickingRoute.add(new Node(new Point2D(i, 4)));
-        pickingRoute.add(new Node(new Point2D(i, 5)));
-        pickingRoute.add(new Node(new Point2D(i, 6)));
-
-        for(i = 4; i <= 38; i++) {
-            pickingRoute.add(new Node(new Point2D(i, 7)));
-        }
-
-        pickingRoute.add(new Node(new Point2D(i, 7)));
-        pickingRoute.add(new Node(new Point2D(i, 8)));
-        pickingRoute.add(new Node(new Point2D(i, 8)));
-        pickingRoute.add(new Node(new Point2D(i, 9)));
-        pickingRoute.add(new Node(new Point2D(i, 10)));
-        pickingRoute.add(new Node(new Point2D(i, 10)));
-
-        for(i = 38; i >= 4; i--) {
-            pickingRoute.add(new Node(new Point2D(i, 10)));
-        }
-
-        return pickingRoute;
-    }
-
-    public List<Node> getRoute2() {
-
-        int i;
-        List<Node> pickingRoute = new ArrayList<>();
-
-        pickingRoute.add(new Node(new Point2D(1, 1)));
-        pickingRoute.add(new Node(new Point2D(1, 2)));
-        pickingRoute.add(new Node(new Point2D(1, 3)));
-        pickingRoute.add(new Node(new Point2D(1, 4)));
-        pickingRoute.add(new Node(new Point2D(1, 5)));
-        pickingRoute.add(new Node(new Point2D(1, 6)));
-        pickingRoute.add(new Node(new Point2D(1, 7)));
-
-        for(i = 1; i <= 38; i++) {
-            pickingRoute.add(new Node(new Point2D(i, 7)));
-        }
-
-        pickingRoute.add(new Node(new Point2D(i, 7)));
-        pickingRoute.add(new Node(new Point2D(i, 8)));
-        pickingRoute.add(new Node(new Point2D(i, 8)));
-        pickingRoute.add(new Node(new Point2D(i, 9)));
-        pickingRoute.add(new Node(new Point2D(i, 10)));
-        pickingRoute.add(new Node(new Point2D(i, 10)));
-
-        for(i = 38; i >= 4; i--) {
-            pickingRoute.add(new Node(new Point2D(i, 10)));
-        }
-
-        return pickingRoute;
-    }
-
-    public List<Node> getRoute3() {
-
-        int i;
-        List<Node> pickingRoute = new ArrayList<>();
-
-        pickingRoute.add(new Node(new Point2D(1, 1)));
-        pickingRoute.add(new Node(new Point2D(1, 1)));
-        pickingRoute.add(new Node(new Point2D(1, 1)));
-        pickingRoute.add(new Node(new Point2D(1, 1)));
-        pickingRoute.add(new Node(new Point2D(1, 1)));
-        pickingRoute.add(new Node(new Point2D(1, 1)));
-        pickingRoute.add(new Node(new Point2D(1, 2)));
-        pickingRoute.add(new Node(new Point2D(1, 3)));
-        pickingRoute.add(new Node(new Point2D(1, 4)));
-        pickingRoute.add(new Node(new Point2D(1, 5)));
-        pickingRoute.add(new Node(new Point2D(1, 6)));
-        pickingRoute.add(new Node(new Point2D(1, 7)));
-
-        for(i = 1; i <= 38; i++) {
-            pickingRoute.add(new Node(new Point2D(i, 7)));
-        }
-
-        pickingRoute.add(new Node(new Point2D(i, 7)));
-        pickingRoute.add(new Node(new Point2D(i, 8)));
-        pickingRoute.add(new Node(new Point2D(i, 8)));
-        pickingRoute.add(new Node(new Point2D(i, 9)));
-        pickingRoute.add(new Node(new Point2D(i, 10)));
-        pickingRoute.add(new Node(new Point2D(i, 10)));
-
-        for(i = 38; i >= 4; i--) {
-            pickingRoute.add(new Node(new Point2D(i, 10)));
-        }
-
-        return pickingRoute;
+        return this.route1;
     }
 
 }

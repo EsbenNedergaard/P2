@@ -53,7 +53,7 @@ class BaseLayerTest {
         }
 
         for (int i = 0; i < 36 * 12; i++) {
-            // Baselayer does not contain 'time'. Therefore we test equality among the x and y. 
+            // BaseLayer does not contain 'time'. Therefore we test equality among the x and y.
             assertEquals(nodeListTest.get(i).getX(), nodeList.get(i).getX());
             assertEquals(nodeListTest.get(i).getY(), nodeList.get(i).getY());
         }

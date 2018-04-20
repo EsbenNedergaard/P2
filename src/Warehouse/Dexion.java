@@ -36,7 +36,6 @@ public class Dexion implements Warehouse {
                 nodeList.add(new Node(new Point2D(i, j)));
             }
         }
-
     }
 
     public void createAisleList() {
@@ -56,11 +55,10 @@ public class Dexion implements Warehouse {
     }
 
     private void createProducts() {
-        // Fill all the racks with products containing ID's starting from 1 and incrementing by 1 for every new product
         int i = 1;
         for (Aisle aisleElement : aisleList) {
             for (RackRow rackRowElement : aisleElement.getRackRowList()) {
-                for (Rack rackElement : rackRowElement.getRackArray()) {
+                for (Rack rackElement : rackRowElement.getRackList()) {
                     while (!rackElement.checkIfFull()) {
                         rackElement.addProduct(new Product(i));
                         i++;

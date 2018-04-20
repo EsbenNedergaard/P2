@@ -16,7 +16,7 @@ public interface RackRow {
     int getRackRowLength();
     Point2D getStartPoint();
     List<Product> getAllProductsInRackRow();
-    Rack[] getRackArray();
+    List<Rack> getRackList();
     Rack getRackByIndex(int Index);
 
     int hashCode();

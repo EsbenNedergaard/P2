@@ -30,7 +30,7 @@ public class GraphicalWarehouse {
     private int LENGTH_WAREHOUSE;
     private int WIDTH_WAREHOUSE;
     // Path finder
-    private FastestRoute pathFinder;
+    private OptimalRouteFinder pathFinder;
     private final int MAX_TIME = 500;
     // Graphic groups
     private Group tileGroup;
@@ -40,6 +40,7 @@ public class GraphicalWarehouse {
     private Group interactionFieldGroup;
 
     private List<OrderPickerGraphics> orderPickerList;
+
 
     // Animation programTimer
     private AnimationTimer programTimer;
@@ -56,7 +57,7 @@ public class GraphicalWarehouse {
 
     private void setupPathFinder() {
         SpaceTimeGrid grid = new SpaceTimeGrid(this.warehouse.getBaseLayer(), MAX_TIME);
-        this.pathFinder = new FastestRoute(grid);
+        this.pathFinder = new OptimalRouteFinder(grid);
     }
 
     // Returns a group of graphical tiles which represents the warehouse floor
@@ -94,7 +95,7 @@ public class GraphicalWarehouse {
 
         for(RackRow rackRowElement : warehouse.getRackRowList()) {
 
-            for (Rack rackElement : rackRowElement.getRackArray()) {
+            for (Rack rackElement : rackRowElement.getRackList()) {
                 RackGraphics graphicRack = new RackGraphics(rackElement);
 
                 Label amtProducts = new Label("" + rackElement.getProductList().size());
@@ -114,7 +115,6 @@ public class GraphicalWarehouse {
 
     private Group getOrderPickerGroup() {
         Group orderPickerGroup = new Group();
-        OrderPickerGraphics orderPickerTest;
 
         return orderPickerGroup;
     }
@@ -180,8 +180,10 @@ public class GraphicalWarehouse {
         // Get the id list from the input field
         List<Integer> tempProductIDList = textHandler.generateProductIDList(inputField.getText());
 
-        List<Point2D> nodeList = warehouse.getPickingPointsFromIDs(tempProductIDList);
-        List<Node> fastestRoute = pathFinder.calculateBestRoute(nodeList);
+      // Find route for picker
+        List<Point2D> pickPointList = this.warehouse.getPickingPointsFromIDs(tempProductIDList);
+        List<Node> fastestRoute = this.pathFinder.calculateBestRoute(pickPointList);
+
 
         OrderPickerGraphics orderPicker = new OrderPickerGraphics(fastestRoute);
         addPicker(orderPicker);

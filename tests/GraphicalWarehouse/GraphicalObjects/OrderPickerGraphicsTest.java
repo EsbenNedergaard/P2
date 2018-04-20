@@ -1,13 +1,13 @@
 package GraphicalWarehouse.GraphicalObjects;
 
 import Geometry.Point2D;
-import GraphicalWarehouse.GenerateRandomPickingRoute;
+import GraphicalWarehouse.GenerateTestPickingRoute;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class OrderPickerGraphicsTest {
 
-    private GenerateRandomPickingRoute route = new GenerateRandomPickingRoute();
+    private GenerateTestPickingRoute route = new GenerateTestPickingRoute();
     private OrderPickerGraphics orderPicker1;
     private int UPDATER;
 

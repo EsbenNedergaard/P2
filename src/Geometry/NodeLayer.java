@@ -5,7 +5,7 @@ import Exceptions.NodeDoesNotExistException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
+// Every node has layers representing a time dimension
 public class NodeLayer {
     private List<Node> nodeList = new ArrayList<>();
     private int time;

@@ -29,7 +29,7 @@ public class InputFieldDataHandler {
 
             char currentChar = inputString.charAt(charIndex);
 
-            if(isNumeric(currentChar)) {
+            if(Character.isDigit(currentChar)) {
                 tempStringBuffer += currentChar;
             }
 
@@ -79,9 +79,4 @@ public class InputFieldDataHandler {
         alert.setContentText(contentText);
         alert.show();
     }
-
-    private boolean isNumeric(char c) {
-        return '0' <= c && c <= '9';
-    }
-
 }

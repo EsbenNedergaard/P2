@@ -36,7 +36,6 @@ public class Dexion implements Warehouse {
                 nodeList.add(new Node(new Point2D(i, j)));
             }
         }
-
     }
 
     public void createAisleList() {

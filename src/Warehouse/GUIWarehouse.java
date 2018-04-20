@@ -37,10 +37,5 @@ public class GUIWarehouse extends Application {
         primaryStage.show();
     }
 
-    public void addPicker(OrderPickerGraphics picker) {
-        this.graphicalWarehouse.addPicker(picker);
-    }
-
-
 }
 

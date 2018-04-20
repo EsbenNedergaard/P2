@@ -9,7 +9,7 @@ import static Warehouse.GUIWarehouse.TILE_SIZE;
 
 public class OrderPickerGraphics extends Rectangle {
 
-    private final static double UPDATE_VALUE = 5;
+    private final static double UPDATE_VALUE = 25;
     private final static double MOVE_DISTANCE_PER_UPDATE = TILE_SIZE / UPDATE_VALUE;
 
     private List<Node> routeList;

@@ -32,15 +32,4 @@ class GraphicalWarehouseTest {
         pickPoints1.add(new Point2D(15, 4));
     }
 
-    @Test
-    void addPicker() {
-        List<Node> route1 = routeFinder.calculateBestRoute(pickPoints1);
-
-        GUIWarehouse gui = new GUIWarehouse();
-        //TempRoutePrinter printer = new TempRoutePrinter(testRoute, baseLayer);
-        //printer.printRoute(testWarehouse.getLength(), testWarehouse.getWidth());
-        gui.addPicker(new OrderPickerGraphics(route1));
-        gui.main(new String[1]);
-
-    }
 }

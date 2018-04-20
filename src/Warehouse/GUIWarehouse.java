@@ -18,15 +18,14 @@ public class GUIWarehouse extends Application {
     }
 
     public GUIWarehouse() {
-        this.warehouse = new Dexion();
-        this.graphicalWarehouse = new GraphicalWarehouse(warehouse);
+        this.init();
     }
 
     @Override
     public void init() {
-
+        this.warehouse = new Dexion();
+        this.graphicalWarehouse = new GraphicalWarehouse(warehouse);
     }
-    //TODO: tidligere havde vi "throws Exception" ved disse snak lige med Tobias om disse er nødve
 
     @Override
     public void start(Stage primaryStage) {

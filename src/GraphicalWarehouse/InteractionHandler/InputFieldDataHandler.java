@@ -49,9 +49,7 @@ public class InputFieldDataHandler {
             }
 
         }
-
         return productIDListBuffer;
-
     }
 
     // Generates a product ID string

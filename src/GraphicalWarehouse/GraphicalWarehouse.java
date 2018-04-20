@@ -2,7 +2,6 @@ package GraphicalWarehouse;
 
 import Geometry.*;
 
-import Geometry.Node;
 import GraphicalWarehouse.GraphicalObjects.*;
 import GraphicalWarehouse.InteractionHandler.InputFieldDataHandler;
 import Warehouse.Aisle.Aisle;

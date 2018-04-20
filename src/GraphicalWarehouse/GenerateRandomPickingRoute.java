@@ -11,7 +11,13 @@ import java.util.List;
  * PICKING ROUTES FOR TESTS                        */
 
 public class GenerateRandomPickingRoute {
-    public List<Node> getRoute1() {
+    List<Node> route1;
+
+    public GenerateRandomPickingRoute() {
+        createRoute1();
+    }
+
+    public void createRoute1() {
         List<Point2D> pickPoints1 = new ArrayList<>();
         FastestRoute routeFinder;
 
@@ -27,8 +33,12 @@ public class GenerateRandomPickingRoute {
         //pickPoints1.add(new Point2D(7, 7));
         //pickPoints1.add(new Point2D(30, 10));
         pickPoints1.add(new Point2D(15, 4));
+        this.route1 = routeFinder.calculateBestRoute(pickPoints1);
+    }
 
-        return routeFinder.calculateBestRoute(pickPoints1);
+
+    public List<Node> getRoute1() {
+        return this.route1;
     }
 
 }

@@ -18,15 +18,14 @@ public class GUIWarehouse extends Application {
     }
 
     public GUIWarehouse() {
-        this.warehouse = new Dexion();
-        this.graphicalWarehouse = new GraphicalWarehouse(warehouse);
+        this.init();
     }
 
     @Override
     public void init() {
-
+        this.warehouse = new Dexion();
+        this.graphicalWarehouse = new GraphicalWarehouse(warehouse);
     }
-    //TODO: tidligere havde vi "throws Exception" ved disse snak lige med Tobias om disse er nødvendige
 
     @Override
     public void start(Stage primaryStage) {
@@ -36,11 +35,6 @@ public class GUIWarehouse extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-
-    public void addPicker(OrderPickerGraphics picker) {
-        this.graphicalWarehouse.addPicker(picker);
-    }
-
 
 }
 

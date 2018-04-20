@@ -3,13 +3,14 @@ package GraphicalWarehouse.GraphicalObjects;
 import Geometry.Node;
 import Geometry.Point2D;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Circle;
+
 import java.util.List;
 import static Warehouse.GUIWarehouse.TILE_SIZE;
 
-public class OrderPickerGraphics extends Rectangle {
+public class OrderPickerGraphics extends Circle {
 
-    private final static double UPDATE_VALUE = 5;
+    private final static double UPDATE_VALUE = 25;
     private final static double MOVE_DISTANCE_PER_UPDATE = TILE_SIZE / UPDATE_VALUE;
 
     private List<Node> routeList;
@@ -17,15 +18,18 @@ public class OrderPickerGraphics extends Rectangle {
 
     public OrderPickerGraphics(List<Node> routeList) {
         // Set design
-        setWidth(TILE_SIZE);
-        setHeight(TILE_SIZE);
-        setFill(Color.valueOf("#000"));
+        //setWidth(TILE_SIZE);
+        //setHeight(TILE_SIZE);
+        setRadius(TILE_SIZE / 2.5);
+        setFill(Color.valueOf("#2d79f7"));
 
         // Set route list
         this.routeList = routeList;
 
         // When the object is first created, the index must be 1
         this.indexOfLastPoint = 1;
+
+        relocate(2.5, 2.5);
 
         setTranslateX(routeList.get(0).getX() * TILE_SIZE);
         setTranslateY(routeList.get(0).getY() * TILE_SIZE);

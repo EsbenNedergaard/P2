@@ -6,9 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class FastestRouteTest {
+class OptimalRouteFinderTest {
 
     private final int MAX_TIME = 250;
     private final int GRID_SIZE = 10;
@@ -47,7 +45,7 @@ class FastestRouteTest {
     @Test
     void calculateBestRoute(){
         List<Node> fastestRoute = new ArrayList<>();
-        FastestRoute routeFinder = new FastestRoute(spaceTimeGrid);
+        OptimalRouteFinder routeFinder = new OptimalRouteFinder(spaceTimeGrid);
         fastestRoute = routeFinder.calculateBestRoute(pickingList);
 
         TempRoutePrinter printer = new TempRoutePrinter(fastestRoute, baseLayer);

@@ -20,7 +20,6 @@ import static Geometry.NodeType.OBSTACLE;
 public class HorizontalAisle implements Aisle {
     private int aisleLength;
     private Point2D startPoint;
-    private Point2D endPoint;
     private RackRow topRackRow;
     private RackRow bottomRackRow;
 
@@ -28,8 +27,6 @@ public class HorizontalAisle implements Aisle {
         //TODO: Sæt exceptions op for når for lang en gang og et punkt placeret forkert\
         this.aisleLength = aisleLength;
         this.startPoint = startPoint;
-
-        this.endPoint = new Point2D(startPoint.getX() + aisleLength - 1, startPoint.getY());
 
         Point2D topRackRowStartPoint = new Point2D(startPoint.getX() + 1, startPoint.getY() - 1);
         Point2D bottomRackRowStartPoint = new Point2D(startPoint.getX() + 1, startPoint.getY() + 1);
@@ -40,16 +37,12 @@ public class HorizontalAisle implements Aisle {
     @Override
     public void setRacksAsObstacles(List<Node> nodeGrid) {
         for(Node n : nodeGrid) {
-            //We here check
-            for(Rack rack : topRackRow.getRackArray()) {
-                if (n.getX() == rack.getXCoordinate() && n.getY() == rack.getYCoordinate()) {
-                    n.setNodeType(OBSTACLE);
-                }
-            }
-
-            for(Rack rack : bottomRackRow.getRackArray()) {
-                if (n.getX() == rack.getXCoordinate() && n.getY() == rack.getYCoordinate()) {
-                    n.setNodeType(OBSTACLE);
+            for(RackRow rackRow : getRackRowList()) {
+                for(Rack rack : rackRow.getRackArray()) {
+                    if (n.getX() == rack.getXCoordinate() && n.getY() == rack.getYCoordinate()) {
+                        n.setNodeType(OBSTACLE);
+                        break; //We jump out of the inner loop
+                    }
                 }
             }
         }
@@ -63,11 +56,6 @@ public class HorizontalAisle implements Aisle {
     @Override
     public Point2D getStartPoint() {
         return this.startPoint;
-    }
-
-    @Override
-    public Point2D getEndPoint() {
-        return this.endPoint;
     }
 
     @Override

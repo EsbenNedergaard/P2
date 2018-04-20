@@ -28,7 +28,6 @@ public class GraphicalWarehouse {
 
     // Graphic groups
     private Group tileGroup;
-    private Group pickPointGroup;
     private Group rackRowGroup;
     private Group rackGroup;
     private Group orderPickerGroup;
@@ -104,21 +103,6 @@ public class GraphicalWarehouse {
         return rackGroup;
     }
 
-    private Group getPickPointGroup() {
-        Group pickPointGroup = new Group();
-
-        for(Aisle aisleElement : warehouse.getAisleList()) {
-            // Setup the design for the points
-            PickPointsGraphics startPointDesign = new PickPointsGraphics(aisleElement.getStartPoint());
-            PickPointsGraphics endPointDesign = new PickPointsGraphics(aisleElement.getEndPoint());
-
-            // Puts the points into the group
-            pickPointGroup.getChildren().addAll(startPointDesign, endPointDesign);
-        }
-
-        return pickPointGroup;
-    }
-
     private Group getOrderPickerGroup() {
         Group orderPickerGroup = new Group();
 
@@ -168,7 +152,6 @@ public class GraphicalWarehouse {
         BorderPane borderPane = new BorderPane();
         Group simulationElementsGroup = new Group();
 
-        pickPointGroup = getPickPointGroup();
         tileGroup = getTileGroup();
         rackRowGroup = getRackRowGroup();
         rackGroup = getRackGroup();
@@ -176,7 +159,7 @@ public class GraphicalWarehouse {
         interactionFieldGroup = getInteractionFieldGroup();
 
         // Add all elements for the simulation
-        simulationElementsGroup.getChildren().addAll(pickPointGroup, rackRowGroup, rackGroup, tileGroup, orderPickerGroup);
+        simulationElementsGroup.getChildren().addAll(rackRowGroup, rackGroup, tileGroup, orderPickerGroup);
 
         borderPane.setTop(simulationElementsGroup);
         borderPane.setBottom(interactionFieldGroup);

@@ -39,11 +39,6 @@ class HorizontalAisleTest {
     }
 
     @Test
-    void getEndPoint01() {
-        assertEquals(new Point2D(29, 5), testAisle01.getEndPoint());
-    }
-
-    @Test
     void getFirstRackRow01() {
         assertEquals(testFirstRackRow01, testAisle01.getTopRackRow());
     }

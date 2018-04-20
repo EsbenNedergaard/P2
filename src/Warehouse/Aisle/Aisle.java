@@ -12,7 +12,6 @@ import java.util.List;
 public interface Aisle {
     int getAisleLength();
     Point2D getStartPoint();
-    Point2D getEndPoint();
 
     RackRow getTopRackRow();
     RackRow getBottomRackRow();

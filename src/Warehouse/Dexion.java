@@ -56,10 +56,6 @@ public class Dexion implements Warehouse {
     }
 
     private void createProducts() {
-
-//        aisleList.get(0).getFirstRackRow().addProduct(new Product(1));
-//        aisleList.get(0).getFirstRackRow().addProduct(new Product(2));
-//        aisleList.get(1).getSecondRackRow().getRackByIndex(5).addProduct(new Product(3));d
         int i = 1;
         for (Aisle aisleElement : aisleList) {
             for (RackRow rackRowElement : aisleElement.getRackRowList()) {

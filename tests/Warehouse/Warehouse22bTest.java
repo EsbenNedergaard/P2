@@ -1,6 +1,5 @@
 package Warehouse;
 
-import Geometry.Node;
 import Geometry.Point2D;
 import org.junit.jupiter.api.Test;
 
@@ -55,8 +54,8 @@ class Warehouse22bTest {
         Product product1 = new Product(1);
         Product product2 = new Product(2);
 
-        //testWarehouse.getAisleList().get(0).getFirstRackRow().getRackByIndex(5).addProduct(product1);
-        //testWarehouse.getAisleList().get(0).getSecondRackRow().getRackByIndex(5).addProduct(product2);
+        //testWarehouse.getAisleList().get(0).getTopRackRow().getRackByIndex(5).addProduct(product1);
+        //testWarehouse.getAisleList().get(0).getBottomRackRow().getRackByIndex(5).addProduct(product2);
 
         List<Product> productPickList = new ArrayList<>();
         productPickList.add(product1);

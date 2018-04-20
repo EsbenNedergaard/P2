@@ -2,7 +2,6 @@ package Warehouse.Aisle;
 
 import Exceptions.FullRackException;
 import Geometry.Node;
-import Geometry.NodeType;
 import Geometry.Point2D;
 import Warehouse.Product;
 import Warehouse.Racks.HorizontalRackRow;
@@ -35,25 +34,26 @@ public class HorizontalAisle implements Aisle {
         Point2D topRackRowStartPoint = new Point2D(startPoint.getX() + 1, startPoint.getY() - 1);
         Point2D bottomRackRowStartPoint = new Point2D(startPoint.getX() + 1, startPoint.getY() + 1);
         topRackRow = new HorizontalRackRow(topRackRowStartPoint, aisleLength - 2, 8);
-        bottomRackRow = new HorizontalRackRow(bottomRackRowStartPoint, aisleLength - 2,8)
+        bottomRackRow = new HorizontalRackRow(bottomRackRowStartPoint, aisleLength - 2,8);
 }
 
     @Override
     public void setRacksAsObstacles(List<Node> nodeGrid) {
-        for(Rack rack : topRackRow.)
+        for(Node n : nodeGrid) {
+            //We here check
+            for(Rack rack : topRackRow.getRackArray()) {
+                if (n.getX() == rack.getXCoordinate() && n.getY() == rack.getYCoordinate()) {
+                    n.setNodeType(OBSTACLE);
+                }
+            }
 
-
-        for (RackRow rackRowElement : rackRowList) {
-            for(Rack rackElement : rackRowElement.getRackArray()) {
-                for (Node nodeElement : nodeGrid) {
-                    if (nodeElement.getX() == rackElement.getXCoordinate() && nodeElement.getY() == rackElement.getYCoordinate()) {
-                        nodeElement.setNodeType(OBSTACLE);
-                    }
+            for(Rack rack : bottomRackRow.getRackArray()) {
+                if (n.getX() == rack.getXCoordinate() && n.getY() == rack.getYCoordinate()) {
+                    n.setNodeType(OBSTACLE);
                 }
             }
         }
     }
-    public void setObstaclesFor
 
     @Override
     public int getAisleLength() {
@@ -71,18 +71,22 @@ public class HorizontalAisle implements Aisle {
     }
 
     @Override
-    public RackRow getFirstRackRow() {
-        return this.rackRowList.get(0);
+    public RackRow getTopRackRow() {
+        return this.topRackRow;
     }
 
     @Override
-    public RackRow getSecondRackRow() {
-        return this.rackRowList.get(1);
+    public RackRow getBottomRackRow() {
+        return this.bottomRackRow;
     }
 
     @Override
     public List<RackRow> getRackRowList() {
-        return this.rackRowList;
+        List<RackRow> temp = new ArrayList<>();
+        temp.add(topRackRow);
+        temp.add(bottomRackRow);
+
+        return temp;
     }
 
     @Override
@@ -91,7 +95,7 @@ public class HorizontalAisle implements Aisle {
 
         for (Product productElement : productPickList) {
 
-            RackRow rackRowElement = getFirstRackRow();
+            RackRow rackRowElement = getTopRackRow();
             int rackIndex = rackRowElement.doesItContainProduct(productElement);
             if (rackIndex != -1) {
                 Point2D rackPosition = rackRowElement.getRackByIndex(rackIndex).getRackPosition();
@@ -99,7 +103,7 @@ public class HorizontalAisle implements Aisle {
             }
 
 
-            rackRowElement = getSecondRackRow();
+            rackRowElement = getBottomRackRow();
             rackIndex = rackRowElement.doesItContainProduct(productElement);
             if (rackIndex != -1) {
                 Point2D rackPosition = rackRowElement.getRackByIndex(rackIndex).getRackPosition();
@@ -117,7 +121,7 @@ public class HorizontalAisle implements Aisle {
 
     @Override
     public void addProduct(Product e) {
-        for (RackRow rackRowElement : rackRowList) {
+        for (RackRow rackRowElement : this.getRackRowList()) {
             for (Rack rackElement : rackRowElement.getRackArray()) {
                 if (!rackElement.checkIfFull()) {
                     rackElement.addProduct(e);

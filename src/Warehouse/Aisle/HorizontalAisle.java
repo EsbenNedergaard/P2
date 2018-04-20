@@ -14,29 +14,35 @@ import java.util.List;
 
 import static Geometry.NodeType.OBSTACLE;
 
+
+/* This is a class that we use for our Aisles, the purpose of this class is to make it possible for us too make a
+ * pickPointList because we know which rackRow is top rackRow, and which is bottom rackRow. This info is needed so
+ * we can place the pickPoint over or under the rackRow*/
 public class HorizontalAisle implements Aisle {
     private int aisleLength;
     private Point2D startPoint;
     private Point2D endPoint;
-    private List<RackRow> rackRowList = new ArrayList<>();
+    private RackRow topRackRow;
+    private RackRow bottomRackRow;
 
     public HorizontalAisle(int aisleLength, Point2D startPoint) {
         //TODO: Sæt exceptions op for når for lang en gang og et punkt placeret forkert\
-
         this.aisleLength = aisleLength;
         this.startPoint = startPoint;
 
         this.endPoint = new Point2D(startPoint.getX() + aisleLength - 1, startPoint.getY());
 
-        Point2D firstRackStartPoint = new Point2D(startPoint.getX() + 1, startPoint.getY() - 1);
-        rackRowList.add(new HorizontalRackRow(firstRackStartPoint, aisleLength - 2, 8));
-
-        Point2D secondRackStartPoint = new Point2D(startPoint.getX() + 1, startPoint.getY() + 1);
-        rackRowList.add(new HorizontalRackRow(secondRackStartPoint, aisleLength - 2,8));
-    }
+        Point2D topRackRowStartPoint = new Point2D(startPoint.getX() + 1, startPoint.getY() - 1);
+        Point2D bottomRackRowStartPoint = new Point2D(startPoint.getX() + 1, startPoint.getY() + 1);
+        topRackRow = new HorizontalRackRow(topRackRowStartPoint, aisleLength - 2, 8);
+        bottomRackRow = new HorizontalRackRow(bottomRackRowStartPoint, aisleLength - 2,8)
+}
 
     @Override
     public void setRacksAsObstacles(List<Node> nodeGrid) {
+        for(Rack rack : topRackRow.)
+
+
         for (RackRow rackRowElement : rackRowList) {
             for(Rack rackElement : rackRowElement.getRackArray()) {
                 for (Node nodeElement : nodeGrid) {
@@ -47,6 +53,7 @@ public class HorizontalAisle implements Aisle {
             }
         }
     }
+    public void setObstaclesFor
 
     @Override
     public int getAisleLength() {

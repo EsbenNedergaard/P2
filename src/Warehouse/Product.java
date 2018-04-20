@@ -31,6 +31,7 @@ public class Product {
 
     @Override
     public boolean equals(Object that) {
+        // Two product objects are equal if they have the same ID
         if(this == that) return true;
         if(that == null || this.getClass() != that.getClass()) return false;
 

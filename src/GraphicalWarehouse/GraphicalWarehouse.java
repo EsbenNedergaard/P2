@@ -154,7 +154,7 @@ public class GraphicalWarehouse {
         gridpane.add(heading, 1, 1, 5, 1);
         gridpane.add(interactionGraphics.getInputField(), 1, 2, 4, 2);
         gridpane.add(interactionGraphics.getAddDataButton(), 5, 2);
-        //gridpane.add(launchButton, 5, 5);
+        //gridPane.add(launchButton, 5, 5);
 
         borderPane.getStyleClass().add("interaction-border-pane");
 

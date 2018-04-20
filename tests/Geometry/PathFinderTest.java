@@ -105,6 +105,7 @@ class PathFinderTest {
         assertEquals(bestResultRoute, testResultRoute);
     }
 
+    // An obstruction is added so another route will be taken
     @Test
     void testRemoveRoute() {
         Node startNode = new Node(new Point2D(0, 0));
@@ -113,6 +114,8 @@ class PathFinderTest {
         PathFinder testPathFinder = new PathFinder(spaceTimeGrid);
 
         List<Node> testNonPermanentObstruction = new ArrayList<>();
+
+        // Adds an obstruction at a specific field until time reaches a specific number
         for(int i = 0; i < MAX_TIME/2; i++) {
             testNonPermanentObstruction.add(testPathFinder.getSpaceTimeGrid().getNodePointer(1, 2, i));
         }

@@ -2,6 +2,7 @@ package GraphicalWarehouse.GraphicalObjects;
 
 import GraphicalWarehouse.InteractionHandler.InputFieldDataHandler;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 
 import java.util.List;
@@ -25,19 +26,13 @@ public class InteractionGraphics {
     }
 
     private void setEventHandlers() {
-
-        InputFieldDataHandler textHandler = new InputFieldDataHandler();
-
         // This is when the ADD BUTTON is clicked
-        addDataButton.setOnMouseClicked(e -> {
-            textHandler.generateProductIDList(inputField.getText());
-            List<Integer> tempList = textHandler.getProductIDList();
-            String generatedProductIDs = textHandler.generateProductIDString();
-
-            if(!generatedProductIDs.equals(""))
-                table.add(generatedProductIDs);
-
-            inputField.clear();
+        addDataButton.setOnMouseClicked(e -> this.actionsForAddProductIDs());
+        // This is when ENTER key is pressed inside input field
+        inputField.setOnKeyPressed(e -> {
+            if(e.getCode() == KeyCode.ENTER) {
+                this.actionsForAddProductIDs();
+            }
         });
     }
 
@@ -55,6 +50,20 @@ public class InteractionGraphics {
 
     public GridPane getTable() {
         return table;
+    }
+
+    // This is the actions which should be called when add button is pressed
+    private void actionsForAddProductIDs() {
+
+        InputFieldDataHandler textHandler = new InputFieldDataHandler();
+
+        List<Integer> tempList = textHandler.generateProductIDList(inputField.getText());
+        String generatedProductIDs = textHandler.generateProductIDString();
+
+        if(!generatedProductIDs.equals(""))
+            table.add(generatedProductIDs);
+
+        inputField.clear();
     }
 
 }

@@ -1,4 +1,5 @@
 package Warehouse;
+import GraphicalWarehouse.GraphicalObjects.OrderPickerGraphics;
 import GraphicalWarehouse.GraphicalWarehouse;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -16,20 +17,24 @@ public class GUIWarehouse extends Application {
         launch(args);
     }
 
+    public GUIWarehouse() {
+        this.init();
+    }
 
     @Override
-    public void init() throws Exception {
+    public void init() {
         this.warehouse = new Dexion();
         this.graphicalWarehouse = new GraphicalWarehouse(warehouse);
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         Scene scene = new Scene(graphicalWarehouse.getWarehouseGraphics());
         scene.getStylesheets().add("GraphicalWarehouse/Styles/stylesheet.css");
         primaryStage.setTitle("GUIWarehouse");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+
 }
 

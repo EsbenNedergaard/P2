@@ -110,6 +110,7 @@ public class HorizontalAisle implements Aisle {
 
     @Override
     public void addProduct(Product e) {
+        // Adds the product in the first non-empty rack
         for (RackRow rackRowElement : rackRowList) {
             for (Rack rackElement : rackRowElement.getRackArray()) {
                 if (!rackElement.checkIfFull()) {

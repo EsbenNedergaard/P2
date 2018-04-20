@@ -12,7 +12,7 @@ public class FullRackException extends RuntimeException {
     }
 
     @Override
-    public String toString() {
+    public String getMessage() {
         return errorMsg;
     }
 }

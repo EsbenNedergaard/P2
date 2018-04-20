@@ -55,9 +55,6 @@ class Warehouse22bTest {
         Product product1 = new Product(1);
         Product product2 = new Product(2);
 
-        //testWarehouse.getAisleList().get(0).getFirstRackRow().getRackByIndex(5).addProduct(product1);
-        //testWarehouse.getAisleList().get(0).getSecondRackRow().getRackByIndex(5).addProduct(product2);
-
         List<Product> productPickList = new ArrayList<>();
         productPickList.add(product1);
         productPickList.add(product2);
@@ -67,6 +64,17 @@ class Warehouse22bTest {
             System.out.println(pickPoint.getX() + ", " + pickPoint.getY());
         }
 
+    }
+
+    @Test
+    void getPickingPointsFromIDs() {
+        List<Integer> productIDList = new ArrayList<>();
+        productIDList.add(8);
+        productIDList.add(80);
+
+        for (Point2D pickPoint : testWarehouse.getPickingPointsFromIDs(productIDList)) {
+            System.out.println(pickPoint.getX() + ", " + pickPoint.getY());
+        }
     }
 
 }

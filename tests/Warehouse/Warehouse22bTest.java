@@ -33,8 +33,8 @@ class Warehouse22bTest {
     }
 
     @Test
-    void getNodeList() {
-        List<Node> temp = testWarehouse.getNodeList();
+    void getBaseLayer() {
+        /*List<Node> temp = testWarehouse.getBaseLayer();
         int currY = 0;
 
         for (Node element : temp) {
@@ -47,7 +47,7 @@ class Warehouse22bTest {
                 System.out.print("+ ");
             } else
                 System.out.print("- ");
-        }
+        }*/
     }
 
     @Test

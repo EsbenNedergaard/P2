@@ -1,18 +1,15 @@
 package GraphicalWarehouse;
 
-import Geometry.Node;
-import Geometry.Point2D;
+import Geometry.*;
+
 import GraphicalWarehouse.GraphicalObjects.*;
-import GraphicalWarehouse.InteractionHandler.WarehouseInteracter;
 import Warehouse.Aisle.Aisle;
 import Warehouse.Racks.*;
-import Warehouse.Warehouse;
+import Warehouse.*;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Insets;
 import javafx.scene.*;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -37,11 +34,9 @@ public class GraphicalWarehouse {
     private Group orderPickerGroup;
     private Group interactionFieldGroup;
 
-    private WarehouseInteracter interacter = new WarehouseInteracter();
+    private List<OrderPickerGraphics> orderPickerList;
 
-    private OrderPickerGraphics orderPickerTest;
-    private OrderPickerGraphics orderPickerTest2;
-    private OrderPickerGraphics orderPickerTest3;
+    private InteractionGraphics interactionGraphics = new InteractionGraphics();
 
     private GenerateRandomPickingRoute
             randomPickingRoute = new GenerateRandomPickingRoute();
@@ -54,6 +49,7 @@ public class GraphicalWarehouse {
         this.warehouse = warehouse;
         this.LENGTH_WAREHOUSE = warehouse.getLength();
         this.WIDTH_WAREHOUSE = warehouse.getWidth();
+        this.orderPickerList = new ArrayList<>();
     }
 
     // Returns a group of graphical tiles which represents the warehouse floor
@@ -126,28 +122,45 @@ public class GraphicalWarehouse {
 
     private Group getOrderPickerGroup() {
         Group orderPickerGroup = new Group();
-        orderPickerTest = new OrderPickerGraphics(randomPickingRoute.getRoute1());
-        orderPickerTest2 = new OrderPickerGraphics(randomPickingRoute.getRoute2());
-        orderPickerTest3 = new OrderPickerGraphics(randomPickingRoute.getRoute3());
 
-        orderPickerGroup.getChildren().addAll(orderPickerTest, orderPickerTest2, orderPickerTest3);
+
+        OrderPickerGraphics orderPickerTest;
+        //OrderPickerGraphics orderPickerTest2;
+        //OrderPickerGraphics orderPickerTest3;
+        orderPickerTest = new OrderPickerGraphics(randomPickingRoute.getRoute1());
+        //orderPickerTest2 = new OrderPickerGraphics(randomPickingRoute.getRoute2());
+        //orderPickerTest3 = new OrderPickerGraphics(randomPickingRoute.getRoute3());
+
+        orderPickerList.add(orderPickerTest);
+        //orderPickerList.add(orderPickerTest2);
+        //orderPickerList.add(orderPickerTest3);
+        orderPickerGroup.getChildren().addAll(orderPickerList);
         return orderPickerGroup;
     }
 
+    public void addPicker(OrderPickerGraphics picker) {
+        orderPickerList.add(picker);
+    }
+
     private Group getInteractionFieldGroup() {
+        BorderPane borderPane = new BorderPane();
         GridPane gridpane = new GridPane();
         gridpane.setMinWidth(TILE_SIZE * WIDTH_WAREHOUSE * SCALE);
+        gridpane.setHgap(10);
         Label heading = new Label("Add product list to queue. Product id separated by comma");
         heading.getStyleClass().add("heading-label");
 
         gridpane.add(heading, 1, 1, 5, 1);
-        gridpane.add(interacter.getInputField(), 1, 2, 4, 2);
-        gridpane.add(interacter.getAddDataButton(), 5, 2);
+        gridpane.add(interactionGraphics.getInputField(), 1, 2, 4, 2);
+        gridpane.add(interactionGraphics.getAddDataButton(), 5, 2);
         //gridpane.add(launchButton, 5, 5);
 
-        gridpane.getStyleClass().add("grid-pane");
+        borderPane.getStyleClass().add("interaction-border-pane");
 
-        return new Group(gridpane);
+        borderPane.setRight(gridpane);
+        borderPane.setLeft(interactionGraphics.getTable());
+
+        return new Group(borderPane);
 
     }
 
@@ -169,7 +182,7 @@ public class GraphicalWarehouse {
         borderPane.setTop(simulationElementsGroup);
         borderPane.setBottom(interactionFieldGroup);
 
-        root.setPrefSize(LENGTH_WAREHOUSE * TILE_SIZE, WIDTH_WAREHOUSE * TILE_SIZE * 2);
+        root.setPrefSize(LENGTH_WAREHOUSE * TILE_SIZE, WIDTH_WAREHOUSE * TILE_SIZE * 2.43);
 
         root.getChildren().addAll(borderPane);
 
@@ -186,9 +199,11 @@ public class GraphicalWarehouse {
 
     private void onUpdate() {
         UPDATE_COUNTER++;
-
-        if(orderPickerTest.move(UPDATE_COUNTER));
-        if(orderPickerTest2.move(UPDATE_COUNTER));
-        if(orderPickerTest3.move(UPDATE_COUNTER));
+        for(OrderPickerGraphics picker : orderPickerList) {
+            if(picker.move(UPDATE_COUNTER));
+        }
+        //if(orderPickerTest.move(UPDATE_COUNTER));
+        //if(orderPickerTest2.move(UPDATE_COUNTER));
+        //if(orderPickerTest3.move(UPDATE_COUNTER));
     }
 }

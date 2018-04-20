@@ -1,6 +1,7 @@
 package Geometry;
 
 import Exceptions.RouteNotPossibleException;
+import Geometry.*;
 import Warehouse.*;
 import org.junit.jupiter.api.Test;
 
@@ -13,16 +14,13 @@ class RouteTestWarehouse {
     @Test
     void testOnWareHouse() {
         Warehouse testWarehouse = new Dexion();
-
-        List<Node> warehouseNodeList = testWarehouse.getNodeList();
-
-        BaseLayer baseLayer = new BaseLayer(warehouseNodeList);
+        BaseLayer baseLayer = testWarehouse.getBaseLayer();
         SpaceTimeGrid spaceTimeGrid = new SpaceTimeGrid(baseLayer, MAX_TIME);
 
 
         Node startNode = new Node(new Point2D(0, 0));
         //Node endNode = new Node(new Point2D((testWarehouse.getLength() - 1), (testWarehouse.getWidth() - 1)));
-        Node endNode = new Node(new Point2D(15,4));
+        Node endNode = new Node(new Point2D(42,3));
         //Node endNode = new Node(new Point2D(15,5));
 
         PathFinder testPathFinder = new PathFinder(spaceTimeGrid);
@@ -30,7 +28,7 @@ class RouteTestWarehouse {
         List<Node> testResultRoute = new ArrayList<>();
         try {
             for (int i = 0; i < 100; i++) {
-                testResultRoute = testPathFinder.findShortestRoute(startNode, endNode);
+                testResultRoute = testPathFinder.findShortestRoute(startNode, endNode, 0);
             }
         }
         catch (RouteNotPossibleException e) {

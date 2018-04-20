@@ -46,14 +46,14 @@ class HorizontalRackRowTest {
     void getRackArray() {
         Rack[] tempArray = testRow.getRackArray();
 
-        assertTrue(rack0.equals(tempArray[0]));
-        assertTrue(rack1.equals(tempArray[1]));
+        assertEquals(rack0, tempArray[0]);
+        assertEquals(rack1, tempArray[1]);
     }
 
     @Test
     void getRackByIndex() {
-        assertTrue(rack0.equals(testRow.getRackByIndex(0)));
-        assertTrue(rack1.equals(testRow.getRackByIndex(1)));
+        assertEquals(rack0, testRow.getRackByIndex(0));
+        assertEquals(rack1, testRow.getRackByIndex(1));
     }
 
     @Test
@@ -62,7 +62,7 @@ class HorizontalRackRowTest {
 
         rack0.addProduct(product1);
 
-        assertTrue(rack0.equals(testRow.getRackByIndex(0)));
+        assertEquals(rack0, testRow.getRackByIndex(0));
     }
 
     @Test
@@ -74,7 +74,7 @@ class HorizontalRackRowTest {
         rack0.addProduct(product1);
         rack0.addProduct(product2);
 
-        assertTrue(rack0.equals(testRow.getRackByIndex(0)));
+        assertEquals(rack0, testRow.getRackByIndex(0));
     }
 
     @Test
@@ -86,7 +86,7 @@ class HorizontalRackRowTest {
 
         rack1.addProduct(product3);
 
-        assertTrue(rack1.equals(testRow.getRackByIndex(1)));
+        assertEquals(rack1, testRow.getRackByIndex(1));
     }
 
     @Test
@@ -106,7 +106,7 @@ class HorizontalRackRowTest {
 
         rack1.addProduct(product1);
 
-        assertTrue(rack1.equals(testRow.getRackByIndex(1)));
+        assertEquals(rack1, testRow.getRackByIndex(1));
     }
 
     @Test
@@ -130,7 +130,7 @@ class HorizontalRackRowTest {
 
     @Test
     void getStartPoint() {
-        assertTrue(testRow.getStartPoint().equals(new Point2D(1,1)));
+        assertEquals(testRow.getStartPoint(), new Point2D(1, 1));
     }
 
     @Test
@@ -142,9 +142,9 @@ class HorizontalRackRowTest {
 
         List<Product> tempProductList = testRow.getAllProductsInRackRow();
 
-        assertTrue(tempProductList.get(0).equals(product1));
-        assertTrue(tempProductList.get(1).equals(product2));
-        assertTrue(tempProductList.get(2).equals(product3));
-        assertTrue(tempProductList.get(3).equals(product4));
+        assertEquals(tempProductList.get(0), product1);
+        assertEquals(tempProductList.get(1), product2);
+        assertEquals(tempProductList.get(2), product3);
+        assertEquals(tempProductList.get(3), product4);
     }
 }

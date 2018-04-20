@@ -24,7 +24,7 @@ public class GenerateRandomPickingRoute {
         pickPoints1.add(new Point2D(42,0));
         pickPoints1.add(new Point2D(42,11));
         pickPoints1.add(new Point2D(10,1));
-        pickPoints1.add(new Point2D(7, 7));
+        //pickPoints1.add(new Point2D(7, 7));
         //pickPoints1.add(new Point2D(30, 10));
         pickPoints1.add(new Point2D(15, 4));
 

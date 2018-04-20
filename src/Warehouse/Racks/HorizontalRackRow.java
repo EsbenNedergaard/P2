@@ -11,16 +11,15 @@ import java.util.Objects;
 public class HorizontalRackRow implements RackRow {
     private Point2D startPoint;
     private int rackRowLength;
-    private Rack[] rackArray;
+    private List<Rack> rackList;
 
     public HorizontalRackRow(Point2D startPoint, int rackRowLength, int maxAmtInSingleRack) {
         this.startPoint = startPoint;
         this.rackRowLength = rackRowLength;
-
-        rackArray = new Rack[rackRowLength];
+        this.rackList = new ArrayList<>();
 
         for(int i = 0; i < rackRowLength; i++) {
-            rackArray[i] = new Rack(maxAmtInSingleRack, new Point2D(startPoint.getX() + i, startPoint.getY()));
+            rackList.add(new Rack(maxAmtInSingleRack, new Point2D(startPoint.getX() + i, startPoint.getY())));
         }
     }
 
@@ -31,7 +30,7 @@ public class HorizontalRackRow implements RackRow {
 
     @Override
     public void addProduct(Product e) {
-        for (Rack rackElement : rackArray) {
+        for (Rack rackElement : rackList) {
             if (!rackElement.checkIfFull()) {
                 rackElement.addProduct(e);
                 return;
@@ -42,17 +41,18 @@ public class HorizontalRackRow implements RackRow {
 
     @Override
     public void addProductToRack(Product product, int rackIndex) {
-        rackArray[rackIndex].addProduct(product);
+        rackList.get(rackIndex).addProduct(product);
     }
 
     @Override
     public int doesItContainProduct(Product e) {
-        for (int i = 0; i < rackArray.length; i++) {
-            if (rackArray[i].doesItContainProduct(e)) {
+        int i = 0;
+        for(Rack r : rackList) {
+            if (r.doesItContainProduct(e)) {
                 return i;
             }
+            i++;
         }
-
         return -1;
     }
 
@@ -69,20 +69,20 @@ public class HorizontalRackRow implements RackRow {
     @Override
     public List<Product> getAllProductsInRackRow() {
         List<Product> productList = new ArrayList<>();
-        for(Rack rackElement : rackArray) {
+        for(Rack rackElement : rackList) {
             productList.addAll(rackElement.getProductList());
         }
         return productList;
     }
 
     @Override
-    public Rack[] getRackArray() {
-        return this.rackArray;
+    public List<Rack> getRackList() {
+        return this.rackList;
     }
 
     @Override
-    public Rack getRackByIndex(int Index) {
-        return rackArray[Index];
+    public Rack getRackByIndex(int index) {
+        return rackList.get(index);
     }
 
 

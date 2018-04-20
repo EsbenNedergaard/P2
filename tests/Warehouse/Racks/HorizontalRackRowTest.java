@@ -44,10 +44,10 @@ class HorizontalRackRowTest {
 
     @Test
     void getRackArray() {
-        Rack[] tempArray = testRow.getRackArray();
+        List<Rack> tempList = testRow.getRackList();
 
-        assertEquals(rack0, tempArray[0]);
-        assertEquals(rack1, tempArray[1]);
+        assertEquals(rack0, tempList.get(0));
+        assertEquals(rack1, tempList.get(1));
     }
 
     @Test

@@ -5,7 +5,6 @@ import Geometry.*;
 import Geometry.Node;
 import GraphicalWarehouse.GraphicalObjects.*;
 import GraphicalWarehouse.InteractionHandler.InputFieldDataHandler;
-import Warehouse.Aisle.Aisle;
 import Warehouse.Racks.*;
 import Warehouse.*;
 import javafx.animation.AnimationTimer;
@@ -101,7 +100,7 @@ public class GraphicalWarehouse {
 
         for(RackRow rackRowElement : warehouse.getRackRowList()) {
 
-            for (Rack rackElement : rackRowElement.getRackArray()) {
+            for (Rack rackElement : rackRowElement.getRackList()) {
                 RackGraphics graphicRack = new RackGraphics(rackElement);
 
                 Label amtProducts = new Label("" + rackElement.getProductList().size());

@@ -2,6 +2,7 @@ package GraphicalWarehouse;
 
 import Geometry.*;
 
+import Geometry.Node;
 import GraphicalWarehouse.GraphicalObjects.*;
 import GraphicalWarehouse.InteractionHandler.InputFieldDataHandler;
 import Warehouse.Aisle.Aisle;
@@ -227,8 +228,5 @@ public class GraphicalWarehouse {
         for(OrderPickerGraphics picker : orderPickerList) {
             if(picker.move(UPDATE_COUNTER));
         }
-        //if(orderPickerTest.move(UPDATE_COUNTER));
-        //if(orderPickerTest2.move(UPDATE_COUNTER));
-        //if(orderPickerTest3.move(UPDATE_COUNTER));
     }
 }

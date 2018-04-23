@@ -41,7 +41,7 @@ public class OptimalRouteFinder {
     //Method that calculates the best route for the pickingList that it is given
     public List<Node> calculateBestRoute(List<Point2D> pickingList) {
         this.bestRoute = new ArrayList<>();
-        //TODO: FIX THIS RIGHT HERE, med at sætte punkter ind i starten
+        //TODO: FIX THIS RIGHT HERE, med at sætte punkter ind i starten er noget med vi skal tage, hvor meget vi fjerner til sidst
         //for(int i = 0; i < amtPickersInGraph * WAIT_TIME_BETWEEN_ROUTES; i++) {
             //bestRoute.add(pathFinder.getSpaceTimeGrid().getNodePointer(routeStartPoint.getX(), routeStartPoint.getY(), i));
         //}
@@ -61,7 +61,6 @@ public class OptimalRouteFinder {
         waitTime.addAll(bestRoute);
         amtPickersInGraph++;
         return waitTime;
-        //return bestRoute;
     }
 
 

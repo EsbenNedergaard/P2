@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OptimalRouteFinder {
-    private final int PICKING_TIME = 15;
     private final int WAIT_TIME_BETWEEN_ROUTES = 3;
     private SpaceTimeGrid spaceTimeGrid;
     private Point2D routeStartPoint;
@@ -38,26 +37,27 @@ public class OptimalRouteFinder {
     //Method that calculates the best route for the pickingList that it is given
     public List<Node> calculateBestRoute(List<Point2D> pickingList) {
         this.bestRoute = new ArrayList<>();
-        //TODO: FIX THIS RIGHT HERE, med at sætte punkter ind i starten er noget med vi skal tage, hvor meget vi fjerner til sidst
-        //for(int i = 0; i < amountPickersInGraph * WAIT_TIME_BETWEEN_ROUTES; i++) {
-            //bestRoute.add(pathFinder.getSpaceTimeGrid().getNodePointer(routeStartPoint.getX(), routeStartPoint.getY(), i));
-        //}
+        List<Node> initialRoute = new ArrayList<>();
+        bestRouteOfAllRoutes(routeStartPoint, pickingList, initialRoute);
 
-        List<Node> temp = new ArrayList<>();
-
-        bestRouteOfAllRoutes(routeStartPoint, pickingList, temp);
-
+        for(int i = 0; i < pathFinder.getPICK_TIME(); i++) {
+            bestRoute.remove(bestRoute.size() -1);
+        }
         List<Node> routeToRemove = new ArrayList<>(bestRoute);
         routeToRemove.remove(0);
         pathFinder.getSpaceTimeGrid().removeRoute(routeToRemove);
+
+
 
         List<Node> waitTime = new ArrayList<>();
         for(int i = 0; i < amountPickersInGraph *WAIT_TIME_BETWEEN_ROUTES; i++) {
             waitTime.add(new Node(routeStartPoint));
         }
-        waitTime.addAll(bestRoute);
+        List<Node> fullRoute = new ArrayList<>();
+        fullRoute.addAll(waitTime);
+        fullRoute.addAll(bestRoute);
         amountPickersInGraph++;
-        return waitTime;
+        return fullRoute;
     }
 
 

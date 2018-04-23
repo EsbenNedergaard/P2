@@ -141,7 +141,7 @@ public class PathFinder {
             } else {
                 node.setDistanceToInf();
             }
-            //All nodes gets an estimated distance to the end node
+            // All nodes gets an estimated distance to the end node
             node.setDistanceToEnd(endNode);
         }
     }

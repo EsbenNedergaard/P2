@@ -1,29 +1,21 @@
 package GraphicalWarehouse;
 
-import Geometry.*;
-
-import Geometry.Node;
-import GraphicalWarehouse.GraphicalObjects.*;
 import GraphicalWarehouse.InteractionHandler.InputFieldDataHandler;
-import Warehouse.Racks.*;
-import Warehouse.*;
-import javafx.animation.AnimationTimer;
-import javafx.geometry.Insets;
-import javafx.scene.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static Warehouse.GUIWarehouse.SCALE;
+import GraphicalWarehouse.GraphicalObjects.*;
 import static Warehouse.GUIWarehouse.TILE_SIZE;
+import static Warehouse.GUIWarehouse.SCALE;
+import javafx.animation.AnimationTimer;
+import javafx.scene.input.KeyCode;
+import javafx.scene.paint.Color;
+import javafx.geometry.Insets;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import Warehouse.Racks.*;
+import javafx.scene.*;
+import Geometry.Node;
+import Warehouse.*;
+import java.util.*;
+import Geometry.*;
 
 public class GraphicalWarehouse {
     private Warehouse warehouse;
@@ -40,7 +32,6 @@ public class GraphicalWarehouse {
     private Group interactionFieldGroup;
 
     private List<OrderPickerGraphics> orderPickerList;
-
 
     // Animation programTimer
     private AnimationTimer programTimer;
@@ -138,6 +129,7 @@ public class GraphicalWarehouse {
         // Get interaction objects
         Button addRouteButton = interactionGraphics.getAddDataButton();
         Button launchButton = interactionGraphics.getLaunchButton();
+        Button resetAllButton = interactionGraphics.getResetAllButton();
         TextField inputField = interactionGraphics.getInputField();
 
         // Set objects in GridPane
@@ -145,6 +137,7 @@ public class GraphicalWarehouse {
         gridpane.add(inputField, 1, 2, 4, 2);
         gridpane.add(addRouteButton, 5, 2);
         gridpane.add(launchButton, 5, 5);
+        gridpane.add(resetAllButton, 5, 6);
 
         TableGraphics table = (TableGraphics) interactionGraphics.getTable();
 
@@ -153,13 +146,15 @@ public class GraphicalWarehouse {
         borderPane.setLeft(table);
 
         // Set event listeners
-        setOnButtonClickEvent(addRouteButton, inputField, table, launchButton);
+        setOnButtonClickEvent(addRouteButton, inputField, table, launchButton, resetAllButton);
 
         return new Group(borderPane);
 
     }
 
-    private void setOnButtonClickEvent(Button addButton, TextField inputField, TableGraphics table, Button launchButton) {
+    private void setOnButtonClickEvent(Button addButton, TextField inputField,
+                                       TableGraphics table, Button launchButton,
+                                       Button resetAllButton) {
         // Run the same method on button clicked and ENTER pressed
         addButton.setOnMouseClicked(e -> this.actionsForAddProductIDs(inputField, table));
         inputField.setOnKeyPressed(e -> {
@@ -169,12 +164,13 @@ public class GraphicalWarehouse {
         });
 
         launchButton.setOnMouseClicked(e -> programTimer.start());
+
+        // Reset button
+        resetAllButton.setOnMouseClicked(e -> this.resetWarehouseOptions(table));
     }
 
     private void actionsForAddProductIDs(TextField inputField, TableGraphics table) {
 
-        // TODO: Create a new task for the heavy calculations
-        // TODO: Put all routes into a list and calculate them in another method
 
         InputFieldDataHandler textHandler = new InputFieldDataHandler();
         // Get the id list from the input field
@@ -196,6 +192,14 @@ public class GraphicalWarehouse {
 
         // Clear the input field when done
         inputField.clear();
+    }
+
+    private void resetWarehouseOptions(TableGraphics table) {
+        programTimer.stop();
+        pathFinder.reset();
+        orderPickerGroup.getChildren().clear();
+        orderPickerList.clear();
+        table.clear();
     }
 
     public Parent getWarehouseGraphics() {

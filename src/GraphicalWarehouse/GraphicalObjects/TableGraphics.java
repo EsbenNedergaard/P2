@@ -31,6 +31,11 @@ public class TableGraphics extends GridPane {
         id.getStyleClass().add("t-table-td"); add(id, 2, rowCount);
     }
 
+    public void clear() {
+        getChildren().clear();
+        rowCount = 0;
+    }
+
     // Call this function every time a new row should be added
     private void newRow() {
         rowCount++;

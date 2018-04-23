@@ -9,14 +9,12 @@ public class InteractionGraphics {
     private Button addDataButton;
     private Button launchButton;
     private Button resetAllButton;
-    private TableGraphics table;
 
     public InteractionGraphics() {
         this.inputField = new TextField();
         this.addDataButton = new Button("Add");
         this.launchButton = new Button("Launch");
         this.resetAllButton = new Button("Reset");
-        this.table = new TableGraphics();
         // Add style class to launch button
         launchButton.getStyleClass().add("launch-button");
 
@@ -37,10 +35,6 @@ public class InteractionGraphics {
 
     public Button getResetAllButton() {
         return resetAllButton;
-    }
-
-    public GridPane getTable() {
-        return table;
     }
 
 }

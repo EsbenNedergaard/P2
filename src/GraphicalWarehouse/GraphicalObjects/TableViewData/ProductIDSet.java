@@ -8,16 +8,12 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class ProductIDSet {
 
-    private int amountOfSetsCreated = 0;
     private final SimpleStringProperty productIDSet;
     private final SimpleStringProperty number;
 
-    public ProductIDSet(String productIDSet) {
-        // New set created
-        amountOfSetsCreated++;
-
+    public ProductIDSet(String productIDSet, int number) {
         this.productIDSet = new SimpleStringProperty(productIDSet);
-        this.number = new SimpleStringProperty("" + amountOfSetsCreated);
+        this.number = new SimpleStringProperty("" + number);
     }
 
     public String getProductIDSet() {

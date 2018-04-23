@@ -21,6 +21,7 @@ import java.util.*;
 import Geometry.*;
 
 public class GraphicalWarehouse {
+
     private Warehouse warehouse;
     private int LENGTH_WAREHOUSE;
     private int WIDTH_WAREHOUSE;
@@ -38,6 +39,7 @@ public class GraphicalWarehouse {
 
     // Table for routes and product IDs
     private Table table = new Table();
+    private int routesAdded = 0;
 
     // Animation programTimer
     private AnimationTimer programTimer;
@@ -168,7 +170,6 @@ public class GraphicalWarehouse {
 
     private void actionsForAddProductIDs(TextField inputField) {
 
-
         InputFieldDataHandler textHandler = new InputFieldDataHandler();
         // Get the id list from the input field
         List<Integer> tempProductIDList = textHandler.generateProductIDList(inputField.getText());
@@ -182,7 +183,8 @@ public class GraphicalWarehouse {
         addPicker(orderPicker);
 
         // Create a data type which fits the table view
-        ProductIDSet generatedProductIDs = new ProductIDSet(textHandler.generateProductIDString());
+        routesAdded++;
+        ProductIDSet generatedProductIDs = new ProductIDSet(textHandler.generateProductIDString(), routesAdded);
 
         if(!generatedProductIDs.getProductIDSet().equals(""))
             table.add(generatedProductIDs);

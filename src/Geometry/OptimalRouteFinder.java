@@ -17,24 +17,21 @@ public class OptimalRouteFinder {
 
 
     public OptimalRouteFinder(SpaceTimeGrid grid) {
-        this.pathFinder = new PathFinder(grid);
         this.spaceTimeGrid = grid;
         this.routeStartPoint = new Node(new Point2D(0, 5));
         this.routeEndPoint = new Node(new Point2D(0, 6));
-        this.amountPickersInGraph = 0;
+        this.reset();
     }
 
-
     public OptimalRouteFinder(SpaceTimeGrid grid, Point2D routeStartPoint, Point2D routeEndPoint) {
-        this.pathFinder = new PathFinder(grid);
         this.spaceTimeGrid = grid;
         this.routeStartPoint = routeStartPoint;
         this.routeEndPoint = routeEndPoint;
-        this.amountPickersInGraph = 0;
+        this.reset();
     }
 
     public void reset() {
-        this.pathFinder = new PathFinder(spaceTimeGrid);
+        this.pathFinder = new PathFinder(new SpaceTimeGrid(this.spaceTimeGrid.getBaseLayer(), this.spaceTimeGrid.getMaxTime()));
         this.amountPickersInGraph = 0;
     }
 

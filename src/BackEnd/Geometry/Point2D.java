@@ -31,11 +31,11 @@ public class Point2D {
         return y;
     }
 
-    protected void setX(int x) {
+    public void setX(int x) {
         this.x = x;
     }
 
-    protected void setY(int y) {
+    public void setY(int y) {
         this.y = y;
     }
 

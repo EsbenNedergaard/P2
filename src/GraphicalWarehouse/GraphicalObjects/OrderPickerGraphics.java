@@ -2,7 +2,9 @@ package GraphicalWarehouse.GraphicalObjects;
 
 import Geometry.Node;
 import Geometry.Point2D;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
 import java.util.List;
@@ -16,12 +18,17 @@ public class OrderPickerGraphics extends Circle {
     private List<Node> routeList;
     private int indexOfLastPoint;
 
+    private static int pickerNumber = 1;
+
     public OrderPickerGraphics(List<Node> routeList) {
         // Set design
         //setWidth(TILE_SIZE);
         //setHeight(TILE_SIZE);
         setRadius(TILE_SIZE / 2.5);
-        setFill(Color.valueOf("#2d79f7"));
+
+        setFill(new ImagePattern(new Image("/Images/forklift" + pickerNumber++ + ".png")));
+
+        //setFill(Color.valueOf("#2d79f7"));
 
         // Set route list
         this.routeList = routeList;

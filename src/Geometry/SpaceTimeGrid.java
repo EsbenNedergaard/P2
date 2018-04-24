@@ -68,11 +68,19 @@ public class SpaceTimeGrid {
 
     public void removeRoute(List<Node> route) {
         for(int i = 0; i < route.size(); i++) {
-            Node temp = route.get(i);
-            if (i + 1 != maxTime) {
-                removeNode(this.getNodePointer(temp.getX(), temp.getY(), i + 1));
+            try {
+                Node temp = route.get(i);
+                if (temp.getTime() + 1 != maxTime) {
+                    try {
+                        removeNode(this.getNodePointer(temp.getX(), temp.getY(), temp.getTime() + 1));
+                    } catch (NodeDoesNotExistException e) {
+                        System.out.println("We already removed the node in the next layer");
+                    }
+                }
+                removeNode(temp);
+            } catch (NodeDoesNotExistException e) {
+                    System.out.println("We could not remove the desired node in this layer");
             }
-            removeNode(route.get(i));
         }
     }
 

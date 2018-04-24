@@ -1,5 +1,8 @@
-package BackEnd.Geometry;
+package BackEnd.Pathfinding;
 
+import BackEnd.Geometry.Node;
+import BackEnd.Geometry.NodeType;
+import BackEnd.Geometry.Point2D;
 import BackEnd.Pathfinding.PathFinder;
 import BackEnd.TempRoutePrinter;
 import Exceptions.RouteNotPossibleException;

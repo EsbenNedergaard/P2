@@ -1,5 +1,7 @@
-package BackEnd.Geometry;
+package BackEnd.Pathfinding;
 
+import BackEnd.Geometry.Node;
+import BackEnd.Geometry.Point2D;
 import BackEnd.Graph.BaseLayer;
 import BackEnd.Graph.SpaceTimeGrid;
 import BackEnd.Pathfinding.OptimalRouteFinder;

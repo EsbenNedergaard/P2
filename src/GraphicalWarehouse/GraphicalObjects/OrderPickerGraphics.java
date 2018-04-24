@@ -26,7 +26,7 @@ public class OrderPickerGraphics extends Circle {
         //setHeight(TILE_SIZE);
         setRadius(TILE_SIZE / 2.5);
 
-        setFill(new ImagePattern(new Image("/Images/forklift" + pickerNumber++ + ".png")));
+        setFill(new ImagePattern(imagePicker(pickerNumber++)));
 
         //setFill(Color.valueOf("#2d79f7"));
 
@@ -41,6 +41,15 @@ public class OrderPickerGraphics extends Circle {
         setTranslateX(routeList.get(0).getX() * TILE_SIZE);
         setTranslateY(routeList.get(0).getY() * TILE_SIZE);
     }
+
+
+    private Image imagePicker(int pickerNumber) {
+        if (pickerNumber > 3)
+            pickerNumber = pickerNumber % 4;
+
+        return new Image("/Images/forklift" + pickerNumber + ".png");
+    }
+
 
     // Call this in a update method
     // For every call it will move towards the end of the route

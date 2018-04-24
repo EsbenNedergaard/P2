@@ -29,6 +29,10 @@ public class PathFinder {
         return spaceTimeGrid;
     }
 
+    public int getPICK_TIME() {
+        return PICK_TIME;
+    }
+
     public void removeRoute(List<Node> route) {
         spaceTimeGrid.removeRoute(route);
     }
@@ -52,12 +56,11 @@ public class PathFinder {
             //We have reached the destination
             if (current.getX() == endNode.getX() && current.getY() == endNode.getY()) {
                 if(checkIfValidEndPoint(current)) {
-
                     Node previous = current;
                     Node next;
                     /*Adding pickTime, to do this we need to make curr+1 come from curr, and curr+2 from curr+1 ...,
                       then in the end we set endNode to be curr+PICKTIME, (Notice, that we start at i = 1) */
-                    for(int i = 1; i < PICK_TIME; i++) {
+                    for(int i = 1; i < PICK_TIME + 1; i++) {
                         next = spaceTimeGrid.getNodePointer(current.getX(), current.getY(), current.getTime() + i);
                         next.setCameFrom(previous);
                         previous = next;
@@ -95,7 +98,7 @@ public class PathFinder {
     private boolean checkIfValidEndPoint(Node current) {
         /*We use try catch to check if all the nodes we need to pick exist in the graph, or if they have been
           removed by other routes */
-        for(int i = 0; i < PICK_TIME; i++) {
+        for(int i = 1; i < PICK_TIME + 1; i++) {
             try {
                 spaceTimeGrid.getNodePointer(current.getX(), current.getY(), current.getTime() + i);
             } catch (NodeDoesNotExistException e) {
@@ -141,7 +144,7 @@ public class PathFinder {
             } else {
                 node.setDistanceToInf();
             }
-            //All nodes gets an estimated distance to the end node
+            // All nodes gets an estimated distance to the end node
             node.setDistanceToEnd(endNode);
         }
     }

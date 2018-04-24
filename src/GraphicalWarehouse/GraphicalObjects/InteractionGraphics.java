@@ -8,13 +8,13 @@ public class InteractionGraphics {
     private TextField inputField;
     private Button addDataButton;
     private Button launchButton;
-    private TableGraphics table;
+    private Button resetAllButton;
 
     public InteractionGraphics() {
         this.inputField = new TextField();
         this.addDataButton = new Button("Add");
         this.launchButton = new Button("Launch");
-        this.table = new TableGraphics();
+        this.resetAllButton = new Button("Reset");
         // Add style class to launch button
         launchButton.getStyleClass().add("launch-button");
 
@@ -33,8 +33,8 @@ public class InteractionGraphics {
         return launchButton;
     }
 
-    public GridPane getTable() {
-        return table;
+    public Button getResetAllButton() {
+        return resetAllButton;
     }
 
 }

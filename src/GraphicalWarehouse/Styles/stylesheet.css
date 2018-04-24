@@ -12,10 +12,8 @@
 
 
 /* TABLE GRAPHICS */
-.t-table {
+.table-view {
     -fx-min-width: 490px;
-    -fx-border-color: #ababab;
-    -fx-max-height: 400px;
 }
 
 .t-table-th, .t-table-th-2 {

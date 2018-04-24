@@ -4,6 +4,7 @@ import BackEnd.Geometry.Node;
 import BackEnd.Geometry.NodeComparator;
 import BackEnd.Geometry.Point2D;
 import Exceptions.NodeDoesNotExistException;
+import Exceptions.NodeLayerDoesNotExistException;
 import Exceptions.RouteNotPossibleException;
 import BackEnd.Graph.SpaceTimeGrid;
 
@@ -19,7 +20,7 @@ public class PathFinder {
     private Node startNode;
     private Node endNode;
     private int startTime;
-    private final int PICK_TIME = 5;
+
 
     public PathFinder(SpaceTimeGrid spaceTimeGrid) {
         this.spaceTimeGrid = spaceTimeGrid;
@@ -33,10 +34,6 @@ public class PathFinder {
         return spaceTimeGrid;
     }
 
-    public int getPICK_TIME() {
-        return PICK_TIME;
-    }
-
     public void removeRoute(List<Node> route) {
         spaceTimeGrid.removeRoute(route);
     }
@@ -45,10 +42,9 @@ public class PathFinder {
         this.startNode =  new Node(start);
         this.endNode = new Node (end);
         this.startTime = startTime;
-        //TODO: Lav noget med startTime cast af exception her
-        this.checkStartAndEndNode();
 
-        //Sets starting values to all nodes
+        //Checks and then sets starting values
+        this.checkInitialValues();
         this.setStartValues();
 
         //Runs till all nodes have been visited or till we find the end node
@@ -90,12 +86,15 @@ public class PathFinder {
         return constructPath(startNode, endNode);
     }
 
+    /*We use try catch to check if all the nodes we need to pick exist in the graph, or if they have been
+      removed by other routes */
     private boolean checkIfValidEndPoint(Node current) {
-        /*We use try catch to check if all the nodes we need to pick exist in the graph, or if they have been
-          removed by other routes */
-        for(int i = 1; i < PICK_TIME + 1; i++) {
+        /*We add one to PICK_TIME because we need to make sure the next route also has a point to start on*/
+        for(int i = 0; i < PickingRoute.PICK_TIME + 1; i++) {
             try {
-                spaceTimeGrid.getNodePointer(current.getX(), current.getY(), current.getTime() + i);
+                /*We add one extra to the time because we start at i=0, which does not help very much, because we
+                * already know this node exists otherwise our pathFinder could not have gotten over to it*/
+                spaceTimeGrid.getNodePointer(current.getX(), current.getY(), (current.getTime() + i) + 1);
             } catch (NodeDoesNotExistException e) {
                 return false;
             }
@@ -103,23 +102,40 @@ public class PathFinder {
         return true;
     }
 
-    private void checkStartAndEndNode() throws RouteNotPossibleException {
-        //We check that the start point is inside the grid
-        if ((startNode.getX() < 0 || startNode.getY() < 0) || (spaceTimeGrid.getBaseLayer().getMaxX() < startNode.getX() || spaceTimeGrid.getBaseLayer().getMaxY() < startNode.getY())) {
-            throw new RouteNotPossibleException("The start point was placed outside the SpaceTimeGrid");
+
+    private void checkInitialValues() {
+        this.checkStartNode();
+        this.checkEndNode();
+        this.checkStartTime();
+    }
+
+    private void checkStartNode()  {
+        for (Node n : spaceTimeGrid.getNodeLayerPointer(startTime).getNodeList()) {
+            if (n.getX() == startNode.getX() && n.getY() == startNode.getY()) {
+                return;
+            }
         }
-        else if ((endNode.getX() < 0 || endNode.getY() < 0) || (spaceTimeGrid.getBaseLayer().getMaxX() < endNode.getX() || spaceTimeGrid.getBaseLayer().getMaxY() < endNode.getY() )) {
+        throw new RouteNotPossibleException("The start point was placed outside the SpaceTimeGrid");
+    }
+    private void checkEndNode() {
+        //We check that the endNode is inside the grid
+        if ((endNode.getX() < 0 || endNode.getY() < 0) || (spaceTimeGrid.getBaseLayer().getMaxX() < endNode.getX() || spaceTimeGrid.getBaseLayer().getMaxY() < endNode.getY() )) {
             throw new RouteNotPossibleException("The end point was placed outside the SpaceTimeGrid");
         }
         else {
             for(Node obstacle : spaceTimeGrid.getBaseLayer().getStationaryObstacles()){
-                if (obstacle.getX() == startNode.getX() && obstacle.getY() == startNode.getY()) {
-                    throw new RouteNotPossibleException("The start point was placed on top of a permanent obstacle");
-                }
-                else if (obstacle.getX() == endNode.getX() && obstacle.getY() == endNode.getY()) {
+                if (obstacle.getX() == endNode.getX() && obstacle.getY() == endNode.getY()) {
                     throw new RouteNotPossibleException("The end point was placed on top of a permanent obstacle");
                 }
             }
+        }
+    }
+
+    private void checkStartTime() {
+        try {
+            spaceTimeGrid.getNodeLayerPointer(startTime);
+        } catch (NodeLayerDoesNotExistException e) {
+            throw new RouteNotPossibleException("There is no NodeLayer with the same time as the startTime :" + startTime);
         }
     }
 
@@ -128,7 +144,7 @@ public class PathFinder {
         openSet.clear();
         closedSet.clear();
 
-        //We set the start-point to reference the first layer.
+        //We set the start-point to reference the correct layer.
         startNode.setNodeLayer(spaceTimeGrid.getNodeLayerList().get(startTime));
 
         for (Node node : spaceTimeGrid.getAllNodes()) {

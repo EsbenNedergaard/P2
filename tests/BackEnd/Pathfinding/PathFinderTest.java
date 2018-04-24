@@ -24,6 +24,8 @@ class PathFinderTest {
     private List<Node> inputSet;
     private BaseLayer baseLayer;
 
+    //TODO: Få lavet tests til de nye checks af værdier og lign.
+
     @BeforeEach
     void beforeEach() {
         inputSet = new ArrayList<>();

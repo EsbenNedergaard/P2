@@ -12,7 +12,7 @@ public class PickingRoute {
         totalPickTime;
     private List<Node> route;
     private List<Point2D> productPoints;
-    private int PICK_TIME = 5;
+    public static int PICK_TIME = 5;
 
     public PickingRoute() {
         travelTime = 0;

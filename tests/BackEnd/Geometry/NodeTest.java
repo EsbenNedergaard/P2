@@ -4,6 +4,7 @@ import static BackEnd.Geometry.NodeType.WALKABLE;
 import static org.junit.jupiter.api.Assertions.*;
 
 import BackEnd.Graph.NodeLayer;
+import Exceptions.UnplacedNodeException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -74,8 +75,8 @@ class NodeTest {
 
     @Test
     void testGetter_getTime(){
-        assertThrows(NullPointerException.class, ()-> node1.getTime());
-        assertThrows(NullPointerException.class, ()-> node2.getTime());
+        assertThrows(UnplacedNodeException.class, ()-> node1.getTime());
+        assertThrows(UnplacedNodeException.class, ()-> node2.getTime());
 
         Node node = new Node(new Point2D(3, 3));
 

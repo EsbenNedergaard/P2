@@ -1,5 +1,6 @@
 package BackEnd.Graph;
 
+import Exceptions.NodeLayerDoesNotExistException;
 import Exceptions.NodeDoesNotExistException;
 import BackEnd.Geometry.Node;
 
@@ -54,10 +55,24 @@ public class SpaceTimeGrid {
     public Node getNodePointer(int x, int y, int time) {
         for (NodeLayer nodeLayer : nodeLayerList) {
             if(time == nodeLayer.getTime()) {
-                return nodeLayer.getNodePointer(x, y);
+                try {
+                    return nodeLayer.getNodePointer(x, y);
+                } catch (NodeDoesNotExistException e) {
+                    throw new NodeDoesNotExistException("The Node with x:" + x + ", y:" + y + ", does not exist in the time: " + time);
+                }
+
             }
         }
-        throw new NodeDoesNotExistException("There was no NodeLayer in the graph with the time " + time);
+        throw new NodeLayerDoesNotExistException("There is no NodeLayer with the time: " + time + " in this graph");
+    }
+
+    public NodeLayer getNodeLayerPointer(int time){
+        for(NodeLayer nodeLayer : nodeLayerList) {
+            if(time == nodeLayer.getTime()) {
+                return nodeLayer;
+            }
+        }
+        throw new NodeLayerDoesNotExistException("There is no NodeLayer with the time: " + time + " in this graph");
     }
 
     public void removeNode(Node n){

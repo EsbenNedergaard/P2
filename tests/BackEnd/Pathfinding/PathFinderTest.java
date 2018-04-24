@@ -24,6 +24,8 @@ class PathFinderTest {
     private List<Node> inputSet;
     private BaseLayer baseLayer;
 
+    //TODO: Få lavet tests til de nye checks af værdier og lign.
+
     @BeforeEach
     void beforeEach() {
         inputSet = new ArrayList<>();
@@ -53,7 +55,7 @@ class PathFinderTest {
         Node endNode = new Node(new Point2D(GRID_SIZE-1,GRID_SIZE-1));
 
         PathFinder testPathFinder = new PathFinder(spaceTimeGrid);
-        List<Node> testResultRoute = new ArrayList<>();
+        PickingRoute testResultRoute = new PickingRoute();
         try {
             testResultRoute = testPathFinder.findShortestRoute(startNode, endNode, START_TIME);
         }
@@ -106,11 +108,10 @@ class PathFinderTest {
         bestResultRoute.add(spaceTimeGrid.getNodePointer(7,9,36));
         bestResultRoute.add(spaceTimeGrid.getNodePointer(8,9,37));
         bestResultRoute.add(spaceTimeGrid.getNodePointer(9,9,38));
-        for(int i = 39; i < (testPathFinder.getPICK_TIME() + 39); i++) {
-            bestResultRoute.add(spaceTimeGrid.getNodePointer(9,9,i));
-        }
+
         // Testing to see if the route computed is the actual shortest route
-        assertEquals(bestResultRoute, testResultRoute);
+        //TODO: lave en equals i en PickingRoute
+        assertEquals(bestResultRoute, testResultRoute.getRoute());
     }
 
     // An obstruction is added so another route will be taken
@@ -129,7 +130,7 @@ class PathFinderTest {
         }
         testPathFinder.removeRoute(testNonPermanentObstruction);
 
-        List<Node> testResultRoute = new ArrayList<>();
+        PickingRoute testResultRoute = new PickingRoute();
         try {
             testResultRoute = testPathFinder.findShortestRoute(startNode, endNode, START_TIME);
         }
@@ -137,7 +138,7 @@ class PathFinderTest {
             System.out.println(e.toString());
         }
 
-        TempRoutePrinter printer = new TempRoutePrinter(testResultRoute, baseLayer);
+        TempRoutePrinter printer = new TempRoutePrinter(testResultRoute.getRoute(), baseLayer);
         printer.printRoute(GRID_SIZE, GRID_SIZE);
         //TODO: make some asserts here
     }

@@ -6,6 +6,7 @@ import Exceptions.NodeDoesNotExistException;
 import BackEnd.Graph.BaseLayer;
 import BackEnd.Graph.NodeLayer;
 import BackEnd.Graph.SpaceTimeGrid;
+import Exceptions.NodeLayerDoesNotExistException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -68,7 +69,7 @@ class SpaceTimeGridTest {
     //Testing with a too high time
     @Test
     void getNodePointer5() {
-        assertThrows(NodeDoesNotExistException.class, ()-> spaceTimeGrid.getNodePointer(1, 1, MAX_TIME+1));
+        assertThrows(NodeLayerDoesNotExistException.class, ()-> spaceTimeGrid.getNodePointer(1, 1, MAX_TIME+1));
     }
      
     @Test

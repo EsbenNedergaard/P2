@@ -2,7 +2,7 @@ package Warehouse.Racks;
 
 import Exceptions.FullRackException;
 import Exceptions.UnplacedRackException;
-import Geometry.Point2D;
+import BackEnd.Geometry.Point2D;
 import Warehouse.Product;
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,9 @@
-package Geometry;
+package BackEnd.Pathfinding;
 
+import BackEnd.Geometry.Node;
+import BackEnd.Geometry.Point2D;
 import Exceptions.RouteNotPossibleException;
+import BackEnd.Graph.SpaceTimeGrid;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,8 +49,6 @@ public class OptimalRouteFinder {
         List<Node> routeToRemove = new ArrayList<>(bestRoute);
         routeToRemove.remove(0);
         pathFinder.getSpaceTimeGrid().removeRoute(routeToRemove);
-
-
 
         List<Node> waitTime = new ArrayList<>();
         for(int i = 0; i < amountPickersInGraph *WAIT_TIME_BETWEEN_ROUTES; i++) {

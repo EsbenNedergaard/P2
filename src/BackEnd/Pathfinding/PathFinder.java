@@ -1,7 +1,11 @@
-package Geometry;
+package BackEnd.Pathfinding;
 
+import BackEnd.Geometry.Node;
+import BackEnd.Geometry.NodeComparator;
+import BackEnd.Geometry.Point2D;
 import Exceptions.NodeDoesNotExistException;
 import Exceptions.RouteNotPossibleException;
+import BackEnd.Graph.SpaceTimeGrid;
 
 import java.util.ArrayList;
 import java.util.Collections;

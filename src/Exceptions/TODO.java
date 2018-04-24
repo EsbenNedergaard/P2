@@ -1,5 +1,0 @@
-package Exceptions;
-
-public class TODO {
-    //TODO: FÅ DET LAVET SÅ VI GØR LIGE SOM DE GJORDE I BOGEN I KAPITEL 10 I FORHOLD TIL PRINT AF FEJL BESKEDER
-}

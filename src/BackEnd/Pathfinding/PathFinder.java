@@ -83,25 +83,47 @@ public class PathFinder {
                 }
             }
         }
-        return constructPath(startNode, endNode);
+        return constructPath();
     }
 
-    /*We use try catch to check if all the nodes we need to pick exist in the graph, or if they have been
-      removed by other routes */
-    private boolean checkIfValidEndPoint(Node current) {
-        /*We add one to PICK_TIME because we need to make sure the next route also has a point to start on*/
-        for(int i = 0; i < PickingRoute.PICK_TIME + 1; i++) {
-            try {
-                /*We add one extra to the time because we start at i=0, which does not help very much, because we
-                * already know this node exists otherwise our pathFinder could not have gotten over to it*/
-                spaceTimeGrid.getNodePointer(current.getX(), current.getY(), (current.getTime() + i) + 1);
-            } catch (NodeDoesNotExistException e) {
-                return false;
-            }
+    //Constructs the shortest route as a list of nodes
+    private PickingRoute constructPath() {
+        PickingRoute path = new PickingRoute();
+        //First node is the destination
+        Node next = this.endNode;
+
+        //Backtracks till we meet the start node
+        while (!next.equals(this.startNode)) {
+            path.addNodeToRoute(next);
+            next = next.getCameFrom();
         }
-        return true;
+        path.addNodeToRoute(this.startNode);
+        //Reverses the list so that end node is the last element
+        Collections.reverse(path.getRoute());
+        return path;
     }
 
+
+    private void setStartValues() {
+        //Makes sure the sets are empty before the algorithm begins
+        openSet.clear();
+        closedSet.clear();
+
+        //We set the start-point to reference the correct layer.
+        startNode.setNodeLayer(spaceTimeGrid.getNodeLayerList().get(startTime));
+
+        for (Node node : spaceTimeGrid.getAllNodes()) {
+            if (node.equals(startNode)) {
+                //First node gets distance 0, other nodes get distance infinity
+                node.setDistanceFromStart(0);
+                openSet.add(node);
+            } else {
+                node.setDistanceToInf();
+            }
+            // All nodes gets an estimated distance to the end node
+            node.setDistanceToEnd(endNode);
+        }
+    }
 
     private void checkInitialValues() {
         this.checkStartNode();
@@ -139,41 +161,19 @@ public class PathFinder {
         }
     }
 
-    private void setStartValues() {
-        //Makes sure the sets are empty before the algorithm begins
-        openSet.clear();
-        closedSet.clear();
-
-        //We set the start-point to reference the correct layer.
-        startNode.setNodeLayer(spaceTimeGrid.getNodeLayerList().get(startTime));
-
-        for (Node node : spaceTimeGrid.getAllNodes()) {
-            if (node.equals(startNode)) {
-                //First node gets distance 0, other nodes get distance infinity
-                node.setDistanceFromStart(0);
-                openSet.add(node);
-            } else {
-                node.setDistanceToInf();
+    /*We use try catch to check if all the nodes we need to pick exist in the graph, or if they have been
+    removed by other routes */
+    private boolean checkIfValidEndPoint(Node current) {
+        /*We add one to PICK_TIME because we need to make sure the next route also has a point to start on*/
+        for(int i = 0; i < PickingRoute.PICK_TIME + 1; i++) {
+            try {
+                /*We add one extra to the time because we start at i=0, which does not help very much, because we
+                 * already know this node exists otherwise our pathFinder could not have gotten over to it*/
+                spaceTimeGrid.getNodePointer(current.getX(), current.getY(), (current.getTime() + i) + 1);
+            } catch (NodeDoesNotExistException e) {
+                return false;
             }
-            // All nodes gets an estimated distance to the end node
-            node.setDistanceToEnd(endNode);
         }
-    }
-
-    //Constructs the shortest route as a list of nodes
-    private PickingRoute constructPath(Node start, Node end) {
-        PickingRoute path = new PickingRoute();
-        //First node is the destination
-        Node next = end;
-
-        //Backtracks till we meet the start node
-        while (!next.equals(start)) {
-            path.addNodeToRoute(next);
-            next = next.getCameFrom();
-        }
-        path.addNodeToRoute(start);
-        //Reverses the list so that end node is the last element
-        Collections.reverse(path.getRoute());
-        return path;
+        return true;
     }
 }

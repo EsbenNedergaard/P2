@@ -61,11 +61,7 @@ public class SpaceTimeGrid {
 
     public void removeNode(Node n){
         if(n.getTime() != 0) {
-            try {
-                this.removeNodeFromNeighbourLists(nodeLayerList.get(n.getTime() - 1), n);
-            } catch (NodeDoesNotExistException e) {
-                System.out.println("This neighbour was already removed");
-            }
+            this.removeNodeFromNeighbourLists(nodeLayerList.get(n.getTime() - 1), n);
         }
         n.getNodeLayerPointer().removeNode(n);
     }
@@ -75,11 +71,16 @@ public class SpaceTimeGrid {
             try {
                 Node temp = route.get(i);
                 if (temp.getTime() + 1 != maxTime) {
-                    removeNode(this.getNodePointer(temp.getX(), temp.getY(), temp.getTime() + 1));
+                    try {
+                        removeNode(this.getNodePointer(temp.getX(), temp.getY(), temp.getTime() + 1));
+                    } catch (NodeDoesNotExistException e) {
+                        System.out.println("We already removed the node in the next layer");
+                    }
                 }
-                removeNode(temp); } catch (NodeDoesNotExistException e) {
-                    System.out.println("This neighbour was already removed");
-                }
+                removeNode(temp);
+            } catch (NodeDoesNotExistException e) {
+                    System.out.println("We could not remove the desired node in this layer");
+            }
         }
     }
 

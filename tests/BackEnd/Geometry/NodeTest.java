@@ -1,8 +1,9 @@
-package Geometry;
+package BackEnd.Geometry;
 
-import static Geometry.NodeType.WALKABLE;
+import static BackEnd.Geometry.NodeType.WALKABLE;
 import static org.junit.jupiter.api.Assertions.*;
 
+import BackEnd.Graph.NodeLayer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,7 +1,10 @@
-package Geometry;
+package BackEnd.Geometry;
 
+import BackEnd.Pathfinding.PathFinder;
+import BackEnd.TempRoutePrinter;
 import Exceptions.RouteNotPossibleException;
-import javafx.scene.layout.GridPane;
+import BackEnd.Graph.BaseLayer;
+import BackEnd.Graph.SpaceTimeGrid;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -99,8 +102,9 @@ class PathFinderTest {
         bestResultRoute.add(spaceTimeGrid.getNodePointer(6,9,35));
         bestResultRoute.add(spaceTimeGrid.getNodePointer(7,9,36));
         bestResultRoute.add(spaceTimeGrid.getNodePointer(8,9,37));
-        bestResultRoute.add(spaceTimeGrid.getNodePointer(9,9,38));
-
+        for(int i = 38; i < (testPathFinder.getPICK_TIME() + 38) + 1; i++) {
+            bestResultRoute.add(spaceTimeGrid.getNodePointer(9,9,i));
+        }
         // Testing to see if the route computed is the actual shortest route
         assertEquals(bestResultRoute, testResultRoute);
     }

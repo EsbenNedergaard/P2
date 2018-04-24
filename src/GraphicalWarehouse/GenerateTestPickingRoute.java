@@ -1,6 +1,9 @@
 package GraphicalWarehouse;
 
-import Geometry.*;
+import BackEnd.Geometry.*;
+import BackEnd.Graph.BaseLayer;
+import BackEnd.Graph.SpaceTimeGrid;
+import BackEnd.Pathfinding.OptimalRouteFinder;
 import Warehouse.*;
 
 import java.util.ArrayList;

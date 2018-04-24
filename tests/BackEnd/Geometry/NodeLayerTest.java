@@ -1,7 +1,7 @@
-package Geometry;
+package BackEnd.Geometry;
 
 import Exceptions.NodeDoesNotExistException;
-import javafx.scene.layout.GridPane;
+import BackEnd.Graph.NodeLayer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

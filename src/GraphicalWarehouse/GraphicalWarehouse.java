@@ -1,14 +1,14 @@
 package GraphicalWarehouse;
 
 import Exceptions.IllegalTextInputException;
+import BackEnd.Graph.SpaceTimeGrid;
+import BackEnd.Pathfinding.OptimalRouteFinder;
 import GraphicalWarehouse.GraphicalObjects.TableViewData.ProductIDSet;
 import GraphicalWarehouse.InteractionHandler.InputFieldDataHandler;
 import GraphicalWarehouse.GraphicalObjects.*;
 import static Warehouse.GUIWarehouse.TILE_SIZE;
 import static Warehouse.GUIWarehouse.SCALE;
 import javafx.animation.AnimationTimer;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.geometry.Insets;
@@ -16,10 +16,10 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import Warehouse.Racks.*;
 import javafx.scene.*;
-import Geometry.Node;
+import BackEnd.Geometry.Node;
 import Warehouse.*;
 import java.util.*;
-import Geometry.*;
+import BackEnd.Geometry.*;
 
 public class GraphicalWarehouse {
 
@@ -156,10 +156,9 @@ public class GraphicalWarehouse {
     private void setOnButtonClickEvent(Button addButton, TextField inputField, Button launchButton,
                                        Button resetAllButton) {
         // Run the same method on button clicked and ENTER pressed
-        addButton.setOnMouseClicked(e ->
-                this.actionsForAddProductIDs(inputField));
+        addButton.setOnMouseClicked(e -> this.actionsForAddProductIDs(inputField));
         inputField.setOnKeyPressed(e -> {
-            if (e.getCode() == KeyCode.ENTER) {
+            if(e.getCode() == KeyCode.ENTER) {
                 this.actionsForAddProductIDs(inputField);
             }
         });

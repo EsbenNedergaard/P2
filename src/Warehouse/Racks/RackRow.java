@@ -1,6 +1,6 @@
 package Warehouse.Racks;
 
-import Geometry.Point2D;
+import BackEnd.Geometry.Point2D;
 import Warehouse.Product;
 
 import java.util.List;

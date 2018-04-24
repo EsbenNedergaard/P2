@@ -1,7 +1,7 @@
 package Warehouse.Aisle;
 
-import Geometry.Node;
-import Geometry.Point2D;
+import BackEnd.Geometry.Node;
+import BackEnd.Geometry.Point2D;
 import Warehouse.Product;
 import Warehouse.Racks.RackRow;
 

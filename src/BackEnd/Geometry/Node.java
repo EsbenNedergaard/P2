@@ -2,6 +2,7 @@ package BackEnd.Geometry;
 
 import Exceptions.IsNotValidNodeTypeException;
 import BackEnd.Graph.NodeLayer;
+import Exceptions.UnplacedNodeException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +73,7 @@ public class Node extends Point2D {
     public int getTime() {
         if (nodeLayerPointer == null) {
             //TODO: make exception
-            throw new NullPointerException("You tried to get time from a node that is not in a time layer");
+            throw new UnplacedNodeException();
         }
         return nodeLayerPointer.getTime();
     }

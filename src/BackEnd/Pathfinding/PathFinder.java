@@ -41,7 +41,7 @@ public class PathFinder {
         spaceTimeGrid.removeRoute(route);
     }
 
-    public List<Node> findShortestRoute(Point2D start, Point2D end, int startTime) throws RouteNotPossibleException {
+    public PickingRoute findShortestRoute(Point2D start, Point2D end, int startTime) throws RouteNotPossibleException {
         this.startNode =  new Node(start);
         this.endNode = new Node (end);
         this.startTime = startTime;
@@ -60,16 +60,7 @@ public class PathFinder {
             //We have reached the destination
             if (current.getX() == endNode.getX() && current.getY() == endNode.getY()) {
                 if(checkIfValidEndPoint(current)) {
-                    Node previous = current;
-                    Node next;
-                    /*Adding pickTime, to do this we need to make curr+1 come from curr, and curr+2 from curr+1 ...,
-                      then in the end we set endNode to be curr+PICKTIME, (Notice, that we start at i = 1) */
-                    for(int i = 1; i < PICK_TIME + 1; i++) {
-                        next = spaceTimeGrid.getNodePointer(current.getX(), current.getY(), current.getTime() + i);
-                        next.setCameFrom(previous);
-                        previous = next;
-                    }
-                    endNode = previous;
+                    endNode = current;
                     break;
                 }
             }
@@ -154,22 +145,19 @@ public class PathFinder {
     }
 
     //Constructs the shortest route as a list of nodes
-    private List<Node> constructPath(Node start, Node end) {
-        ArrayList<Node> path = new ArrayList<>();
-
+    private PickingRoute constructPath(Node start, Node end) {
+        PickingRoute path = new PickingRoute();
         //First node is the destination
         Node next = end;
 
         //Backtracks till we meet the start node
         while (!next.equals(start)) {
-            path.add(next);
+            path.addNodeToRoute(next);
             next = next.getCameFrom();
         }
-        path.add(start);
-
+        path.addNodeToRoute(start);
         //Reverses the list so that end node is the last element
-        Collections.reverse(path);
-
+        Collections.reverse(path.getRoute());
         return path;
     }
 }

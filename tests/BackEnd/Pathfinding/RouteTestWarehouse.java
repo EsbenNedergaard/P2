@@ -30,7 +30,7 @@ class RouteTestWarehouse {
 
         PathFinder testPathFinder = new PathFinder(spaceTimeGrid);
 
-        List<Node> testResultRoute = new ArrayList<>();
+        PickingRoute testResultRoute = new PickingRoute();
         try {
             for (int i = 0; i < 100; i++) {
                 testResultRoute = testPathFinder.findShortestRoute(startNode, endNode, 0);
@@ -40,7 +40,7 @@ class RouteTestWarehouse {
             System.out.println(e.toString());
         }
 
-        TempRoutePrinter printer = new TempRoutePrinter(testResultRoute, baseLayer);
+        TempRoutePrinter printer = new TempRoutePrinter(testResultRoute.getRoute(), baseLayer);
         printer.printRoute(testWarehouse.getLength(), testWarehouse.getWidth());
     }
 

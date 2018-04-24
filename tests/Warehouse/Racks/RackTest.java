@@ -1,7 +1,7 @@
 package Warehouse.Racks;
 
 import Exceptions.FullRackException;
-import Geometry.Point2D;
+import BackEnd.Geometry.Point2D;
 import Warehouse.Product;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

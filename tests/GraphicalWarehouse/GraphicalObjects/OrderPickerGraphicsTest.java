@@ -1,6 +1,6 @@
 package GraphicalWarehouse.GraphicalObjects;
 
-import Geometry.Point2D;
+import BackEnd.Geometry.Point2D;
 import GraphicalWarehouse.GenerateTestPickingRoute;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;

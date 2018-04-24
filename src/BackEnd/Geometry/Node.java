@@ -1,6 +1,7 @@
-package Geometry;
+package BackEnd.Geometry;
 
 import Exceptions.IsNotValidNodeTypeException;
+import BackEnd.Graph.NodeLayer;
 
 import java.util.ArrayList;
 import java.util.List;

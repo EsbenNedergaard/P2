@@ -1,13 +1,13 @@
 package GraphicalWarehouse;
 
+import BackEnd.Graph.SpaceTimeGrid;
+import BackEnd.Pathfinding.OptimalRouteFinder;
 import GraphicalWarehouse.GraphicalObjects.TableViewData.ProductIDSet;
 import GraphicalWarehouse.InteractionHandler.InputFieldDataHandler;
 import GraphicalWarehouse.GraphicalObjects.*;
 import static Warehouse.GUIWarehouse.TILE_SIZE;
 import static Warehouse.GUIWarehouse.SCALE;
 import javafx.animation.AnimationTimer;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.geometry.Insets;
@@ -15,10 +15,10 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import Warehouse.Racks.*;
 import javafx.scene.*;
-import Geometry.Node;
+import BackEnd.Geometry.Node;
 import Warehouse.*;
 import java.util.*;
-import Geometry.*;
+import BackEnd.Geometry.*;
 
 public class GraphicalWarehouse {
 

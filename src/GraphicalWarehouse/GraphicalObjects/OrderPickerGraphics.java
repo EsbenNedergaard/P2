@@ -1,7 +1,7 @@
 package GraphicalWarehouse.GraphicalObjects;
 
-import Geometry.Node;
-import Geometry.Point2D;
+import BackEnd.Geometry.Node;
+import BackEnd.Geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 

@@ -1,6 +1,9 @@
-package Geometry;
+package BackEnd.Pathfinding;
 
+import BackEnd.Geometry.Node;
+import BackEnd.Geometry.Point2D;
 import Exceptions.RouteNotPossibleException;
+import BackEnd.Graph.SpaceTimeGrid;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +13,7 @@ public class OptimalRouteFinder {
     private SpaceTimeGrid spaceTimeGrid;
     private Point2D routeStartPoint;
     private Point2D routeEndPoint;
-    private List<Node> bestRoute;
+    private PickingRoute bestRoute;
     private PathFinder pathFinder;
     private int amountPickersInGraph;
 
@@ -36,26 +39,35 @@ public class OptimalRouteFinder {
 
     //Method that calculates the best route for the pickingList that it is given
     public List<Node> calculateBestRoute(List<Point2D> pickingList) {
-        this.bestRoute = new ArrayList<>();
-        List<Node> initialRoute = new ArrayList<>();
+        this.bestRoute = new PickingRoute();
+        PickingRoute initialRoute = new PickingRoute();
         bestRouteOfAllRoutes(routeStartPoint, pickingList, initialRoute);
 
-        for(int i = 0; i < pathFinder.getPICK_TIME(); i++) {
-            bestRoute.remove(bestRoute.size() -1);
-        }
-        List<Node> routeToRemove = new ArrayList<>(bestRoute);
-        routeToRemove.remove(0);
-        pathFinder.getSpaceTimeGrid().removeRoute(routeToRemove);
+        PickingRoute routeToRemove = new PickingRoute(bestRoute);
 
 
+        /*Here we remove the last 5 points that are added because the algorithm thinks it needs to pick
+          a ware in the routeEndPoint, which is not right we remove one extra because for know we let
+          the pickers stack up in the end point */
+        //for(int i = 0; i < pathFinder.getPICK_TIME() + 1; i++) {
+            routeToRemove.getRoute().remove(routeToRemove.getRouteLength() - 1);
 
-        List<Node> waitTime = new ArrayList<>();
+        //}
+        routeToRemove.getRoute().remove(0);
+        //TODO: få lavet så SpaceTimeGrid tager en pickingRoute i stedet.
+        pathFinder.getSpaceTimeGrid().removeRoute(routeToRemove.getRoute());
+
+
+        PickingRoute waitTime = new PickingRoute();
         for(int i = 0; i < amountPickersInGraph *WAIT_TIME_BETWEEN_ROUTES; i++) {
-            waitTime.add(new Node(routeStartPoint));
+            waitTime.addNodeToRoute(new Node(routeStartPoint));
         }
+
+
+        //TODO: Få ændret herfra og ned og dermed ændret retur typen
         List<Node> fullRoute = new ArrayList<>();
-        fullRoute.addAll(waitTime);
-        fullRoute.addAll(bestRoute);
+        fullRoute.addAll(waitTime.getRoute());
+        fullRoute.addAll(bestRoute.getRoute());
         amountPickersInGraph++;
         return fullRoute;
     }
@@ -64,19 +76,21 @@ public class OptimalRouteFinder {
 
     /*Our recursive function that calls itself with a smaller and smaller version of the list of remaining pick points
     * and a bigger currRoute plus a new start point*/
-    private void bestRouteOfAllRoutes(Point2D currStart, List<Point2D> remainingPickingPoints, List<Node> currRoute) {
+    private void bestRouteOfAllRoutes(Point2D currStart, List<Point2D> remainingPickingPoints, PickingRoute currRoute) {
         try {
             if(remainingPickingPoints.isEmpty()) {
-                int timeAfterRoute = currRoute.size() + amountPickersInGraph * WAIT_TIME_BETWEEN_ROUTES;
-                currRoute.addAll(pathFinder.findShortestRoute(currStart, routeEndPoint, timeAfterRoute));
-                if(bestRoute.size() == 0 || currRoute.size() < bestRoute.size()){
-                    bestRoute = new ArrayList<>(currRoute);
+                int timeAfterRoute = currRoute.getRouteLength() + amountPickersInGraph * WAIT_TIME_BETWEEN_ROUTES;
+                currRoute.addOtherRouteToRoute(pathFinder.findShortestRoute(currStart, routeEndPoint, timeAfterRoute));
+                if(bestRoute.getRouteLength() == 0 || currRoute.getRouteLength() < bestRoute.getRouteLength()){
+                    bestRoute = new PickingRoute(currRoute);
                 }
             } else {
                 for (Point2D n : remainingPickingPoints) {
-                    int timeAfterRoute = currRoute.size() + amountPickersInGraph * WAIT_TIME_BETWEEN_ROUTES;
-                    List<Node> nextRoute = new ArrayList<>(currRoute);
-                    nextRoute.addAll(pathFinder.findShortestRoute(currStart, n, timeAfterRoute));
+                    int timeAfterRoute = currRoute.getRouteLength() + amountPickersInGraph * WAIT_TIME_BETWEEN_ROUTES;
+                    PickingRoute nextRoute = new PickingRoute(currRoute);
+                    nextRoute.addOtherRouteToRoute(pathFinder.findShortestRoute(currStart, n, timeAfterRoute));
+
+                    nextRoute.addPickingToRouteEnd(pathFinder.getSpaceTimeGrid());
 
                     List<Point2D> nextList = new ArrayList<>(remainingPickingPoints);
                     nextList.remove(n);

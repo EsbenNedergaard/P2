@@ -1,8 +1,6 @@
-package Geometry;
+package BackEnd.Geometry;
 
 import org.junit.jupiter.api.Test;
-
-import java.util.Comparator;
 
 import static org.junit.jupiter.api.Assertions.*;
 

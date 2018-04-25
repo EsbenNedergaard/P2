@@ -1,6 +1,6 @@
 package Warehouse.Aisle;
 
-import Geometry.Point2D;
+import BackEnd.Geometry.Point2D;
 import Warehouse.Racks.HorizontalRackRow;
 import Warehouse.Racks.RackRow;
 import org.junit.jupiter.api.BeforeEach;

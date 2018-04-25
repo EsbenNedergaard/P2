@@ -1,13 +1,13 @@
 package GraphicalWarehouse.GraphicalObjects;
 
-import Geometry.Point2D;
-import GraphicalWarehouse.GraphicalWarehouse;
+import BackEnd.Geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import static Warehouse.GUIWarehouse.TILE_SIZE;
 
 public class Tile extends Rectangle {
+
     public Tile(Point2D point) {
 
         // Pixel width of tile

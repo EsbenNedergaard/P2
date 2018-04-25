@@ -1,6 +1,10 @@
-package GraphicalWarehouse;
+package GraphicalWarehouse.GraphicalObjects;
 
-import Geometry.*;
+import BackEnd.Geometry.*;
+import BackEnd.Graph.BaseLayer;
+import BackEnd.Graph.SpaceTimeGrid;
+import BackEnd.Pathfinding.OptimalRouteFinder;
+import GraphicalWarehouse.GraphicalWarehouse;
 import Warehouse.*;
 
 import java.util.ArrayList;
@@ -27,7 +31,6 @@ public class GenerateTestPickingRoute {
         SpaceTimeGrid spaceTimeGrid = new SpaceTimeGrid(baseLayer, 500);
         routeFinder = new OptimalRouteFinder(spaceTimeGrid);
 
-        pickPoints.add(new Point2D(6,1));
         pickPoints.add(new Point2D(6,1));
         pickPoints.add(new Point2D(6,1));
         pickPoints.add(new Point2D(6,1));

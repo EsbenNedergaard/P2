@@ -1,4 +1,6 @@
-package Geometry;
+package BackEnd.Graph;
+
+import BackEnd.Geometry.Node;
 
 import java.util.ArrayList;
 import java.util.List;

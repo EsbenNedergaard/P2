@@ -3,6 +3,7 @@ package GraphicalWarehouse.GraphicalObjects;
 import GraphicalWarehouse.GraphicalObjects.TableViewData.ProductIDSet;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -30,10 +31,12 @@ public class Table {
         // Set Table Columns
         TableColumn productIDColumn = new TableColumn("Product ID");
         TableColumn routeNumberColumn = new TableColumn("#");
+        TableColumn actionColumn = new TableColumn("View");
 
         // Style for columns
-        productIDColumn.setMinWidth(400);
+        productIDColumn.setMinWidth(320);
         routeNumberColumn.setMaxWidth(40);
+        actionColumn.setMaxWidth(80);
 
         productIDColumn.setCellValueFactory(
                 new PropertyValueFactory<ProductIDSet, String>("productIDSet"));
@@ -41,10 +44,13 @@ public class Table {
         routeNumberColumn.setCellValueFactory(
                 new PropertyValueFactory<ProductIDSet, String>("number"));
 
+        actionColumn.setCellValueFactory(
+                new PropertyValueFactory<ProductIDSet, Button>("highlightButton"));
+
         if(data != null)
             table.setItems(data);
 
-        table.getColumns().addAll(routeNumberColumn, productIDColumn);
+        table.getColumns().addAll(routeNumberColumn, productIDColumn, actionColumn);
     }
 
     public TableView<ProductIDSet> getTable() {

@@ -1,7 +1,13 @@
-package Geometry;
+package BackEnd.Pathfinding;
 
+import BackEnd.Geometry.Node;
+import BackEnd.Geometry.NodeType;
+import BackEnd.Geometry.Point2D;
+import BackEnd.Pathfinding.PathFinder;
+import BackEnd.TempRoutePrinter;
 import Exceptions.RouteNotPossibleException;
-import javafx.scene.layout.GridPane;
+import BackEnd.Graph.BaseLayer;
+import BackEnd.Graph.SpaceTimeGrid;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,6 +23,8 @@ class PathFinderTest {
     private SpaceTimeGrid spaceTimeGrid;
     private List<Node> inputSet;
     private BaseLayer baseLayer;
+
+    //TODO: Få lavet tests til de nye checks af værdier og lign.
 
     @BeforeEach
     void beforeEach() {
@@ -47,7 +55,7 @@ class PathFinderTest {
         Node endNode = new Node(new Point2D(GRID_SIZE-1,GRID_SIZE-1));
 
         PathFinder testPathFinder = new PathFinder(spaceTimeGrid);
-        List<Node> testResultRoute = new ArrayList<>();
+        PickingRoute testResultRoute = new PickingRoute();
         try {
             testResultRoute = testPathFinder.findShortestRoute(startNode, endNode, START_TIME);
         }
@@ -102,7 +110,8 @@ class PathFinderTest {
         bestResultRoute.add(spaceTimeGrid.getNodePointer(9,9,38));
 
         // Testing to see if the route computed is the actual shortest route
-        assertEquals(bestResultRoute, testResultRoute);
+        //TODO: lave en equals i en PickingRoute
+        assertEquals(bestResultRoute, testResultRoute.getRoute());
     }
 
     // An obstruction is added so another route will be taken
@@ -121,7 +130,7 @@ class PathFinderTest {
         }
         testPathFinder.removeRoute(testNonPermanentObstruction);
 
-        List<Node> testResultRoute = new ArrayList<>();
+        PickingRoute testResultRoute = new PickingRoute();
         try {
             testResultRoute = testPathFinder.findShortestRoute(startNode, endNode, START_TIME);
         }
@@ -129,7 +138,7 @@ class PathFinderTest {
             System.out.println(e.toString());
         }
 
-        TempRoutePrinter printer = new TempRoutePrinter(testResultRoute, baseLayer);
+        TempRoutePrinter printer = new TempRoutePrinter(testResultRoute.getRoute(), baseLayer);
         printer.printRoute(GRID_SIZE, GRID_SIZE);
         //TODO: make some asserts here
     }

@@ -1,8 +1,8 @@
 package Warehouse.Aisle;
 
 import Exceptions.FullRackException;
-import Geometry.Node;
-import Geometry.Point2D;
+import BackEnd.Geometry.Node;
+import BackEnd.Geometry.Point2D;
 import Warehouse.Product;
 import Warehouse.Racks.HorizontalRackRow;
 import Warehouse.Racks.Rack;
@@ -11,7 +11,7 @@ import Warehouse.Racks.RackRow;
 import java.util.ArrayList;
 import java.util.List;
 
-import static Geometry.NodeType.OBSTACLE;
+import static BackEnd.Geometry.NodeType.OBSTACLE;
 
 
 /* This is a class that we use for our Aisles, the purpose of this class is to make it possible for us too make a

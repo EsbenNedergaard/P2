@@ -1,5 +1,9 @@
-package Geometry;
+package BackEnd.Graph;
 
+import BackEnd.Geometry.Node;
+import BackEnd.Geometry.NodeType;
+import BackEnd.Geometry.Point2D;
+import BackEnd.Graph.BaseLayer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

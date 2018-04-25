@@ -3,6 +3,7 @@ package Warehouse.Aisle;
 import Exceptions.FullRackException;
 import BackEnd.Geometry.Node;
 import BackEnd.Geometry.Point2D;
+import Warehouse.PickingPoint;
 import Warehouse.Product;
 import Warehouse.Racks.HorizontalRackRow;
 import Warehouse.Racks.Rack;
@@ -78,8 +79,8 @@ public class HorizontalAisle implements Aisle {
     }
 
     @Override
-    public List<Point2D> getPickingPoints(List<Product> productPickList) {
-        List<Point2D> pickingPointList = new ArrayList<>();
+    public List<PickingPoint> getPickingPoints(List<Product> productPickList) {
+        List<PickingPoint> pickingPointList = new ArrayList<>();
 
         for (Product productElement : productPickList) {
 
@@ -87,7 +88,7 @@ public class HorizontalAisle implements Aisle {
             int rackIndex = rackRowElement.doesItContainProduct(productElement);
             if (rackIndex != -1) {
                 Point2D rackPosition = rackRowElement.getRackByIndex(rackIndex).getRackPosition();
-                pickingPointList.add(new Point2D(rackPosition.getX(), rackPosition.getY() + 1));
+                pickingPointList.add(new PickingPoint(new Point2D(rackPosition.getX(), rackPosition.getY() + 1), productElement) );
             }
 
 
@@ -95,7 +96,7 @@ public class HorizontalAisle implements Aisle {
             rackIndex = rackRowElement.doesItContainProduct(productElement);
             if (rackIndex != -1) {
                 Point2D rackPosition = rackRowElement.getRackByIndex(rackIndex).getRackPosition();
-                pickingPointList.add(new Point2D(rackPosition.getX(), rackPosition.getY() - 1));
+                pickingPointList.add(new PickingPoint(new Point2D(rackPosition.getX(), rackPosition.getY() - 1), productElement));
             }
         }
 

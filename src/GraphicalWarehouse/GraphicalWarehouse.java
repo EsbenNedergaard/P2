@@ -35,7 +35,7 @@ public class GraphicalWarehouse {
     private Group rackGroup;
     private Group orderPickerGroup;
     private Group interactionFieldGroup;
-    private Group routeHighligtGroup;
+    private Group routeHighlightGroup;
 
     private List<OrderPickerGraphics> orderPickerList;
 
@@ -199,7 +199,7 @@ public class GraphicalWarehouse {
 
 
         // Find route for picker
-        List<Point2D> pickPointList = this.warehouse.getPickingPointsFromIDs(tempProductIDList);
+        List<PickingPoint> pickPointList = this.warehouse.getPickingPointsFromIDs(tempProductIDList);
         List<Node> fastestRoute = this.pathFinder.calculateBestRoute(pickPointList);
 
         OrderPickerGraphics orderPicker = new OrderPickerGraphics(fastestRoute);
@@ -253,10 +253,10 @@ public class GraphicalWarehouse {
         rackGroup = getRackGroup();
         orderPickerGroup = new Group();
         interactionFieldGroup = getInteractionFieldGroup();
-        routeHighligtGroup = routeHighlighter.getHighlightGroup();
+        routeHighlightGroup = routeHighlighter.getHighlightGroup();
 
         // Add all elements for the simulation
-        simulationElementsGroup.getChildren().addAll(routeHighligtGroup, rackRowGroup, rackGroup, tileGroup, orderPickerGroup);
+        simulationElementsGroup.getChildren().addAll(routeHighlightGroup, rackRowGroup, rackGroup, tileGroup, orderPickerGroup);
 
         borderPane.setTop(simulationElementsGroup);
         borderPane.setBottom(interactionFieldGroup);

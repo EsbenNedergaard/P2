@@ -2,7 +2,7 @@ package Warehouse.Aisle;
 
 import BackEnd.Geometry.Node;
 import BackEnd.Geometry.Point2D;
-import Warehouse.PickingPoint;
+import BackEnd.Geometry.PickingPoint;
 import Warehouse.Product;
 import Warehouse.Racks.RackRow;
 

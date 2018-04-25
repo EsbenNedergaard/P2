@@ -1,6 +1,7 @@
-package Warehouse;
+package BackEnd.Geometry;
 
 import BackEnd.Geometry.Point2D;
+import Warehouse.Product;
 
 public class PickingPoint extends Point2D {
     private Product product;

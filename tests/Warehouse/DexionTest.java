@@ -1,6 +1,6 @@
 package Warehouse;
 
-import BackEnd.Geometry.Point2D;
+import BackEnd.Geometry.PickingPoint;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

@@ -1,5 +1,6 @@
 package Warehouse;
 
+import BackEnd.Geometry.PickingPoint;
 import BackEnd.Graph.BaseLayer;
 import BackEnd.Geometry.Node;
 import BackEnd.Geometry.Point2D;

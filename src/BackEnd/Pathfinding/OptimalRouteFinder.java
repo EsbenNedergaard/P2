@@ -4,7 +4,7 @@ import BackEnd.Geometry.Node;
 import BackEnd.Geometry.Point2D;
 import Exceptions.RouteNotPossibleException;
 import BackEnd.Graph.SpaceTimeGrid;
-import Warehouse.PickingPoint;
+import BackEnd.Geometry.PickingPoint;
 
 import java.util.ArrayList;
 import java.util.List;

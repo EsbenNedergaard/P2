@@ -34,12 +34,13 @@ public class GraphicalWarehouse {
     private Group rackGroup;
     private Group orderPickerGroup;
     private Group interactionFieldGroup;
+    private Group routeHighligtGroup;
 
     private List<OrderPickerGraphics> orderPickerList;
 
-    // Table for routes and product IDs
-    private Table table = new Table();
+    // Number of routes added (Only used for the table)
     private int routesAdded = 0;
+    private RouteHighlighterGraphics routeHighlighter;
 
     // Animation programTimer
     private AnimationTimer programTimer;
@@ -50,6 +51,7 @@ public class GraphicalWarehouse {
         this.LENGTH_WAREHOUSE = warehouse.getLength();
         this.WIDTH_WAREHOUSE = warehouse.getWidth();
         this.orderPickerList = new ArrayList<>();
+        this.routeHighlighter = new RouteHighlighterGraphics();
 
         setupPathFinder();
     }
@@ -133,6 +135,7 @@ public class GraphicalWarehouse {
         Button launchButton = interactionGraphics.getLaunchButton();
         Button resetAllButton = interactionGraphics.getResetAllButton();
         TextField inputField = interactionGraphics.getInputField();
+        Table table = interactionGraphics.getTableView();
 
         // Set objects in GridPane
         gridpane.add(heading, 1, 1, 5, 1);
@@ -146,29 +149,30 @@ public class GraphicalWarehouse {
         borderPane.setLeft(table.getTable());
 
         // Set event listeners
-        setOnButtonClickEvent(addRouteButton, inputField, launchButton, resetAllButton);
+        setOnButtonClickEvent(addRouteButton, inputField, launchButton, resetAllButton, table);
 
         return new Group(borderPane);
 
     }
 
-    private void setOnButtonClickEvent(Button addButton, TextField inputField, Button launchButton,
-                                       Button resetAllButton) {
+    private void setOnButtonClickEvent(Button addButton, TextField inputField,
+                                       Button launchButton, Button resetAllButton, Table table) {
         // Run the same method on button clicked and ENTER pressed
-        addButton.setOnMouseClicked(e -> this.actionsForAddProductIDs(inputField));
+        addButton.setOnMouseClicked(e -> this.actionsForAddProductIDs(inputField, table));
         inputField.setOnKeyPressed(e -> {
             if(e.getCode() == KeyCode.ENTER) {
-                this.actionsForAddProductIDs(inputField);
+                this.actionsForAddProductIDs(inputField, table);
             }
         });
 
         launchButton.setOnMouseClicked(e -> programTimer.start());
 
         // Reset button
-        resetAllButton.setOnMouseClicked(e -> this.resetWarehouseOptions());
+        resetAllButton.setOnMouseClicked(e -> this.resetWarehouseOptions(table));
+
     }
 
-    private void actionsForAddProductIDs(TextField inputField) {
+    private void actionsForAddProductIDs(TextField inputField, Table table) {
 
         InputFieldDataHandler textHandler = new InputFieldDataHandler();
         // Get the id list from the input field
@@ -178,13 +182,18 @@ public class GraphicalWarehouse {
         List<Point2D> pickPointList = this.warehouse.getPickingPointsFromIDs(tempProductIDList);
         List<Node> fastestRoute = this.pathFinder.calculateBestRoute(pickPointList);
 
-
         OrderPickerGraphics orderPicker = new OrderPickerGraphics(fastestRoute);
         addPicker(orderPicker);
 
         // Create a data type which fits the table view
         routesAdded++;
-        ProductIDSet generatedProductIDs = new ProductIDSet(textHandler.generateProductIDString(), routesAdded);
+        ProductIDSet generatedProductIDs = new ProductIDSet(
+                textHandler.generateProductIDString(),
+                routesAdded,
+                fastestRoute
+        );
+
+        setNewViewButtonClickEvent(generatedProductIDs);
 
         if(!generatedProductIDs.getProductIDSet().equals(""))
             table.add(generatedProductIDs);
@@ -193,12 +202,19 @@ public class GraphicalWarehouse {
         inputField.clear();
     }
 
-    private void resetWarehouseOptions() {
+    // Sets a new event handler for the button "View"
+    private void setNewViewButtonClickEvent(ProductIDSet IDSet) {
+        IDSet.getHighlightButton().setOnMouseClicked(e -> routeHighlighter.setRouteList(IDSet.getRouteList()));
+    }
+
+    private void resetWarehouseOptions(Table table) {
         programTimer.stop();
         pathFinder.reset();
         orderPickerGroup.getChildren().clear();
         orderPickerList.clear();
         table.clear();
+        routesAdded = 0;
+        routeHighlighter.reset();
     }
 
     public Parent getWarehouseGraphics() {
@@ -211,15 +227,15 @@ public class GraphicalWarehouse {
         rackGroup = getRackGroup();
         orderPickerGroup = new Group();
         interactionFieldGroup = getInteractionFieldGroup();
+        routeHighligtGroup = routeHighlighter.getHighlightGroup();
 
         // Add all elements for the simulation
-        simulationElementsGroup.getChildren().addAll(rackRowGroup, rackGroup, tileGroup, orderPickerGroup);
+        simulationElementsGroup.getChildren().addAll(routeHighligtGroup, rackRowGroup, rackGroup, tileGroup, orderPickerGroup);
 
         borderPane.setTop(simulationElementsGroup);
         borderPane.setBottom(interactionFieldGroup);
 
         root.setPrefSize(LENGTH_WAREHOUSE * TILE_SIZE, WIDTH_WAREHOUSE * TILE_SIZE * 2.43);
-
         root.getChildren().addAll(borderPane);
 
         programTimer = new AnimationTimer() {

@@ -1,5 +1,5 @@
 package Warehouse;
-import GraphicalWarehouse.GraphicalWarehouse;
+import GraphicalSimulation.WarehouseSimulation;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 
 public class GUIWarehouse extends Application {
     private Warehouse warehouse;
-    private GraphicalWarehouse graphicalWarehouse;
+    private WarehouseSimulation graphicalWarehouse;
 
     public static final int SCALE = 5;
     public static final int TILE_SIZE = 5 * SCALE;
@@ -23,7 +23,7 @@ public class GUIWarehouse extends Application {
     @Override
     public void init() {
         this.warehouse = new Dexion();
-        this.graphicalWarehouse = new GraphicalWarehouse(warehouse);
+        this.graphicalWarehouse = new WarehouseSimulation(warehouse);
     }
 
     @Override

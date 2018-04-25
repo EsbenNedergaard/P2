@@ -1,7 +1,10 @@
-package BackEnd.Geometry;
+package BackEnd.Graph;
 
+import BackEnd.Geometry.Node;
+import BackEnd.Geometry.Point2D;
 import Exceptions.NodeDoesNotExistException;
 import BackEnd.Graph.NodeLayer;
+import Exceptions.UnplacedNodeException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -35,7 +38,7 @@ class NodeLayerTest {
     @Test
     void testSetupReferences() {
         Node temp = new Node(new Point2D(1,1));
-        assertThrows(NullPointerException.class, ()-> temp.getTime());
+        assertThrows(UnplacedNodeException.class, ()-> temp.getTime());
 
         temp.setNodeLayer(testLayer1);
         assertEquals(0, temp.getTime());

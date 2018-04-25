@@ -10,8 +10,8 @@ import static Warehouse.GUIWarehouse.TILE_SIZE;
 
 
 //TODO: BURDE LAVES OM TIL AT VÆRE RACK DESIGN
-public class RackGraphics extends Circle {
-    public RackGraphics(Rack rack) {
+public class RackGraphic extends Circle {
+    public RackGraphic(Warehouse.Racks.Rack rack) {
         rack.getProductList().size();
 
         setRadius(TILE_SIZE / 2.5);

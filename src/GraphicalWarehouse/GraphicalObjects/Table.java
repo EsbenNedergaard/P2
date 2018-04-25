@@ -1,11 +1,8 @@
 package GraphicalWarehouse.GraphicalObjects;
 
-import GraphicalWarehouse.GraphicalObjects.TableViewData.ProductIDSet;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import GraphicalWarehouse.Interaction.TableViewData.ProductIDSet;
+import javafx.collections.*;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class Table {

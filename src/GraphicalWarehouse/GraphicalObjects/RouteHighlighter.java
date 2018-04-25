@@ -12,17 +12,17 @@ import javafx.scene.Group;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RouteHighlighterGraphics {
+public class RouteHighlighter {
 
     private List<Node> routeList;
     private Group highlightGroup = new Group();
 
-    public RouteHighlighterGraphics(List<Node> routeList) {
+    public RouteHighlighter(List<Node> routeList) {
         this.routeList = routeList;
         createHighlight();
     }
 
-    public RouteHighlighterGraphics() {
+    public RouteHighlighter() {
         this.routeList = new ArrayList<>();
     }
 

@@ -3,18 +3,23 @@ package GraphicalWarehouse;
 import Exceptions.IllegalTextInputException;
 import BackEnd.Graph.SpaceTimeGrid;
 import BackEnd.Pathfinding.OptimalRouteFinder;
-import GraphicalWarehouse.GraphicalObjects.TableViewData.ProductIDSet;
-import GraphicalWarehouse.InteractionHandler.InputFieldDataHandler;
+import GraphicalWarehouse.GraphicalObjects.RackGraphic;
+import GraphicalWarehouse.GraphicalObjects.RackRowGraphic;
+import GraphicalWarehouse.Interaction.TableViewData.ProductIDSet;
+import GraphicalWarehouse.Interaction.Handler.InputFieldDataHandler;
 import GraphicalWarehouse.GraphicalObjects.*;
 import static Warehouse.GUIWarehouse.TILE_SIZE;
 import static Warehouse.GUIWarehouse.SCALE;
+
+import GraphicalWarehouse.Interaction.InteractionGraphics;
+import Warehouse.Racks.Rack;
+import Warehouse.Racks.RackRow;
 import javafx.animation.AnimationTimer;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import Warehouse.Racks.*;
 import javafx.scene.*;
 import BackEnd.Geometry.Node;
 import Warehouse.*;
@@ -37,11 +42,11 @@ public class GraphicalWarehouse {
     private Group interactionFieldGroup;
     private Group routeHighligtGroup;
 
-    private List<OrderPickerGraphics> orderPickerList;
+    private List<OrderPickerGraphic> orderPickerList;
 
     // Number of routes added (Only used for the table)
     private int routesAdded = 0;
-    private RouteHighlighterGraphics routeHighlighter;
+    private RouteHighlighter routeHighlighter;
 
     // Animation programTimer
     private AnimationTimer programTimer;
@@ -52,7 +57,7 @@ public class GraphicalWarehouse {
         this.LENGTH_WAREHOUSE = warehouse.getLength();
         this.WIDTH_WAREHOUSE = warehouse.getWidth();
         this.orderPickerList = new ArrayList<>();
-        this.routeHighlighter = new RouteHighlighterGraphics();
+        this.routeHighlighter = new RouteHighlighter();
 
         setupPathFinder();
     }
@@ -83,7 +88,7 @@ public class GraphicalWarehouse {
 
         for(RackRow rackRowElement : warehouse.getRackRowList()) {
             // Styles the rack
-            RackRowGraphics graphicRack = new RackRowGraphics(rackRowElement);
+            RackRowGraphic graphicRack = new RackRowGraphic(rackRowElement);
             // Puts the rack into the group
             rackRowGroup.getChildren().add(graphicRack);
         }
@@ -98,7 +103,7 @@ public class GraphicalWarehouse {
         for(RackRow rackRowElement : warehouse.getRackRowList()) {
 
             for (Rack rackElement : rackRowElement.getRackList()) {
-                RackGraphics graphicRack = new RackGraphics(rackElement);
+                RackGraphic graphicRack = new RackGraphic(rackElement);
 
                 Label amtProducts = new Label("" + rackElement.getProductList().size());
                 amtProducts.setPadding(new Insets(4, 5, 5, 8));
@@ -115,7 +120,7 @@ public class GraphicalWarehouse {
         return rackGroup;
     }
 
-    private void addPicker(OrderPickerGraphics picker) {
+    private void addPicker(OrderPickerGraphic picker) {
         orderPickerList.add(picker);
         orderPickerGroup.getChildren().add(picker);
     }
@@ -202,7 +207,7 @@ public class GraphicalWarehouse {
         List<Point2D> pickPointList = this.warehouse.getPickingPointsFromIDs(tempProductIDList);
         List<Node> fastestRoute = this.pathFinder.calculateBestRoute(pickPointList);
 
-        OrderPickerGraphics orderPicker = new OrderPickerGraphics(fastestRoute);
+        OrderPickerGraphic orderPicker = new OrderPickerGraphic(fastestRoute);
         addPicker(orderPicker);
 
         // Create a data type which fits the table view
@@ -276,7 +281,7 @@ public class GraphicalWarehouse {
 
     private void onUpdate() {
         UPDATE_COUNTER++;
-        for(OrderPickerGraphics picker : orderPickerList) {
+        for(OrderPickerGraphic picker : orderPickerList) {
             if(picker.move(UPDATE_COUNTER));
         }
     }

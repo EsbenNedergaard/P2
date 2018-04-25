@@ -1,5 +1,6 @@
-package GraphicalWarehouse.GraphicalObjects;
+package GraphicalWarehouse.Interaction;
 
+import GraphicalWarehouse.GraphicalObjects.Table;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 

@@ -10,7 +10,7 @@ import javafx.scene.shape.Circle;
 import java.util.List;
 import static Warehouse.GUIWarehouse.TILE_SIZE;
 
-public class OrderPickerGraphics extends Circle {
+public class OrderPickerGraphic extends Circle {
 
     private final static double UPDATE_VALUE = 25;
     private final static double MOVE_DISTANCE_PER_UPDATE = TILE_SIZE / UPDATE_VALUE;
@@ -20,15 +20,11 @@ public class OrderPickerGraphics extends Circle {
 
     private static int pickerNumber = 1;
 
-    public OrderPickerGraphics(List<Node> routeList) {
+    public OrderPickerGraphic(List<Node> routeList) {
         // Set design
-        //setWidth(TILE_SIZE);
-        //setHeight(TILE_SIZE);
         setRadius(TILE_SIZE / 2.5);
 
-        setFill(new ImagePattern(imagePicker(pickerNumber++)));
-
-        //setFill(Color.valueOf("#2d79f7"));
+        setFill(Color.valueOf("#2d79f7"));
 
         // Set route list
         this.routeList = routeList;
@@ -40,14 +36,6 @@ public class OrderPickerGraphics extends Circle {
 
         setTranslateX(routeList.get(0).getX() * TILE_SIZE);
         setTranslateY(routeList.get(0).getY() * TILE_SIZE);
-    }
-
-
-    private Image imagePicker(int pickerNumber) {
-        if (pickerNumber > 3)
-            pickerNumber = pickerNumber % 4;
-
-        return new Image("/Images/forklift" + pickerNumber + ".png");
     }
 
 

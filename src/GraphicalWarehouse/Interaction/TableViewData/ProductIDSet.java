@@ -1,4 +1,4 @@
-package GraphicalWarehouse.GraphicalObjects.TableViewData;
+package GraphicalWarehouse.Interaction.TableViewData;
 
 import BackEnd.Geometry.Node;
 import javafx.beans.property.SimpleStringProperty;

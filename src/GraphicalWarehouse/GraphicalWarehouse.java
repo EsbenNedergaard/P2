@@ -199,7 +199,7 @@ public class GraphicalWarehouse {
 
 
         // Find route for picker
-        List<Point2D> pickPointList = this.warehouse.getPickingPointsFromIDs(tempProductIDList);
+        List<PickingPoint> pickPointList = this.warehouse.getPickingPointsFromIDs(tempProductIDList);
         List<Node> fastestRoute = this.pathFinder.calculateBestRoute(pickPointList);
 
         OrderPickerGraphics orderPicker = new OrderPickerGraphics(fastestRoute);

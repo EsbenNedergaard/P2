@@ -11,13 +11,15 @@ import static Warehouse.GUIWarehouse.TILE_SIZE;
 public class CircleTile extends Circle {
 
     public CircleTile(Point2D point) {
-
+        double radius = 2;
         // Pixel width of tile
-        setRadius(TILE_SIZE / 5.5);
+        setRadius(radius);
         setFill(Color.valueOf("#3b3b3b"));
 
+        double relocateValue = TILE_SIZE / 2 - radius;
+
         // Graphical position of tile
-        relocate(point.getXPixels() + 8, point.getYPixels() + 8);
+        relocate(point.getXPixels() + relocateValue, point.getYPixels() + relocateValue);
 
     }
 

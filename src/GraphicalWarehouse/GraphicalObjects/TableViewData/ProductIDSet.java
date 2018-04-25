@@ -1,6 +1,6 @@
 package GraphicalWarehouse.GraphicalObjects.TableViewData;
 
-import Geometry.Node;
+import BackEnd.Geometry.Node;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.Button;
 

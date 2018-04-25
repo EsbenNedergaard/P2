@@ -1,5 +1,6 @@
 package GraphicalWarehouse.InteractionHandler;
 
+import Exceptions.IllegalTextInputException;
 import javafx.scene.control.Alert;
 
 import java.util.ArrayList;
@@ -16,25 +17,28 @@ public class InputFieldDataHandler {
     // This method takes a string of product id's, clears product buffer,
     // adds new result to the productIDListBuffer and returns it
     public List<Integer> generateProductIDList(String inputString){
-
         productIDListBuffer.clear();
-
-        if(inputString.isEmpty())
-            showAlert("The text field was empty", Alert.AlertType.WARNING);
 
         String tempStringBuffer = "";
         int inputStringLength = inputString.length() - 1;
 
         for(int charIndex = 0; charIndex <= inputStringLength; charIndex++) {
-
             char currentChar = inputString.charAt(charIndex);
+
+            if(!Character.isDigit(currentChar) && currentChar != ' ' && currentChar != ',') {
+                throw new IllegalTextInputException("Your input contains a letter or illegal special character");
+            }
 
             if(Character.isDigit(currentChar)) {
                 tempStringBuffer += currentChar;
             }
 
             // Buffer closing conditions
-            if((currentChar == ',' || charIndex == inputStringLength) && !tempStringBuffer.isEmpty()) {
+            if(currentChar == ',' || charIndex == inputStringLength) {
+                if(tempStringBuffer.isEmpty()) {
+                    throw new IllegalTextInputException("Illegal input before a comma or at end of input");
+                }
+
                 int foundNumber;
                 // Try to parse the current tempStringBuffer to integer
                 try {
@@ -45,9 +49,7 @@ public class InputFieldDataHandler {
                 } catch(NumberFormatException e) {
                     showAlert(e.getMessage(), Alert.AlertType.ERROR);
                 }
-
             }
-
         }
 
         return productIDListBuffer;
@@ -73,7 +75,6 @@ public class InputFieldDataHandler {
         }
 
         return productIDString;
-
     }
 
     public List<Integer> getProductIDList() {

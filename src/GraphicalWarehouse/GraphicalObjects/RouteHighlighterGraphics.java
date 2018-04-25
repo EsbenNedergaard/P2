@@ -5,8 +5,8 @@ package GraphicalWarehouse.GraphicalObjects;
  * GRAPHICALLY IN THE WAREHOUSE. ONLY ONE ROUTE CAN BE
   * HIGHLIGHTED AT A TIME */
 
-import Geometry.Node;
-import Geometry.Point2D;
+import BackEnd.Geometry.Node;
+import BackEnd.Geometry.Point2D;
 import javafx.scene.Group;
 
 import java.util.ArrayList;

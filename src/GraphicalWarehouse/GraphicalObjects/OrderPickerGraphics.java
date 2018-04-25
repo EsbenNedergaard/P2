@@ -18,7 +18,6 @@ public class OrderPickerGraphics extends Circle {
     private List<Node> routeList;
     private int indexOfLastPoint;
 
-    private static int pickerNumber = 1;
 
     public OrderPickerGraphics(List<Node> routeList) {
         // Set design
@@ -26,9 +25,7 @@ public class OrderPickerGraphics extends Circle {
         //setHeight(TILE_SIZE);
         setRadius(TILE_SIZE / 2.5);
 
-        setFill(new ImagePattern(imagePicker(pickerNumber++)));
-
-        //setFill(Color.valueOf("#2d79f7"));
+        setFill(Color.valueOf("#2d79f7"));
 
         // Set route list
         this.routeList = routeList;
@@ -40,14 +37,6 @@ public class OrderPickerGraphics extends Circle {
 
         setTranslateX(routeList.get(0).getX() * TILE_SIZE);
         setTranslateY(routeList.get(0).getY() * TILE_SIZE);
-    }
-
-
-    private Image imagePicker(int pickerNumber) {
-        if (pickerNumber > 3)
-            pickerNumber = pickerNumber % 4;
-
-        return new Image("/Images/forklift" + pickerNumber + ".png");
     }
 
 

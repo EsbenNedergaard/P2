@@ -1,5 +1,6 @@
 package GraphicalWarehouse;
 
+import Exceptions.IllegalTextInputException;
 import BackEnd.Graph.SpaceTimeGrid;
 import BackEnd.Pathfinding.OptimalRouteFinder;
 import GraphicalWarehouse.GraphicalObjects.TableViewData.ProductIDSet;
@@ -173,10 +174,29 @@ public class GraphicalWarehouse {
     }
 
     private void actionsForAddProductIDs(TextField inputField, Table table) {
+        if (inputField.getText().isEmpty()) {
+            showAlert("The text field was empty", Alert.AlertType.WARNING);
+            return;
+        }
 
         InputFieldDataHandler textHandler = new InputFieldDataHandler();
+
         // Get the id list from the input field
-        List<Integer> tempProductIDList = textHandler.generateProductIDList(inputField.getText());
+        List<Integer> tempProductIDList;
+        try {
+            tempProductIDList = textHandler.generateProductIDList(inputField.getText());
+        }
+        catch(IllegalTextInputException e) {
+            showAlert(e.getMessage(), Alert.AlertType.WARNING);
+            return;
+        }
+
+        // This should never happen
+        if(tempProductIDList == null) {
+            showAlert("Null pointer, this should not happen", Alert.AlertType.WARNING);
+            return;
+        }
+
 
         // Find route for picker
         List<Point2D> pickPointList = this.warehouse.getPickingPointsFromIDs(tempProductIDList);
@@ -200,6 +220,12 @@ public class GraphicalWarehouse {
 
         // Clear the input field when done
         inputField.clear();
+    }
+
+    private void showAlert(String contentText, Alert.AlertType type) {
+        Alert alert = new Alert(type);
+        alert.setContentText(contentText);
+        alert.show();
     }
 
     // Sets a new event handler for the button "View"

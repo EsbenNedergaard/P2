@@ -1,5 +1,5 @@
 package Warehouse;
-import GraphicalSimulation.WarehouseSimulation;
+import WarehouseSimulation.WarehouseSimulation;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -29,7 +29,7 @@ public class GUIWarehouse extends Application {
     @Override
     public void start(Stage primaryStage) {
         Scene scene = new Scene(graphicalWarehouse.getWarehouseGraphics());
-        scene.getStylesheets().add("GraphicalWarehouse/Styles/stylesheet.css");
+        scene.getStylesheets().add("WarehouseSimulation/Styles/stylesheet.css");
         primaryStage.setTitle("GUIWarehouse");
         primaryStage.setScene(scene);
         primaryStage.show();

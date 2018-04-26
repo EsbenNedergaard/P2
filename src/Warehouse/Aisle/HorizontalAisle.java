@@ -88,14 +88,30 @@ public class HorizontalAisle implements Aisle {
             RackRow rackRowElement = getTopRackRow();
             int rackIndex = rackRowElement.doesItContainProduct(productElement);
             if (rackIndex != -1) {
+                // Get real product object when the rack and product id is known
+                List<Product> rackProductList = rackRowElement.getRackByIndex(rackIndex).getProductList();
+                for(Product product : rackProductList) {
+                    if(product.equals(productElement)) {
+                        productElement = product;
+                    }
+                }
+
                 Point2D rackPosition = rackRowElement.getRackByIndex(rackIndex).getRackPosition();
-                pickingPointList.add(new PickingPoint(new Point2D(rackPosition.getX(), rackPosition.getY() + 1), productElement) );
+                pickingPointList.add(new PickingPoint(new Point2D(rackPosition.getX(), rackPosition.getY() + 1), productElement));
             }
 
 
             rackRowElement = getBottomRackRow();
             rackIndex = rackRowElement.doesItContainProduct(productElement);
             if (rackIndex != -1) {
+                // Get real product object when the rack and product id is known
+                List<Product> rackProductList = rackRowElement.getRackByIndex(rackIndex).getProductList();
+                for(Product product : rackProductList) {
+                    if(product.equals(productElement)) {
+                        productElement = product;
+                    }
+                }
+
                 Point2D rackPosition = rackRowElement.getRackByIndex(rackIndex).getRackPosition();
                 pickingPointList.add(new PickingPoint(new Point2D(rackPosition.getX(), rackPosition.getY() - 1), productElement));
             }

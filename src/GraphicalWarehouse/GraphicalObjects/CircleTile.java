@@ -20,7 +20,5 @@ public class CircleTile extends Circle {
 
         // Graphical position of tile
         relocate(point.getXPixels() + relocateValue, point.getYPixels() + relocateValue);
-
     }
-
 }

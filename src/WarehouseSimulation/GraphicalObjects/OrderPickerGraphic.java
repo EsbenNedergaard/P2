@@ -10,82 +10,108 @@ import static Warehouse.GUIWarehouse.TILE_SIZE;
 
 public class OrderPickerGraphic extends Circle {
 
-    private final static double UPDATE_VALUE = 25;
-    private final static double MOVE_DISTANCE_PER_UPDATE = TILE_SIZE / UPDATE_VALUE;
-
+    private final static double PICKER_SPEED_IN_MS = 25;
     private List<Node> routeList;
-    private int indexOfLastPoint;
-
+    private double moveDistancePerUpdate;
+    private int indexOfTargetNode;
 
     public OrderPickerGraphic(List<Node> routeList) {
-        // Set design
-        setRadius(TILE_SIZE / 2.5);
-
-        setFill(Color.valueOf("#2d79f7"));
-
-        // Set route list
         this.routeList = routeList;
+        this.moveDistancePerUpdate = calculateMoveDistancePerUpdate();
+        this.indexOfTargetNode = 1;
+        setDesign();
+        setStartLocation();
+    }
 
-        // When the object is first created, the index must be 1
-        this.indexOfLastPoint = 1;
-
+    private void setStartLocation() {
         relocate(2.5, 2.5);
-
         setTranslateX(routeList.get(0).getX() * TILE_SIZE);
         setTranslateY(routeList.get(0).getY() * TILE_SIZE);
     }
 
+    private void setDesign() {
+        setRadius(TILE_SIZE / 2.5);
+        setFill(Color.valueOf("#2d79f7"));
+    }
 
-    // Call this in a update method
-    // For every call it will move towards the end of the route
-    // Return true if the move was successful and false when the route is finished
+    private double calculateMoveDistancePerUpdate() {
+        return TILE_SIZE / PICKER_SPEED_IN_MS;
+    }
+
     public boolean move(final int UPDATE_COUNTER) {
+        if(!routeIsDone()) {
+            if(moveIsVertical())
+                moveVertical();
+            else if (moveIsHorizontal())
+                moveHorizontal();
+            else
+                waiting();
 
-        if (indexOfLastPoint < routeList.size()) {
-
-            if (changeInXCoordinate()) {
-                // Then move current picker in X direction
-                if (getLastPointPosition().getX() < getTargetNode().getX()) {
-                    setTranslateX(getTranslateX() + MOVE_DISTANCE_PER_UPDATE);
-                }  else {
-                    setTranslateX(getTranslateX() - MOVE_DISTANCE_PER_UPDATE);
-                }
-
-            } else if (changeInYCoordinate()) {
-                // Then move current picker in Y direction
-                if (getLastPointPosition().getY() < getTargetNode().getY()) {
-                    setTranslateY(getTranslateY() + MOVE_DISTANCE_PER_UPDATE);
-                } else {
-                    setTranslateY(getTranslateY() - MOVE_DISTANCE_PER_UPDATE);
-                }
-
+            if(isAtTargetNode(UPDATE_COUNTER)) {
+                forcePickerToTargetNode();
+                moveOnToNextTargetNode();
             }
-            // The else block is where it would be when in waiting position
-
-            // If the picker is at the target point then move on to next target
-            if (UPDATE_COUNTER % UPDATE_VALUE == 0) {
-                // Force picker to target point when moving on to next
-                setTranslateX(getTargetNode().getXPixels());
-                setTranslateY(getTargetNode().getYPixels());
-                indexOfLastPoint++;
-            }
-
             return true;
-
-        } else {
-            // The route is done
-            return false;
         }
+        return false;
     }
 
-    private Node getLastPointPosition() {
-        return this.routeList.get(indexOfLastPoint - 1);
+    private boolean routeIsDone() {
+        return indexOfTargetNode == routeList.size();
     }
 
-    // Returns the node were the picker should move towards
+    private boolean moveIsVertical() {
+        return getLastVisitedNode().getXPixels() != getTargetNode().getXPixels() &&
+               getLastVisitedNode().getYPixels() == getTargetNode().getYPixels();
+    }
+
+    private boolean moveIsHorizontal() {
+        return getLastVisitedNode().getYPixels() != getTargetNode().getYPixels() &&
+               getLastVisitedNode().getXPixels() == getTargetNode().getXPixels();
+    }
+
+    private void moveVertical() {
+        if(isLeftMove()) moveLeft();
+        else moveRight();
+    }
+
+    private boolean isLeftMove() {
+        return getLastVisitedNode().getX() > getTargetNode().getX();
+    }
+
+    private void moveLeft() {
+        setTranslateX(getTranslateX() - moveDistancePerUpdate);
+    }
+
+    private void moveRight() {
+        setTranslateX(getTranslateX() + moveDistancePerUpdate);
+    }
+
+    private void moveHorizontal() {
+        if(isUpMove()) moveUp();
+        else moveDown();
+    }
+
+    private boolean isUpMove() {
+        return getLastVisitedNode().getY() < getTargetNode().getY();
+    }
+
+    private void moveUp() {
+        setTranslateY(getTranslateY() + moveDistancePerUpdate);
+    }
+
+    private void moveDown() {
+        setTranslateY(getTranslateY() - moveDistancePerUpdate);
+    }
+
+    // TODO: Do something while waiting?
+    private void waiting() {}
+
+    private Node getLastVisitedNode() {
+        return this.routeList.get(indexOfTargetNode - 1);
+    }
+
     private Node getTargetNode() {
-        int indexOfTargetNode = indexOfLastPoint;
-
         if (indexOfTargetNode >= routeList.size())
             throw new IndexOutOfBoundsException("Index out of bound");
 
@@ -96,16 +122,17 @@ public class OrderPickerGraphic extends Circle {
         return new Point2D((int) getTranslateX() / TILE_SIZE, (int) getTranslateY() / TILE_SIZE);
     }
 
-    // Return true if two points has different x values
-    private boolean changeInXCoordinate() {
-        return getLastPointPosition().getXPixels() != getTargetNode().getXPixels() &&
-               getLastPointPosition().getYPixels() == getTargetNode().getYPixels();
+    private boolean isAtTargetNode(final int UPDATE_COUNTER) {
+        return UPDATE_COUNTER % PICKER_SPEED_IN_MS == 0;
     }
 
-    // Return true if two points has different y values
-    private boolean changeInYCoordinate() {
-        return getLastPointPosition().getYPixels() != getTargetNode().getYPixels() &&
-               getLastPointPosition().getXPixels() == getTargetNode().getXPixels();
+    private void forcePickerToTargetNode() {
+        setTranslateX(getTargetNode().getXPixels());
+        setTranslateY(getTargetNode().getYPixels());
+    }
+
+    private void moveOnToNextTargetNode() {
+        indexOfTargetNode++;
     }
 
 }

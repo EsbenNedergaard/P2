@@ -23,7 +23,6 @@ public class Table<E> {
                 createColumn("Product ID", 320, "productIDSet"),
                 createColumn("View", 80,  "highlightButton")
         );
-
         setColumnsSortable(columnList, false);
         addColumnsToTable(columnList);
         table.setEditable(false);
@@ -35,7 +34,6 @@ public class Table<E> {
         setColumnName(column, name);
         setColumnWidth(column, width);
         setPropertyValueFactory(column, factoryValue);
-
         return column;
     }
 
@@ -58,9 +56,8 @@ public class Table<E> {
     }
 
     private void addColumnsToTable(List<TableColumn> columnList) {
-        for(TableColumn column : columnList) {
+        for(TableColumn column : columnList)
             table.getColumns().addAll(column);
-        }
     }
 
     public void add(E productIDSet) {

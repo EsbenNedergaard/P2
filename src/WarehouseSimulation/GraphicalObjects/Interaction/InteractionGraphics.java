@@ -1,6 +1,6 @@
 package WarehouseSimulation.GraphicalObjects.Interaction;
 
-import WarehouseSimulation.GraphicalObjects.Table;
+import WarehouseSimulation.GraphicalObjects.Interaction.TableView.Table;
 import javafx.scene.control.*;
 
 public class InteractionGraphics {

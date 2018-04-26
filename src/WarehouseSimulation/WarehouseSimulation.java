@@ -4,7 +4,7 @@ import BackEnd.Pathfinding.PickingRoute;
 import Exceptions.IllegalTextInputException;
 import BackEnd.Graph.SpaceTimeGrid;
 import BackEnd.Pathfinding.OptimalRouteFinder;
-import WarehouseSimulation.GraphicalObjects.Interaction.TableViewData.ProductIDSet;
+import WarehouseSimulation.GraphicalObjects.Interaction.TableView.TableFactoryData;
 import WarehouseSimulation.GraphicalObjects.Interaction.Handler.InputFieldDataHandler;
 import static Warehouse.GUIWarehouse.TILE_SIZE;
 import static Warehouse.GUIWarehouse.SCALE;
@@ -13,7 +13,7 @@ import WarehouseSimulation.GraphicalObjects.Interaction.InteractionGraphics;
 import WarehouseSimulation.GraphicalObjects.Warehouse.WarehouseGraphics;
 import WarehouseSimulation.GraphicalObjects.OrderPickerGraphic;
 import WarehouseSimulation.GraphicalObjects.RouteHighlighter;
-import WarehouseSimulation.GraphicalObjects.Table;
+import WarehouseSimulation.GraphicalObjects.Interaction.TableView.Table;
 import javafx.animation.AnimationTimer;
 import javafx.scene.input.KeyCode;
 import javafx.scene.control.*;
@@ -149,7 +149,7 @@ public class WarehouseSimulation {
 
         // Create a data type which fits the table view
         routesAdded++;
-        ProductIDSet generatedProductIDs = new ProductIDSet(
+        TableFactoryData generatedProductIDs = new TableFactoryData(
                 textHandler.generateProductIDString(),
                 routesAdded,
                 fastestRoute.getRoute()
@@ -171,7 +171,7 @@ public class WarehouseSimulation {
     }
 
     // Sets a new event handler for the button "View"
-    private void setViewRouteButtonClickEvent(ProductIDSet IDSet) {
+    private void setViewRouteButtonClickEvent(TableFactoryData IDSet) {
         IDSet.getHighlightButton().setOnMouseClicked(e -> {
             routeHighlighter.setRouteList(IDSet.getRouteList());
         });

@@ -1,0 +1,37 @@
+.interaction-border-pane {
+    -fx-padding: 13px;
+}
+
+.text-field {
+    -fx-pref-width: 500px;
+}
+
+.heading-label {
+    -fx-padding: 0px 0px 10px 0px;
+}
+
+
+/* TABLE GRAPHICS */
+.table-view {
+    -fx-min-width: 490px;
+}
+
+.t-table-th, .t-table-th-2 {
+    -fx-background-color: #2f2f2f;
+    -fx-text-fill: white;
+    -fx-padding: 5px;
+    -fx-border-insets: 0px 4px 0px 0px;
+    -fx-background-insets: 0px 4px 0px 0px;
+    -fx-pref-width: 40px;
+}
+.t-table-th-2 {
+    -fx-pref-width: 450px;
+    -fx-border-insets: 0px;
+    -fx-background-insets: 0px;
+}
+
+.t-table-td {
+    -fx-padding: 5px;
+    -fx-border-insets: 0px 4px 0px 0px;
+    -fx-background-insets: 0px 4px 0px 0px;
+}

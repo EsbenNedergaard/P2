@@ -4,6 +4,7 @@ import BackEnd.Geometry.Node;
 import BackEnd.Geometry.Point2D;
 import Exceptions.RouteNotPossibleException;
 import BackEnd.Graph.SpaceTimeGrid;
+import BackEnd.Geometry.PickingPoint;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +39,7 @@ public class OptimalRouteFinder {
     }
 
     //Method that calculates the best route for the pickingList that it is given
-    public List<Node> calculateBestRoute(List<Point2D> pickingList) {
+    public List<Node> calculateBestRoute(List<PickingPoint> pickingList) {
         this.bestRoute = new PickingRoute();
         PickingRoute initialRoute = new PickingRoute();
         bestRouteOfAllRoutes(routeStartPoint, pickingList, initialRoute);
@@ -76,7 +77,7 @@ public class OptimalRouteFinder {
 
     /*Our recursive function that calls itself with a smaller and smaller version of the list of remaining pick points
     * and a bigger currRoute plus a new start point*/
-    private void bestRouteOfAllRoutes(Point2D currStart, List<Point2D> remainingPickingPoints, PickingRoute currRoute) {
+    private void bestRouteOfAllRoutes(Point2D currStart, List<PickingPoint> remainingPickingPoints, PickingRoute currRoute) {
         try {
             if(remainingPickingPoints.isEmpty()) {
                 int timeAfterRoute = currRoute.getRouteLength() + amountPickersInGraph * WAIT_TIME_BETWEEN_ROUTES;
@@ -85,14 +86,14 @@ public class OptimalRouteFinder {
                     bestRoute = new PickingRoute(currRoute);
                 }
             } else {
-                for (Point2D n : remainingPickingPoints) {
+                for (PickingPoint n : remainingPickingPoints) {
                     int timeAfterRoute = currRoute.getRouteLength() + amountPickersInGraph * WAIT_TIME_BETWEEN_ROUTES;
                     PickingRoute nextRoute = new PickingRoute(currRoute);
                     nextRoute.addOtherRouteToRoute(pathFinder.findShortestRoute(currStart, n, timeAfterRoute));
 
                     nextRoute.addPickingToRouteEnd(pathFinder.getSpaceTimeGrid());
 
-                    List<Point2D> nextList = new ArrayList<>(remainingPickingPoints);
+                    List<PickingPoint> nextList = new ArrayList<>(remainingPickingPoints);
                     nextList.remove(n);
 
                     bestRouteOfAllRoutes(n, nextList, nextRoute);

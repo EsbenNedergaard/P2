@@ -4,7 +4,6 @@ import BackEnd.Geometry.*;
 import BackEnd.Graph.BaseLayer;
 import BackEnd.Graph.SpaceTimeGrid;
 import BackEnd.Pathfinding.OptimalRouteFinder;
-import GraphicalWarehouse.GraphicalWarehouse;
 import Warehouse.*;
 
 import java.util.ArrayList;
@@ -23,7 +22,7 @@ public class GenerateTestPickingRoute {
     }
 
     public void createRoute1() {
-        List<Point2D> pickPoints = new ArrayList<>();
+        List<PickingPoint> pickPoints = new ArrayList<>();
         OptimalRouteFinder routeFinder;
 
         Warehouse testWarehouse = new Dexion();
@@ -31,15 +30,15 @@ public class GenerateTestPickingRoute {
         SpaceTimeGrid spaceTimeGrid = new SpaceTimeGrid(baseLayer, 500);
         routeFinder = new OptimalRouteFinder(spaceTimeGrid);
 
-        pickPoints.add(new Point2D(6,1));
-        pickPoints.add(new Point2D(6,1));
-        pickPoints.add(new Point2D(6,1));
-        pickPoints.add(new Point2D(6,1));
+        pickPoints.add(new PickingPoint(new Point2D(6,1), new Product(1)));
+        pickPoints.add(new PickingPoint(new Point2D(6,1), new Product(1)));
+        pickPoints.add(new PickingPoint(new Point2D(6,1), new Product(1)));
+        pickPoints.add(new PickingPoint(new Point2D(6,1), new Product(1)));
         this.route1 = routeFinder.calculateBestRoute(pickPoints);
     }
 
     public void createRoute2() {
-        List<Point2D> pickPoints = new ArrayList<>();
+        List<PickingPoint> pickPoints = new ArrayList<>();
         OptimalRouteFinder routeFinder;
 
         Warehouse testWarehouse = new Dexion();
@@ -47,10 +46,9 @@ public class GenerateTestPickingRoute {
         SpaceTimeGrid spaceTimeGrid = new SpaceTimeGrid(baseLayer, 500);
         routeFinder = new OptimalRouteFinder(spaceTimeGrid);
 
-        pickPoints.add(new Point2D(8,1));
-        pickPoints.add(new Point2D(34,10));
+        pickPoints.add(new PickingPoint(new Point2D(8,1), new Product(1)));
+        pickPoints.add(new PickingPoint(new Point2D(34,1), new Product(1)));
         this.route2 = routeFinder.calculateBestRoute(pickPoints);
-
     }
 
     public List<Node> getRoute1() {

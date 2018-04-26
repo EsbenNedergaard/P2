@@ -1,0 +1,286 @@
+ //PRODUCT STUFF:
+
+     public int getXCoordinate() {
+         if(productPosition.equals(new Point2D(-1, -1)))
+             throw new NullPointerException("Tried to get an unplaced product");
+
+         return this.productPosition.getX();
+     }
+
+     public int getYCoordinate() {
+         if(productPosition.equals(new Point2D(-1, -1)))
+             throw new NullPointerException("Tried to get an unplaced product");
+
+         return this.productPosition.getY();
+     }
+
+     public Point2D getProductPosition() {
+         if(productPosition.equals(new Point2D(-1, -1)))
+             throw new NullPointerException("Tried to get an unplaced product");
+
+         return productPosition;
+     }
+
+     public void setProductPosition(Point2D productPosition) {
+         this.productPosition = productPosition;
+     }
+
+
+
+
+
+
+ public void addProduct(Product product, int productPosition) {
+        checkForIllegalProductPostion(productPosition);
+
+        Point2D placementPoint = createProductPlacementPoint(productPosition);
+        // Check if position contains a product
+        if(containsProduct(placementPoint))
+            throw new IllegalProductPositionException("Place contains a product");
+
+        product.setProductPosition(placementPoint);
+        productList.add(product);
+    }
+
+
+    @Override
+    public boolean containsProduct(Point2D point) {
+        for(Product item : productList) {
+            if(item.getProductPosition().equals(point))
+                return true;
+        }
+        return false;
+    }
+
+
+
+
+        while(i < getRackLength() && !found) {
+            Point2D productPoint = createProductPlacementPoint(i);
+            if(!containsProduct(productPoint)) {
+                product.setProductPosition(productPoint);
+                productList.add(product);
+                found = true;
+            }
+            i++;
+        }
+
+
+
+
+    void checkForIllegalProductPostion(int productPosition){
+        // Check if position is negative
+        if(productPosition < 0)
+            throw new IllegalProductPositionException("The product position cannot be negative");
+
+        // Check if rackRow position is in rackRow
+        if(productPosition > getRackLength())
+            throw new IllegalProductPositionException("The product position was too high");
+    }
+
+
+
+        @Override
+        public Product getProduct(int id) {
+            for(Product item : productList) {
+                if(item.getById() == id)
+                    return item;
+            }
+            // Product does not exist
+            throw new ProductDoesNotExistException();
+        }
+
+
+rackList.add(new HorizontalRack(AISLE_LENGTH, new Point2D(AISLE_PADDING, 0)));
+        rackList.add(new HorizontalRack(AISLE_LENGTH, new Point2D(AISLE_PADDING, 2)));
+        rackList.add(new HorizontalRack(AISLE_LENGTH, new Point2D(AISLE_PADDING, 3)));
+        rackList.add(new HorizontalRack(AISLE_LENGTH, new Point2D(AISLE_PADDING, 5)));
+        rackList.add(new HorizontalRack(AISLE_LENGTH, new Point2D(AISLE_PADDING, 6)));
+        rackList.add(new HorizontalRack(AISLE_LENGTH, new Point2D(AISLE_PADDING, 8)));
+        rackList.add(new HorizontalRack(AISLE_LENGTH, new Point2D(AISLE_PADDING, 9)));
+        rackList.add(new HorizontalRack(AISLE_LENGTH, new Point2D(AISLE_PADDING, 11)));
+
+
+        try {
+            rackList.get(0).addProduct(new Product("Apple", 1));
+            rackList.get(0).addProduct(new Product("Orange", 2));
+            rackList.get(0).addProduct(new Product("Grapes", 3));
+            //rackRow.addProduct(new Product("Orange", 10));
+        } catch (IllegalProductPositionException | FullRackException e) {
+            System.out.println(e.toString());
+        }
+
+        try {
+            rackList.get(1).addProduct(new Product("Pear", 5));
+            rackList.get(1).addProduct(new Product("Orange", 10));
+            rackList.get(1).addProduct(new Product("Grapes", 17));
+            //rackRow.addProduct(new Product("Orange", 10));
+        } catch (IllegalProductPositionException | FullRackException e) {
+            System.out.println(e.toString());
+        }
+
+
+
+
+     double moveDistancePerUpdate = TILE_SIZE / 30.0;
+         javafx.scene.Node currentOrderPicker = orderPickerGroup.getChildren().get(0);
+
+         double orderPickerStartXCoordinate = routeNodesList.get(0).getX();
+         double orderPickerStartYCoordinate = routeNodesList.get(0).getY();
+
+         if(routeNodesList.size() > 1) {
+
+             if (FRAME_COUNTER % 30 == 0) {
+                 routeNodesList.remove(0);
+                 currentOrderPicker.setTranslateX(routeNodesList.get(0).getXPixels());
+                 currentOrderPicker.setTranslateY(routeNodesList.get(0).getYPixels());
+
+                 FRAME_COUNTER++;
+                 //System.out.println(routeNodesList.size());
+             }
+
+             Node currentNode = routeNodesList.get(0);
+             Node nextNode = routeNodesList.get(1);
+
+             double pickerXCoordinate = currentOrderPicker.getTranslateX();
+             double pickerYCoordinate = currentOrderPicker.getTranslateY();
+
+             if(currentNode.getX() == nextNode.getX() && currentNode.getY() == nextNode.getY()) {
+                 // This is a waiting spot
+             }
+             else if(currentNode.getX() == nextNode.getX()) {
+                 if(currentNode.getY() < nextNode.getY())
+                     currentOrderPicker.setTranslateY(pickerYCoordinate + moveDistancePerUpdate);
+                 else
+                     currentOrderPicker.setTranslateY(pickerYCoordinate - moveDistancePerUpdate);
+             }
+             else {
+                 if(currentNode.getX() < nextNode.getX())
+                     currentOrderPicker.setTranslateX(pickerXCoordinate + moveDistancePerUpdate);
+                 else
+                     currentOrderPicker.setTranslateX(pickerXCoordinate - moveDistancePerUpdate);
+             }
+         }
+
+
+
+    public List<Node> getRoute1() {
+
+        List<Node> pickingRoute = new ArrayList<>();
+        int i;
+
+        for(i = 0; i <= 38; i++) {
+            pickingRoute.add(new Node(new Point2D(i, 1)));
+        }
+
+        pickingRoute.add(new Node(new Point2D(i, 1)));
+        pickingRoute.add(new Node(new Point2D(i, 2)));
+        pickingRoute.add(new Node(new Point2D(i, 2)));
+        pickingRoute.add(new Node(new Point2D(i, 3)));
+        pickingRoute.add(new Node(new Point2D(i, 4)));
+        pickingRoute.add(new Node(new Point2D(i, 4)));
+
+        for(i = 38; i > 4; i--) {
+            pickingRoute.add(new Node(new Point2D(i, 4)));
+        }
+
+        pickingRoute.add(new Node(new Point2D(i, 4)));
+        pickingRoute.add(new Node(new Point2D(i, 5)));
+        pickingRoute.add(new Node(new Point2D(i, 6)));
+
+        for(i = 4; i <= 38; i++) {
+            pickingRoute.add(new Node(new Point2D(i, 7)));
+        }
+
+        pickingRoute.add(new Node(new Point2D(i, 7)));
+        pickingRoute.add(new Node(new Point2D(i, 8)));
+        pickingRoute.add(new Node(new Point2D(i, 8)));
+        pickingRoute.add(new Node(new Point2D(i, 9)));
+        pickingRoute.add(new Node(new Point2D(i, 10)));
+        pickingRoute.add(new Node(new Point2D(i, 10)));
+
+        for(i = 38; i >= 4; i--) {
+            pickingRoute.add(new Node(new Point2D(i, 10)));
+        }
+
+        return pickingRoute;
+    }
+
+    public List<Node> getRoute2() {
+
+        int i;
+        List<Node> pickingRoute = new ArrayList<>();
+
+        pickingRoute.add(new Node(new Point2D(1, 1)));
+        pickingRoute.add(new Node(new Point2D(1, 2)));
+        pickingRoute.add(new Node(new Point2D(1, 3)));
+        pickingRoute.add(new Node(new Point2D(1, 4)));
+        pickingRoute.add(new Node(new Point2D(1, 5)));
+        pickingRoute.add(new Node(new Point2D(1, 6)));
+        pickingRoute.add(new Node(new Point2D(1, 7)));
+
+        for(i = 1; i <= 38; i++) {
+            pickingRoute.add(new Node(new Point2D(i, 7)));
+        }
+
+        pickingRoute.add(new Node(new Point2D(i, 7)));
+        pickingRoute.add(new Node(new Point2D(i, 8)));
+        pickingRoute.add(new Node(new Point2D(i, 8)));
+        pickingRoute.add(new Node(new Point2D(i, 9)));
+        pickingRoute.add(new Node(new Point2D(i, 10)));
+        pickingRoute.add(new Node(new Point2D(i, 10)));
+
+        for(i = 38; i >= 4; i--) {
+            pickingRoute.add(new Node(new Point2D(i, 10)));
+        }
+
+        return pickingRoute;
+    }
+
+    public List<Node> getRoute3() {
+
+        int i;
+        List<Node> pickingRoute = new ArrayList<>();
+
+        pickingRoute.add(new Node(new Point2D(1, 1)));
+        pickingRoute.add(new Node(new Point2D(1, 1)));
+        pickingRoute.add(new Node(new Point2D(1, 1)));
+        pickingRoute.add(new Node(new Point2D(1, 1)));
+        pickingRoute.add(new Node(new Point2D(1, 1)));
+        pickingRoute.add(new Node(new Point2D(1, 1)));
+        pickingRoute.add(new Node(new Point2D(1, 2)));
+        pickingRoute.add(new Node(new Point2D(1, 3)));
+        pickingRoute.add(new Node(new Point2D(1, 4)));
+        pickingRoute.add(new Node(new Point2D(1, 5)));
+        pickingRoute.add(new Node(new Point2D(1, 6)));
+        pickingRoute.add(new Node(new Point2D(1, 7)));
+
+        for(i = 1; i <= 38; i++) {
+            pickingRoute.add(new Node(new Point2D(i, 7)));
+        }
+
+        pickingRoute.add(new Node(new Point2D(i, 7)));
+        pickingRoute.add(new Node(new Point2D(i, 8)));
+        pickingRoute.add(new Node(new Point2D(i, 8)));
+        pickingRoute.add(new Node(new Point2D(i, 9)));
+        pickingRoute.add(new Node(new Point2D(i, 10)));
+        pickingRoute.add(new Node(new Point2D(i, 10)));
+
+        for(i = 38; i >= 4; i--) {
+            pickingRoute.add(new Node(new Point2D(i, 10)));
+        }
+
+        return pickingRoute;
+    }
+
+
+
+       Node previous = pickPoint;
+            Node next;
+            /*Adding pickTime, to do this we need to make curr+1 come from curr, and curr+2 from curr+1 ...,
+              then in the end we set endNode to be curr+PICKTIME, (Notice, that we start at i = 1) */
+            for(int i = 1; i < PICK_TIME + 1; i++) {
+                next = spaceTimeGrid.getNodePointer(pickPoint.getX(), pickPoint.getY(), pickPoint.getTime() + i);
+                next.setCameFrom(previous);
+                previous = next;
+            }

@@ -20,6 +20,7 @@ public class PathFinder {
     private Node startNode;
     private Node endNode;
     private int startTime;
+    private int pickTime;
 
 
     public PathFinder(SpaceTimeGrid spaceTimeGrid) {
@@ -42,11 +43,19 @@ public class PathFinder {
         this.startNode =  new Node(start);
         this.endNode = new Node (end);
         this.startTime = startTime;
+        this.pickTime = PickingRoute.PICK_TIME;
 
         //Checks and then sets starting values
         this.checkInitialValues();
         this.setStartValues();
 
+        //We calculate the path
+        this.calculatePath();
+
+        return constructPath();
+    }
+
+    private void calculatePath() {
         //Runs till all nodes have been visited or till we find the end node
         while (!openSet.isEmpty()) {
             //Retrieves next node to visit and adds it to the closed set
@@ -70,7 +79,7 @@ public class PathFinder {
             for (Node neighbour : current.getNeighbourNodes()) {
                 //We check if the current node is in the already checked nodes (closed set)
                 if (closedSet.contains(neighbour)) {
-                   continue;
+                    continue;
                 }
 
                 //A better path exists
@@ -83,7 +92,6 @@ public class PathFinder {
                 }
             }
         }
-        return constructPath();
     }
 
     //Constructs the shortest route as a list of nodes
@@ -112,9 +120,9 @@ public class PathFinder {
         //We set the start-point to reference the correct layer.
         startNode.setNodeLayer(spaceTimeGrid.getNodeLayerList().get(startTime));
 
+        //First node gets distance 0, other nodes get distance infinity
         for (Node node : spaceTimeGrid.getAllNodes()) {
             if (node.equals(startNode)) {
-                //First node gets distance 0, other nodes get distance infinity
                 node.setDistanceFromStart(0);
                 openSet.add(node);
             } else {
@@ -132,6 +140,7 @@ public class PathFinder {
     }
 
     private void checkStartNode()  {
+        //We check that the startNode is inside the timeLayer for our startTime
         for (Node n : spaceTimeGrid.getNodeLayerPointer(startTime).getNodeList()) {
             if (n.getX() == startNode.getX() && n.getY() == startNode.getY()) {
                 return;
@@ -141,16 +150,12 @@ public class PathFinder {
     }
     private void checkEndNode() {
         //We check that the endNode is inside the grid
-        if ((endNode.getX() < 0 || endNode.getY() < 0) || (spaceTimeGrid.getBaseLayer().getMaxX() < endNode.getX() || spaceTimeGrid.getBaseLayer().getMaxY() < endNode.getY() )) {
-            throw new RouteNotPossibleException("The end point was placed outside the SpaceTimeGrid");
-        }
-        else {
-            for(Node obstacle : spaceTimeGrid.getBaseLayer().getStationaryObstacles()){
-                if (obstacle.getX() == endNode.getX() && obstacle.getY() == endNode.getY()) {
-                    throw new RouteNotPossibleException("The end point was placed on top of a permanent obstacle");
-                }
+        for(Node n : spaceTimeGrid.getBaseLayer().getNodeListWithoutObstacles()) {
+            if (n.getX() == endNode.getX() && n.getY() == endNode.getY()) {
+                return;
             }
         }
+        throw new RouteNotPossibleException("The start point was placed outside the SpaceTimeGrid");
     }
 
     private void checkStartTime() {
@@ -165,7 +170,7 @@ public class PathFinder {
     removed by other routes */
     private boolean checkIfValidEndPoint(Node current) {
         /*We add one to PICK_TIME because we need to make sure the next route also has a point to start on*/
-        for(int i = 0; i < PickingRoute.PICK_TIME + 1; i++) {
+        for(int i = 0; i < pickTime + 1; i++) {
             try {
                 /*We add one extra to the time because we start at i=0, which does not help very much, because we
                  * already know this node exists otherwise our pathFinder could not have gotten over to it*/

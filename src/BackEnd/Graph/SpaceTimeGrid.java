@@ -23,7 +23,7 @@ public class SpaceTimeGrid {
 
     private void setupNodeLayerList() {
         for (int i = 0; i < maxTime; i++) {
-            NodeLayer tempNodeLayer = new NodeLayer(baseLayer.getNodeList(), i);
+            NodeLayer tempNodeLayer = new NodeLayer(baseLayer.getNodeListWithoutObstacles(), i);
             nodeLayerList.add(tempNodeLayer);
             if (i != 0) {
                 nodeLayerList.get(i-1).setAllNeighbourNodesForLayer(nodeLayerList.get(i));

@@ -43,7 +43,23 @@ public class PathFinder {
         this.startNode =  new Node(start);
         this.endNode = new Node (end);
         this.startTime = startTime;
-        this.pickTime = PickingRoute.PICK_TIME;
+        this.pickTime = 0;
+
+        //Checks and then sets starting values
+        this.checkInitialValues();
+        this.setStartValues();
+
+        //We calculate the path
+        this.calculatePath();
+
+        return constructPath();
+    }
+
+    public PickingRoute findShortestRoute(Point2D start, Point2D end, int startTime, int pickTime) throws RouteNotPossibleException {
+        this.startNode =  new Node(start);
+        this.endNode = new Node (end);
+        this.startTime = startTime;
+        this.pickTime = pickTime;
 
         //Checks and then sets starting values
         this.checkInitialValues();

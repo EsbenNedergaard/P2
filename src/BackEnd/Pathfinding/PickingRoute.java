@@ -13,7 +13,6 @@ public class PickingRoute {
     private int totalPickTime;
     private List<Node> route;
     private List<PickingPoint> pickingPoints;
-    public static int PICK_TIME = 5;
 
     public PickingRoute() {
         totalPickTime = 0;
@@ -55,9 +54,9 @@ public class PickingRoute {
 
     }
 
-    public void addPickingToRouteEnd(SpaceTimeGrid spaceTimeGrid) {
+    public void addPickingToRouteEnd(SpaceTimeGrid spaceTimeGrid, int pickTime) {
         Node pickPoint = route.get(route.size() - 1);
-        for(int i = 0; i < PICK_TIME; i++) {
+        for(int i = 0; i < pickTime; i++) {
             route.add(spaceTimeGrid.getNodePointer(pickPoint.getX(), pickPoint.getY(), (pickPoint.getTime() + i) + 1));
             totalPickTime++;
         }

@@ -90,7 +90,7 @@ public class SpaceTimeGrid {
                     try {
                         removeNode(this.getNodePointer(temp.getX(), temp.getY(), temp.getTime() + 1));
                     } catch (NodeDoesNotExistException e) {
-                        System.out.println("We already removed the node in the next layer");
+                        //We already removed the node in the next layer, so nothing should happen
                     }
                 }
                 removeNode(temp);

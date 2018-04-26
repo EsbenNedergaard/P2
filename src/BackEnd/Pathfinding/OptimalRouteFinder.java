@@ -79,24 +79,36 @@ public class OptimalRouteFinder {
     * and a bigger currRoute plus a new start point*/
     private void bestRouteOfAllRoutes(Point2D currStart, List<PickingPoint> remainingPickingPoints, PickingRoute currRoute) {
         try {
+            //Calculates the total time travelled so far
+            int timeTravelledSinceStart = currRoute.getRouteLength() + amountPickersInGraph * WAIT_TIME_BETWEEN_ROUTES;
+
+            //There are no more picking points to visit on the route
             if(remainingPickingPoints.isEmpty()) {
-                int timeAfterRoute = currRoute.getRouteLength() + amountPickersInGraph * WAIT_TIME_BETWEEN_ROUTES;
-                currRoute.addOtherRouteToRoute(pathFinder.findShortestRoute(currStart, routeEndPoint, timeAfterRoute));
+                //Adds the path from last picking point to delivery area
+                currRoute.addOtherRoute(pathFinder.findShortestRoute(currStart, routeEndPoint, timeTravelledSinceStart).getRoute());
+
+                //Checks if the new route is shorter than the previous found routes
                 if(bestRoute.getRouteLength() == 0 || currRoute.getRouteLength() < bestRoute.getRouteLength()){
                     bestRoute = new PickingRoute(currRoute);
                 }
             } else {
-                for (PickingPoint n : remainingPickingPoints) {
-                    int timeAfterRoute = currRoute.getRouteLength() + amountPickersInGraph * WAIT_TIME_BETWEEN_ROUTES;
+                //Iterates through all remaining picking points
+                for (PickingPoint nextPickPoint : remainingPickingPoints) {
                     PickingRoute nextRoute = new PickingRoute(currRoute);
-                    nextRoute.addOtherRouteToRoute(pathFinder.findShortestRoute(currStart, n, timeAfterRoute));
+                    //Adds the path from current picking point to next picking point
+                    nextRoute.addOtherRoute(pathFinder.findShortestRoute(currStart, nextPickPoint, timeTravelledSinceStart).getRoute());
 
+                    //Adds time for picking on next pick point
                     nextRoute.addPickingToRouteEnd(pathFinder.getSpaceTimeGrid());
 
+                    /*Creates a new list that doesn't include the (just added) next pick point, because we can't remove
+                    * it from the list we are iterating through */
                     List<PickingPoint> nextList = new ArrayList<>(remainingPickingPoints);
-                    nextList.remove(n);
+                    nextList.remove(nextPickPoint);
 
-                    bestRouteOfAllRoutes(n, nextList, nextRoute);
+                    //Function calls itself with remaining picking points to be visited
+                    //Finds the next paths on the route
+                    bestRouteOfAllRoutes(nextPickPoint, nextList, nextRoute);
                 }
             }
         } catch (RouteNotPossibleException e) {

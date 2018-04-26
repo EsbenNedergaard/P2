@@ -47,8 +47,8 @@ public class PickingRoute {
         route.add(n);
     }
 
-    public void addOtherRouteToRoute(PickingRoute another) {
-        route.addAll(another.getRoute());
+    public void addOtherRoute(List<Node> another) {
+        route.addAll(another);
     }
 
     public void addPickPoint(PickingPoint pickingPoint) {

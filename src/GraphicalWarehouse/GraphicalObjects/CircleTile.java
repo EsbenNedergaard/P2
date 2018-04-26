@@ -16,7 +16,7 @@ public class CircleTile extends Circle {
         setRadius(radius);
         setFill(Color.valueOf("#3b3b3b"));
 
-        double relocateValue = TILE_SIZE / 2 - radius;
+        double relocateValue = (TILE_SIZE / 2) - radius;
 
         // Graphical position of tile
         relocate(point.getXPixels() + relocateValue, point.getYPixels() + relocateValue);

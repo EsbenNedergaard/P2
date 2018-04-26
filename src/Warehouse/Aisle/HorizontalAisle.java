@@ -1,9 +1,10 @@
 package Warehouse.Aisle;
 
+
+import BackEnd.Geometry.PickingPoint;
 import Exceptions.FullRackException;
 import BackEnd.Geometry.Node;
 import BackEnd.Geometry.Point2D;
-import BackEnd.Geometry.PickingPoint;
 import Warehouse.Product;
 import Warehouse.Racks.HorizontalRackRow;
 import Warehouse.Racks.Rack;

@@ -199,7 +199,7 @@ public class WarehouseSimulation {
         simulationElementsGroup.getChildren().addAll(
                 // Graphical groups for simulations
                 routeHighlighter.getHighlightGroup(),
-                warehouseSimulator.getRackGroup(),
+                warehouseSimulator.getRackRowGroup(),
                 warehouseSimulator.getRackGroup(),
                 warehouseSimulator.getTileGroup(),
                 orderPickerGroup

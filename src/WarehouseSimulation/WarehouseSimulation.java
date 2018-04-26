@@ -1,9 +1,10 @@
 package WarehouseSimulation;
 
+import BackEnd.Geometry.PickingPoint;
+import BackEnd.Pathfinding.OptimalRouteFinder;
 import BackEnd.Pathfinding.PickingRoute;
 import Exceptions.IllegalTextInputException;
 import BackEnd.Graph.SpaceTimeGrid;
-import BackEnd.Pathfinding.OptimalRouteFinder;
 import WarehouseSimulation.GraphicalObjects.Interaction.TableView.TableFactoryData;
 import WarehouseSimulation.GraphicalObjects.Interaction.Handler.InputFieldDataHandler;
 import static Warehouse.GUIWarehouse.TILE_SIZE;
@@ -22,7 +23,6 @@ import javafx.scene.*;
 import BackEnd.Geometry.Node;
 import Warehouse.*;
 import java.util.*;
-import BackEnd.Geometry.*;
 
 /* THIS IS THE WAREHOUSE SIMULATION, WHICH RETURNS A PARENT THAT CAN
  * BE SET IN A SCENE OBJECT. THE WAREHOUSE SIMULATION CONTAINS A SIMULATION
@@ -142,7 +142,7 @@ public class WarehouseSimulation {
 
         // Find route for picker
         List<PickingPoint> pickPointList = this.warehouse.getPickingPointsFromIDs(tempProductIDList);
-        PickingRoute fastestRoute = this.pathFinder.calculateBestRoute(pickPointList);
+        PickingRoute fastestRoute = pathFinder.calculateBestRoute(pickPointList);
 
         OrderPickerGraphic orderPicker = new OrderPickerGraphic(fastestRoute.getRoute());
         addPicker(orderPicker);

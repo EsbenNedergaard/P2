@@ -140,7 +140,7 @@ public class WarehouseSimulation {
         }
 
         // Find route for picker
-        List<Point2D> pickPointList = this.warehouse.getPickingPointsFromIDs(tempProductIDList);
+        List<PickingPoint> pickPointList = this.warehouse.getPickingPointsFromIDs(tempProductIDList);
         List<Node> fastestRoute = this.pathFinder.calculateBestRoute(pickPointList);
 
         OrderPickerGraphic orderPicker = new OrderPickerGraphic(fastestRoute);

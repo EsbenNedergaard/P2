@@ -16,7 +16,6 @@ public class OrderPickerGraphic extends Circle {
     private List<Node> routeList;
     private int indexOfLastPoint;
 
-    private static int pickerNumber = 1;
 
     public OrderPickerGraphic(List<Node> routeList) {
         // Set design

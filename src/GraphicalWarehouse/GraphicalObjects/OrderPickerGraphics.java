@@ -35,6 +35,7 @@ public class OrderPickerGraphics extends Circle {
 
         relocate(2.5, 2.5);
 
+        // Sets starting position of picker
         setTranslateX(routeList.get(0).getX() * TILE_SIZE);
         setTranslateY(routeList.get(0).getY() * TILE_SIZE);
     }

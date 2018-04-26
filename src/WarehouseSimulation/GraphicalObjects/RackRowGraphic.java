@@ -16,9 +16,12 @@ public class RackRowGraphic extends Rectangle {
             setHeight(TILE_SIZE * rackRow.getRackRowLength());
         }
 
-        // Relocates the rackRow to its position
+        setDesign();
         relocate(rackRow.getStartPoint().getXPixels(), rackRow.getStartPoint().getYPixels());
-        // Color fill
+    }
+
+    private void setDesign() {
         setFill(Color.valueOf("#d0d2d3"));
     }
+
 }

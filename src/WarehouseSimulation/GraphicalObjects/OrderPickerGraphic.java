@@ -38,6 +38,7 @@ public class OrderPickerGraphic extends Circle {
         return TILE_SIZE / PICKER_SPEED_IN_MS;
     }
 
+    // Call this 60 times / sec
     public boolean move(final int UPDATE_COUNTER) {
         if(!routeIsDone()) {
             if(moveIsVertical())

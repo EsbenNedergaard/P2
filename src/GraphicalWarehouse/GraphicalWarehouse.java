@@ -230,7 +230,7 @@ public class GraphicalWarehouse {
 
     // Sets a new event handler for the button "View"
     private void setNewViewButtonClickEvent(ProductIDSet IDSet) {
-        IDSet.getHighlightButton().setOnMouseClicked(e -> routeHighlighter.setRouteList(IDSet.getRouteList()));
+        IDSet.getHighlightButton().setOnMouseClicked(e -> routeHighlighter.setHighlightRouteList(IDSet.getRouteList()));
     }
 
     private void resetWarehouseOptions(Table table) {

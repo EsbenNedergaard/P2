@@ -51,7 +51,7 @@ public class PickingRoute {
     }
 
     public void addPickPoint(PickingPoint pickingPoint) {
-
+        pickingPoints.add(pickingPoint);
     }
 
     public void addPickingToRouteEnd(SpaceTimeGrid spaceTimeGrid, int pickTime) {
@@ -60,6 +60,22 @@ public class PickingRoute {
             route.add(spaceTimeGrid.getNodePointer(pickPoint.getX(), pickPoint.getY(), (pickPoint.getTime() + i) + 1));
             totalPickTime++;
         }
+    }
 
+    public void addStartTime(int startTime) {
+        Node routeStartPoint = route.get(0);
+
+        /*These are added as just Nodes, that are not part of the SpaceTimeGrid, because the GUI, needs them
+          to start the pickers at different times because it does not look at their time but only x and y */
+        List<Node> waitTime = new ArrayList<>();
+        for(int i = 0; i < startTime; i++) {
+            waitTime.add(new Node(routeStartPoint));
+        }
+
+        List<Node> fullRoute = new ArrayList<>();
+        fullRoute.addAll(waitTime);
+        fullRoute.addAll(this.route);
+
+        this.route = fullRoute;
     }
 }

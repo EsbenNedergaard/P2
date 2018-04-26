@@ -41,7 +41,7 @@ public class OptimalRouteFinder {
     }
 
     //Method that calculates the best route for the pickingList that it is given
-    public List<Node> calculateBestRoute(List<PickingPoint> pickingList) {
+    public PickingRoute calculateBestRoute(List<PickingPoint> pickingList) {
         this.startTime = amountPickersInGraph * WAIT_TIME_BETWEEN_PICKERS;
         this.bestRoute = new PickingRoute();
         PickingRoute initialRoute = new PickingRoute();
@@ -50,21 +50,11 @@ public class OptimalRouteFinder {
         //TODO: få lavet så SpaceTimeGrid tager en pickingRoute i stedet.
         pathFinder.getSpaceTimeGrid().removeRoute(bestRoute.getRoute());
 
+        //Here we add the initial start time between the routes
+        bestRoute.addStartTime(startTime);
 
-        /*These are added as just Nodes, that are not part of the SpaceTimeGrid, because the GUI, needs them
-          to start the pickers at different times because it does not look at their time but only x and y */
-        PickingRoute waitTime = new PickingRoute();
-        for(int i = 0; i < startTime; i++) {
-            waitTime.addNodeToRoute(new Node(routeStartPoint));
-        }
-
-
-        //TODO: Få ændret herfra og ned og dermed ændret retur typen
-        List<Node> fullRoute = new ArrayList<>();
-        fullRoute.addAll(waitTime.getRoute());
-        fullRoute.addAll(bestRoute.getRoute());
         amountPickersInGraph++;
-        return fullRoute;
+        return bestRoute;
     }
 
 

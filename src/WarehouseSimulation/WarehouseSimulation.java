@@ -1,5 +1,6 @@
 package WarehouseSimulation;
 
+import BackEnd.Pathfinding.PickingRoute;
 import Exceptions.IllegalTextInputException;
 import BackEnd.Graph.SpaceTimeGrid;
 import BackEnd.Pathfinding.OptimalRouteFinder;
@@ -141,9 +142,9 @@ public class WarehouseSimulation {
 
         // Find route for picker
         List<PickingPoint> pickPointList = this.warehouse.getPickingPointsFromIDs(tempProductIDList);
-        List<Node> fastestRoute = this.pathFinder.calculateBestRoute(pickPointList);
+        PickingRoute fastestRoute = this.pathFinder.calculateBestRoute(pickPointList);
 
-        OrderPickerGraphic orderPicker = new OrderPickerGraphic(fastestRoute);
+        OrderPickerGraphic orderPicker = new OrderPickerGraphic(fastestRoute.getRoute());
         addPicker(orderPicker);
 
         // Create a data type which fits the table view
@@ -151,7 +152,7 @@ public class WarehouseSimulation {
         ProductIDSet generatedProductIDs = new ProductIDSet(
                 textHandler.generateProductIDString(),
                 routesAdded,
-                fastestRoute
+                fastestRoute.getRoute()
         );
 
         setViewRouteButtonClickEvent(generatedProductIDs);

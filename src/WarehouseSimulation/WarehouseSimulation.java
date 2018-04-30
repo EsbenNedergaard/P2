@@ -173,7 +173,7 @@ public class WarehouseSimulation {
     // Sets a new event handler for the button "View"
     private void setViewRouteButtonClickEvent(TableFactoryData IDSet) {
         IDSet.getHighlightButton().setOnMouseClicked(e -> {
-            routeHighlighter.setRouteList(IDSet.getRouteList());
+            routeHighlighter.setHighlightRouteList(IDSet.getRouteList());
         });
     }
 

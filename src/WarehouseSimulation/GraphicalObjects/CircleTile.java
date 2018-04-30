@@ -1,4 +1,4 @@
-package GraphicalWarehouse.GraphicalObjects;
+package WarehouseSimulation.GraphicalObjects;
 
 import BackEnd.Geometry.Point2D;
 import javafx.scene.paint.Color;

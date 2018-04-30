@@ -23,7 +23,7 @@ public class SpaceTimeGrid {
 
     private void setupNodeLayerList() {
         for (int i = 0; i < maxTime; i++) {
-            NodeLayer tempNodeLayer = new NodeLayer(baseLayer.getNodeList(), i);
+            NodeLayer tempNodeLayer = new NodeLayer(baseLayer.getNodeListWithoutObstacles(), i);
             nodeLayerList.add(tempNodeLayer);
             if (i != 0) {
                 nodeLayerList.get(i-1).setAllNeighbourNodesForLayer(nodeLayerList.get(i));
@@ -90,7 +90,7 @@ public class SpaceTimeGrid {
                     try {
                         removeNode(this.getNodePointer(temp.getX(), temp.getY(), temp.getTime() + 1));
                     } catch (NodeDoesNotExistException e) {
-                        System.out.println("We already removed the node in the next layer");
+                        //We already removed the node in the next layer, so nothing should happen
                     }
                 }
                 removeNode(temp);

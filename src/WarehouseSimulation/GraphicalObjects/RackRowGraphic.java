@@ -1,14 +1,13 @@
-package GraphicalWarehouse.GraphicalObjects;
+package WarehouseSimulation.GraphicalObjects;
 
-import Warehouse.Racks.RackRow;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import static Warehouse.GUIWarehouse.TILE_SIZE;
 
-public class RackRowGraphics extends Rectangle {
+public class RackRowGraphic extends Rectangle {
 
-    public RackRowGraphics(RackRow rackRow) {
+    public RackRowGraphic(Warehouse.Racks.RackRow rackRow) {
         if(rackRow.isHorizontal()) {
             setWidth(TILE_SIZE * rackRow.getRackRowLength());
             setHeight(TILE_SIZE);
@@ -17,9 +16,12 @@ public class RackRowGraphics extends Rectangle {
             setHeight(TILE_SIZE * rackRow.getRackRowLength());
         }
 
-        // Relocates the rackRow to its position
+        setDesign();
         relocate(rackRow.getStartPoint().getXPixels(), rackRow.getStartPoint().getYPixels());
-        // Color fill
+    }
+
+    private void setDesign() {
         setFill(Color.valueOf("#d0d2d3"));
     }
+
 }

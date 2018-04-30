@@ -1,27 +1,34 @@
-package GraphicalWarehouse;
+package WarehouseSimulation;
 
+import BackEnd.Geometry.PickingPoint;
+import BackEnd.Pathfinding.OptimalRouteFinder;
+import BackEnd.Pathfinding.PickingRoute;
 import Exceptions.IllegalTextInputException;
 import BackEnd.Graph.SpaceTimeGrid;
-import BackEnd.Pathfinding.OptimalRouteFinder;
-import GraphicalWarehouse.GraphicalObjects.TableViewData.ProductIDSet;
-import GraphicalWarehouse.InteractionHandler.InputFieldDataHandler;
-import GraphicalWarehouse.GraphicalObjects.*;
+import WarehouseSimulation.GraphicalObjects.Interaction.TableView.TableFactoryData;
+import WarehouseSimulation.GraphicalObjects.Interaction.Handler.InputFieldDataHandler;
 import static Warehouse.GUIWarehouse.TILE_SIZE;
 import static Warehouse.GUIWarehouse.SCALE;
+
+import WarehouseSimulation.GraphicalObjects.Interaction.InteractionGraphics;
+import WarehouseSimulation.GraphicalObjects.Warehouse.WarehouseGraphics;
+import WarehouseSimulation.GraphicalObjects.OrderPickerGraphic;
+import WarehouseSimulation.GraphicalObjects.RouteHighlighter;
+import WarehouseSimulation.GraphicalObjects.Interaction.TableView.Table;
 import javafx.animation.AnimationTimer;
 import javafx.scene.input.KeyCode;
-import javafx.scene.paint.Color;
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import Warehouse.Racks.*;
 import javafx.scene.*;
 import BackEnd.Geometry.Node;
 import Warehouse.*;
 import java.util.*;
-import BackEnd.Geometry.*;
 
-public class GraphicalWarehouse {
+/* THIS IS THE WAREHOUSE SIMULATION, WHICH RETURNS A PARENT THAT CAN
+ * BE SET IN A SCENE OBJECT. THE WAREHOUSE SIMULATION CONTAINS A SIMULATION
+ * AND A INTERACTION FIELD. ALL GRAPHICS ARE SET FROM OTHER CLASSES */
+
+public class WarehouseSimulation {
 
     private Warehouse warehouse;
     private int LENGTH_WAREHOUSE;
@@ -29,30 +36,25 @@ public class GraphicalWarehouse {
     // Path finder
     private OptimalRouteFinder pathFinder;
     private final int MAX_TIME = 500;
-    // Graphic groups
-    private Group tileGroup;
-    private Group rackRowGroup;
-    private Group rackGroup;
     private Group orderPickerGroup;
-    private Group interactionFieldGroup;
-    private Group routeHighlightGroup;
+    private List<OrderPickerGraphic> orderPickerList;
 
-    private List<OrderPickerGraphics> orderPickerList;
-
+    // The simulation
+    private WarehouseGraphics warehouseSimulator;
     // Number of routes added (Only used for the table)
     private int routesAdded = 0;
-    private RouteHighlighterGraphics routeHighlighter;
-
+    private RouteHighlighter routeHighlighter;
     // Animation programTimer
     private AnimationTimer programTimer;
     private int UPDATE_COUNTER = 0;
 
-    public GraphicalWarehouse(Warehouse warehouse) {
+    public WarehouseSimulation(Warehouse warehouse) {
         this.warehouse = warehouse;
         this.LENGTH_WAREHOUSE = warehouse.getLength();
         this.WIDTH_WAREHOUSE = warehouse.getWidth();
         this.orderPickerList = new ArrayList<>();
-        this.routeHighlighter = new RouteHighlighterGraphics();
+        this.routeHighlighter = new RouteHighlighter();
+        this.warehouseSimulator = new WarehouseGraphics(warehouse);
 
         setupPathFinder();
     }
@@ -62,60 +64,7 @@ public class GraphicalWarehouse {
         this.pathFinder = new OptimalRouteFinder(grid);
     }
 
-    // Returns a group of graphical tiles which represents the warehouse floor
-    private Group getTileGroup() {
-        // Create a group to the graphical tiles
-        tileGroup = new Group();
-
-        for (int x = 0; x < LENGTH_WAREHOUSE; x++) {
-            for (int y = 0; y < WIDTH_WAREHOUSE; y++) {
-                Point2D tilePoint = new Point2D(x, y);
-                tileGroup.getChildren().add(new Tile(tilePoint));
-            }
-        }
-
-        return tileGroup;
-    }
-
-    private Group getRackRowGroup() {
-        // Create a group of graphical racks
-        Group rackRowGroup = new Group();
-
-        for(RackRow rackRowElement : warehouse.getRackRowList()) {
-            // Styles the rack
-            RackRowGraphics graphicRack = new RackRowGraphics(rackRowElement);
-            // Puts the rack into the group
-            rackRowGroup.getChildren().add(graphicRack);
-        }
-
-        return rackRowGroup;
-    }
-
-    private Group getRackGroup() {
-        // Create a group of graphical racks
-        Group rackGroup = new Group();
-
-        for(RackRow rackRowElement : warehouse.getRackRowList()) {
-
-            for (Rack rackElement : rackRowElement.getRackList()) {
-                RackGraphics graphicRack = new RackGraphics(rackElement);
-
-                Label amtProducts = new Label("" + rackElement.getProductList().size());
-                amtProducts.setPadding(new Insets(4, 5, 5, 8));
-                amtProducts.setTextFill(Color.valueOf("white"));
-
-                if (rackElement.getProductList().size() == 0)
-                    amtProducts.setVisible(false);
-
-                amtProducts.relocate(rackElement.getRackPosition().getXPixels(), rackElement.getRackPosition().getYPixels());
-                rackGroup.getChildren().addAll(graphicRack, amtProducts);
-            }
-        }
-
-        return rackGroup;
-    }
-
-    private void addPicker(OrderPickerGraphics picker) {
+    private void addPicker(OrderPickerGraphic picker) {
         orderPickerList.add(picker);
         orderPickerGroup.getChildren().add(picker);
     }
@@ -191,29 +140,22 @@ public class GraphicalWarehouse {
             return;
         }
 
-        // This should never happen
-        if(tempProductIDList == null) {
-            showAlert("Null pointer, this should not happen", Alert.AlertType.WARNING);
-            return;
-        }
-
-
         // Find route for picker
         List<PickingPoint> pickPointList = this.warehouse.getPickingPointsFromIDs(tempProductIDList);
-        List<Node> fastestRoute = this.pathFinder.calculateBestRoute(pickPointList);
+        PickingRoute fastestRoute = pathFinder.calculateBestRoute(pickPointList);
 
-        OrderPickerGraphics orderPicker = new OrderPickerGraphics(fastestRoute);
+        OrderPickerGraphic orderPicker = new OrderPickerGraphic(fastestRoute.getRoute());
         addPicker(orderPicker);
 
         // Create a data type which fits the table view
         routesAdded++;
-        ProductIDSet generatedProductIDs = new ProductIDSet(
+        TableFactoryData generatedProductIDs = new TableFactoryData(
                 textHandler.generateProductIDString(),
                 routesAdded,
-                fastestRoute
+                fastestRoute.getRoute()
         );
 
-        setNewViewButtonClickEvent(generatedProductIDs);
+        setViewRouteButtonClickEvent(generatedProductIDs);
 
         if(!generatedProductIDs.getProductIDSet().equals(""))
             table.add(generatedProductIDs);
@@ -229,8 +171,10 @@ public class GraphicalWarehouse {
     }
 
     // Sets a new event handler for the button "View"
-    private void setNewViewButtonClickEvent(ProductIDSet IDSet) {
-        IDSet.getHighlightButton().setOnMouseClicked(e -> routeHighlighter.setHighlightRouteList(IDSet.getRouteList()));
+    private void setViewRouteButtonClickEvent(TableFactoryData IDSet) {
+        IDSet.getHighlightButton().setOnMouseClicked(e -> {
+            routeHighlighter.setRouteList(IDSet.getRouteList());
+        });
     }
 
     private void resetWarehouseOptions(Table table) {
@@ -247,16 +191,20 @@ public class GraphicalWarehouse {
         Pane root = new Pane();
         BorderPane borderPane = new BorderPane();
         Group simulationElementsGroup = new Group();
-
-        tileGroup = getTileGroup();
-        rackRowGroup = getRackRowGroup();
-        rackGroup = getRackGroup();
         orderPickerGroup = new Group();
-        interactionFieldGroup = getInteractionFieldGroup();
-        routeHighlightGroup = routeHighlighter.getHighlightGroup();
+
+        // Set interaction graphics
+        Group interactionFieldGroup = getInteractionFieldGroup();
 
         // Add all elements for the simulation
-        simulationElementsGroup.getChildren().addAll(routeHighlightGroup, rackRowGroup, rackGroup, tileGroup, orderPickerGroup);
+        simulationElementsGroup.getChildren().addAll(
+                // Graphical groups for simulations
+                routeHighlighter.getHighlightGroup(),
+                warehouseSimulator.getRackRowGroup(),
+                warehouseSimulator.getRackGroup(),
+                warehouseSimulator.getTileGroup(),
+                orderPickerGroup
+        );
 
         borderPane.setTop(simulationElementsGroup);
         borderPane.setBottom(interactionFieldGroup);
@@ -276,7 +224,7 @@ public class GraphicalWarehouse {
 
     private void onUpdate() {
         UPDATE_COUNTER++;
-        for(OrderPickerGraphics picker : orderPickerList) {
+        for(OrderPickerGraphic picker : orderPickerList) {
             if(picker.move(UPDATE_COUNTER));
         }
     }

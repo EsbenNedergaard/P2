@@ -31,21 +31,6 @@ class BaseLayerTest {
         bl = new BaseLayer(nodeList);
     }
 
-
-    @Test
-    void testMethod_getMaxX() {
-        int maxX = bl.getMaxX();
-
-        assertEquals(maxX, 35);
-    }
-
-    @Test
-    void testMethod_getMaxY() {
-        int maxY = bl.getMaxY();
-
-        assertEquals(maxY, 11);
-    }
-
     @Test
     void testMethod_getNodeList() {
         List<Node> nodeListTest = new ArrayList<>();

@@ -1,4 +1,4 @@
-package GraphicalWarehouse.GraphicalObjects.TableViewData;
+package WarehouseSimulation.GraphicalObjects.Interaction.TableView;
 
 import BackEnd.Geometry.Node;
 import javafx.beans.property.SimpleStringProperty;
@@ -10,7 +10,7 @@ import java.util.List;
  * THIS CLASS ONLY FORMS THE DATA STRUCTURE FOR PUTTING DATA INTO
  * A TABLE VIEW*/
 
-public class ProductIDSet {
+public class TableFactoryData {
 
     private final SimpleStringProperty productIDSet;
     private final SimpleStringProperty number;
@@ -19,7 +19,7 @@ public class ProductIDSet {
     // Holds a copy of the node list too
     private List<Node> routeList;
 
-    public ProductIDSet(String productIDSet, int number, List<Node> list) {
+    public TableFactoryData(String productIDSet, int number, List<Node> list) {
         this.productIDSet = new SimpleStringProperty(productIDSet);
         this.number = new SimpleStringProperty("" + number);
         this.highlightButton = new Button("View");

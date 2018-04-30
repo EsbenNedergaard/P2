@@ -1,7 +1,7 @@
-package GraphicalWarehouse.GraphicalObjects;
+package WarehouseSimulation.GraphicalObjects.Interaction;
 
+import WarehouseSimulation.GraphicalObjects.Interaction.TableView.Table;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
 
 public class InteractionGraphics {
 

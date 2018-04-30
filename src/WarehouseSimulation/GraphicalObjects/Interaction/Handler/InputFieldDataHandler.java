@@ -1,4 +1,4 @@
-package GraphicalWarehouse.InteractionHandler;
+package WarehouseSimulation.GraphicalObjects.Interaction.Handler;
 
 import Exceptions.IllegalTextInputException;
 import javafx.scene.control.Alert;

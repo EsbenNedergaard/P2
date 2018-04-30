@@ -1,9 +1,9 @@
-package GraphicalWarehouse.GraphicalObjects;
+package WarehouseSimulation.GraphicalObjects;
 
 
 /* THIS CLASS TAKES A LIST OF NODES AND HIGHLIGHTS THEM
  * GRAPHICALLY IN THE WAREHOUSE. ONLY ONE ROUTE CAN BE
-  * HIGHLIGHTED AT A TIME */
+ * HIGHLIGHTED AT A TIME */
 
 import BackEnd.Geometry.Node;
 import BackEnd.Geometry.Point2D;
@@ -12,18 +12,18 @@ import javafx.scene.Group;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RouteHighlighterGraphics {
+public class RouteHighlighter {
 
     private List<Node> routeList;
     private Group highlightGroup = new Group();
     private boolean highlightOn = false;
 
-    public RouteHighlighterGraphics(List<Node> routeList) {
+    public RouteHighlighter(List<Node> routeList) {
         this.routeList = routeList;
         createHighlight();
     }
 
-    public RouteHighlighterGraphics() {
+    public RouteHighlighter() {
         this.routeList = new ArrayList<>();
     }
 

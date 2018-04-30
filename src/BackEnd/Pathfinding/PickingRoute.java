@@ -1,0 +1,81 @@
+package BackEnd.Pathfinding;
+
+import BackEnd.Geometry.Node;
+import BackEnd.Graph.SpaceTimeGrid;
+import BackEnd.Geometry.PickingPoint;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+//TODO: måske skelne mellem WaitTime og TravelTime, og dette routeLenght op i disse 2.
+public class PickingRoute {
+    private int totalPickTime;
+    private List<Node> route;
+    private List<PickingPoint> pickingPoints;
+
+    public PickingRoute() {
+        totalPickTime = 0;
+        route = new ArrayList<>();
+        pickingPoints = new ArrayList<>();
+    }
+
+    public PickingRoute(PickingRoute another) {
+        totalPickTime = another.getTotalPickTime();
+        route = new ArrayList<>(another.getRoute());
+        pickingPoints = new ArrayList<>(another.getPickingPoints());
+    }
+
+    public int getRouteLength() {
+        return route.size();
+    }
+
+    public int getTotalPickTime() {
+        return totalPickTime;
+    }
+
+    public List<PickingPoint> getPickingPoints() {
+        return pickingPoints;
+    }
+
+    public List<Node> getRoute() {
+        return route;
+    }
+
+    public void addNodeToRoute(Node n) {
+        route.add(n);
+    }
+
+    public void addOtherRoute(List<Node> another) {
+        route.addAll(another);
+    }
+
+    public void addPickPoint(PickingPoint pickingPoint) {
+        pickingPoints.add(pickingPoint);
+    }
+
+    public void addPickingToRouteEnd(SpaceTimeGrid spaceTimeGrid, int pickTime) {
+        Node pickPoint = route.get(route.size() - 1);
+        for(int i = 0; i < pickTime; i++) {
+            route.add(spaceTimeGrid.getNodePointer(pickPoint.getX(), pickPoint.getY(), (pickPoint.getTime() + i) + 1));
+            totalPickTime++;
+        }
+    }
+
+    public void addStartTime(int startTime) {
+        Node routeStartPoint = route.get(0);
+
+        /*These are added as just Nodes, that are not part of the SpaceTimeGrid, because the GUI, needs them
+          to start the pickers at different times because it does not look at their time but only x and y */
+        List<Node> waitTime = new ArrayList<>();
+        for(int i = 0; i < startTime; i++) {
+            waitTime.add(new Node(routeStartPoint));
+        }
+
+        List<Node> fullRoute = new ArrayList<>();
+        fullRoute.addAll(waitTime);
+        fullRoute.addAll(this.route);
+
+        this.route = fullRoute;
+    }
+}

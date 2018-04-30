@@ -1,6 +1,6 @@
 package Exceptions;
 
-public class RouteNotPossibleException extends Exception {
+public class RouteNotPossibleException extends RuntimeException {
     private String errorMsg;
 
     public RouteNotPossibleException(String errorMsg) {

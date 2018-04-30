@@ -1,7 +1,9 @@
 package Warehouse;
 
+import Exceptions.ProductNotInRackException;
 import Warehouse.Racks.Rack;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Product {
@@ -16,7 +18,7 @@ public class Product {
         this.rack = rack;
     }
 
-    int getId() {
+    public int getId() {
         return id;
     }
 
@@ -37,7 +39,22 @@ public class Product {
 
         Product product = (Product) that;
 
-        return  product.getId() == this.id;
+        return product.getId() == this.id;
     }
 
+    public int getShelfIndex() {
+        if(getRack() == null)
+            throw new ProductNotInRackException();
+
+        List<Product> productList = rack.getProductList();
+        int productListSize = productList.size();
+
+        for(int i = 0; i < productListSize; i++) {
+            if(this.equals(productList.get(i))) {
+                return i;
+            }
+        }
+
+        throw new ProductNotInRackException();
+    }
 }

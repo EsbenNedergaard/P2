@@ -1,8 +1,9 @@
 package Warehouse;
 
-import Geometry.BaseLayer;
-import Geometry.Node;
-import Geometry.Point2D;
+import BackEnd.Geometry.PickingPoint;
+import BackEnd.Graph.BaseLayer;
+import BackEnd.Geometry.Node;
+import BackEnd.Geometry.Point2D;
 import Warehouse.Aisle.Aisle;
 import Warehouse.Aisle.HorizontalAisle;
 import Warehouse.Racks.Rack;
@@ -79,8 +80,8 @@ public class Dexion implements Warehouse {
     }
 
     @Override
-    public List<Point2D> getPickingPoints(List<Product> productPickList) {
-        List<Point2D> pickingPointList = new ArrayList<>();
+    public List<PickingPoint> getPickingPoints(List<Product> productPickList) {
+        List<PickingPoint> pickingPointList = new ArrayList<>();
 
         for (Aisle aisleElement : aisleList) {
             pickingPointList.addAll(aisleElement.getPickingPoints(productPickList));
@@ -90,7 +91,7 @@ public class Dexion implements Warehouse {
     }
 
     @Override
-    public List<Point2D> getPickingPointsFromIDs(List<Integer> productIDList) {
+    public List<PickingPoint> getPickingPointsFromIDs(List<Integer> productIDList) {
         List<Product> productPickList = new ArrayList<>();
 
         for (int i : productIDList) {

@@ -272,3 +272,15 @@ rackList.add(new HorizontalRack(AISLE_LENGTH, new Point2D(AISLE_PADDING, 0)));
 
         return pickingRoute;
     }
+
+
+
+       Node previous = pickPoint;
+            Node next;
+            /*Adding pickTime, to do this we need to make curr+1 come from curr, and curr+2 from curr+1 ...,
+              then in the end we set endNode to be curr+PICKTIME, (Notice, that we start at i = 1) */
+            for(int i = 1; i < PICK_TIME + 1; i++) {
+                next = spaceTimeGrid.getNodePointer(pickPoint.getX(), pickPoint.getY(), pickPoint.getTime() + i);
+                next.setCameFrom(previous);
+                previous = next;
+            }

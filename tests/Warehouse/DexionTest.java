@@ -1,7 +1,6 @@
 package Warehouse;
 
-import Geometry.Node;
-import Geometry.Point2D;
+import BackEnd.Geometry.PickingPoint;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -60,8 +59,8 @@ class DexionTest {
         productPickList.add(product2);
 
 
-        for (Point2D pickPoint : testWarehouse.getPickingPoints(productPickList)) {
-            System.out.println(pickPoint.getX() + ", " + pickPoint.getY());
+        for (PickingPoint pickingPoint : testWarehouse.getPickingPoints(productPickList)) {
+            System.out.println(pickingPoint.getX() + ", " + pickingPoint.getY());
         }
 
     }
@@ -72,8 +71,8 @@ class DexionTest {
         productIDList.add(8);
         productIDList.add(80);
 
-        for (Point2D pickPoint : testWarehouse.getPickingPointsFromIDs(productIDList)) {
-            System.out.println(pickPoint.getX() + ", " + pickPoint.getY());
+        for (PickingPoint pickingPoint : testWarehouse.getPickingPointsFromIDs(productIDList)) {
+            System.out.println(pickingPoint.getX() + ", " + pickingPoint.getY());
         }
     }
 

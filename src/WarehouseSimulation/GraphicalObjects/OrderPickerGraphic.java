@@ -10,7 +10,8 @@ import static Warehouse.GUIWarehouse.TILE_SIZE;
 
 public class OrderPickerGraphic extends Circle {
 
-    private final static double PICKER_SPEED_IN_MS = 25;
+    private final static double PICKER_SPEED_IN_MPS = 2;
+    private final static int SCREEN_HZ = 60; /* change this to screen HZ */
     private List<Node> routeList;
     private double moveDistancePerUpdate;
     private int indexOfTargetNode;
@@ -35,7 +36,7 @@ public class OrderPickerGraphic extends Circle {
     }
 
     private double calculateMoveDistancePerUpdate() {
-        return TILE_SIZE / PICKER_SPEED_IN_MS;
+        return PICKER_SPEED_IN_MPS * TILE_SIZE * (1 / SCREEN_HZ);
     }
 
     // Call this 60 times / sec
@@ -124,7 +125,7 @@ public class OrderPickerGraphic extends Circle {
     }
 
     private boolean isAtTargetNode(final int UPDATE_COUNTER) {
-        return UPDATE_COUNTER % PICKER_SPEED_IN_MS == 0;
+        return UPDATE_COUNTER % (TILE_SIZE / moveDistancePerUpdate) == 0;
     }
 
     private void forcePickerToTargetNode() {

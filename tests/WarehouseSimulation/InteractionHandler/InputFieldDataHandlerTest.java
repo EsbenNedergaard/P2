@@ -18,24 +18,21 @@ class InputFieldDataHandlerTest {
     @Test
     void testGenerateProductID_01() {
         String str = "234f5aa";
-        handler.generateProductIDList(str);
 
-
+        assertThrows(IllegalTextInputException.class, () -> handler.generateProductIDList(str));
     }
 
     @Test
     void testGenerateProductID_02() {
-        String str = "234, f5aa, 2453, kdflk,, 3i4";
-        handler.generateProductIDList(str);
+        String str = "234,, 80, 40";
 
-        assertEquals("234, 5, 2453, 34", handler.generateProductIDString());
+        assertThrows(IllegalTextInputException.class, () -> handler.generateProductIDList(str));
     }
 
     @Test
     void testGenerateProductID_03() {
-        String str = "234, f5aa, 245.3, kdflk,, 3i4";
-        handler.generateProductIDList(str);
+        String str = "10, 202, ";
 
-        assertEquals("234, 5, 2453, 34", handler.generateProductIDString());
+        assertThrows(IllegalTextInputException.class, () -> handler.generateProductIDList(str));
     }
 }

@@ -5,6 +5,7 @@ import BackEnd.Pathfinding.OptimalRouteFinder;
 import BackEnd.Pathfinding.PickingRoute;
 import Exceptions.IllegalTextInputException;
 import BackEnd.Graph.SpaceTimeGrid;
+import WarehouseSimulation.GraphicalObjects.Colors.PickerColors;
 import WarehouseSimulation.GraphicalObjects.Interaction.TableView.TableFactoryData;
 import WarehouseSimulation.GraphicalObjects.Interaction.Handler.InputFieldDataHandler;
 import static Warehouse.GUIWarehouse.TILE_SIZE;
@@ -12,15 +13,13 @@ import static Warehouse.GUIWarehouse.SCALE;
 
 import WarehouseSimulation.GraphicalObjects.Interaction.InteractionGraphics;
 import WarehouseSimulation.GraphicalObjects.Warehouse.WarehouseGraphics;
-import WarehouseSimulation.GraphicalObjects.OrderPickerGraphic;
-import WarehouseSimulation.GraphicalObjects.RouteHighlighter;
+import WarehouseSimulation.GraphicalObjects.*;
 import WarehouseSimulation.GraphicalObjects.Interaction.TableView.Table;
 import javafx.animation.AnimationTimer;
 import javafx.scene.input.KeyCode;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.*;
-import BackEnd.Geometry.Node;
 import Warehouse.*;
 import java.util.*;
 
@@ -38,7 +37,7 @@ public class WarehouseSimulation {
     private final int MAX_TIME = 500;
     private Group orderPickerGroup;
     private List<OrderPickerGraphic> orderPickerList;
-
+    private PickerColors pickerColorGenerator;
     // The simulation
     private WarehouseGraphics warehouseSimulator;
     // Number of routes added (Only used for the table)
@@ -55,7 +54,7 @@ public class WarehouseSimulation {
         this.orderPickerList = new ArrayList<>();
         this.routeHighlighter = new RouteHighlighter();
         this.warehouseSimulator = new WarehouseGraphics(warehouse);
-
+        this.pickerColorGenerator = new PickerColors();
         setupPathFinder();
     }
 
@@ -123,6 +122,7 @@ public class WarehouseSimulation {
     }
 
     private void actionsForAddProductIDs(TextField inputField, Table table) {
+
         if (inputField.getText().isEmpty()) {
             showAlert("The text field was empty", Alert.AlertType.WARNING);
             return;
@@ -140,11 +140,14 @@ public class WarehouseSimulation {
             return;
         }
 
+        // Get color for picker
+        String pickerColor = pickerColorGenerator.getUnusedColor();
+
         // Find route for picker
         List<PickingPoint> pickPointList = this.warehouse.getPickingPointsFromIDs(tempProductIDList);
         PickingRoute fastestRoute = pathFinder.calculateBestRoute(pickPointList);
 
-        OrderPickerGraphic orderPicker = new OrderPickerGraphic(fastestRoute.getRoute());
+        OrderPickerGraphic orderPicker = new OrderPickerGraphic(fastestRoute.getRoute(), pickerColor);
         addPicker(orderPicker);
 
         // Create a data type which fits the table view
@@ -152,7 +155,8 @@ public class WarehouseSimulation {
         TableFactoryData generatedProductIDs = new TableFactoryData(
                 textHandler.generateProductIDString(),
                 routesAdded,
-                fastestRoute.getRoute()
+                fastestRoute.getRoute(),
+                pickerColor
         );
 
         setViewRouteButtonClickEvent(generatedProductIDs);
@@ -171,9 +175,10 @@ public class WarehouseSimulation {
     }
 
     // Sets a new event handler for the button "View"
-    private void setViewRouteButtonClickEvent(TableFactoryData IDSet) {
-        IDSet.getHighlightButton().setOnMouseClicked(e -> {
-            routeHighlighter.setHighlightRouteList(IDSet.getRouteList());
+    private void setViewRouteButtonClickEvent(TableFactoryData generatedProductIDs) {
+        generatedProductIDs.getHighlightButton().setOnMouseClicked(e -> {
+            routeHighlighter.setHighlightRouteList(generatedProductIDs.getRouteList(),
+                                                   generatedProductIDs.getRouteColor());
         });
     }
 
@@ -185,6 +190,7 @@ public class WarehouseSimulation {
         table.clear();
         routesAdded = 0;
         routeHighlighter.reset();
+        pickerColorGenerator.resetIndexOfUnusedColor();
     }
 
     public Parent getWarehouseGraphics() {

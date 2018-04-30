@@ -2,6 +2,7 @@ package WarehouseSimulation.GraphicalObjects;
 
 import BackEnd.Geometry.Node;
 import BackEnd.Geometry.Point2D;
+import WarehouseSimulation.GraphicalObjects.Colors.Colors;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
@@ -16,11 +17,19 @@ public class OrderPickerGraphic extends Circle {
     private double moveDistancePerUpdate;
     private int indexOfTargetNode;
 
+    public OrderPickerGraphic(List<Node> routeList, String color) {
+        this.routeList = routeList;
+        this.moveDistancePerUpdate = calculateMoveDistancePerUpdate();
+        this.indexOfTargetNode = 1;
+        setDesign(color);
+        setStartLocation();
+    }
+
     public OrderPickerGraphic(List<Node> routeList) {
         this.routeList = routeList;
         this.moveDistancePerUpdate = calculateMoveDistancePerUpdate();
         this.indexOfTargetNode = 1;
-        setDesign();
+        setDesign(Colors.BLUE.getColor());
         setStartLocation();
     }
 
@@ -30,13 +39,13 @@ public class OrderPickerGraphic extends Circle {
         setTranslateY(routeList.get(0).getY() * TILE_SIZE);
     }
 
-    private void setDesign() {
+    private void setDesign(String color) {
         setRadius(TILE_SIZE / 2.5);
-        setFill(Color.valueOf("#2d79f7"));
+        setFill(Color.valueOf(color));
     }
 
     private double calculateMoveDistancePerUpdate() {
-        return PICKER_SPEED_IN_MPS * TILE_SIZE * (1 / SCREEN_HZ);
+        return PICKER_SPEED_IN_MPS * TILE_SIZE * 1 / SCREEN_HZ;
     }
 
     // Call this 60 times / sec

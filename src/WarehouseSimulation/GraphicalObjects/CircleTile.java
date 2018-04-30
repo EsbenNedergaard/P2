@@ -10,12 +10,11 @@ import static Warehouse.GUIWarehouse.TILE_SIZE;
 
 public class CircleTile extends Circle {
 
-    public CircleTile(Point2D point) {
+    public CircleTile(Point2D point, String color) {
         double radius = 2;
         // Pixel width of tile
         setRadius(radius);
-        setFill(Color.valueOf("#3b3b3b"));
-
+        setFill(Color.valueOf(color));
         double relocateValue = (TILE_SIZE / 2) - radius;
 
         // Graphical position of tile

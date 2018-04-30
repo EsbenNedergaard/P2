@@ -1,9 +1,10 @@
-package GraphicalWarehouse.GraphicalObjects;
+package WarehouseSimulation.GraphicalObjects;
 
 import BackEnd.Geometry.*;
 import BackEnd.Graph.BaseLayer;
 import BackEnd.Graph.SpaceTimeGrid;
 import BackEnd.Pathfinding.OptimalRouteFinder;
+import BackEnd.Pathfinding.PickingRoute;
 import Warehouse.*;
 
 import java.util.ArrayList;
@@ -14,8 +15,8 @@ import java.util.List;
  * PICKING ROUTES FOR TESTS                        */
 
 public class GenerateTestPickingRoute {
-    List<Node> route1;
-    List<Node> route2;
+    PickingRoute route1;
+    PickingRoute route2;
 
     public GenerateTestPickingRoute() {
         createRoute1();
@@ -52,10 +53,10 @@ public class GenerateTestPickingRoute {
     }
 
     public List<Node> getRoute1() {
-        return this.route1;
+        return this.route1.getRoute();
     }
 
     public List<Node> getRoute2() {
-        return route2;
+        return route2.getRoute();
     }
 }

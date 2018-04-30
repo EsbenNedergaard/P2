@@ -1,4 +1,4 @@
-package GraphicalWarehouse.GraphicalObjects;
+package WarehouseSimulation.GraphicalObjects;
 
 import BackEnd.Geometry.Point2D;
 import org.junit.jupiter.api.*;
@@ -6,13 +6,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class OrderPickerGraphicsTest {
     private GenerateTestPickingRoute route = new GenerateTestPickingRoute();
-    private OrderPickerGraphics orderPicker1;
+    private OrderPickerGraphic orderPicker1;
     private int UPDATER;
 
 
     @BeforeEach
     void beforeEach() {
-        orderPicker1 = new OrderPickerGraphics(route.getRoute1());
+        orderPicker1 = new OrderPickerGraphic(route.getRoute1());
         UPDATER = 0;
     }
 

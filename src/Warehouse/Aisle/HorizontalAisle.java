@@ -80,40 +80,43 @@ public class HorizontalAisle implements Aisle {
     }
 
     @Override
-    public List<PickingPoint> getPickingPoints(List<Product> productPickList) {
+    public List<PickingPoint> getPickingPoints(List<Integer> productIdList) {
         List<PickingPoint> pickingPointList = new ArrayList<>();
 
-        for (Product productElement : productPickList) {
+        RackRow topRackRow = getTopRackRow();
+        RackRow bottomRackRow = getBottomRackRow();
 
-            RackRow rackRowElement = getTopRackRow();
-            int rackIndex = rackRowElement.doesItContainProduct(productElement);
+        for (Integer productId : productIdList) {
+            Product tempProduct = new Product(productId);
+
+            // if top rack row contains the product
+            int rackIndex = topRackRow.doesItContainProduct(tempProduct);
             if (rackIndex != -1) {
-                // Get real product object when the rack and product id is known
-                List<Product> rackProductList = rackRowElement.getRackByIndex(rackIndex).getProductList();
-                for(Product product : rackProductList) {
-                    if(product.equals(productElement)) {
-                        productElement = product;
+                List<Product> productsInRack = topRackRow.getRackByIndex(rackIndex).getProductList();
+                for(Product product : productsInRack) {
+                    if(product.equals(tempProduct)) {
+                        tempProduct = product;
                     }
                 }
 
-                Point2D rackPosition = rackRowElement.getRackByIndex(rackIndex).getRackPosition();
-                pickingPointList.add(new PickingPoint(new Point2D(rackPosition.getX(), rackPosition.getY() + 1), productElement));
+                Point2D rackPosition = topRackRow.getRackByIndex(rackIndex).getRackPosition();
+                pickingPointList.add(new PickingPoint(new Point2D(rackPosition.getX(), rackPosition.getY() + 1), tempProduct));
             }
 
-
-            rackRowElement = getBottomRackRow();
-            rackIndex = rackRowElement.doesItContainProduct(productElement);
-            if (rackIndex != -1) {
-                // Get real product object when the rack and product id is known
-                List<Product> rackProductList = rackRowElement.getRackByIndex(rackIndex).getProductList();
-                for(Product product : rackProductList) {
-                    if(product.equals(productElement)) {
-                        productElement = product;
+            else {
+                // if bottom rack row contains the product
+                rackIndex = bottomRackRow.doesItContainProduct(tempProduct);
+                if (rackIndex != -1) {
+                    List<Product> productsInRack = bottomRackRow.getRackByIndex(rackIndex).getProductList();
+                    for (Product product : productsInRack) {
+                        if (product.equals(tempProduct)) {
+                            tempProduct = product;
+                        }
                     }
-                }
 
-                Point2D rackPosition = rackRowElement.getRackByIndex(rackIndex).getRackPosition();
-                pickingPointList.add(new PickingPoint(new Point2D(rackPosition.getX(), rackPosition.getY() - 1), productElement));
+                    Point2D rackPosition = bottomRackRow.getRackByIndex(rackIndex).getRackPosition();
+                    pickingPointList.add(new PickingPoint(new Point2D(rackPosition.getX(), rackPosition.getY() - 1), tempProduct));
+                }
             }
         }
 

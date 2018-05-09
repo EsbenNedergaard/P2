@@ -23,10 +23,6 @@ import javafx.scene.*;
 import Warehouse.*;
 import java.util.*;
 
-/* THIS IS THE WAREHOUSE SIMULATION, WHICH RETURNS A PARENT THAT CAN
- * BE SET IN A SCENE OBJECT. THE WAREHOUSE SIMULATION CONTAINS A SIMULATION
- * AND A INTERACTION FIELD. ALL GRAPHICS ARE SET FROM OTHER CLASSES */
-
 public class WarehouseSimulation {
 
     private Warehouse warehouse;
@@ -156,6 +152,7 @@ public class WarehouseSimulation {
                 textHandler.generateProductIDString(),
                 routesAdded,
                 pickingRoute.getRoute(),
+                pickingRoute.getProductPoints(),
                 pickerColor
         );
 
@@ -178,7 +175,8 @@ public class WarehouseSimulation {
     private void setViewRouteButtonClickEvent(TableFactoryData generatedProductIDs) {
         generatedProductIDs.getHighlightButton().setOnMouseClicked(e -> {
             routeHighlighter.setHighlightRouteList(generatedProductIDs.getRouteList(),
-                                                   generatedProductIDs.getRouteColor());
+                                                   generatedProductIDs.getRouteColor(),
+                                                   generatedProductIDs.getProductPositions());
         });
     }
 
@@ -205,8 +203,8 @@ public class WarehouseSimulation {
         // Add all elements for the simulation
         simulationElementsGroup.getChildren().addAll(
                 // Graphical groups for simulations
-                routeHighlighter.getHighlightGroup(),
                 warehouseSimulator.getRackRowGroup(),
+                routeHighlighter.getHighlightGroup(),
                 warehouseSimulator.getTileGroup(),
                 orderPickerGroup
         );

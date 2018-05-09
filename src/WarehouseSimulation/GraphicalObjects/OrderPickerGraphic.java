@@ -2,6 +2,7 @@ package WarehouseSimulation.GraphicalObjects;
 
 import BackEnd.Geometry.Node;
 import BackEnd.Geometry.Point2D;
+import WarehouseSimulation.GraphicalObjects.Colors.Colors;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
@@ -10,16 +11,25 @@ import static Warehouse.GUIWarehouse.TILE_SIZE;
 
 public class OrderPickerGraphic extends Circle {
 
-    private final static double PICKER_SPEED_IN_MS = 25;
+    private final static double PICKER_SPEED_IN_MPS = 2;
+    private final static int SCREEN_HZ = 60; /* change this to screen HZ */
     private List<Node> routeList;
     private double moveDistancePerUpdate;
     private int indexOfTargetNode;
+
+    public OrderPickerGraphic(List<Node> routeList, String color) {
+        this.routeList = routeList;
+        this.moveDistancePerUpdate = calculateMoveDistancePerUpdate();
+        this.indexOfTargetNode = 1;
+        setDesign(color);
+        setStartLocation();
+    }
 
     public OrderPickerGraphic(List<Node> routeList) {
         this.routeList = routeList;
         this.moveDistancePerUpdate = calculateMoveDistancePerUpdate();
         this.indexOfTargetNode = 1;
-        setDesign();
+        setDesign(Colors.BLUE.getColor());
         setStartLocation();
     }
 
@@ -29,13 +39,13 @@ public class OrderPickerGraphic extends Circle {
         setTranslateY(routeList.get(0).getY() * TILE_SIZE);
     }
 
-    private void setDesign() {
+    private void setDesign(String color) {
         setRadius(TILE_SIZE / 2.5);
-        setFill(Color.valueOf("#2d79f7"));
+        setFill(Color.valueOf(color));
     }
 
     private double calculateMoveDistancePerUpdate() {
-        return TILE_SIZE / PICKER_SPEED_IN_MS;
+        return PICKER_SPEED_IN_MPS * TILE_SIZE * 1 / SCREEN_HZ;
     }
 
     // Call this 60 times / sec
@@ -124,7 +134,7 @@ public class OrderPickerGraphic extends Circle {
     }
 
     private boolean isAtTargetNode(final int UPDATE_COUNTER) {
-        return UPDATE_COUNTER % PICKER_SPEED_IN_MS == 0;
+        return UPDATE_COUNTER % (TILE_SIZE / moveDistancePerUpdate) == 0;
     }
 
     private void forcePickerToTargetNode() {

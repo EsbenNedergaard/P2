@@ -45,11 +45,8 @@ public class PathFinder {
         this.startTime = startTime;
         this.pickTime = 0;
 
-        //Checks and then sets starting values
         this.checkInitialValues();
         this.setStartValues();
-
-        //We calculate the path
         this.calculatePath();
 
         return constructPath();

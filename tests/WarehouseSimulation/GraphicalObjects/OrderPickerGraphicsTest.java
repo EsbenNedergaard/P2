@@ -16,8 +16,8 @@ class OrderPickerGraphicsTest {
 
     private PathFinder pathFinder;
     private OrderPickerGraphic orderPicker;
-    Point2D startPoint;
-    Point2D endPoint;
+    private Point2D startPoint;
+    private Point2D endPoint;
 
     @BeforeEach
     void beforeEach() {

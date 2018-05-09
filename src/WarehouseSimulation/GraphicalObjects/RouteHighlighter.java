@@ -3,7 +3,11 @@ package WarehouseSimulation.GraphicalObjects;
 import BackEnd.Geometry.Node;
 import BackEnd.Geometry.Point2D;
 import javafx.scene.Group;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextBoundsType;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,11 +17,7 @@ public class RouteHighlighter {
     private Group highlightGroup = new Group();
     private boolean highlightOn = false;
     private String color;
-
-    public RouteHighlighter(List<Node> routeList) {
-        this.routeList = routeList;
-        createHighlight();
-    }
+    private List<Point2D> productPositions;
 
     public RouteHighlighter() {
         this.routeList = new ArrayList<>();
@@ -29,17 +29,29 @@ public class RouteHighlighter {
         // Create the new highlighted route
         for(Node node : routeList) {
             Point2D tileLocation = new Point2D(node.getX(), node.getY());
-            highlightGroup.getChildren().add(new CircleTile(tileLocation, color));
+            highlightGroup.getChildren().add(new CircleTile(tileLocation, color, 2));
         }
+
+        // Create product highlights
+        int i = 1;
+        for(Point2D point : productPositions) {
+            CircleTile circle = new CircleTile(point, color, 8);
+            Text text = new Text("" + i);
+            PaneCircleText pane = new PaneCircleText(circle, text);
+            highlightGroup.getChildren().add(pane);
+            i++;
+        }
+
     }
 
     public Group getHighlightGroup() {
         return highlightGroup;
     }
 
-    public void setHighlightRouteList(List<Node> routeList, String color) {
+    public void setHighlightRouteList(List<Node> routeList, String color, List<Point2D> productPositions) {
         this.routeList = routeList;
         this.color = color;
+        this.productPositions = productPositions;
 
         // When the exact same route is highlighted again, delete the highlight
         if(isHighlightOn() && checkIfHighlighted()) {
@@ -56,6 +68,7 @@ public class RouteHighlighter {
 
     public void reset() {
         highlightGroup.getChildren().clear();
+        setHighlightOn(false);
     }
 
     // Checking if the route compared to is already highlighted

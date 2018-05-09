@@ -1,5 +1,6 @@
 package Warehouse;
 
+import BackEnd.Geometry.Point2D;
 import Exceptions.ProductNotInRackException;
 import Warehouse.Racks.Rack;
 
@@ -24,6 +25,10 @@ public class Product {
 
     public Rack getRack() {
         return rack;
+    }
+
+    public Point2D getProductPostion() {
+        return getRack().getRackPosition();
     }
 
     @Override

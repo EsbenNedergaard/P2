@@ -53,20 +53,4 @@ public class WarehouseGraphics {
 
         return rackRowGroup;
     }
-
-    // Returns the graphical group of racks
-    public Group getRackGroup() {
-        // Create a group of graphical racks
-       Group rackGroup = new Group();
-
-         /*for(RackRow rackRowElement : warehouse.getRackRowList()) {
-
-            for (Rack rackElement : rackRowElement.getRackList()) {
-                RackGraphic graphicRack = new RackGraphic(rackElement);
-            }
-        }*/
-
-        return rackGroup;
-    }
-
 }

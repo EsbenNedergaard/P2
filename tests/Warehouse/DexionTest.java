@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class DexionTest {
     private Dexion testWarehouse = new Dexion();
@@ -50,30 +51,26 @@ class DexionTest {
     }
 
     @Test
-    void getPickingPoints() {
-        Product product1 = new Product(1);
-        Product product2 = new Product(2);
+    void getPickingPoints01() {
+        List<Integer> productIdList = new ArrayList<>();
+        productIdList.add(1);
+        productIdList.add(273);
 
-        List<Product> productPickList = new ArrayList<>();
-        productPickList.add(product1);
-        productPickList.add(product2);
+        List<PickingPoint> pickingPointList = testWarehouse.getPickingPoints(productIdList);
 
-
-        for (PickingPoint pickingPoint : testWarehouse.getPickingPoints(productPickList)) {
-            System.out.println(pickingPoint.getX() + ", " + pickingPoint.getY());
-        }
-
+        // The two pickingPoints have equal Point2D
+        assertEquals(pickingPointList.get(0), pickingPointList.get(1));
     }
 
     @Test
-    void getPickingPointsFromIDs() {
-        List<Integer> productIDList = new ArrayList<>();
-        productIDList.add(8);
-        productIDList.add(80);
+    void getPickingPoints02() {
+        List<Integer> productIdList = new ArrayList<>();
+        productIdList.add(1);
+        productIdList.add(273);
 
-        for (PickingPoint pickingPoint : testWarehouse.getPickingPointsFromIDs(productIDList)) {
-            System.out.println(pickingPoint.getX() + ", " + pickingPoint.getY());
-        }
+        List<PickingPoint> pickingPointList = testWarehouse.getPickingPoints(productIdList);
+
+        assertNotEquals(pickingPointList.get(0).getProduct(), pickingPointList.get(1).getProduct());
     }
 
 }

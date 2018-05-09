@@ -1,10 +1,5 @@
 package WarehouseSimulation.GraphicalObjects;
 
-
-/* THIS CLASS TAKES A LIST OF NODES AND HIGHLIGHTS THEM
- * GRAPHICALLY IN THE WAREHOUSE. ONLY ONE ROUTE CAN BE
- * HIGHLIGHTED AT A TIME */
-
 import BackEnd.Geometry.Node;
 import BackEnd.Geometry.Point2D;
 import javafx.scene.Group;
@@ -17,6 +12,7 @@ public class RouteHighlighter {
     private List<Node> routeList;
     private Group highlightGroup = new Group();
     private boolean highlightOn = false;
+    private String color;
 
     public RouteHighlighter(List<Node> routeList) {
         this.routeList = routeList;
@@ -33,7 +29,7 @@ public class RouteHighlighter {
         // Create the new highlighted route
         for(Node node : routeList) {
             Point2D tileLocation = new Point2D(node.getX(), node.getY());
-            highlightGroup.getChildren().add(new CircleTile(tileLocation));
+            highlightGroup.getChildren().add(new CircleTile(tileLocation, color));
         }
     }
 
@@ -41,8 +37,9 @@ public class RouteHighlighter {
         return highlightGroup;
     }
 
-    public void setHighlightRouteList(List<Node> routeList) {
+    public void setHighlightRouteList(List<Node> routeList, String color) {
         this.routeList = routeList;
+        this.color = color;
 
         // When the exact same route is highlighted again, delete the highlight
         if(isHighlightOn() && checkIfHighlighted()) {

@@ -3,6 +3,9 @@ package WarehouseSimulation.GraphicalObjects;
 import BackEnd.Geometry.Node;
 import BackEnd.Geometry.Point2D;
 import javafx.scene.Group;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextBoundsType;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -32,7 +35,11 @@ public class RouteHighlighter {
         // Create product highlights
         int i = 1;
         for(Point2D point : productPositions) {
-            highlightGroup.getChildren().add(new CircleTile(point, color, 7));
+            CircleTile circle = new CircleTile(point, color, 8);
+            Text text = new Text("" + i);
+            PaneCircleText pane = new PaneCircleText(circle, text);
+            highlightGroup.getChildren().add(pane);
+            i++;
         }
 
     }
@@ -61,6 +68,7 @@ public class RouteHighlighter {
 
     public void reset() {
         highlightGroup.getChildren().clear();
+        setHighlightOn(false);
     }
 
     // Checking if the route compared to is already highlighted

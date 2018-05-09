@@ -13,12 +13,20 @@ public class CircleTile extends Circle {
     public CircleTile(Point2D point, String color, int radius) {
         // Pixel width of tile
         setRadius(radius);
-        setFill(Color.valueOf(color));
-        double relocateValue = (TILE_SIZE / 2) - radius;
+        setDesign(point, color);
+        relocateCircle(radius);
+    }
 
+    private void setDesign(Point2D point, String color) {
+        setFill(Color.valueOf(color));
         // Graphical position of tile
-        relocate(relocateValue, relocateValue);
         setTranslateX(point.getXPixels());
         setTranslateY(point.getYPixels());
     }
+
+    private void relocateCircle(int radius) {
+        double relocateValue = (TILE_SIZE / 2) - radius;
+        relocate(relocateValue, relocateValue);
+    }
+
 }

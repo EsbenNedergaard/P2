@@ -185,6 +185,7 @@ public class WarehouseSimulation {
         table.clear();
         routesAdded = 0;
         routeHighlighter.reset();
+        routeHighlighter.setHighlightOn(false);
     }
 
     public Parent getWarehouseGraphics() {

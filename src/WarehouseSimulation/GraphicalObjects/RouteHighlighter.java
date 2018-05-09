@@ -45,15 +45,15 @@ public class RouteHighlighter {
         this.routeList = routeList;
 
         // When the exact same route is highlighted again, delete the highlight
-        if(highlightOn && checkIfHighlighted()) {
+        if(isHighlightOn() && checkIfHighlighted()) {
             reset();
-            highlightOn = false;
+            setHighlightOn(false);
         }
         else {
             // When a new route should be highlighted, delete the previous
             reset();
             createHighlight();
-            highlightOn = true;
+            setHighlightOn(true);
         }
     }
 
@@ -72,5 +72,13 @@ public class RouteHighlighter {
             i++;
         }
         return true;
+    }
+
+    public boolean isHighlightOn() {
+        return highlightOn;
+    }
+
+    public void setHighlightOn(boolean highlightOn) {
+        this.highlightOn = highlightOn;
     }
 }

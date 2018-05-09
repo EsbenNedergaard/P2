@@ -5,16 +5,17 @@ import Warehouse.Product;
 public class PickingPoint extends Point2D {
     private Product product;
     private int pickTime;
+    private Point2D productPoint;
 
     public PickingPoint(Point2D pickPoint, Product product) {
         super(pickPoint);
         this.product = product;
         this.pickTime = 3 + product.getShelfIndex();
-        System.out.println("" + this.pickTime);
     }
     public void setProduct(Product product) {
         this.product = product;
     }
+
 
     public void setPickTime(int pickTime) {
         this.pickTime = pickTime;

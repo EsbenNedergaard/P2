@@ -57,24 +57,14 @@ public class WarehouseGraphics {
     // Returns the graphical group of racks
     public Group getRackGroup() {
         // Create a group of graphical racks
-        Group rackGroup = new Group();
+       Group rackGroup = new Group();
 
-        for(RackRow rackRowElement : warehouse.getRackRowList()) {
+         /*for(RackRow rackRowElement : warehouse.getRackRowList()) {
 
             for (Rack rackElement : rackRowElement.getRackList()) {
                 RackGraphic graphicRack = new RackGraphic(rackElement);
-
-                Label amtProducts = new Label("" + rackElement.getProductList().size());
-                amtProducts.setPadding(new Insets(4, 5, 5, 8));
-                amtProducts.setTextFill(Color.valueOf("white"));
-
-                if (rackElement.getProductList().size() == 0)
-                    amtProducts.setVisible(false);
-
-                amtProducts.relocate(rackElement.getRackPosition().getXPixels(), rackElement.getRackPosition().getYPixels());
-                rackGroup.getChildren().addAll(graphicRack, amtProducts);
             }
-        }
+        }*/
 
         return rackGroup;
     }

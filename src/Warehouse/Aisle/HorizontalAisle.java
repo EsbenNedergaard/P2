@@ -101,6 +101,7 @@ public class HorizontalAisle implements Aisle {
 
                 Point2D rackPosition = topRackRow.getRackByIndex(rackIndex).getRackPosition();
                 pickingPointList.add(new PickingPoint(new Point2D(rackPosition.getX(), rackPosition.getY() + 1), tempProduct));
+
             }
 
             else {

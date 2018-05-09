@@ -1,39 +1,52 @@
 package WarehouseSimulation.GraphicalObjects;
 
+import BackEnd.Geometry.Node;
 import BackEnd.Geometry.Point2D;
+import BackEnd.Graph.SpaceTimeGrid;
+import BackEnd.Pathfinding.PathFinder;
+import Warehouse.Warehouse;
+import Warehouse.Dexion;
 import org.junit.jupiter.api.*;
+
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class OrderPickerGraphicsTest {
-    private GenerateTestPickingRoute route = new GenerateTestPickingRoute();
-    private OrderPickerGraphic orderPicker1;
-    private int UPDATER;
 
+    private PathFinder pathFinder;
+    private OrderPickerGraphic orderPicker;
+    Point2D startPoint;
+    Point2D endPoint;
 
     @BeforeEach
     void beforeEach() {
-        orderPicker1 = new OrderPickerGraphic(route.getRoute1());
-        UPDATER = 0;
+        Warehouse warehouse = new Dexion();
+        SpaceTimeGrid timeGrid = new SpaceTimeGrid(warehouse.getBaseLayer(), 200);
+        pathFinder = new PathFinder(timeGrid);
     }
 
     @Test
-    void testStartPointInRouteMatchesOrderPicker01() {
-        Point2D routeStartPoint = route.getRoute1().get(0);
+    void testPickerStartsAtExpectedPosition() {
+        startPoint = new Point2D(0,0);
+        endPoint = new Point2D(14, 1);
+        List<Node> shortestRoute = pathFinder.findShortestRoute(startPoint, endPoint, 0).getRoute();
+        orderPicker = new OrderPickerGraphic(shortestRoute);
 
-        assertEquals(routeStartPoint.getXPixels(), orderPicker1.getCurrentPosition().getXPixels());
-        assertEquals(routeStartPoint.getYPixels(), orderPicker1.getCurrentPosition().getYPixels());
+        assertEquals(startPoint, orderPicker.getCurrentPosition());
     }
 
     @Test
-    void testFinishPointMatchesOrderPicker01() {
-        int routeListLength = route.getRoute1().size();
-        Point2D routeFinishPoint = route.getRoute1().get(routeListLength - 1);
+    void testPickerEndsAtExpectedPosition() {
+        startPoint = new Point2D(0,0);
+        endPoint = new Point2D(14, 1);
+        List<Node> shortestRoute = pathFinder.findShortestRoute(startPoint, endPoint, 0).getRoute();
+        orderPicker = new OrderPickerGraphic(shortestRoute);
 
-        // Finish the picker route
-        while(orderPicker1.move(UPDATER++));
+        int COUNTER = 0;
+        while(orderPicker.move(COUNTER++));  // Move picker towards end of route
 
-        assertEquals(routeFinishPoint.getXPixels(), orderPicker1.getCurrentPosition().getXPixels());
-        assertEquals(routeFinishPoint.getYPixels(), orderPicker1.getCurrentPosition().getYPixels());
+        assertEquals(endPoint, orderPicker.getCurrentPosition());
     }
 
 }

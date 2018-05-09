@@ -93,16 +93,17 @@ public class HorizontalAisle implements Aisle {
             int rackIndex = topRackRow.doesItContainProduct(tempProduct);
             if (rackIndex != -1) {
                 List<Product> productsInRack = topRackRow.getRackByIndex(rackIndex).getProductList();
+                //We do this to get the correct productPointer
                 for(Product product : productsInRack) {
                     if(product.equals(tempProduct)) {
                         tempProduct = product;
                     }
                 }
 
-                Point2D rackPosition = topRackRow.getRackByIndex(rackIndex).getRackPosition();
-                pickingPointList.add(new PickingPoint(new Point2D(rackPosition.getX(), rackPosition.getY() + 1), tempProduct));
+                Point2D productPosition = tempProduct.getProductPostion();
+                //We add one to the Y, because it is a topRackRow and our coordinate system goes downward
+                pickingPointList.add(new PickingPoint(new Point2D(productPosition.getX(), productPosition.getY() + 1), tempProduct));
             }
-
             else {
                 // if bottom rack row contains the product
                 rackIndex = bottomRackRow.doesItContainProduct(tempProduct);

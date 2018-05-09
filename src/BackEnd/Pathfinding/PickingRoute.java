@@ -1,6 +1,7 @@
 package BackEnd.Pathfinding;
 
 import BackEnd.Geometry.Node;
+import BackEnd.Geometry.Point2D;
 import BackEnd.Graph.SpaceTimeGrid;
 import BackEnd.Geometry.PickingPoint;
 
@@ -40,6 +41,16 @@ public class PickingRoute {
 
     public List<Node> getRoute() {
         return route;
+    }
+
+    public List<Point2D> getProductPoints(){
+        List<Point2D> productPoints = new ArrayList<>();
+        //We run through all the products and get the product positions.
+        for(PickingPoint pickingPoint : this.getPickingPoints()) {
+            productPoints.add(pickingPoint.getProduct().getProductPostion());
+        }
+
+        return productPoints;
     }
 
     public void addNodeToRoute(Node n) {

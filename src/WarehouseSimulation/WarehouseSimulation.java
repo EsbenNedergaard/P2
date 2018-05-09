@@ -145,9 +145,9 @@ public class WarehouseSimulation {
 
         // Find route for picker
         List<PickingPoint> pickPointList = this.warehouse.getPickingPoints(tempProductIDList);
-        PickingRoute fastestRoute = pathFinder.calculateBestRoute(pickPointList);
+        PickingRoute pickingRoute = pathFinder.calculateBestRoute(pickPointList);
 
-        OrderPickerGraphic orderPicker = new OrderPickerGraphic(fastestRoute.getRoute(), pickerColor);
+        OrderPickerGraphic orderPicker = new OrderPickerGraphic(pickingRoute.getRoute(), pickerColor);
         addPicker(orderPicker);
 
         // Create a data type which fits the table view
@@ -155,7 +155,7 @@ public class WarehouseSimulation {
         TableFactoryData generatedProductIDs = new TableFactoryData(
                 textHandler.generateProductIDString(),
                 routesAdded,
-                fastestRoute.getRoute(),
+                pickingRoute.getRoute(),
                 pickerColor
         );
 
@@ -207,7 +207,6 @@ public class WarehouseSimulation {
                 // Graphical groups for simulations
                 routeHighlighter.getHighlightGroup(),
                 warehouseSimulator.getRackRowGroup(),
-                warehouseSimulator.getRackGroup(),
                 warehouseSimulator.getTileGroup(),
                 orderPickerGroup
         );

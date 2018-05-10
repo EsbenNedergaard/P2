@@ -109,7 +109,9 @@ public class PathFinder {
             if (closedSet.contains(neighbour)) {
                 continue;
             }
+
             this.updateNeighbourDistanceFromStart(current, neighbour);
+
             if (!openSet.contains(neighbour)) {
                 openSet.add(neighbour);
             }
@@ -117,10 +119,27 @@ public class PathFinder {
     }
 
     private void updateNeighbourDistanceFromStart(Node current, Node neighbour){
+        //Update distance through neighbour
         if (current.getDistanceFromStart() + 1 < neighbour.getDistanceFromStart()) {
             //A better path exists.
             neighbour.setCameFrom(current);
             neighbour.setDistanceFromStart(current.getDistanceFromStart() + 1); //We increase the distance to the start with 1
+        }
+    }
+
+    private void checkDistanceThroughCurrentToNeighbourNoWaitTimePunishment(Node current){
+        for (Node neighbour : current.getNeighbourNodes()) {
+            //We check if the current node is in the already checked nodes (closed set)
+            if (closedSet.contains(neighbour)) {
+                continue;
+            }
+
+            //Update distance through neighbour
+            this.updateNeighbourDistanceFromStartNoWaitTimePunishment(current, neighbour);
+
+            if (!openSet.contains(neighbour)) {
+                openSet.add(neighbour);
+            }
         }
     }
 

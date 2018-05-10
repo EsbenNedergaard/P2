@@ -146,4 +146,8 @@ public class OrderPickerGraphic extends Circle {
         indexOfTargetNode++;
     }
 
+    public void startOver() {
+        indexOfTargetNode = 1;
+    }
+
 }

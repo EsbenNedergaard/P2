@@ -120,7 +120,6 @@ public class WarehouseSimulation {
     }
 
     private void actionsForAddProductIDs(TextField inputField, Table table) {
-
         if (inputField.getText().isEmpty()) {
             showAlert("The text field was empty", Alert.AlertType.WARNING);
             return;
@@ -174,6 +173,17 @@ public class WarehouseSimulation {
         routesAdded++;
 
         return pickerColorValue;
+    }
+
+    private void startOverOptions() {
+        if(UPDATE_COUNTER == 0) {
+            showAlert("And how would you like this to be possible?", Alert.AlertType.INFORMATION);
+        }
+        else {
+            UPDATE_COUNTER = 0;
+            for(OrderPickerGraphic currentPicker : orderPickerList)
+                currentPicker.startOver();
+        }
     }
 
     private void showAlert(String contentText, Alert.AlertType type) {

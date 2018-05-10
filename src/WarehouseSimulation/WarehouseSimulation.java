@@ -52,10 +52,10 @@ public class WarehouseSimulation {
         this.routeHighlighter = new RouteHighlighter();
         this.warehouseSimulator = new WarehouseGraphics(warehouse);
         this.pickerColorGenerator = new PickerColors();
-        setupPathFinder();
+        setupOptimalRouteFinder();
     }
 
-    private void setupPathFinder() {
+    private void setupOptimalRouteFinder() {
         SpaceTimeGrid grid = new SpaceTimeGrid(this.warehouse.getBaseLayer(), MAX_TIME);
         this.optimalRouteFinder = new FastestRouteFinder(grid);
     }
@@ -136,25 +136,17 @@ public class WarehouseSimulation {
             showAlert(e.getMessage(), Alert.AlertType.WARNING);
             return;
         }
+        PickingRoute pickingRoute = getPickingRouteFromIDlist(tempProductIDList);
 
-        // Get color for picker
-        String pickerColor = pickerColorGenerator.getUnusedColor();
-
-        // Find route for picker
-        List<PickingPoint> pickPointList = this.warehouse.getPickingPoints(tempProductIDList);
-        PickingRoute pickingRoute = optimalRouteFinder.calculateBestRoute(pickPointList);
-        
-        OrderPickerGraphic orderPicker = new OrderPickerGraphic(pickingRoute.getRoute(), pickerColor);
-        addPicker(orderPicker);
+        String pickerColorValue = this.setupPicker(pickingRoute);
 
         // Create a data type which fits the table view
-        routesAdded++;
         TableFactoryData generatedProductIDs = new TableFactoryData(
                 textHandler.generateProductIDString(),
                 routesAdded,
                 pickingRoute.getRoute(),
                 pickingRoute.getProductPoints(),
-                pickerColor
+                pickerColorValue
         );
 
         setViewRouteButtonClickEvent(generatedProductIDs);
@@ -164,6 +156,23 @@ public class WarehouseSimulation {
 
         // Clear the input field when done
         inputField.clear();
+    }
+
+    private PickingRoute getPickingRouteFromIDlist(List<Integer> idList) {
+        // Find route for picker
+        List<PickingPoint> pickPointList = this.warehouse.getPickingPoints(idList);
+        PickingRoute pickingRoute = optimalRouteFinder.calculateBestRoute(pickPointList);
+        return pickingRoute;
+    }
+
+    private String setupPicker(PickingRoute pickingRoute) {
+        // Get color for picker
+        String pickerColorValue = pickerColorGenerator.getUnusedColor();
+        OrderPickerGraphic orderPicker = new OrderPickerGraphic(pickingRoute.getRoute(), pickerColorValue);
+        addPicker(orderPicker);
+        routesAdded++;
+
+        return pickerColorValue;
     }
 
     private void showAlert(String contentText, Alert.AlertType type) {

@@ -17,15 +17,9 @@ public class FastestRouteFinder extends OptimalRouteFinder {
         super(grid);
     }
 
-    public FastestRouteFinder(SpaceTimeGrid grid, Point2D routeStartPoint, Point2D routeEndPoint) {
-        super(grid, routeStartPoint, routeEndPoint);
-    }
-
     @Override
-    public void reset() {
+    PathFinder getPathFinder() {
         PathFinder fastestPathFinder = new FastestPathFinder(new SpaceTimeGrid(super.getSpaceTimeGrid().getBaseLayer(), super.getSpaceTimeGrid().getMaxTime()));
-        super.setPathFinder(fastestPathFinder);
-        super.setAmountPickersInGraph(0);
-        super.setStartTime(0);
+        return fastestPathFinder;
     }
 }

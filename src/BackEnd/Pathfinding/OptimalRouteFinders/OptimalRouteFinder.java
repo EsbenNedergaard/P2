@@ -29,29 +29,16 @@ public abstract class OptimalRouteFinder {
         this.reset();
     }
 
-    public OptimalRouteFinder(SpaceTimeGrid grid, Point2D routeStartPoint, Point2D routeEndPoint) {
-        this.spaceTimeGrid = grid;
-        this.routeStartPoint = routeStartPoint;
-        this.routeEndPoint = routeEndPoint;
-        this.reset();
+    public void reset() {
+        this.pathFinder = this.getPathFinder();
+        this.amountPickersInGraph = 0;
+        this.startTime = 0;
     }
 
-    public abstract void reset();
+    abstract PathFinder getPathFinder();
 
-    SpaceTimeGrid getSpaceTimeGrid() {
+    public SpaceTimeGrid getSpaceTimeGrid() {
         return spaceTimeGrid;
-    }
-
-    public void setPathFinder(PathFinder pathFinder) {
-        this.pathFinder = pathFinder;
-    }
-
-    void setStartTime(int startTime) {
-        this.startTime = startTime;
-    }
-
-    void setAmountPickersInGraph(int amountPickersInGraph) {
-        this.amountPickersInGraph = amountPickersInGraph;
     }
 
     //TODO: problemer med picking points bliver lavet om når vi har 700 - 970

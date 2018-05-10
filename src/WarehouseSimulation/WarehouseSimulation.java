@@ -175,17 +175,6 @@ public class WarehouseSimulation {
         return pickerColorValue;
     }
 
-    private void startOverOptions() {
-        if(UPDATE_COUNTER == 0) {
-            showAlert("And how would you like this to be possible?", Alert.AlertType.INFORMATION);
-        }
-        else {
-            UPDATE_COUNTER = 0;
-            for(OrderPickerGraphic currentPicker : orderPickerList)
-                currentPicker.startOver();
-        }
-    }
-
     private void showAlert(String contentText, Alert.AlertType type) {
         Alert alert = new Alert(type);
         alert.setContentText(contentText);

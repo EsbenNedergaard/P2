@@ -30,8 +30,8 @@ public abstract class PathFinder {
     public PathFinder(SpaceTimeGrid spaceTimeGrid) {
         this.spaceTimeGrid = spaceTimeGrid;
         this.closedSet = new ArrayList<>();
-        //this.heuristic = new TrueDistance();
-        this.heuristic = new Manhatten();
+        this.heuristic = new TrueDistance();
+        //this.heuristic = new Manhatten();
         //We set the openSet to in worst case be cable of containing all nodes
         this.openSet = new PriorityQueue<>(spaceTimeGrid.getAllNodes().size(), new NodeComparator());
     }

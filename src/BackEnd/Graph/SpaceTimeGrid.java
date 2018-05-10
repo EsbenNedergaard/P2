@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SpaceTimeGrid {
-    //TODO: set something up so you can check if the end node or start node is set on top of a permanent obstacle with help of baselayer
     private BaseLayer baseLayer;
     private List<NodeLayer> nodeLayerList;
     private int maxTime;
@@ -23,8 +22,7 @@ public class SpaceTimeGrid {
 
     private void setupNodeLayerList() {
         for (int i = 0; i < maxTime; i++) {
-            NodeLayer tempNodeLayer = new NodeLayer(baseLayer.getNodeListWithoutObstacles(), i);
-            nodeLayerList.add(tempNodeLayer);
+            nodeLayerList.add(new NodeLayer(baseLayer.getNodeListWithoutObstacles(), i));
             if (i != 0) {
                 nodeLayerList.get(i-1).setAllNeighbourNodesForLayer(nodeLayerList.get(i));
             }
@@ -83,19 +81,18 @@ public class SpaceTimeGrid {
     }
 
     public void removeRoute(List<Node> route) {
-        for(int i = 0; i < route.size(); i++) {
+        for (Node aRoute : route) {
             try {
-                Node temp = route.get(i);
-                if (temp.getTime() + 1 != maxTime) {
+                if (aRoute.getTime() + 1 != maxTime) {
                     try {
-                        removeNode(this.getNodePointer(temp.getX(), temp.getY(), temp.getTime() + 1));
+                        removeNode(this.getNodePointer(aRoute.getX(), aRoute.getY(), aRoute.getTime() + 1));
                     } catch (NodeDoesNotExistException e) {
                         //We already removed the node in the next layer, so nothing should happen
                     }
                 }
-                removeNode(temp);
+                removeNode(aRoute);
             } catch (NodeDoesNotExistException e) {
-                    System.out.println("We could not remove the desired node in this layer");
+                System.out.println("We could not remove the desired node in this layer");
             }
         }
     }

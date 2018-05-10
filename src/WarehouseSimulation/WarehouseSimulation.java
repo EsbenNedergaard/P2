@@ -3,6 +3,7 @@ package WarehouseSimulation;
 import BackEnd.Geometry.PickingPoint;
 import BackEnd.Pathfinding.OptimalRouteFinders.FastestRouteFinder;
 import BackEnd.Pathfinding.OptimalRouteFinders.OptimalRouteFinder;
+import BackEnd.Pathfinding.OptimalRouteFinders.ShortestRouteFinder;
 import BackEnd.Pathfinding.PickingRoute;
 import Exceptions.IllegalTextInputException;
 import BackEnd.Graph.SpaceTimeGrid;
@@ -57,7 +58,8 @@ public class WarehouseSimulation {
 
     private void setupOptimalRouteFinder() {
         SpaceTimeGrid grid = new SpaceTimeGrid(this.warehouse.getBaseLayer(), MAX_TIME);
-        this.optimalRouteFinder = new FastestRouteFinder(grid);
+        //this.optimalRouteFinder = new FastestRouteFinder(grid);
+        this.optimalRouteFinder = new ShortestRouteFinder(grid);
     }
 
     private void addPicker(OrderPickerGraphic picker) {

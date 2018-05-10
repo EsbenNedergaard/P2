@@ -77,7 +77,6 @@ public class SpaceTimeGrid {
         if(n.getTime() != 0) {
             this.removeNodeFromNeighbourLists(nodeLayerList.get(n.getTime() - 1), n);
         }
-        //n.getNodeLayerPointer().removeNode(n);
     }
 
     public void removeRoute(List<Node> route) {

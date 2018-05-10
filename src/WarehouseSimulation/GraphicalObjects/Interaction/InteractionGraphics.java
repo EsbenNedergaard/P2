@@ -9,6 +9,7 @@ public class InteractionGraphics {
     private Button addDataButton;
     private Button launchButton;
     private Button resetAllButton;
+    private Button startOverButton;
     private Table tableView;
 
     public InteractionGraphics() {
@@ -16,6 +17,7 @@ public class InteractionGraphics {
         this.addDataButton = new Button("Add");
         this.launchButton = new Button("Launch");
         this.resetAllButton = new Button("Reset");
+        this.startOverButton = new Button("Start Over");
         this.tableView = new Table();
         // Add style class to launch button
         launchButton.getStyleClass().add("launch-button");
@@ -37,6 +39,10 @@ public class InteractionGraphics {
 
     public Button getResetAllButton() {
         return resetAllButton;
+    }
+
+    public Button getStartOverButton() {
+        return startOverButton;
     }
 
     public Table getTableView() {

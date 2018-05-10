@@ -9,9 +9,7 @@ import BackEnd.Graph.SpaceTimeGrid;
 import WarehouseSimulation.GraphicalObjects.Colors.PickerColors;
 import WarehouseSimulation.GraphicalObjects.Interaction.TableView.TableFactoryData;
 import WarehouseSimulation.GraphicalObjects.Interaction.Handler.InputFieldDataHandler;
-import static Warehouse.GUIWarehouse.TILE_SIZE;
-import static Warehouse.GUIWarehouse.SCALE;
-
+import static Warehouse.GUIWarehouse.*;
 import WarehouseSimulation.GraphicalObjects.Interaction.InteractionGraphics;
 import WarehouseSimulation.GraphicalObjects.Warehouse.WarehouseGraphics;
 import WarehouseSimulation.GraphicalObjects.*;
@@ -80,6 +78,7 @@ public class WarehouseSimulation {
         Button addRouteButton = interactionGraphics.getAddDataButton();
         Button launchButton = interactionGraphics.getLaunchButton();
         Button resetAllButton = interactionGraphics.getResetAllButton();
+        Button startOverButton = interactionGraphics.getStartOverButton();
         TextField inputField = interactionGraphics.getInputField();
         Table table = interactionGraphics.getTableView();
 
@@ -89,20 +88,22 @@ public class WarehouseSimulation {
         gridpane.add(addRouteButton, 5, 2);
         gridpane.add(launchButton, 5, 5);
         gridpane.add(resetAllButton, 5, 6);
+        gridpane.add(startOverButton, 5, 7);
 
         borderPane.getStyleClass().add("interaction-border-pane");
         borderPane.setRight(gridpane);
         borderPane.setLeft(table.getTable());
 
         // Set event listeners
-        setOnButtonClickEvent(addRouteButton, inputField, launchButton, resetAllButton, table);
+        setOnButtonClickEvent(addRouteButton, inputField, launchButton, resetAllButton, startOverButton, table);
 
         return new Group(borderPane);
 
     }
 
     private void setOnButtonClickEvent(Button addButton, TextField inputField,
-                                       Button launchButton, Button resetAllButton, Table table) {
+                                       Button launchButton, Button resetAllButton,
+                                       Button startOverButton, Table table) {
         // Run the same method on button clicked and ENTER pressed
         addButton.setOnMouseClicked(e -> this.actionsForAddProductIDs(inputField, table));
         inputField.setOnKeyPressed(e -> {
@@ -112,8 +113,7 @@ public class WarehouseSimulation {
         });
 
         launchButton.setOnMouseClicked(e -> programTimer.start());
-
-        // Reset button
+        startOverButton.setOnMouseClicked(e -> this.startOverOptions());
         resetAllButton.setOnMouseClicked(e -> this.resetWarehouseOptions(table));
 
     }
@@ -166,6 +166,17 @@ public class WarehouseSimulation {
         inputField.clear();
     }
 
+    private void startOverOptions() {
+        if(UPDATE_COUNTER == 0) {
+            showAlert("And how would you like this to be possible?", Alert.AlertType.INFORMATION);
+        }
+        else {
+            UPDATE_COUNTER = 0;
+            for(OrderPickerGraphic currentPicker : orderPickerList)
+                currentPicker.startOver();
+        }
+    }
+
     private void showAlert(String contentText, Alert.AlertType type) {
         Alert alert = new Alert(type);
         alert.setContentText(contentText);
@@ -190,6 +201,7 @@ public class WarehouseSimulation {
         routesAdded = 0;
         routeHighlighter.reset();
         pickerColorGenerator.resetIndexOfUnusedColor();
+        UPDATE_COUNTER = 0;
     }
 
     public Parent getWarehouseGraphics() {

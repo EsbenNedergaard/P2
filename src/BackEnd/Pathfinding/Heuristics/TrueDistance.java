@@ -21,13 +21,18 @@ public class TrueDistance implements Heuristic {
 
         //Denne del sørger for vi kopier baseLayerets distance to end
         for(Node baseLayerNode : spaceTimeGrid.getBaseLayer().getNodeListWithoutObstacles()) {
-            for(int i = 0; i < spaceTimeGrid.getMaxTime(); i++) {
+            for(Node node : spaceTimeGrid.getAllNodes()) {
+                if(node.getX() == baseLayerNode.getX() && node.getY() == baseLayerNode.getY()) {
+                    node.setDistanceToEnd(baseLayerNode.getDistanceToEnd());
+                }
+            }
+            /*for(int i = 0; i < spaceTimeGrid.getMaxTime(); i++) {
                 try {
                     spaceTimeGrid.getNodePointer(baseLayerNode.getX(), baseLayerNode.getY(), i).setDistanceToEnd(baseLayerNode.getDistanceToEnd());
                 } catch (NodeDoesNotExistException ignored) {
                     //This happens in cases where one of the nodes have been removed by an earlier route
                 }
-            }
+            }*/
         }
     }
 }

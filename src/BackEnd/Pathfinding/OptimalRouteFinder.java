@@ -40,6 +40,7 @@ public class OptimalRouteFinder {
         this.startTime = 0;
     }
 
+    //TODO: problemer med picking points bliver lavet om når vi har 700 - 970
     //Method that calculates the best route for the pickingList that it is given
     public PickingRoute calculateBestRoute(List<PickingPoint> pickingList) {
         this.startTime = amountPickersInGraph * WAIT_TIME_BETWEEN_PICKERS;
@@ -69,7 +70,7 @@ public class OptimalRouteFinder {
             //There are no more picking points to visit on the route
             if(remainingPickingPoints.isEmpty()) {
                 //Adds the path from last picking point to delivery area
-                currRoute.addOtherRoute(pathFinder.findShortestRoute(currStart, routeEndPoint, timeTravelledSinceStart).getRoute());
+                currRoute.addOtherRoute(pathFinder.findFastestPath(currStart, routeEndPoint, timeTravelledSinceStart).getRoute());
 
                 //Checks if the new route is shorter than the previous found routes
                 if(bestRoute.getRouteLength() == 0 || currRoute.getRouteLength() < bestRoute.getRouteLength()){
@@ -80,7 +81,7 @@ public class OptimalRouteFinder {
                 for (PickingPoint nextPickPoint : remainingPickingPoints) {
                     PickingRoute nextRoute = new PickingRoute(currRoute);
                     //Adds the path from current picking point to next picking point
-                    nextRoute.addOtherRoute(pathFinder.findShortestRoute(currStart, nextPickPoint, timeTravelledSinceStart, nextPickPoint.getPickTime()).getRoute());
+                    nextRoute.addOtherRoute(pathFinder.findFastestPath(currStart, nextPickPoint, timeTravelledSinceStart, nextPickPoint.getPickTime()).getRoute());
 
                     //Adds time for picking on next pick point
                     nextRoute.addPickingToRouteEnd(pathFinder.getSpaceTimeGrid(), nextPickPoint.getPickTime());

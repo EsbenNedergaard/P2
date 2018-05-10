@@ -172,8 +172,7 @@ public class WarehouseSimulation {
     private PickingRoute getPickingRouteFromIDlist(List<Integer> idList) {
         // Find route for picker
         List<PickingPoint> pickPointList = this.warehouse.getPickingPoints(idList);
-        PickingRoute pickingRoute = optimalRouteFinder.calculateBestRoute(pickPointList);
-        return pickingRoute;
+        return optimalRouteFinder.calculateBestRoute(pickPointList);
     }
 
     private String setupPicker(PickingRoute pickingRoute) {

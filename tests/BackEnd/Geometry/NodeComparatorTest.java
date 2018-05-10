@@ -9,7 +9,7 @@ class NodeComparatorTest {
 
 
     // Same total distance, different distances to end and different y values. Should prioritize node with shortest distance to end.
-    @Test
+    /*@Test
     void testMethod_compare_01(){
         Node firstNode = new Node(new Point2D(1, 1));
         Node secondNode = new Node(new Point2D(2, 2));
@@ -94,5 +94,5 @@ class NodeComparatorTest {
 
         assertTrue(compareElement.compare(firstNode, secondNode) == 0);
         assertTrue(compareElement.compare(secondNode, firstNode) == 0);
-    }
+    }*/
 }

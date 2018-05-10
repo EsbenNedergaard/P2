@@ -118,11 +118,8 @@ public class Node extends Point2D {
         this.distanceFromStart = INFINITY;
     }
 
-    public void setDistanceToEnd(Node endNode) {
-        int xDistance = Math.abs(endNode.getX() - this.getX());
-        int yDistance = Math.abs(endNode.getY() - this.getY());
-
-        this.distanceToEnd = xDistance + yDistance;
+    public void setDistanceToEnd(int distanceToEnd) {
+        this.distanceToEnd = distanceToEnd;
     }
 
     public void setNeighbourNodes(List<Node> possibleNeighbours) {

@@ -4,6 +4,8 @@ import BackEnd.Geometry.Node;
 import BackEnd.Geometry.NodeComparator;
 import BackEnd.Geometry.Point2D;
 import BackEnd.Graph.SpaceTimeGrid;
+import BackEnd.Pathfinding.Heuristics.Heuristic;
+import BackEnd.Pathfinding.Heuristics.Manhatten;
 import BackEnd.Pathfinding.PickingRoute;
 import Exceptions.NodeDoesNotExistException;
 import Exceptions.NodeLayerDoesNotExistException;
@@ -22,11 +24,13 @@ public abstract class PathFinder {
     private Node endNode;
     private int startTime;
     private int pickTime;
+    private Heuristic heuristic;
 
 
     public PathFinder(SpaceTimeGrid spaceTimeGrid) {
         this.spaceTimeGrid = spaceTimeGrid;
         this.closedSet = new ArrayList<>();
+        this.heuristic = new Manhatten();
 
         //We set the openSet to in worst case be cable of containing all nodes
         this.openSet = new PriorityQueue<>(spaceTimeGrid.getAllNodes().size(), new NodeComparator());
@@ -95,9 +99,9 @@ public abstract class PathFinder {
             } else {
                 node.setDistanceToInf();
             }
-            // All nodes gets an estimated distance to the end node
-            node.setDistanceToEnd(endNode);
         }
+        // All nodes gets an estimated distance to the end node
+        heuristic.setDistanceToEnd(spaceTimeGrid.getAllNodes(), endNode);
     }
 
     private void calculateFastestPath() {

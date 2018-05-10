@@ -119,7 +119,7 @@ class NodeTest {
     @Test
     void testMethod_setDistanceToEnd(){
         Node endNode = new Node(new Point2D(3,3));
-        node1.setDistanceToEnd(endNode);
+        node1.setDistanceToEnd(4);
 
         // Expect the sum of the difference between the two point coordinates: (1,1), (3,3), which is 2 + 2 = 4
         assertEquals(4, node1.getDistanceToEnd());

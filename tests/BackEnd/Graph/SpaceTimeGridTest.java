@@ -86,27 +86,6 @@ class SpaceTimeGridTest {
 
     }
 
-    @Test
-    void removeNode() {
-        //We make a nodeList that does not contain (0,0)
-        List<Node> nodeList = new ArrayList<>();
-        for (int x = 0; x < GRID_SIZE; x++) {
-            for (int y = 0; y < GRID_SIZE; y++) {
-                if (!(x == 0 && y == 0)) {
-                    Node temp = new Node(new Point2D(x, y));
-                    nodeList.add(temp);
-                }
-            }
-        }
-        NodeLayer temp = new NodeLayer(nodeList, 0);
-
-        assertNotEquals(temp, spaceTimeGrid.getNodeLayerList().get(0));
-
-        //We then remove (0,0), and check that the nodeLayers are equal, which means we removed the correct node.
-        spaceTimeGrid.removeNode(spaceTimeGrid.getNodePointer(0,0,0));
-        assertEquals(temp, spaceTimeGrid.getNodeLayerList().get(0));
-    }
-
     //TODO: make better assertEquals in the end.
     @Test
     void removeNeighbourNode() {
@@ -122,7 +101,7 @@ class SpaceTimeGridTest {
         assertEquals(4,  temp2.getNeighbourNodes().size());
         assertEquals(4,  temp3.getNeighbourNodes().size());
 
-        spaceTimeGrid.removeNode(nodeToRemove);
+        spaceTimeGrid.removeNodeFromNeighbourLists(nodeToRemove);
         assertEquals(2, temp1.getNeighbourNodes().size());
         assertEquals(3, temp2.getNeighbourNodes().size());
         assertEquals(3, temp3.getNeighbourNodes().size());

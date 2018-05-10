@@ -73,12 +73,6 @@ public class SpaceTimeGrid {
         throw new NodeLayerDoesNotExistException("There is no NodeLayer with the time: " + time + " in this graph");
     }
 
-    public void removeNode(Node n){
-        if(n.getTime() != 0) {
-            this.removeNodeFromNeighbourLists(nodeLayerList.get(n.getTime() - 1), n);
-        }
-    }
-
     public void removeRoute(List<Node> route) {
         for (Node node : route) {
             try {
@@ -86,23 +80,28 @@ public class SpaceTimeGrid {
                     //Here we remove the node in the next layer also so that we cant pass through each other
                     try {
                         Node nodeInNextLayer = this.getNodePointer(node.getX(), node.getY(), node.getTime() + 1);
-                        this.removeNode(nodeInNextLayer);
+                        this.removeNodeFromNeighbourLists(nodeInNextLayer);
                     } catch (NodeDoesNotExistException e) {
                         //We already removed the node in the next layer, so nothing should happen
                     }
                 }
-                this.removeNode(node);
+                this.removeNodeFromNeighbourLists(node);
             } catch (NodeDoesNotExistException e) {
                 System.out.println("We could not remove the desired node in this layer");
             }
         }
     }
 
-    private void removeNodeFromNeighbourLists(NodeLayer earlierNodeLayer, Node neighbourToRemove){
-        for(Node node : earlierNodeLayer.getNodeList()) {
-            for (Node neighbour : node.getNeighbourNodes()) {
-                if(neighbourToRemove.equals(neighbour)) {
-                    node.getNeighbourNodes().remove(neighbour);
+    public void removeNodeFromNeighbourLists(Node node){
+        if(node.getTime() == 0) {
+            return;
+        }
+        NodeLayer earlierNodeLayer = this.getNodeLayerPointer(node.getTime()-1);
+
+        for(Node nodeInEarlierLayer : earlierNodeLayer.getNodeList()) {
+            for (Node neighbour : nodeInEarlierLayer.getNeighbourNodes()) {
+                if(node.equals(neighbour)) {
+                    nodeInEarlierLayer.getNeighbourNodes().remove(neighbour);
                     /* We need this break because we remove an element from the Neighbour-loop that we are running through
                     otherwise the for-each loop will crash */
                     break;

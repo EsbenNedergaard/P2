@@ -55,8 +55,8 @@ public class WarehouseSimulation {
 
     private void setupOptimalRouteFinder() {
         SpaceTimeGrid grid = new SpaceTimeGrid(this.warehouse.getBaseLayer(), MAX_TIME);
-        //this.optimalRouteFinder = new ShortestRouteFinder(grid);
-        this.optimalRouteFinder = new FastestRouteFinder(grid);
+        this.optimalRouteFinder = new ShortestRouteFinder(grid);
+        //this.optimalRouteFinder = new FastestRouteFinder(grid);
     }
 
     private void addPicker(OrderPickerGraphic picker) {
@@ -65,7 +65,6 @@ public class WarehouseSimulation {
     }
 
     private Group getInteractionFieldGroup() {
-
         InteractionGraphics interactionGraphics = new InteractionGraphics();
         BorderPane borderPane = new BorderPane();
         GridPane gridpane = new GridPane();

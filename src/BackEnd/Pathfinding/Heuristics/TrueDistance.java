@@ -24,6 +24,7 @@ public class TrueDistance implements Heuristic {
             node.setDistanceToEnd(distanceToEnd);
         }
 
+
         int baseLayerSize = baseLayerNodeList.size();
         //BURDE SORTE DEM FØRST FOR EN SIKKERHEDSSKYLD
         for(NodeLayer nodeLayer : spaceTimeGrid.getNodeLayerList()) {

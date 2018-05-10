@@ -2,6 +2,7 @@ package WarehouseSimulation;
 
 import BackEnd.Geometry.PickingPoint;
 import BackEnd.Pathfinding.OptimalRouteFinders.FastestRouteFinder;
+import BackEnd.Pathfinding.OptimalRouteFinders.OptimalRouteFinder;
 import BackEnd.Pathfinding.PickingRoute;
 import Exceptions.IllegalTextInputException;
 import BackEnd.Graph.SpaceTimeGrid;
@@ -29,7 +30,7 @@ public class WarehouseSimulation {
     private int LENGTH_WAREHOUSE;
     private int WIDTH_WAREHOUSE;
     // Path finder
-    private FastestRouteFinder pathFinder;
+    private OptimalRouteFinder optimalRouteFinder;
     private final int MAX_TIME = 500;
     private Group orderPickerGroup;
     private List<OrderPickerGraphic> orderPickerList;
@@ -56,7 +57,7 @@ public class WarehouseSimulation {
 
     private void setupPathFinder() {
         SpaceTimeGrid grid = new SpaceTimeGrid(this.warehouse.getBaseLayer(), MAX_TIME);
-        this.pathFinder = new FastestRouteFinder(grid);
+        this.optimalRouteFinder = new FastestRouteFinder(grid);
     }
 
     private void addPicker(OrderPickerGraphic picker) {
@@ -141,7 +142,7 @@ public class WarehouseSimulation {
 
         // Find route for picker
         List<PickingPoint> pickPointList = this.warehouse.getPickingPoints(tempProductIDList);
-        PickingRoute pickingRoute = pathFinder.calculateBestRoute(pickPointList);
+        PickingRoute pickingRoute = optimalRouteFinder.calculateBestRoute(pickPointList);
         
         OrderPickerGraphic orderPicker = new OrderPickerGraphic(pickingRoute.getRoute(), pickerColor);
         addPicker(orderPicker);
@@ -182,7 +183,7 @@ public class WarehouseSimulation {
 
     private void resetWarehouseOptions(Table table) {
         programTimer.stop();
-        pathFinder.reset();
+        optimalRouteFinder.reset();
         orderPickerGroup.getChildren().clear();
         orderPickerList.clear();
         table.clear();

@@ -36,6 +36,18 @@ public abstract class PathFinder {
         return spaceTimeGrid;
     }
 
+    public int getStartTime() {
+        return startTime;
+    }
+
+    public Node getStartNode() {
+        return startNode;
+    }
+
+    public Node getEndNode() {
+        return endNode;
+    }
+
     public void removeRoute(List<Node> route) {
         spaceTimeGrid.removeRoute(route);
     }
@@ -46,7 +58,7 @@ public abstract class PathFinder {
         this.startTime = startTime;
         this.pickTime = 0;
 
-        this.checkInitialValues();
+        StartValueChecker.checkValues(this);
         this.setStartValues();
         this.calculateFastestPath();
 
@@ -60,7 +72,7 @@ public abstract class PathFinder {
         this.pickTime = pickTime;
 
         //Checks and then sets starting values, and calculate the path
-        this.checkInitialValues();
+        StartValueChecker.checkValues(this);
         this.setStartValues();
         this.calculateFastestPath();
 
@@ -85,39 +97,6 @@ public abstract class PathFinder {
             }
             // All nodes gets an estimated distance to the end node
             node.setDistanceToEnd(endNode);
-        }
-    }
-
-    private void checkInitialValues() {
-        this.checkStartNode();
-        this.checkEndNode();
-        this.checkStartTime();
-    }
-
-    private void checkStartNode()  {
-        //We check that the startNode is inside the timeLayer for our startTime
-        for (Node n : spaceTimeGrid.getNodeLayerPointer(startTime).getNodeList()) {
-            if (n.getX() == startNode.getX() && n.getY() == startNode.getY()) {
-                return;
-            }
-        }
-        throw new RouteNotPossibleException("The start point was placed outside the SpaceTimeGrid: (" + startNode.getX() + ";" + startNode.getY() + ")");
-    }
-    private void checkEndNode() {
-        //We check that the endNode is inside the grid
-        for(Node n : spaceTimeGrid.getBaseLayer().getNodeListWithoutObstacles()) {
-            if (n.getX() == endNode.getX() && n.getY() == endNode.getY()) {
-                return;
-            }
-        }
-        throw new RouteNotPossibleException("The end point was placed outside the SpaceTimeGrid: (" + endNode.getX() + ";" + endNode.getY() + ")");
-    }
-
-    private void checkStartTime() {
-        try {
-            spaceTimeGrid.getNodeLayerPointer(startTime);
-        } catch (NodeLayerDoesNotExistException e) {
-            throw new RouteNotPossibleException("There is no NodeLayer with the same time as the startTime :" + startTime);
         }
     }
 

@@ -1,18 +1,10 @@
-package BackEnd.Pathfinding.OptimalRouteFinders;
+package BackEnd.Pathfinding.RouteFinders;
 
-import BackEnd.Geometry.Node;
-import BackEnd.Geometry.Point2D;
 import BackEnd.Pathfinding.PathFinders.FastestPathFinder;
 import BackEnd.Pathfinding.PathFinders.PathFinder;
-import BackEnd.Pathfinding.PickingRoute;
-import Exceptions.RouteNotPossibleException;
 import BackEnd.Graph.SpaceTimeGrid;
-import BackEnd.Geometry.PickingPoint;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class FastestRouteFinder extends OptimalRouteFinder {
+public class FastestRouteFinder extends RouteFinder {
     public FastestRouteFinder(SpaceTimeGrid grid) {
         super(grid);
     }

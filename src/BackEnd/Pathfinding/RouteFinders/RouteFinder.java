@@ -1,4 +1,4 @@
-package BackEnd.Pathfinding.OptimalRouteFinders;
+package BackEnd.Pathfinding.RouteFinders;
 
 import BackEnd.Geometry.Node;
 import BackEnd.Geometry.PickingPoint;
@@ -11,7 +11,7 @@ import Exceptions.RouteNotPossibleException;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class OptimalRouteFinder {
+public abstract class RouteFinder {
     private final int WAIT_TIME_BETWEEN_PICKERS = 3;
     private int startTime;
     private SpaceTimeGrid spaceTimeGrid;
@@ -22,7 +22,7 @@ public abstract class OptimalRouteFinder {
     private int amountPickersInGraph;
 
 
-    public OptimalRouteFinder(SpaceTimeGrid grid) {
+    public RouteFinder(SpaceTimeGrid grid) {
         this.spaceTimeGrid = grid;
         this.routeStartPoint = new Node(new Point2D(0, 5));
         this.routeEndPoint = new Node(new Point2D(0, 6));

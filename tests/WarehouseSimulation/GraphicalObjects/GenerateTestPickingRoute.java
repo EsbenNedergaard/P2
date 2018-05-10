@@ -3,7 +3,7 @@ package WarehouseSimulation.GraphicalObjects;
 import BackEnd.Geometry.*;
 import BackEnd.Graph.BaseLayer;
 import BackEnd.Graph.SpaceTimeGrid;
-import BackEnd.Pathfinding.OptimalRouteFinders.FastestRouteFinder;
+import BackEnd.Pathfinding.RouteFinders.FastestRouteFinder;
 import BackEnd.Pathfinding.PickingRoute;
 import Warehouse.*;
 

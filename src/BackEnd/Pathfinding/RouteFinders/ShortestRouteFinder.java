@@ -1,10 +1,10 @@
-package BackEnd.Pathfinding.OptimalRouteFinders;
+package BackEnd.Pathfinding.RouteFinders;
 
 import BackEnd.Graph.SpaceTimeGrid;
 import BackEnd.Pathfinding.PathFinders.PathFinder;
 import BackEnd.Pathfinding.PathFinders.ShortestPathFinder;
 
-public class ShortestRouteFinder extends OptimalRouteFinder {
+public class ShortestRouteFinder extends RouteFinder {
     public ShortestRouteFinder(SpaceTimeGrid grid) {
         super(grid);
     }

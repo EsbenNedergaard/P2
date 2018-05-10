@@ -1,9 +1,9 @@
 package WarehouseSimulation;
 
 import BackEnd.Geometry.PickingPoint;
-import BackEnd.Pathfinding.OptimalRouteFinders.FastestRouteFinder;
-import BackEnd.Pathfinding.OptimalRouteFinders.OptimalRouteFinder;
-import BackEnd.Pathfinding.OptimalRouteFinders.ShortestRouteFinder;
+import BackEnd.Pathfinding.RouteFinders.FastestRouteFinder;
+import BackEnd.Pathfinding.RouteFinders.RouteFinder;
+import BackEnd.Pathfinding.RouteFinders.ShortestRouteFinder;
 import BackEnd.Pathfinding.PickingRoute;
 import Exceptions.IllegalTextInputException;
 import BackEnd.Graph.SpaceTimeGrid;
@@ -28,7 +28,7 @@ public class WarehouseSimulation {
     private int LENGTH_WAREHOUSE;
     private int WIDTH_WAREHOUSE;
     // Path finder
-    private OptimalRouteFinder optimalRouteFinder;
+    private RouteFinder routeFinder;
     private final int MAX_TIME = 500;
     private Group orderPickerGroup;
     private List<OrderPickerGraphic> orderPickerList;
@@ -55,8 +55,8 @@ public class WarehouseSimulation {
 
     private void setupOptimalRouteFinder() {
         SpaceTimeGrid grid = new SpaceTimeGrid(this.warehouse.getBaseLayer(), MAX_TIME);
-        this.optimalRouteFinder = new ShortestRouteFinder(grid);
-        //this.optimalRouteFinder = new FastestRouteFinder(grid);
+        //this.routeFinder = new ShortestRouteFinder(grid);
+        this.routeFinder = new FastestRouteFinder(grid);
     }
 
     private void addPicker(OrderPickerGraphic picker) {
@@ -171,7 +171,7 @@ public class WarehouseSimulation {
     private PickingRoute getPickingRouteFromIDlist(List<Integer> idList) {
         // Find route for picker
         List<PickingPoint> pickPointList = this.warehouse.getPickingPoints(idList);
-        return optimalRouteFinder.calculateBestRoute(pickPointList);
+        return routeFinder.calculateBestRoute(pickPointList);
     }
 
     private String setupPicker(PickingRoute pickingRoute) {
@@ -201,7 +201,7 @@ public class WarehouseSimulation {
 
     private void resetWarehouseOptions(Table table) {
         programTimer.stop();
-        optimalRouteFinder.reset();
+        routeFinder.reset();
         orderPickerGroup.getChildren().clear();
         orderPickerList.clear();
         table.clear();

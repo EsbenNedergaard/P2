@@ -142,7 +142,7 @@ public class WarehouseSimulation {
         // Find route for picker
         List<PickingPoint> pickPointList = this.warehouse.getPickingPoints(tempProductIDList);
         PickingRoute pickingRoute = pathFinder.calculateBestRoute(pickPointList);
-
+        
         OrderPickerGraphic orderPicker = new OrderPickerGraphic(pickingRoute.getRoute(), pickerColor);
         addPicker(orderPicker);
 

@@ -2,16 +2,12 @@ package BackEnd.Pathfinding;
 
 import BackEnd.Geometry.Node;
 import BackEnd.Geometry.Point2D;
-import BackEnd.Pathfinding.PathFinder;
 import BackEnd.TempRoutePrinter;
 import Exceptions.RouteNotPossibleException;
 import BackEnd.Graph.BaseLayer;
 import BackEnd.Graph.SpaceTimeGrid;
 import Warehouse.*;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.List;
 
 class RouteTestWarehouse {
     private final int MAX_TIME = 100;
@@ -33,7 +29,7 @@ class RouteTestWarehouse {
         PickingRoute testResultRoute = new PickingRoute();
         try {
             for (int i = 0; i < 100; i++) {
-                testResultRoute = testPathFinder.findShortestRoute(startNode, endNode, 0);
+                testResultRoute = testPathFinder.findFastestPath(startNode, endNode, 0);
             }
         }
         catch (RouteNotPossibleException e) {

@@ -39,7 +39,7 @@ public class PathFinder {
         spaceTimeGrid.removeRoute(route);
     }
 
-    public PickingRoute findShortestRoute(Point2D start, Point2D end, int startTime) throws RouteNotPossibleException {
+    public PickingRoute findFastestPath(Point2D start, Point2D end, int startTime) throws RouteNotPossibleException {
         this.startNode =  new Node(start);
         this.endNode = new Node (end);
         this.startTime = startTime;
@@ -47,62 +47,90 @@ public class PathFinder {
 
         this.checkInitialValues();
         this.setStartValues();
-        this.calculatePath();
+        this.calculateFastestPath();
 
         return constructPath();
     }
 
-    public PickingRoute findShortestRoute(Point2D start, Point2D end, int startTime, int pickTime) throws RouteNotPossibleException {
+    public PickingRoute findFastestPath(Point2D start, Point2D end, int startTime, int pickTime) throws RouteNotPossibleException {
         this.startNode =  new Node(start);
         this.endNode = new Node (end);
         this.startTime = startTime;
         this.pickTime = pickTime;
 
-        //Checks and then sets starting values
+        //Checks and then sets starting values, and calculate the path
         this.checkInitialValues();
         this.setStartValues();
-
-        //We calculate the path
-        this.calculatePath();
+        this.calculateFastestPath();
 
         return constructPath();
     }
 
-    private void calculatePath() {
+    private void calculateFastestPath() {
         //Runs till all nodes have been visited or till we find the end node
         while (!openSet.isEmpty()) {
-            //Retrieves next node to visit and adds it to the closed set
-            Node current = openSet.poll();
-            closedSet.add(current);
+            Node current = getNextNode();
 
-            //We have reached the destination
-            if (current.getX() == endNode.getX() && current.getY() == endNode.getY()) {
-                if(checkIfValidEndPoint(current)) {
-                    endNode = current;
-                    break;
-                }
+            if (isEndNode(current)) {
+                endNode = current;
+                break; //We have reached the destination
             }
 
+            this.checkIfOutOfTime(current);
 
-            if (spaceTimeGrid.getMaxTime() <= (current.getTime() + 1)){
-                throw new RouteNotPossibleException("Did not find a route in the given time");
+            this.checkDistanceThroughCurrentToNeighbour(current);
+        }
+    }
+
+    //Retrieves next node to visit and adds it to the closed set
+    private Node getNextNode(){
+        Node next = openSet.poll();
+        closedSet.add(next);
+        return next;
+    }
+
+    private Boolean isEndNode(Node current){
+        if(current.getX() == endNode.getX() && current.getY() == endNode.getY()) {
+            return checkIfPickingIsPossible(current);
+        }
+        return false;
+    }
+
+    private void checkIfOutOfTime(Node current){
+        if (spaceTimeGrid.getMaxTime() <= (current.getTime() + (pickTime + 1))){
+            throw new RouteNotPossibleException("Did not find a route in the given time");
+        }
+    }
+
+    //Checks if there exists a better path through current node to its neighbours
+    private void checkDistanceThroughCurrentToNeighbour(Node current){
+        for (Node neighbour : current.getNeighbourNodes()) {
+            //We check if the current node is in the already checked nodes (closed set)
+            if (closedSet.contains(neighbour)) {
+                continue;
             }
+            this.updateNeighbourDistanceFromStart(current, neighbour);
+            if (!openSet.contains(neighbour)) {
+                openSet.add(neighbour);
+            }
+        }
+    }
 
-            //Checks if there exists a better path through current node to its neighbours
-            for (Node neighbour : current.getNeighbourNodes()) {
-                //We check if the current node is in the already checked nodes (closed set)
-                if (closedSet.contains(neighbour)) {
-                    continue;
-                }
+    private void updateNeighbourDistanceFromStart(Node current, Node neighbour){
+        if (current.getDistanceFromStart() + 1 < neighbour.getDistanceFromStart()) {
+            //A better path exists.
+            neighbour.setCameFrom(current);
+            neighbour.setDistanceFromStart(current.getDistanceFromStart() + 1); //We increase the distance to the start with 1
+        }
+    }
 
-                //A better path exists
-                if (current.getDistanceFromStart() + 1 < neighbour.getDistanceFromStart()) {
-                    neighbour.setCameFrom(current);
-                    neighbour.setDistanceFromStart(current.getDistanceFromStart() + 1);
-                }
-                if (!openSet.contains(neighbour)) {
-                    openSet.add(neighbour);
-                }
+    private void updateNeighbourDistanceFromStartNoWaitTimePunishment(Node current, Node neighbour) {
+        if (current.getDistanceFromStart() + 1 < neighbour.getDistanceFromStart()) {
+            neighbour.setCameFrom(current);
+            if(current.getX() == neighbour.getX() && current.getY() == neighbour.getY()) {
+                neighbour.setDistanceFromStart(current.getDistanceFromStart()); //Here we don't punish for waiting.
+            } else {
+                neighbour.setDistanceFromStart(current.getDistanceFromStart() + 1);
             }
         }
     }
@@ -181,7 +209,7 @@ public class PathFinder {
 
     /*We use try catch to check if all the nodes we need to pick exist in the graph, or if they have been
     removed by other routes */
-    private boolean checkIfValidEndPoint(Node current) {
+    private boolean checkIfPickingIsPossible(Node current) {
         /*We add one to PICK_TIME because we need to make sure the next route also has a point to start on*/
         for(int i = 0; i < pickTime + 1; i++) {
             try {

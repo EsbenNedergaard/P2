@@ -14,8 +14,6 @@ public interface Aisle {
     int getAisleLength();
     Point2D getStartPoint();
 
-    RackRow getTopRackRow();
-    RackRow getBottomRackRow();
     List<RackRow> getRackRowList();
 
     void addProduct(Product e);

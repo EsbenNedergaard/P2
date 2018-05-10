@@ -30,7 +30,7 @@ class OrderPickerGraphicsTest {
     void testPickerStartsAtExpectedPosition() {
         startPoint = new Point2D(0,0);
         endPoint = new Point2D(14, 1);
-        List<Node> shortestRoute = pathFinder.findShortestRoute(startPoint, endPoint, 0).getRoute();
+        List<Node> shortestRoute = pathFinder.findFastestPath(startPoint, endPoint, 0).getRoute();
         orderPicker = new OrderPickerGraphic(shortestRoute);
 
         assertEquals(startPoint, orderPicker.getCurrentPosition());
@@ -40,7 +40,7 @@ class OrderPickerGraphicsTest {
     void testPickerEndsAtExpectedPosition() {
         startPoint = new Point2D(0,0);
         endPoint = new Point2D(14, 1);
-        List<Node> shortestRoute = pathFinder.findShortestRoute(startPoint, endPoint, 0).getRoute();
+        List<Node> shortestRoute = pathFinder.findFastestPath(startPoint, endPoint, 0).getRoute();
         orderPicker = new OrderPickerGraphic(shortestRoute);
 
         int COUNTER = 0;

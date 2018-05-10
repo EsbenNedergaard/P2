@@ -60,12 +60,10 @@ public class HorizontalAisle implements Aisle {
         return this.startPoint;
     }
 
-    @Override
     public RackRow getTopRackRow() {
         return this.topRackRow;
     }
 
-    @Override
     public RackRow getBottomRackRow() {
         return this.bottomRackRow;
     }

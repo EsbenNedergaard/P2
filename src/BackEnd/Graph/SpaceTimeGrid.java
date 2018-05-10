@@ -77,20 +77,21 @@ public class SpaceTimeGrid {
         if(n.getTime() != 0) {
             this.removeNodeFromNeighbourLists(nodeLayerList.get(n.getTime() - 1), n);
         }
-        n.getNodeLayerPointer().removeNode(n);
     }
 
     public void removeRoute(List<Node> route) {
-        for (Node aRoute : route) {
+        for (Node node : route) {
             try {
-                if (aRoute.getTime() + 1 != maxTime) {
+                if (node.getTime() + 1 != maxTime) {
+                    //Here we remove the node in the next layer also so that we cant pass through each other
                     try {
-                        removeNode(this.getNodePointer(aRoute.getX(), aRoute.getY(), aRoute.getTime() + 1));
+                        Node nodeInNextLayer = this.getNodePointer(node.getX(), node.getY(), node.getTime() + 1);
+                        this.removeNode(nodeInNextLayer);
                     } catch (NodeDoesNotExistException e) {
                         //We already removed the node in the next layer, so nothing should happen
                     }
                 }
-                removeNode(aRoute);
+                this.removeNode(node);
             } catch (NodeDoesNotExistException e) {
                 System.out.println("We could not remove the desired node in this layer");
             }

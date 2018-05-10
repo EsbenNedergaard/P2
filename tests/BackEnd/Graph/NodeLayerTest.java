@@ -118,24 +118,6 @@ class NodeLayerTest {
     }
 
     //Testing that the node gets removed from the layer
-    @Test
-    void removeNode1() {
-        testLayer1.removeNode(testLayer1.getNodePointer(1,1));
-        assertThrows(NodeDoesNotExistException.class, ()-> testLayer1.getNodePointer(1, 1));
-    }
-
-
-    /*Checking that not gets removed if you try to remove a node that does not belong to the layer
-      even if there is a node with the same coordinates*/
-    @Test
-    void removeNode2() {
-        //We do this so we dont get a pointer to the nodeList in the layer
-        List<Node> tempNodeList = new ArrayList<>(testLayer1.getNodeList());
-
-        testLayer1.removeNode(testLayer2.getNodePointer(1,1));
-        assertEquals(tempNodeList, testLayer1.getNodeList());
-    }
-
 
     @Test
     void equals1() {
@@ -147,19 +129,14 @@ class NodeLayerTest {
 
     @Test
     void equals2() {
+        //We try to remove a node an see that they are not equal
+        nodeList.remove(0);
+
         NodeLayer temp = new NodeLayer(nodeList, 0);
-        temp.removeNode(temp.getNodePointer(0,0));
 
         assertNotEquals(temp, testLayer1);
     }
 
-    @Test
-    void equals3() {
-        NodeLayer temp = new NodeLayer(nodeList, 0);
-        testLayer1.removeNode(temp.getNodePointer(0,0));
-
-        assertNotEquals(temp, testLayer1);
-    }
 
     //We test that our 2 test layers should not be equal because they have different times*/
     @Test

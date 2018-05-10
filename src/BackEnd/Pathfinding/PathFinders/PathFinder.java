@@ -30,8 +30,8 @@ public abstract class PathFinder {
     public PathFinder(SpaceTimeGrid spaceTimeGrid) {
         this.spaceTimeGrid = spaceTimeGrid;
         this.closedSet = new ArrayList<>();
-        this.heuristic = new Manhatten();
         //this.heuristic = new TrueDistance();
+        this.heuristic = new Manhatten();
         //We set the openSet to in worst case be cable of containing all nodes
         this.openSet = new PriorityQueue<>(spaceTimeGrid.getAllNodes().size(), new NodeComparator());
     }
@@ -178,14 +178,23 @@ public abstract class PathFinder {
 
     /*We use try catch to check if all the nodes we need to pick exist in the graph, or if they have been
     removed by other routes */
-    private boolean checkIfPickingIsPossible(Node current) {
+    private boolean checkIfPickingIsPossible(Node possibleEndPoint) {
+        boolean found;
+        Node current = possibleEndPoint;
+
         /*We add one to PICK_TIME because we need to make sure the next route also has a point to start on*/
         for(int i = 0; i < pickTime + 1; i++) {
-            try {
-                /*We add one extra to the time because we start at i=0, which does not help very much, because we
-                 * already know this node exists otherwise our pathFinder could not have gotten over to it*/
-                spaceTimeGrid.getNodePointer(current.getX(), current.getY(), (current.getTime() + i) + 1);
-            } catch (NodeDoesNotExistException e) {
+            Node next = spaceTimeGrid.getNodePointer(current.getX(), current.getY(), current.getTime() + 1);
+            found = false;
+            for(Node neighbourToCurrent : current.getNeighbourNodes()) {
+                //We check that the next node exists in the current neighbour list and haven't been removed
+                if(next.equals(neighbourToCurrent)) {
+                    current = next;
+                    found = true;
+                    break;
+                }
+            }
+            if(!found) {
                 return false;
             }
         }

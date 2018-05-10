@@ -26,7 +26,6 @@ import Warehouse.*;
 import java.util.*;
 
 public class WarehouseSimulation {
-
     private Warehouse warehouse;
     private int LENGTH_WAREHOUSE;
     private int WIDTH_WAREHOUSE;
@@ -59,7 +58,7 @@ public class WarehouseSimulation {
     private void setupOptimalRouteFinder() {
         SpaceTimeGrid grid = new SpaceTimeGrid(this.warehouse.getBaseLayer(), MAX_TIME);
         //this.optimalRouteFinder = new FastestRouteFinder(grid);
-        this.optimalRouteFinder = new ShortestRouteFinder(grid);
+        this.optimalRouteFinder = new FastestRouteFinder(grid);
     }
 
     private void addPicker(OrderPickerGraphic picker) {

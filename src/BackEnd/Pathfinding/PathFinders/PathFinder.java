@@ -1,19 +1,20 @@
-package BackEnd.Pathfinding;
+package BackEnd.Pathfinding.PathFinders;
 
 import BackEnd.Geometry.Node;
 import BackEnd.Geometry.NodeComparator;
 import BackEnd.Geometry.Point2D;
+import BackEnd.Graph.SpaceTimeGrid;
+import BackEnd.Pathfinding.PickingRoute;
 import Exceptions.NodeDoesNotExistException;
 import Exceptions.NodeLayerDoesNotExistException;
 import Exceptions.RouteNotPossibleException;
-import BackEnd.Graph.SpaceTimeGrid;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.PriorityQueue;
 
-public class PathFinder {
+public abstract class PathFinder {
     private SpaceTimeGrid spaceTimeGrid;
     private List<Node> closedSet;
     private PriorityQueue<Node> openSet;
@@ -103,13 +104,14 @@ public class PathFinder {
     }
 
     //Checks if there exists a better path through current node to its neighbours
-    private void checkDistanceThroughCurrentToNeighbour(Node current){
+    private void checkDistanceThroughCurrentToNeighbour(Node current) {
         for (Node neighbour : current.getNeighbourNodes()) {
             //We check if the current node is in the already checked nodes (closed set)
             if (closedSet.contains(neighbour)) {
                 continue;
             }
 
+            //Update distance through neighbour
             this.updateNeighbourDistanceFromStart(current, neighbour);
 
             if (!openSet.contains(neighbour)) {
@@ -118,41 +120,7 @@ public class PathFinder {
         }
     }
 
-    private void updateNeighbourDistanceFromStart(Node current, Node neighbour){
-        //Update distance through neighbour
-        if (current.getDistanceFromStart() + 1 < neighbour.getDistanceFromStart()) {
-            //A better path exists.
-            neighbour.setCameFrom(current);
-            neighbour.setDistanceFromStart(current.getDistanceFromStart() + 1); //We increase the distance to the start with 1
-        }
-    }
-
-    private void checkDistanceThroughCurrentToNeighbourNoWaitTimePunishment(Node current){
-        for (Node neighbour : current.getNeighbourNodes()) {
-            //We check if the current node is in the already checked nodes (closed set)
-            if (closedSet.contains(neighbour)) {
-                continue;
-            }
-
-            //Update distance through neighbour
-            this.updateNeighbourDistanceFromStartNoWaitTimePunishment(current, neighbour);
-
-            if (!openSet.contains(neighbour)) {
-                openSet.add(neighbour);
-            }
-        }
-    }
-
-    private void updateNeighbourDistanceFromStartNoWaitTimePunishment(Node current, Node neighbour) {
-        if (current.getDistanceFromStart() + 1 < neighbour.getDistanceFromStart()) {
-            neighbour.setCameFrom(current);
-            if(current.getX() == neighbour.getX() && current.getY() == neighbour.getY()) {
-                neighbour.setDistanceFromStart(current.getDistanceFromStart()); //Here we don't punish for waiting.
-            } else {
-                neighbour.setDistanceFromStart(current.getDistanceFromStart() + 1);
-            }
-        }
-    }
+    abstract void updateNeighbourDistanceFromStart(Node current, Node neighbour);
 
     //Constructs the shortest route as a list of nodes
     private PickingRoute constructPath() {
@@ -206,7 +174,7 @@ public class PathFinder {
                 return;
             }
         }
-        throw new RouteNotPossibleException("The start point was placed outside the SpaceTimeGrid");
+        throw new RouteNotPossibleException("The start point was placed outside the SpaceTimeGrid: (" + startNode.getX() + ";" + startNode.getY() + ")");
     }
     private void checkEndNode() {
         //We check that the endNode is inside the grid
@@ -215,7 +183,7 @@ public class PathFinder {
                 return;
             }
         }
-        throw new RouteNotPossibleException("The start point was placed outside the SpaceTimeGrid");
+        throw new RouteNotPossibleException("The end point was placed outside the SpaceTimeGrid: (" + endNode.getX() + ";" + endNode.getY() + ")");
     }
 
     private void checkStartTime() {

@@ -1,15 +1,17 @@
-package BackEnd.Pathfinding;
+package BackEnd.Pathfinding.OptimalRouteFinders;
 
 import BackEnd.Geometry.Node;
-import BackEnd.Geometry.Point2D;
-import Exceptions.RouteNotPossibleException;
-import BackEnd.Graph.SpaceTimeGrid;
 import BackEnd.Geometry.PickingPoint;
+import BackEnd.Geometry.Point2D;
+import BackEnd.Graph.SpaceTimeGrid;
+import BackEnd.Pathfinding.PathFinders.PathFinder;
+import BackEnd.Pathfinding.PickingRoute;
+import Exceptions.RouteNotPossibleException;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class OptimalRouteFinder {
+public abstract class OptimalRouteFinder {
     private final int WAIT_TIME_BETWEEN_PICKERS = 3;
     private int startTime;
     private SpaceTimeGrid spaceTimeGrid;
@@ -34,10 +36,22 @@ public class OptimalRouteFinder {
         this.reset();
     }
 
-    public void reset() {
-        this.pathFinder = new PathFinder(new SpaceTimeGrid(this.spaceTimeGrid.getBaseLayer(), this.spaceTimeGrid.getMaxTime()));
-        this.amountPickersInGraph = 0;
-        this.startTime = 0;
+    public abstract void reset();
+
+    SpaceTimeGrid getSpaceTimeGrid() {
+        return spaceTimeGrid;
+    }
+
+    public void setPathFinder(PathFinder pathFinder) {
+        this.pathFinder = pathFinder;
+    }
+
+    void setStartTime(int startTime) {
+        this.startTime = startTime;
+    }
+
+    void setAmountPickersInGraph(int amountPickersInGraph) {
+        this.amountPickersInGraph = amountPickersInGraph;
     }
 
     //TODO: problemer med picking points bliver lavet om når vi har 700 - 970
@@ -61,7 +75,7 @@ public class OptimalRouteFinder {
 
 
     /*Our recursive function that calls itself with a smaller and smaller version of the list of remaining pick points
-    * and a bigger currRoute plus a new start point*/
+     * and a bigger currRoute plus a new start point*/
     private void bestRouteOfAllRoutes(Point2D currStart, List<PickingPoint> remainingPickingPoints, PickingRoute currRoute) {
         try {
             //Calculates the total time travelled so far
@@ -89,7 +103,7 @@ public class OptimalRouteFinder {
                     nextRoute.addPickPoint(nextPickPoint);
 
                     /*Creates a new list that doesn't include the (just added) next pick point, because we can't remove
-                    * it from the list we are iterating through */
+                     * it from the list we are iterating through */
                     List<PickingPoint> nextList = new ArrayList<>(remainingPickingPoints);
                     nextList.remove(nextPickPoint);
 

@@ -3,7 +3,7 @@ package WarehouseSimulation.GraphicalObjects;
 import BackEnd.Geometry.*;
 import BackEnd.Graph.BaseLayer;
 import BackEnd.Graph.SpaceTimeGrid;
-import BackEnd.Pathfinding.OptimalRouteFinder;
+import BackEnd.Pathfinding.OptimalRouteFinders.FastestRouteFinder;
 import BackEnd.Pathfinding.PickingRoute;
 import Warehouse.*;
 
@@ -24,12 +24,12 @@ public class GenerateTestPickingRoute {
 
     public void createRoute1() {
         List<PickingPoint> pickPoints = new ArrayList<>();
-        OptimalRouteFinder routeFinder;
+        FastestRouteFinder routeFinder;
 
         Warehouse testWarehouse = new Dexion();
         BaseLayer baseLayer = testWarehouse.getBaseLayer();
         SpaceTimeGrid spaceTimeGrid = new SpaceTimeGrid(baseLayer, 500);
-        routeFinder = new OptimalRouteFinder(spaceTimeGrid);
+        routeFinder = new FastestRouteFinder(spaceTimeGrid);
 
         pickPoints.add(new PickingPoint(new Point2D(6,1), new Product(1)));
         pickPoints.add(new PickingPoint(new Point2D(6,1), new Product(1)));
@@ -40,12 +40,12 @@ public class GenerateTestPickingRoute {
 
     public void createRoute2() {
         List<PickingPoint> pickPoints = new ArrayList<>();
-        OptimalRouteFinder routeFinder;
+        FastestRouteFinder routeFinder;
 
         Warehouse testWarehouse = new Dexion();
         BaseLayer baseLayer = testWarehouse.getBaseLayer();
         SpaceTimeGrid spaceTimeGrid = new SpaceTimeGrid(baseLayer, 500);
-        routeFinder = new OptimalRouteFinder(spaceTimeGrid);
+        routeFinder = new FastestRouteFinder(spaceTimeGrid);
 
         pickPoints.add(new PickingPoint(new Point2D(8,1), new Product(1)));
         pickPoints.add(new PickingPoint(new Point2D(34,1), new Product(1)));

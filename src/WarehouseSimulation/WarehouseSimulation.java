@@ -1,7 +1,7 @@
 package WarehouseSimulation;
 
 import BackEnd.Geometry.PickingPoint;
-import BackEnd.Pathfinding.OptimalRouteFinder;
+import BackEnd.Pathfinding.OptimalRouteFinders.FastestRouteFinder;
 import BackEnd.Pathfinding.PickingRoute;
 import Exceptions.IllegalTextInputException;
 import BackEnd.Graph.SpaceTimeGrid;
@@ -29,7 +29,7 @@ public class WarehouseSimulation {
     private int LENGTH_WAREHOUSE;
     private int WIDTH_WAREHOUSE;
     // Path finder
-    private OptimalRouteFinder pathFinder;
+    private FastestRouteFinder pathFinder;
     private final int MAX_TIME = 500;
     private Group orderPickerGroup;
     private List<OrderPickerGraphic> orderPickerList;
@@ -56,7 +56,7 @@ public class WarehouseSimulation {
 
     private void setupPathFinder() {
         SpaceTimeGrid grid = new SpaceTimeGrid(this.warehouse.getBaseLayer(), MAX_TIME);
-        this.pathFinder = new OptimalRouteFinder(grid);
+        this.pathFinder = new FastestRouteFinder(grid);
     }
 
     private void addPicker(OrderPickerGraphic picker) {

@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Manhatten implements Heuristic{
     @Override
-    public void setDistanceToEnd(List<Node> allNodes, Node endNode) {
+    public void findDistanceToEndForAllNodes(List<Node> allNodes, Node endNode) {
         for(Node node : allNodes) {
             int xDistance = Math.abs(endNode.getX() - node.getX());
             int yDistance = Math.abs(endNode.getY() - node.getY());

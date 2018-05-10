@@ -6,5 +6,5 @@ import BackEnd.Graph.BaseLayer;
 import java.util.List;
 
 public interface Heuristic {
-    void setDistanceToEnd(List<Node> allNodes, Node endNode);
+    void findDistanceToEndForAllNodes(List<Node> allNodes, Node endNode);
 }

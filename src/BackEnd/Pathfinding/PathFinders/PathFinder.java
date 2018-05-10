@@ -8,7 +8,6 @@ import BackEnd.Pathfinding.Heuristics.Heuristic;
 import BackEnd.Pathfinding.Heuristics.Manhatten;
 import BackEnd.Pathfinding.PickingRoute;
 import Exceptions.NodeDoesNotExistException;
-import Exceptions.NodeLayerDoesNotExistException;
 import Exceptions.RouteNotPossibleException;
 
 import java.util.ArrayList;
@@ -101,7 +100,7 @@ public abstract class PathFinder {
             }
         }
         // All nodes gets an estimated distance to the end node
-        heuristic.setDistanceToEnd(spaceTimeGrid.getAllNodes(), endNode);
+        heuristic.findDistanceToEndForAllNodes(spaceTimeGrid.getAllNodes(), endNode);
     }
 
     private void calculateFastestPath() {

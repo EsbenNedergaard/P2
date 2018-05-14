@@ -5,7 +5,6 @@ import Exceptions.UnplacedRackException;
 import BackEnd.Geometry.Point2D;
 import Warehouse.Product;
 import Warehouse.Shelf;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -77,9 +76,6 @@ public class Rack {
     }
 
     public Point2D getRackPosition() {
-        if(rackPosition.equals(new Point2D(-1, -1)))
-            throw new UnplacedRackException();
-
         return rackPosition;
     }
 

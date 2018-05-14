@@ -69,7 +69,6 @@ public class Dexion implements Warehouse {
         }
     }
 
-
     @Override
     public List<RackRow> getRackRowList() {
         List<RackRow> tempRackRowList = new ArrayList<>();

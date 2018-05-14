@@ -19,7 +19,6 @@ public class RouteFinder {
     private SpaceTimeGrid spaceTimeGrid;
     private Point2D routeStartPoint;
     private Point2D routeEndPoint;
-    private PickingRoute bestRoute;
     private PathFinder pathFinder;
     private int amountPickersInGraph;
 
@@ -58,9 +57,9 @@ public class RouteFinder {
     //Method that calculates the best route for the pickingList that it is given
     public PickingRoute calculateBestRoute(List<PickingPoint> pickingList) {
         this.startTime = amountPickersInGraph * WAIT_TIME_BETWEEN_PICKERS;
-        this.bestRoute = new PickingRoute();
-        PickingRoute initialRoute = new PickingRoute();
-        bestRouteOfAllRoutes(routeStartPoint, pickingList, initialRoute);
+        PickingRoute bestRoute = new PickingRoute();
+        bestRoute = bestRouteOfAllRoutes(routeStartPoint, pickingList, bestRoute);
+
 
         //TODO: få lavet så SpaceTimeGrid tager en pickingRoute i stedet.
         pathFinder.getSpaceTimeGrid().removeRoute(bestRoute.getRoute());
@@ -73,39 +72,40 @@ public class RouteFinder {
     }
 
 
-
     /*Our recursive function that calls itself with a smaller and smaller version of the list of remaining pick points
      * and a bigger currRoute plus a new start point*/
-    private void bestRouteOfAllRoutes(Point2D currStart, List<PickingPoint> remainingPickingPoints, PickingRoute currRoute) throws RouteNotPossibleException {
+    private PickingRoute bestRouteOfAllRoutes(Point2D currStart, List<PickingPoint> remainingPickingPoints, PickingRoute currRoute) throws RouteNotPossibleException {
         int timeTravelledSinceStart = currRoute.getRouteLength() + startTime;
+        PickingRoute bestRoute = new PickingRoute();
 
-        if(remainingPickingPoints.isEmpty()) {
+        if (remainingPickingPoints.isEmpty()) {
             //Adds the path from last picking point to delivery area
             currRoute.addOtherRoute(pathFinder.findFastestPath(currStart, routeEndPoint, timeTravelledSinceStart).getRoute());
+            return currRoute;
+        }
+        for (PickingPoint nextPickPoint : remainingPickingPoints) { //Iterates through all remaining picking points
+            PickingRoute nextRoute = new PickingRoute(currRoute);
+            //Adds the path from current picking point to next picking point
+            nextRoute.addOtherRoute(pathFinder.findFastestPath(currStart, nextPickPoint, timeTravelledSinceStart, nextPickPoint.getPickTime()).getRoute());
 
-            //Checks if the new route is shorter than the previous found routes
-            if(bestRoute.getRouteLength() == 0 || currRoute.getRouteLength() < bestRoute.getRouteLength()){
-                bestRoute = new PickingRoute(currRoute);
-            }
-        } else {
-            for (PickingPoint nextPickPoint : remainingPickingPoints) { //Iterates through all remaining picking points
-                PickingRoute nextRoute = new PickingRoute(currRoute);
-                //Adds the path from current picking point to next picking point
-                nextRoute.addOtherRoute(pathFinder.findFastestPath(currStart, nextPickPoint, timeTravelledSinceStart, nextPickPoint.getPickTime()).getRoute());
+            //Adds time for picking on next pick point
+            nextRoute.addPickingToRouteEnd(pathFinder.getSpaceTimeGrid(), nextPickPoint.getPickTime());
+            //Then we add the pick point to this routes list
+            nextRoute.addPickPoint(nextPickPoint);
 
-                //Adds time for picking on next pick point
-                nextRoute.addPickingToRouteEnd(pathFinder.getSpaceTimeGrid(), nextPickPoint.getPickTime());
-                //Then we add the pick point to this routes list
-                nextRoute.addPickPoint(nextPickPoint);
+            /*Creates a new list that doesn't include the (just added) next pick point, because we can't remove
+             * it from the list we are iterating through */
+            List<PickingPoint> nextList = new ArrayList<>(remainingPickingPoints);
+            nextList.remove(nextPickPoint);
 
-                /*Creates a new list that doesn't include the (just added) next pick point, because we can't remove
-                 * it from the list we are iterating through */
-                List<PickingPoint> nextList = new ArrayList<>(remainingPickingPoints);
-                nextList.remove(nextPickPoint);
+            //Function calls itself with remaining picking points to be visited
+            nextRoute = bestRouteOfAllRoutes(nextPickPoint, nextList, nextRoute);
 
-                //Function calls itself with remaining picking points to be visited
-                bestRouteOfAllRoutes(nextPickPoint, nextList, nextRoute);
+            //Found route is the fastest found so far
+            if (nextRoute.getRouteLength() < bestRoute.getRouteLength() || bestRoute.getRouteLength() == 0) {
+                bestRoute = new PickingRoute(nextRoute);
             }
         }
+        return bestRoute;
     }
 }

@@ -17,6 +17,8 @@ public class Dexion implements Warehouse {
     private int width;
     private List<Aisle> aisleList;
     private List<Node> nodeList;
+    private Point2D routeStartPoint;
+    private Point2D routeEndPoint;
 
     private static final int AISLE_LENGTH = 34;
     private static final int AISLE_PADDING = 5;
@@ -28,6 +30,7 @@ public class Dexion implements Warehouse {
         createNodeGrid();
         createAisleList();
         createProducts();
+        setStartAndEndPoints(new Point2D(0, 4), new Point2D(0, 6));
     }
 
     private void createNodeGrid(){
@@ -69,6 +72,11 @@ public class Dexion implements Warehouse {
         }
     }
 
+    private void setStartAndEndPoints(Point2D routeStartPoint, Point2D routeEndPoint) {
+        this.routeStartPoint = routeStartPoint;
+        this.routeEndPoint = routeEndPoint;
+    }
+
     @Override
     public List<RackRow> getRackRowList() {
         List<RackRow> tempRackRowList = new ArrayList<>();
@@ -87,6 +95,16 @@ public class Dexion implements Warehouse {
         }
 
         return pickingPointList;
+    }
+
+    @Override
+    public Point2D getRouteStartPoint() {
+        return routeStartPoint;
+    }
+
+    @Override
+    public Point2D getRouteEndPoint() {
+        return routeEndPoint;
     }
 
     @Override

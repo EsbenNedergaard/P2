@@ -11,6 +11,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 public class WarehouseGraphics {
 
@@ -53,4 +54,13 @@ public class WarehouseGraphics {
 
         return rackRowGroup;
     }
+
+    public Group createStartAndEndPoints(Point2D startPoint, Point2D endPoint) {
+        Group pointGroup = new Group();
+        TileFill startFill = new TileFill("#49eb41", startPoint);
+        TileFill endFill = new TileFill("#ee4a2f", endPoint);
+        pointGroup.getChildren().addAll(startFill, endFill);
+        return pointGroup;
+    }
+
 }

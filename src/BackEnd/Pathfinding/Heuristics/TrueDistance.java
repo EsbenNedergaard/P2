@@ -1,10 +1,8 @@
 package BackEnd.Pathfinding.Heuristics;
 
 import BackEnd.Geometry.Node;
-import BackEnd.Graph.BaseLayer;
 import BackEnd.Graph.NodeLayer;
 import BackEnd.Graph.SpaceTimeGrid;
-import Exceptions.NodeDoesNotExistException;
 
 import java.util.List;
 
@@ -26,8 +24,9 @@ public class TrueDistance implements Heuristic {
 
 
         int baseLayerSize = baseLayerNodeList.size();
-        //BURDE SORTE DEM FØRST FOR EN SIKKERHEDSSKYLD
+        //BURDE SORTE NODERNE FØRST FOR EN SIKKERHEDSSKYLD
         for(NodeLayer nodeLayer : spaceTimeGrid.getNodeLayerList()) {
+            //We run through all the nodes in the layer and set the distance to end, to be the same as for the baseLayer
             for(int i = 0; i < baseLayerSize; i++) {
                 nodeLayer.getNodeList().get(i).setDistanceToEnd(baseLayerNodeList.get(i).getDistanceToEnd());
             }

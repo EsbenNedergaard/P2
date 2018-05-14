@@ -17,6 +17,8 @@ import java.util.List;
 public class GenerateTestPickingRoute {
     PickingRoute route1;
     PickingRoute route2;
+    private Point2D routeStartPoint = new Point2D(0, 5);
+    private Point2D routeEndPoint = new Point2D(0, 6);
 
     public GenerateTestPickingRoute() {
         createRoute1();
@@ -29,7 +31,7 @@ public class GenerateTestPickingRoute {
         Warehouse testWarehouse = new Dexion();
         BaseLayer baseLayer = testWarehouse.getBaseLayer();
         SpaceTimeGrid spaceTimeGrid = new SpaceTimeGrid(baseLayer, 500);
-        routeFinder = new FastestRouteFinder(spaceTimeGrid);
+        routeFinder = new FastestRouteFinder(spaceTimeGrid, routeStartPoint, routeEndPoint);
 
         pickPoints.add(new PickingPoint(new Point2D(6,1), new Product(1)));
         pickPoints.add(new PickingPoint(new Point2D(6,1), new Product(1)));
@@ -45,7 +47,7 @@ public class GenerateTestPickingRoute {
         Warehouse testWarehouse = new Dexion();
         BaseLayer baseLayer = testWarehouse.getBaseLayer();
         SpaceTimeGrid spaceTimeGrid = new SpaceTimeGrid(baseLayer, 500);
-        routeFinder = new FastestRouteFinder(spaceTimeGrid);
+        routeFinder = new FastestRouteFinder(spaceTimeGrid, routeStartPoint, routeEndPoint);
 
         pickPoints.add(new PickingPoint(new Point2D(8,1), new Product(1)));
         pickPoints.add(new PickingPoint(new Point2D(34,1), new Product(1)));

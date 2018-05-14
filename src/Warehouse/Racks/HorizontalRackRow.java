@@ -14,13 +14,13 @@ public class HorizontalRackRow implements RackRow {
     private int rackRowLength;
     private List<Rack> rackList;
 
-    public HorizontalRackRow(Point2D startPoint, int rackRowLength, int maxAmtInSingleRack) {
+    public HorizontalRackRow(Point2D startPoint, int rackRowLength, int numberOfShelvesInSingleRack) {
         this.startPoint = startPoint;
         this.rackRowLength = rackRowLength;
         this.rackList = new ArrayList<>();
 
         for(int i = 0; i < rackRowLength; i++) {
-            rackList.add(new Rack(maxAmtInSingleRack, new Point2D(startPoint.getX() + i, startPoint.getY())));
+            rackList.add(new Rack(numberOfShelvesInSingleRack, new Point2D(startPoint.getX() + i, startPoint.getY())));
         }
     }
 

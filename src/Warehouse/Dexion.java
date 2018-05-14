@@ -18,8 +18,8 @@ public class Dexion implements Warehouse {
     private List<Aisle> aisleList;
     private List<Node> nodeList;
 
-    private static final int AISLE_LENGTH = 36;
-    private static final int AISLE_PADDING = 4;
+    private static final int AISLE_LENGTH = 34;
+    private static final int AISLE_PADDING = 5;
 
 
     public Dexion() {

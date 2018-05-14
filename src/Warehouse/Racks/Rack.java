@@ -4,18 +4,23 @@ import Warehouse.Exceptions.FullRackException;
 import Exceptions.UnplacedRackException;
 import BackEnd.Geometry.Point2D;
 import Warehouse.Product;
+import Warehouse.Shelf;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class Rack {
-    private int maxAmtProductsInRack;
-    private List<Product> productList = new ArrayList<>();
+    private List<Shelf> shelfList = new ArrayList<>();
+    private int amountOfShelvesInRack;
     private Point2D rackPosition;
 
-    public Rack(int maxAmtProductsInRack, Point2D rackPosition) {
-        this.maxAmtProductsInRack = maxAmtProductsInRack;
+    public Rack(int amountOfShelvesInRack, Point2D rackPosition) {
+        this.amountOfShelvesInRack = amountOfShelvesInRack;
         this.rackPosition = rackPosition;
+
+        for (int i = 0; i < amountOfShelvesInRack; i++) {
+            shelfList.add(new Shelf());
+        }
     }
 
     public void addProduct(Product product) {
@@ -23,31 +28,51 @@ public class Rack {
             throw new FullRackException("This rack is already full");
         }
         product.setRack(this);
-        this.productList.add(product);
+
+        for (Shelf shelf : shelfList) {
+            if (!shelf.containsProduct()) {
+                shelf.setProduct(product);
+                return;
+            }
+        }
     }
 
     public boolean doesItContainProduct(Product product) {
-        for (Product productElement : productList) {
-            if(productElement.equals(product))
+        for (Shelf shelf : shelfList) {
+            if(product.equals(shelf.getProduct()))
                 return true;
         }
         return false;
     }
 
     public boolean checkIfFull(){
-        return productList.size() >= maxAmtProductsInRack;
+        for (Shelf shelf : shelfList) {
+            if (!shelf.containsProduct()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public List<Product> getProductList(){
-        return this.productList;
+        List<Product> productList = new ArrayList<>();
+
+        for (Shelf shelf : shelfList) {
+            if (shelf.containsProduct()) {
+                productList.add(shelf.getProduct());
+            }
+        }
+
+        return productList;
     }
 
-    public Product getProduct(int ListIndex) {
-        return productList.get(ListIndex);
+    public Product getProduct(int shelfIndex) {
+        return shelfList.get(shelfIndex).getProduct();
     }
 
-    public int getMaxAmtProductsInRack() {
-        return this.maxAmtProductsInRack;
+    public int getAmountOfShelvesInRack() {
+        return this.amountOfShelvesInRack;
     }
 
     public Point2D getRackPosition() {

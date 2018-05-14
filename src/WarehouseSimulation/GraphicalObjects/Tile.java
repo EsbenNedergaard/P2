@@ -21,4 +21,3 @@ public class Tile extends Rectangle {
         setStrokeWidth(0.5);
     }
 }
-

@@ -31,21 +31,6 @@ public class Product {
         return getRack().getRackPosition();
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
-    @Override
-    public boolean equals(Object that) {
-        // Two product objects are equal if they have the same ID
-        if(this == that) return true;
-        if(that == null || this.getClass() != that.getClass()) return false;
-
-        Product product = (Product) that;
-
-        return product.getId() == this.id;
-    }
 
     public int getShelfIndex() {
         if(getRack() == null)
@@ -62,4 +47,21 @@ public class Product {
 
         throw new ProductNotInRackException();
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        // Two product objects are equal if they have the same ID
+        if(this == that) return true;
+        if(that == null || this.getClass() != that.getClass()) return false;
+
+        Product product = (Product) that;
+
+        return product.getId() == this.id;
+    }
+
 }

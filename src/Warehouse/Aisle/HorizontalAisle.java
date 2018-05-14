@@ -123,11 +123,6 @@ public class HorizontalAisle implements Aisle {
     }
 
     @Override
-    public boolean doesItContainProductID(int id) {
-        return false;
-    }
-
-    @Override
     public void addProduct(Product e) {
         for (RackRow rackRowElement : this.getRackRowList()) {
             for (Rack rackElement : rackRowElement.getRackList()) {

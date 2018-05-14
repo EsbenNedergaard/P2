@@ -3,7 +3,6 @@ package WarehouseSimulation;
 import BackEnd.Geometry.PickingPoint;
 import BackEnd.Pathfinding.RouteFinders.FastestRouteFinder;
 import BackEnd.Pathfinding.RouteFinders.RouteFinder;
-import BackEnd.Pathfinding.RouteFinders.ShortestRouteFinder;
 import BackEnd.Pathfinding.PickingRoute;
 import Exceptions.IllegalTextInputException;
 import BackEnd.Graph.SpaceTimeGrid;
@@ -78,7 +77,7 @@ public class WarehouseSimulation {
         Button addRouteButton = interactionGraphics.getAddDataButton();
         Button launchButton = interactionGraphics.getLaunchButton();
         Button resetAllButton = interactionGraphics.getResetAllButton();
-        Button startOverButton = interactionGraphics.getStartOverButton();
+        Button startOverButton = interactionGraphics.getReLaunchButton();
         TextField inputField = interactionGraphics.getInputField();
         Table table = interactionGraphics.getTableView();
 

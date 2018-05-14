@@ -12,12 +12,10 @@ public class Rack {
     private int maxAmtProductsInRack;
     private List<Product> productList = new ArrayList<>();
     private Point2D rackPosition;
-    private boolean isTopRackRow;
 
     public Rack(int maxAmtProductsInRack, Point2D rackPosition) {
         this.maxAmtProductsInRack = maxAmtProductsInRack;
         this.rackPosition = rackPosition;
-        //this.isTopRackRow = isTopRackRow;
     }
 
     public void addProduct(Product product) {
@@ -53,9 +51,6 @@ public class Rack {
     }
 
     public Point2D getRackPosition() {
-        if(rackPosition.equals(new Point2D(-1, -1)))
-            throw new UnplacedRackException();
-
         return rackPosition;
     }
 

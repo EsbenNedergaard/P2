@@ -62,11 +62,11 @@ public class HorizontalAisle implements Aisle {
         return this.startPoint;
     }
 
-    public RackRow getTopRackRow() {
+    private RackRow getTopRackRow() {
         return this.topRackRow;
     }
 
-    public RackRow getBottomRackRow() {
+    private RackRow getBottomRackRow() {
         return this.bottomRackRow;
     }
 

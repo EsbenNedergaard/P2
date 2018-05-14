@@ -2,6 +2,7 @@ package Warehouse.Racks;
 
 import Warehouse.Exceptions.FullRackException;
 import BackEnd.Geometry.Point2D;
+import Warehouse.Exceptions.FullRackRowException;
 import Warehouse.Product;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -97,7 +98,7 @@ class HorizontalRackRowTest {
         testRow.addProduct(product3);
         testRow.addProduct(product4);
 
-        assertThrows(FullRackException.class, ()-> testRow.addProduct(product5));
+        assertThrows(FullRackRowException.class, ()-> testRow.addProduct(product5));
     }
 
     @Test

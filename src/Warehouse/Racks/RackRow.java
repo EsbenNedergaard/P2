@@ -8,8 +8,8 @@ import java.util.List;
 public interface RackRow {
     boolean isHorizontal();
 
-    void addProduct(Product e);
-    void addProductToRack(Product product, int rackIndex);
+    boolean addProduct(Product e);
+    boolean addProductToRack(Product product, int rackIndex);
 
     int doesItContainProduct(Product e);
 

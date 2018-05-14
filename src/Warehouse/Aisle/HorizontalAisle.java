@@ -42,7 +42,8 @@ public class HorizontalAisle implements Aisle {
         for(Node n : nodeGrid) {
             for(RackRow rackRow : getRackRowList()) {
                 for(Rack rack : rackRow.getRackList()) {
-                    if (n.getX() == rack.getXCoordinate() && n.getY() == rack.getYCoordinate()) {
+                    Point2D rackPoint = rack.getRackPosition();
+                    if (n.getX() == rackPoint.getX() && n.getY() == rackPoint.getY()) {
                         n.setNodeType(OBSTACLE);
                         break; //We jump out of the inner loop
                     }

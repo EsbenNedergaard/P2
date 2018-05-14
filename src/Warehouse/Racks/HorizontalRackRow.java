@@ -2,6 +2,7 @@ package Warehouse.Racks;
 
 import Warehouse.Exceptions.FullRackException;
 import BackEnd.Geometry.Point2D;
+import Warehouse.Exceptions.FullRackRowException;
 import Warehouse.Product;
 
 import java.util.ArrayList;
@@ -29,19 +30,22 @@ public class HorizontalRackRow implements RackRow {
     }
 
     @Override
-    public void addProduct(Product e) {
+    public boolean addProduct(Product e) {
         for (Rack rackElement : rackList) {
             if (!rackElement.checkIfFull()) {
                 rackElement.addProduct(e);
-                return;
+                return true;
             }
         }
-        throw new FullRackException("This rackrow is already full");
+        throw new FullRackRowException("This rackrow is already full");
     }
 
     @Override
-    public void addProductToRack(Product product, int rackIndex) {
+    public boolean addProductToRack(Product product, int rackIndex) throws FullRackException{
         rackList.get(rackIndex).addProduct(product);
+
+        //We only get here if the rack is not full otherwise it will throw an fullRackException
+        return true;
     }
 
     @Override

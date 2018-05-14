@@ -52,29 +52,12 @@ public class Rack {
         return this.maxAmtProductsInRack;
     }
 
-
-    public int getXCoordinate() {
-        if(rackPosition.equals(new Point2D(-1, -1)))
-            throw new UnplacedRackException();
-
-        return this.rackPosition.getX();
-    }
-
-    public int getYCoordinate() {
-        if(rackPosition.equals(new Point2D(-1, -1)))
-            throw new UnplacedRackException();
-
-        return this.rackPosition.getY();
-    }
-
     public Point2D getRackPosition() {
         if(rackPosition.equals(new Point2D(-1, -1)))
             throw new UnplacedRackException();
 
         return rackPosition;
     }
-
-
 
     @Override
     public int hashCode() {

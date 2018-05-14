@@ -22,10 +22,10 @@ public abstract class RouteFinder {
     private int amountPickersInGraph;
 
 
-    public RouteFinder(SpaceTimeGrid grid) {
+    public RouteFinder(SpaceTimeGrid grid, Point2D routeStartPoint, Point2D routeEndPoint) {
         this.spaceTimeGrid = grid;
-        this.routeStartPoint = new Node(new Point2D(0, 5));
-        this.routeEndPoint = new Node(new Point2D(0, 6));
+        this.routeStartPoint = new Node(routeStartPoint);
+        this.routeEndPoint = new Node(routeEndPoint);
         this.reset();
     }
 

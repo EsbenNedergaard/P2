@@ -21,6 +21,7 @@ import static BackEnd.Geometry.NodeType.OBSTACLE;
  * pickPointList because we know which rackRow is top rackRow, and which is bottom rackRow. This info is needed so
  * we can place the pickPoint over or under the rackRow*/
 public class HorizontalAisle implements Aisle {
+    private final int SHELVES_PER_RACK = 8;
     private int aisleLength;
     private Point2D startPoint;
     private RackRow topRackRow;
@@ -31,10 +32,10 @@ public class HorizontalAisle implements Aisle {
         this.aisleLength = aisleLength;
         this.startPoint = startPoint;
 
-        Point2D topRackRowStartPoint = new Point2D(startPoint.getX() + 1, startPoint.getY() - 1);
-        Point2D bottomRackRowStartPoint = new Point2D(startPoint.getX() + 1, startPoint.getY() + 1);
-        topRackRow = new HorizontalRackRow(topRackRowStartPoint, aisleLength - 2, 8);
-        bottomRackRow = new HorizontalRackRow(bottomRackRowStartPoint, aisleLength - 2,8);
+        Point2D topRackRowStartPoint = new Point2D(startPoint.getX(), startPoint.getY() - 1);
+        Point2D bottomRackRowStartPoint = new Point2D(startPoint.getX(), startPoint.getY() + 1);
+        topRackRow = new HorizontalRackRow(topRackRowStartPoint, aisleLength, SHELVES_PER_RACK);
+        bottomRackRow = new HorizontalRackRow(bottomRackRowStartPoint, aisleLength,SHELVES_PER_RACK);
 }
 
     @Override

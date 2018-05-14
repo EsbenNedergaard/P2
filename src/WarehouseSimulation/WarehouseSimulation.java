@@ -1,6 +1,7 @@
 package WarehouseSimulation;
 
 import BackEnd.Geometry.PickingPoint;
+import BackEnd.Geometry.Point2D;
 import BackEnd.Pathfinding.RouteFinders.FastestRouteFinder;
 import BackEnd.Pathfinding.RouteFinders.RouteFinder;
 import BackEnd.Pathfinding.PickingRoute;
@@ -40,6 +41,8 @@ public class WarehouseSimulation {
     // Animation programTimer
     private AnimationTimer programTimer;
     private int UPDATE_COUNTER = 0;
+    private Point2D routeStartPoint;
+    private Point2D routeEndPoint;
 
     public WarehouseSimulation(Warehouse warehouse) {
         this.warehouse = warehouse;
@@ -54,8 +57,10 @@ public class WarehouseSimulation {
 
     private void setupOptimalRouteFinder() {
         SpaceTimeGrid grid = new SpaceTimeGrid(this.warehouse.getBaseLayer(), MAX_TIME);
+        this.routeStartPoint = new Point2D(0, 5);
+        this.routeEndPoint = new Point2D(0, 6);
         //this.routeFinder = new ShortestRouteFinder(grid);
-        this.routeFinder = new FastestRouteFinder(grid);
+        this.routeFinder = new FastestRouteFinder(grid, routeStartPoint, routeEndPoint);
     }
 
     private void addPicker(OrderPickerGraphic picker) {

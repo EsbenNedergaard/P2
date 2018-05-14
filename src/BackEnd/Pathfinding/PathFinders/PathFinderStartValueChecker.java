@@ -4,7 +4,7 @@ import BackEnd.Geometry.Node;
 import Exceptions.NodeLayerDoesNotExistException;
 import Exceptions.RouteNotPossibleException;
 
-public class StartValueChecker {
+public class PathFinderStartValueChecker {
     static public void checkValues(PathFinder pathFinder){
         checkStartNode(pathFinder);
         checkEndNode(pathFinder);

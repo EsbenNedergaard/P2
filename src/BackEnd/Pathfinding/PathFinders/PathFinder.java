@@ -5,10 +5,8 @@ import BackEnd.Geometry.NodeComparator;
 import BackEnd.Geometry.Point2D;
 import BackEnd.Graph.SpaceTimeGrid;
 import BackEnd.Pathfinding.Heuristics.Heuristic;
-import BackEnd.Pathfinding.Heuristics.Manhatten;
 import BackEnd.Pathfinding.Heuristics.TrueDistance;
 import BackEnd.Pathfinding.PickingRoute;
-import Exceptions.NodeDoesNotExistException;
 import Exceptions.RouteNotPossibleException;
 
 import java.util.ArrayList;
@@ -62,7 +60,7 @@ public abstract class PathFinder {
         this.startTime = startTime;
         this.pickTime = 0;
 
-        StartValueChecker.checkValues(this);
+        PathFinderStartValueChecker.checkValues(this);
         this.setStartValues();
         this.calculateFastestPath();
 
@@ -76,7 +74,7 @@ public abstract class PathFinder {
         this.pickTime = pickTime;
 
         //Checks and then sets starting values, and calculate the path
-        StartValueChecker.checkValues(this);
+        PathFinderStartValueChecker.checkValues(this);
         this.setStartValues();
         this.calculateFastestPath();
 

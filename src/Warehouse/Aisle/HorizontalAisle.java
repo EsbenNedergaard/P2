@@ -2,7 +2,8 @@ package Warehouse.Aisle;
 
 
 import BackEnd.Geometry.PickingPoint;
-import Exceptions.FullRackException;
+import Warehouse.Exceptions.FullAisleException;
+import Warehouse.Exceptions.FullRackException;
 import BackEnd.Geometry.Node;
 import BackEnd.Geometry.Point2D;
 import Warehouse.Product;
@@ -123,15 +124,10 @@ public class HorizontalAisle implements Aisle {
     }
 
     @Override
-    public void addProduct(Product e) {
+    public boolean addProduct(Product e) {
         for (RackRow rackRowElement : this.getRackRowList()) {
-            for (Rack rackElement : rackRowElement.getRackList()) {
-                if (!rackElement.checkIfFull()) {
-                    rackElement.addProduct(e);
-                    return;
-                }
-            }
+            rackRowElement.addProduct(e);
         }
-        throw new FullRackException("This aisle is already full");
+        throw new FullAisleException("This aisle is already full");
     }
 }

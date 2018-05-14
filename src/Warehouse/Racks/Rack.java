@@ -1,6 +1,6 @@
 package Warehouse.Racks;
 
-import Exceptions.FullRackException;
+import Warehouse.Exceptions.FullRackException;
 import Exceptions.UnplacedRackException;
 import BackEnd.Geometry.Point2D;
 import Warehouse.Product;

@@ -16,6 +16,7 @@ import java.util.PriorityQueue;
 
 public abstract class PathFinder {
     private SpaceTimeGrid spaceTimeGrid;
+    private SpaceTimeGrid unmodifiedSpaceTimeGrid;
     private List<Node> closedSet;
     private PriorityQueue<Node> openSet;
     private Node startNode;
@@ -27,11 +28,16 @@ public abstract class PathFinder {
 
     public PathFinder(SpaceTimeGrid spaceTimeGrid) {
         this.spaceTimeGrid = spaceTimeGrid;
+        this.unmodifiedSpaceTimeGrid = spaceTimeGrid;
         this.closedSet = new ArrayList<>();
         this.heuristic = new TrueDistance();
         //this.heuristic = new Manhatten();
         //We set the openSet to in worst case be cable of containing all nodes
         this.openSet = new PriorityQueue<>(spaceTimeGrid.getAllNodes().size(), new NodeComparator());
+    }
+
+    public void resetSpaceTimeGrid() {
+        this.spaceTimeGrid = new SpaceTimeGrid(spaceTimeGrid.getBaseLayer(), spaceTimeGrid.getMaxTime());
     }
 
     public SpaceTimeGrid getSpaceTimeGrid() {

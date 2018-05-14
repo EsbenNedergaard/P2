@@ -4,14 +4,16 @@ import BackEnd.Geometry.Node;
 import BackEnd.Geometry.PickingPoint;
 import BackEnd.Geometry.Point2D;
 import BackEnd.Graph.SpaceTimeGrid;
+import BackEnd.Pathfinding.PathFinders.FastestPathFinder;
 import BackEnd.Pathfinding.PathFinders.PathFinder;
+import BackEnd.Pathfinding.PathFinders.ShortestPathFinder;
 import BackEnd.Pathfinding.PickingRoute;
 import Exceptions.RouteNotPossibleException;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class RouteFinder {
+public class RouteFinder {
     private final int WAIT_TIME_BETWEEN_PICKERS = 3;
     private int startTime;
     private SpaceTimeGrid spaceTimeGrid;
@@ -26,16 +28,27 @@ public abstract class RouteFinder {
         this.spaceTimeGrid = grid;
         this.routeStartPoint = new Node(routeStartPoint);
         this.routeEndPoint = new Node(routeEndPoint);
-        this.reset();
-    }
-
-    public void reset() {
-        this.pathFinder = this.getPathFinder();
+        this.pathFinder = new FastestPathFinder(spaceTimeGrid);
         this.amountPickersInGraph = 0;
         this.startTime = 0;
     }
 
-    abstract PathFinder getPathFinder();
+    public RouteFinder(SpaceTimeGrid grid, Point2D routeStartPoint, Point2D routeEndPoint, PathFinder pathFinder) {
+        this.spaceTimeGrid = grid;
+        this.routeStartPoint = new Node(routeStartPoint);
+        this.routeEndPoint = new Node(routeEndPoint);
+        this.pathFinder = pathFinder;
+        this.amountPickersInGraph = 0;
+        this.startTime = 0;
+    }
+
+
+
+    public void reset() {
+        this.pathFinder.resetSpaceTimeGrid();
+        this.amountPickersInGraph = 0;
+        this.startTime = 0;
+    }
 
     public SpaceTimeGrid getSpaceTimeGrid() {
         return spaceTimeGrid;

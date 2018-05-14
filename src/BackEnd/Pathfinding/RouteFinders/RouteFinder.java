@@ -22,10 +22,10 @@ public abstract class RouteFinder {
     private int amountPickersInGraph;
 
 
-    public RouteFinder(SpaceTimeGrid grid) {
+    public RouteFinder(SpaceTimeGrid grid, Point2D routeStartPoint, Point2D routeEndPoint) {
         this.spaceTimeGrid = grid;
-        this.routeStartPoint = new Node(new Point2D(0, 5));
-        this.routeEndPoint = new Node(new Point2D(0, 6));
+        this.routeStartPoint = new Node(routeStartPoint);
+        this.routeEndPoint = new Node(routeEndPoint);
         this.reset();
     }
 
@@ -66,7 +66,6 @@ public abstract class RouteFinder {
     private void bestRouteOfAllRoutes(Point2D currStart, List<PickingPoint> remainingPickingPoints, PickingRoute currRoute) throws RouteNotPossibleException {
         int timeTravelledSinceStart = currRoute.getRouteLength() + startTime;
 
-        //There are no more picking points to visit on the route
         if(remainingPickingPoints.isEmpty()) {
             //Adds the path from last picking point to delivery area
             currRoute.addOtherRoute(pathFinder.findFastestPath(currStart, routeEndPoint, timeTravelledSinceStart).getRoute());
@@ -76,8 +75,7 @@ public abstract class RouteFinder {
                 bestRoute = new PickingRoute(currRoute);
             }
         } else {
-            //Iterates through all remaining picking points
-            for (PickingPoint nextPickPoint : remainingPickingPoints) {
+            for (PickingPoint nextPickPoint : remainingPickingPoints) { //Iterates through all remaining picking points
                 PickingRoute nextRoute = new PickingRoute(currRoute);
                 //Adds the path from current picking point to next picking point
                 nextRoute.addOtherRoute(pathFinder.findFastestPath(currStart, nextPickPoint, timeTravelledSinceStart, nextPickPoint.getPickTime()).getRoute());
@@ -93,7 +91,6 @@ public abstract class RouteFinder {
                 nextList.remove(nextPickPoint);
 
                 //Function calls itself with remaining picking points to be visited
-                //Finds the next paths on the route
                 bestRouteOfAllRoutes(nextPickPoint, nextList, nextRoute);
             }
         }

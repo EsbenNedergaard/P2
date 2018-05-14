@@ -5,10 +5,8 @@ import BackEnd.Geometry.NodeComparator;
 import BackEnd.Geometry.Point2D;
 import BackEnd.Graph.SpaceTimeGrid;
 import BackEnd.Pathfinding.Heuristics.Heuristic;
-import BackEnd.Pathfinding.Heuristics.Manhatten;
 import BackEnd.Pathfinding.Heuristics.TrueDistance;
 import BackEnd.Pathfinding.PickingRoute;
-import Exceptions.NodeDoesNotExistException;
 import Exceptions.RouteNotPossibleException;
 
 import java.util.ArrayList;
@@ -62,7 +60,7 @@ public abstract class PathFinder {
         this.startTime = startTime;
         this.pickTime = 0;
 
-        StartValueChecker.checkValues(this);
+        PathFinderStartValueChecker.checkValues(this);
         this.setStartValues();
         this.calculateFastestPath();
 
@@ -76,7 +74,7 @@ public abstract class PathFinder {
         this.pickTime = pickTime;
 
         //Checks and then sets starting values, and calculate the path
-        StartValueChecker.checkValues(this);
+        PathFinderStartValueChecker.checkValues(this);
         this.setStartValues();
         this.calculateFastestPath();
 
@@ -116,7 +114,19 @@ public abstract class PathFinder {
 
             this.checkIfOutOfTime(current);
 
-            this.checkDistanceThroughCurrentToNeighbour(current);
+            //Checks if there exists a better path through current node to its neighbours
+            for (Node neighbour : current.getNeighbourNodes()) {
+                //We check if the current node is in the already checked nodes (closed set)
+                if (closedSet.contains(neighbour)) {
+                    continue;
+                }
+                //Update distance through neighbour
+                this.updateNeighbourDistanceFromStart(current, neighbour);
+
+                if (!openSet.contains(neighbour)) {
+                    openSet.add(neighbour);
+                }
+            }
         }
     }
 
@@ -127,11 +137,8 @@ public abstract class PathFinder {
         return next;
     }
 
-    private Boolean isEndNode(Node current){
-        if(current.getX() == endNode.getX() && current.getY() == endNode.getY()) {
-            return checkIfPickingIsPossible(current);
-        }
-        return false;
+    private Boolean isEndNode(Node current) {
+        return current.getX() == endNode.getX() && current.getY() == endNode.getY() && checkIfPickingIsPossible(current);
     }
 
     private void checkIfOutOfTime(Node current){
@@ -140,22 +147,6 @@ public abstract class PathFinder {
         }
     }
 
-    //Checks if there exists a better path through current node to its neighbours
-    private void checkDistanceThroughCurrentToNeighbour(Node current) {
-        for (Node neighbour : current.getNeighbourNodes()) {
-            //We check if the current node is in the already checked nodes (closed set)
-            if (closedSet.contains(neighbour)) {
-                continue;
-            }
-
-            //Update distance through neighbour
-            this.updateNeighbourDistanceFromStart(current, neighbour);
-
-            if (!openSet.contains(neighbour)) {
-                openSet.add(neighbour);
-            }
-        }
-    }
 
     abstract void updateNeighbourDistanceFromStart(Node current, Node neighbour);
 
@@ -189,7 +180,6 @@ public abstract class PathFinder {
             for(Node neighbourToCurrent : current.getNeighbourNodes()) {
                 //We check that the next node exists in the current neighbour list and haven't been removed
                 if(next.equals(neighbourToCurrent)) {
-                    current = next;
                     found = true;
                     break;
                 }
@@ -197,7 +187,9 @@ public abstract class PathFinder {
             if(!found) {
                 return false;
             }
+            current = next;
         }
+        //We only get here if we get that there is a neighbour below our possible end point for the time required to pick
         return true;
     }
 }

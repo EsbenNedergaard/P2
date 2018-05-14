@@ -4,7 +4,7 @@ import java.util.Comparator;
 
 public class NodeComparator implements Comparator<Node> {
 
-    // Compares two nodes by total distance first, lowest distance to end secondly, and highest y value finally
+    // Compares two nodes by lowest total distance first, lowest distance to end secondly, and highest y value finally
     @Override
     public int compare(Node o1, Node o2) {
 

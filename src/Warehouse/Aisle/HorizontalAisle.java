@@ -2,7 +2,8 @@ package Warehouse.Aisle;
 
 
 import BackEnd.Geometry.PickingPoint;
-import Exceptions.FullRackException;
+import Warehouse.Exceptions.FullAisleException;
+import Warehouse.Exceptions.FullRackException;
 import BackEnd.Geometry.Node;
 import BackEnd.Geometry.Point2D;
 import Warehouse.Product;
@@ -20,6 +21,7 @@ import static BackEnd.Geometry.NodeType.OBSTACLE;
  * pickPointList because we know which rackRow is top rackRow, and which is bottom rackRow. This info is needed so
  * we can place the pickPoint over or under the rackRow*/
 public class HorizontalAisle implements Aisle {
+    private final int SHELVES_PER_RACK = 8;
     private int aisleLength;
     private Point2D startPoint;
     private RackRow topRackRow;
@@ -30,10 +32,10 @@ public class HorizontalAisle implements Aisle {
         this.aisleLength = aisleLength;
         this.startPoint = startPoint;
 
-        Point2D topRackRowStartPoint = new Point2D(startPoint.getX() + 1, startPoint.getY() - 1);
-        Point2D bottomRackRowStartPoint = new Point2D(startPoint.getX() + 1, startPoint.getY() + 1);
-        topRackRow = new HorizontalRackRow(topRackRowStartPoint, aisleLength - 2, 8);
-        bottomRackRow = new HorizontalRackRow(bottomRackRowStartPoint, aisleLength - 2,8);
+        Point2D topRackRowStartPoint = new Point2D(startPoint.getX(), startPoint.getY() - 1);
+        Point2D bottomRackRowStartPoint = new Point2D(startPoint.getX(), startPoint.getY() + 1);
+        topRackRow = new HorizontalRackRow(topRackRowStartPoint, aisleLength, SHELVES_PER_RACK);
+        bottomRackRow = new HorizontalRackRow(bottomRackRowStartPoint, aisleLength,SHELVES_PER_RACK);
 }
 
     @Override
@@ -41,7 +43,8 @@ public class HorizontalAisle implements Aisle {
         for(Node n : nodeGrid) {
             for(RackRow rackRow : getRackRowList()) {
                 for(Rack rack : rackRow.getRackList()) {
-                    if (n.getX() == rack.getXCoordinate() && n.getY() == rack.getYCoordinate()) {
+                    Point2D rackPoint = rack.getRackPosition();
+                    if (n.getX() == rackPoint.getX() && n.getY() == rackPoint.getY()) {
                         n.setNodeType(OBSTACLE);
                         break; //We jump out of the inner loop
                     }
@@ -60,11 +63,11 @@ public class HorizontalAisle implements Aisle {
         return this.startPoint;
     }
 
-    public RackRow getTopRackRow() {
+    private RackRow getTopRackRow() {
         return this.topRackRow;
     }
 
-    public RackRow getBottomRackRow() {
+    private RackRow getBottomRackRow() {
         return this.bottomRackRow;
     }
 
@@ -123,20 +126,10 @@ public class HorizontalAisle implements Aisle {
     }
 
     @Override
-    public boolean doesItContainProductID(int id) {
-        return false;
-    }
-
-    @Override
-    public void addProduct(Product e) {
+    public boolean addProduct(Product e) {
         for (RackRow rackRowElement : this.getRackRowList()) {
-            for (Rack rackElement : rackRowElement.getRackList()) {
-                if (!rackElement.checkIfFull()) {
-                    rackElement.addProduct(e);
-                    return;
-                }
-            }
+            rackRowElement.addProduct(e);
         }
-        throw new FullRackException("This aisle is already full");
+        throw new FullAisleException("This aisle is already full");
     }
 }

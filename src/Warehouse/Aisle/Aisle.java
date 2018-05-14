@@ -16,8 +16,7 @@ public interface Aisle {
 
     List<RackRow> getRackRowList();
 
-    void addProduct(Product e);
+    boolean addProduct(Product e);
     List<PickingPoint> getPickingPoints(List<Integer> productIdList);
-    boolean doesItContainProductID(int id); //Should be used to look through the racks an see if it contains the product, and then we can add the products point to the pickingPoints.
     void setRacksAsObstacles(List<Node> nodeGrid);
 }

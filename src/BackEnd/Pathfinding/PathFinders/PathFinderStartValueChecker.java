@@ -4,8 +4,7 @@ import BackEnd.Geometry.Node;
 import Exceptions.NodeLayerDoesNotExistException;
 import Exceptions.RouteNotPossibleException;
 
-public class StartValueChecker {
-
+public class PathFinderStartValueChecker {
     static public void checkValues(PathFinder pathFinder){
         checkStartNode(pathFinder);
         checkEndNode(pathFinder);
@@ -39,4 +38,5 @@ public class StartValueChecker {
             throw new RouteNotPossibleException("There is no NodeLayer with the same time as the startTime :" + pathFinder.getStartTime());
         }
     }
+
 }

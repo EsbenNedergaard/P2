@@ -1,10 +1,11 @@
 package WarehouseSimulation;
 
 import BackEnd.Geometry.PickingPoint;
+import BackEnd.Geometry.Point2D;
 import BackEnd.Pathfinding.RouteFinders.FastestRouteFinder;
 import BackEnd.Pathfinding.RouteFinders.RouteFinder;
-import BackEnd.Pathfinding.RouteFinders.ShortestRouteFinder;
 import BackEnd.Pathfinding.PickingRoute;
+import BackEnd.Pathfinding.RouteFinders.ShortestRouteFinder;
 import Exceptions.IllegalTextInputException;
 import BackEnd.Graph.SpaceTimeGrid;
 import WarehouseSimulation.GraphicalObjects.Colors.PickerColors;
@@ -41,6 +42,8 @@ public class WarehouseSimulation {
     // Animation programTimer
     private AnimationTimer programTimer;
     private int UPDATE_COUNTER = 0;
+    private Point2D routeStartPoint;
+    private Point2D routeEndPoint;
 
     public WarehouseSimulation(Warehouse warehouse) {
         this.warehouse = warehouse;
@@ -55,8 +58,10 @@ public class WarehouseSimulation {
 
     private void setupOptimalRouteFinder() {
         SpaceTimeGrid grid = new SpaceTimeGrid(this.warehouse.getBaseLayer(), MAX_TIME);
-        //this.routeFinder = new ShortestRouteFinder(grid);
-        this.routeFinder = new FastestRouteFinder(grid);
+        this.routeStartPoint = new Point2D(0, 5);
+        this.routeEndPoint = new Point2D(0, 6);
+        //this.routeFinder = new ShortestRouteFinder(grid, routeStartPoint, routeEndPoint);
+        this.routeFinder = new FastestRouteFinder(grid, routeStartPoint, routeEndPoint);
     }
 
     private void addPicker(OrderPickerGraphic picker) {
@@ -78,7 +83,7 @@ public class WarehouseSimulation {
         Button addRouteButton = interactionGraphics.getAddDataButton();
         Button launchButton = interactionGraphics.getLaunchButton();
         Button resetAllButton = interactionGraphics.getResetAllButton();
-        Button startOverButton = interactionGraphics.getStartOverButton();
+        Button startOverButton = interactionGraphics.getReLaunchButton();
         TextField inputField = interactionGraphics.getInputField();
         Table table = interactionGraphics.getTableView();
 

@@ -6,6 +6,7 @@ import BackEnd.Geometry.Point2D;
 import BackEnd.Graph.BaseLayer;
 import Warehouse.Aisle.Aisle;
 import Warehouse.Racks.HorizontalRackRow;
+import Warehouse.Racks.Rack;
 import Warehouse.Racks.RackRow;
 
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.List;
 public class Simple7x7Warehouse implements Warehouse {
     private List<Node> nodeList;
     private List<RackRow> rackRowList;
+    private final int SIZE = 7;
 
     public Simple7x7Warehouse() {
         this.nodeList = new ArrayList<>();
@@ -23,26 +25,41 @@ public class Simple7x7Warehouse implements Warehouse {
         this.setupRackRows();
     }
 
-    private void createNodeGrid(){
+    private void createNodeGrid() {
         nodeList = new ArrayList<>();
-        for(int j = 0; j < this.getWidth(); j++) {
-            for(int i = 0; i < this.getLength(); i++) {
+        for (int j = 0; j < this.getWidth(); j++) {
+            for (int i = 0; i < this.getLength(); i++) {
                 nodeList.add(new Node(new Point2D(i, j)));
             }
         }
     }
 
     private void setupRackRows() {
-        Point2D firstRackRowStartPoint = new Point2D(1, 1);
-        Point2D secondRackRowStartPoint = new Point2D(1, 3);
+        List<Point2D> rackRowStartPoints = new ArrayList<>();
+        rackRowStartPoints.add(new Point2D(1, 1));
+        rackRowStartPoints.add(new Point2D(1, 3));
+        rackRowStartPoints.add(new Point2D(1, 5));
 
-        int rackRowLenght = 3;
+        int rackRowLenght = 5;
         int shelvesPerRack = 3;
-        this.rackRowList.add(new HorizontalRackRow(firstRackRowStartPoint, rackRowLenght, shelvesPerRack));
-        this.rackRowList.add(new HorizontalRackRow(secondRackRowStartPoint, rackRowLenght, shelvesPerRack));
-
-        for(RackRow rackRow : this.getRackRowList()) {
+        for (Point2D startPoint : rackRowStartPoints) {
+            this.rackRowList.add(new HorizontalRackRow(startPoint, rackRowLenght, shelvesPerRack));
+        }
+        for (RackRow rackRow : this.getRackRowList()) {
             rackRow.setRacksAsObstacles(nodeList);
+        }
+        this.setupProducts();
+    }
+
+    private void setupProducts() {
+        int i = 1;
+        for (RackRow rackRow : this.getRackRowList()) {
+            for (Rack rack : rackRow.getRackList()) {
+                while (!rack.isFull()) {
+                    rack.addProduct(new Product(i));
+                    i++;
+                }
+            }
         }
     }
 
@@ -60,22 +77,26 @@ public class Simple7x7Warehouse implements Warehouse {
     public List<PickingPoint> getPickingPoints(List<Integer> productIdList) {
         List<PickingPoint> pickingPoints = new ArrayList<>();
 
+        for (RackRow rackRow : this.getRackRowList()) {
+            //pickingPoints.addAll();
+        }
+
         return pickingPoints;
     }
 
     @Override
     public int getWidth() {
-        return 5;
+        return SIZE;
     }
 
     @Override
     public int getLength() {
-        return 5;
+        return SIZE;
     }
 
     @Override
     public Point2D getRouteStartPoint() {
-        return new Point2D(0,0);
+        return new Point2D(0, 0);
     }
 
     @Override

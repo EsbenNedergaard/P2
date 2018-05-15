@@ -1,7 +1,6 @@
 package Warehouse.Racks;
 
 import Warehouse.Exceptions.FullRackException;
-import Exceptions.UnplacedRackException;
 import BackEnd.Geometry.Point2D;
 import Warehouse.Product;
 import Warehouse.Shelf;
@@ -24,7 +23,7 @@ public class Rack {
     }
 
     public void addProduct(Product product) {
-        if (checkIfFull()) {
+        if (isFull()) {
             throw new FullRackException("This rack is already full");
         }
         product.setRack(this);
@@ -45,7 +44,7 @@ public class Rack {
         return false;
     }
 
-    public boolean checkIfFull(){
+    public boolean isFull(){
         for (Shelf shelf : shelfList) {
             if (!shelf.containsProduct()) {
                 return false;

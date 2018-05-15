@@ -2,6 +2,7 @@ package Warehouse.Aisle;
 
 
 import BackEnd.Geometry.PickingPoint;
+import Exceptions.RackRowDoesNotContainProductException;
 import Warehouse.Exceptions.FullAisleException;
 import Warehouse.Exceptions.FullRackException;
 import BackEnd.Geometry.Node;
@@ -73,38 +74,22 @@ public class HorizontalAisle implements Aisle {
         RackRow bottomRackRow = getBottomRackRow();
 
         for (Integer productId : productIdList) {
-            Product tempProduct = new Product(productId);
-
-            // if top rack row contains the product
-            int rackIndex = topRackRow.doesItContainProduct(tempProduct);
-            if (rackIndex != -1) {
-                List<Product> productsInRack = topRackRow.getRackByIndex(rackIndex).getProductList();
-                //We do this to get the correct productPointer
-                for(Product product : productsInRack) {
-                    if(product.equals(tempProduct)) {
-                        tempProduct = product;
-                    }
-                }
-
+            Product tempProduct;
+            //We try to get the pointer to the product with the ID if it exists in the top rackRow
+            try {
+                tempProduct = topRackRow.getProductPointerFromID(productId);
                 Point2D productPosition = tempProduct.getProductPostion();
-                //We add one to the Y, because it is a topRackRow and our coordinate system goes downward
+                //We say y+1, because it is a topRackRow and our coordinate system goes downward
                 pickingPointList.add(new PickingPoint(new Point2D(productPosition.getX(), productPosition.getY() + 1), tempProduct));
-            }
-            else {
-                // if bottom rack row contains the product
-                rackIndex = bottomRackRow.doesItContainProduct(tempProduct);
-                if (rackIndex != -1) {
-                    List<Product> productsInRack = bottomRackRow.getRackByIndex(rackIndex).getProductList();
-                    for (Product product : productsInRack) {
-                        if (product.equals(tempProduct)) {
-                            tempProduct = product;
-                        }
-                    }
+            } catch (RackRowDoesNotContainProductException ignored) {}
 
-                    Point2D rackPosition = bottomRackRow.getRackByIndex(rackIndex).getRackPosition();
-                    pickingPointList.add(new PickingPoint(new Point2D(rackPosition.getX(), rackPosition.getY() - 1), tempProduct));
-                }
-            }
+            //Same for the bottom.
+            try {
+                tempProduct = bottomRackRow.getProductPointerFromID(productId);
+                Point2D productPosition = tempProduct.getProductPostion();
+                //We y-1, because it is a bottomRackRow and our coordinate system goes downward
+                pickingPointList.add(new PickingPoint(new Point2D(productPosition.getX(), productPosition.getY() - 1), tempProduct));
+            } catch (RackRowDoesNotContainProductException ignored) {}
         }
 
         return pickingPointList;

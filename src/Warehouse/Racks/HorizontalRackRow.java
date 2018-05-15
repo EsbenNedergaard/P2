@@ -1,6 +1,8 @@
 package Warehouse.Racks;
 
 import BackEnd.Geometry.Node;
+import BackEnd.Geometry.PickingPoint;
+import Exceptions.RackRowDoesNotContainProductException;
 import Warehouse.Exceptions.FullRackException;
 import BackEnd.Geometry.Point2D;
 import Warehouse.Exceptions.FullRackRowException;
@@ -35,7 +37,7 @@ public class HorizontalRackRow implements RackRow {
     @Override
     public boolean addProduct(Product e) {
         for (Rack rackElement : rackList) {
-            if (!rackElement.checkIfFull()) {
+            if (!rackElement.isFull()) {
                 rackElement.addProduct(e);
                 return true;
             }
@@ -51,17 +53,8 @@ public class HorizontalRackRow implements RackRow {
         return true;
     }
 
-    @Override
-    public int doesItContainProduct(Product e) {
-        int i = 0;
-        for(Rack r : rackList) {
-            if (r.doesItContainProduct(e)) {
-                return i;
-            }
-            i++;
-        }
-        return -1;
-    }
+
+
 
     @Override
     public int getRackRowLength() {
@@ -103,6 +96,36 @@ public class HorizontalRackRow implements RackRow {
                 }
             }
         }
+    }
+
+    @Override
+    public Product getProductPointerFromID(Integer productID) throws RackRowDoesNotContainProductException {
+        Product tempProduct = new Product(productID);
+
+        int rackIndex = this.doesItContainProduct(tempProduct);
+        if (rackIndex != -1) {
+            List<Product> productsInRack = this.getRackByIndex(rackIndex).getProductList();
+
+            //We do this to get the correct productPointer
+            for(Product product : productsInRack) {
+                if(product.equals(tempProduct)) {
+                    return product;
+                }
+            }
+        }
+        throw new RackRowDoesNotContainProductException(this.toString() + ": did not contain the product with the ID " + productID);
+    }
+
+
+    private int doesItContainProduct(Product e) {
+        int i = 0;
+        for(Rack r : rackList) {
+            if (r.doesItContainProduct(e)) {
+                return i;
+            }
+            i++;
+        }
+        return -1;
     }
 
     @Override

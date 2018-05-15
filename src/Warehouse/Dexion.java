@@ -9,7 +9,6 @@ import Warehouse.Aisle.HorizontalAisle;
 import Warehouse.Racks.Rack;
 import Warehouse.Racks.RackRow;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,7 +67,7 @@ public class Dexion implements Warehouse {
         for (Aisle aisleElement : aisleList) {
             for (RackRow rackRowElement : aisleElement.getRackRowList()) {
                 for (Rack rackElement : rackRowElement.getRackList()) {
-                    while (!rackElement.checkIfFull()) {
+                    while (!rackElement.isFull()) {
                         rackElement.addProduct(new Product(i));
                         i++;
                     }

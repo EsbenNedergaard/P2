@@ -8,6 +8,7 @@ import BackEnd.Pathfinding.RouteFinders.RouteFinder;
 import BackEnd.TempRoutePrinter;
 import Warehouse.Product;
 import Warehouse.Racks.Rack;
+import Warehouse.Simple7x7Warehouse;
 import Warehouse.Warehouse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,16 +18,14 @@ import java.util.List;
 
 class RouteFinderTest {
     private RouteFinder testRouteFinder;
-    private SpaceTimeGrid grid;
     private PickingPoint pickPoint1;
     private PickingPoint pickPoint2;
-    private int GRID_SIZE = 5;
 
     @BeforeEach
     void beforeEach(){
         int MAX_TIME = 100;
-        Warehouse warehouse = new Warehouse.Simple7x7Warehouse();
-        this.grid = new SpaceTimeGrid(warehouse.getBaseLayer(), MAX_TIME);
+        Warehouse warehouse = new Simple7x7Warehouse();
+        SpaceTimeGrid grid = new SpaceTimeGrid(warehouse.getBaseLayer(), MAX_TIME);
 
         this.testRouteFinder = new RouteFinder(new FastestPathFinder(grid), warehouse.getRouteStartPoint(), warehouse.getRouteEndPoint());
         this.createPickingPoints();
@@ -55,8 +54,5 @@ class RouteFinderTest {
 
 
         PickingRoute pickingRoute = testRouteFinder.calculateBestRoute(pickingList);
-
-        TempRoutePrinter printer = new TempRoutePrinter(pickingRoute.getRoute(), grid.getBaseLayer());
-        printer.printRoute(GRID_SIZE, GRID_SIZE);
     }
 }

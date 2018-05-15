@@ -4,6 +4,7 @@ import BackEnd.Geometry.Node;
 import BackEnd.Geometry.PickingPoint;
 import BackEnd.Geometry.Point2D;
 import BackEnd.Graph.BaseLayer;
+import Exceptions.RackRowDoesNotContainProductException;
 import Warehouse.Aisle.Aisle;
 import Warehouse.Racks.HorizontalRackRow;
 import Warehouse.Racks.Rack;
@@ -41,7 +42,7 @@ public class Simple7x7Warehouse implements Warehouse {
         rackRowStartPoints.add(new Point2D(1, 5));
 
         int rackRowLenght = 5;
-        int shelvesPerRack = 3;
+        int shelvesPerRack = 1;
         for (Point2D startPoint : rackRowStartPoints) {
             this.rackRowList.add(new HorizontalRackRow(startPoint, rackRowLenght, shelvesPerRack));
         }
@@ -77,8 +78,16 @@ public class Simple7x7Warehouse implements Warehouse {
     public List<PickingPoint> getPickingPoints(List<Integer> productIdList) {
         List<PickingPoint> pickingPoints = new ArrayList<>();
 
-        for (RackRow rackRow : this.getRackRowList()) {
-            //pickingPoints.addAll();
+        for (Integer productId : productIdList) {
+            Product tempProduct;
+            for(RackRow rackRow : this.getRackRowList()) {
+                try {
+                    tempProduct = rackRow.getProductPointerFromID(productId);
+                    Point2D productPosition = tempProduct.getProductPostion();
+                    //We y-1, because it is a bottomRackRow and our coordinate system goes downward
+                    pickingPoints.add(new PickingPoint(new Point2D(productPosition.getX(), productPosition.getY() - 1), tempProduct));
+                } catch (RackRowDoesNotContainProductException ignored) {}
+            }
         }
 
         return pickingPoints;

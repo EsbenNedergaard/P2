@@ -57,7 +57,7 @@ public class WarehouseSimulation {
         Point2D routeStartPoint = warehouse.getRouteStartPoint();
         Point2D routeEndPoint = warehouse.getRouteEndPoint();
         this.routeFinder = new RouteFinder(grid, routeStartPoint, routeEndPoint);
-        //this.routeFinder = new RouteFinder( new ShortestPathFinder(grid), routeStartPoint, routeEndPoint);
+        //this.routeFinder = new RouteFinder(new ShortestPathFinder(grid), routeStartPoint, routeEndPoint);
     }
 
     private void addPicker(OrderPickerGraphic picker) {

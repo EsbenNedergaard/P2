@@ -35,7 +35,6 @@ class FastestPathFinderTest {
                 inputSet.add(temp);
             }
         }
-
         //Setting in standard obstacles
         for (Node n : inputSet) {
             int x = n.getX();

@@ -1,5 +1,6 @@
 package Warehouse.Racks;
 
+import BackEnd.Geometry.Node;
 import BackEnd.Geometry.Point2D;
 import Warehouse.Product;
 
@@ -18,4 +19,5 @@ public interface RackRow {
     List<Product> getAllProductsInRackRow();
     List<Rack> getRackList();
     Rack getRackByIndex(int Index);
+    void setRacksAsObstacles(List<Node> nodeGrid);
 }

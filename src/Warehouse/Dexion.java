@@ -24,7 +24,6 @@ public class Dexion implements Warehouse {
     private static final int AISLE_LENGTH = 34;
     private static final int AISLE_PADDING = 5;
 
-
     public Dexion() {
         length = AISLE_LENGTH + (AISLE_PADDING * 2);
         width = 12;
@@ -36,14 +35,14 @@ public class Dexion implements Warehouse {
 
     private void createNodeGrid(){
         nodeList = new ArrayList<>();
-        for(int j = 0; j < width; j++) {
-            for(int i = 0; i < length; i++) {
+        for(int j = 0; j < this.getWidth(); j++) {
+            for(int i = 0; i < this.getLength(); i++) {
                 nodeList.add(new Node(new Point2D(i, j)));
             }
         }
     }
 
-    public void createAisleList() {
+    private void createAisleList() {
         aisleList = new ArrayList<>();
         Aisle aisle1 = new HorizontalAisle(AISLE_LENGTH, new Point2D(AISLE_PADDING, 1));
         Aisle aisle2 = new HorizontalAisle(AISLE_LENGTH, new Point2D(AISLE_PADDING, 4));
@@ -54,8 +53,13 @@ public class Dexion implements Warehouse {
         aisleList.add(aisle3);
         aisleList.add(aisle4);
 
-        for(Aisle element : aisleList) {
-            element.setRacksAsObstacles(nodeList);
+        //By creating the aisles we also create the rackRows which we make into obstacles
+        this.setRackRowsAsObstacles();
+    }
+
+    private void setRackRowsAsObstacles(){
+        for(RackRow rackRow : this.getRackRowList()) {
+            rackRow.setRacksAsObstacles(nodeList);
         }
     }
 
@@ -106,11 +110,6 @@ public class Dexion implements Warehouse {
     @Override
     public Point2D getRouteEndPoint() {
         return routeEndPoint;
-    }
-
-    @Override
-    public List<Aisle> getAisleList() {
-        return aisleList;
     }
 
     @Override

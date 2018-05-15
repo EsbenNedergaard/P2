@@ -1,5 +1,6 @@
 package Warehouse.Racks;
 
+import BackEnd.Geometry.Node;
 import Warehouse.Exceptions.FullRackException;
 import BackEnd.Geometry.Point2D;
 import Warehouse.Exceptions.FullRackRowException;
@@ -8,6 +9,8 @@ import Warehouse.Product;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import static BackEnd.Geometry.NodeType.OBSTACLE;
 
 public class HorizontalRackRow implements RackRow {
     private Point2D startPoint;
@@ -89,6 +92,18 @@ public class HorizontalRackRow implements RackRow {
         return rackList.get(index);
     }
 
+    @Override
+    public void setRacksAsObstacles(List<Node> nodeGrid) {
+        for(Node n : nodeGrid) {
+            for(Rack rack : this.getRackList()) {
+                Point2D rackPoint = rack.getRackPosition();
+                if (n.getX() == rackPoint.getX() && n.getY() == rackPoint.getY()) {
+                    n.setNodeType(OBSTACLE);
+                    break; //We jump out of the inner loop
+                }
+            }
+        }
+    }
 
     @Override
     public int hashCode() {

@@ -17,6 +17,10 @@ public class PickingPoint extends Point2D {
         this.product = product;
     }
 
+    public void setPickTime(int pickTime) {
+        this.pickTime = pickTime;
+    }
+
     public Product getProduct() {
         return product;
     }

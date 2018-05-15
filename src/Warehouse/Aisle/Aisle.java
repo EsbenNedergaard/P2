@@ -18,5 +18,4 @@ public interface Aisle {
 
     boolean addProduct(Product e);
     List<PickingPoint> getPickingPoints(List<Integer> productIdList);
-    void setRacksAsObstacles(List<Node> nodeGrid);
 }

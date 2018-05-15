@@ -9,8 +9,6 @@ import Warehouse.Racks.RackRow;
 import java.util.List;
 
 public interface Warehouse {
-    void createAisleList();
-    List<Aisle> getAisleList();
     List<RackRow> getRackRowList();
     BaseLayer getBaseLayer();
     List<PickingPoint> getPickingPoints(List<Integer> productIdList);

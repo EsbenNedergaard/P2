@@ -36,21 +36,6 @@ public class HorizontalAisle implements Aisle {
         Point2D bottomRackRowStartPoint = new Point2D(startPoint.getX(), startPoint.getY() + 1);
         topRackRow = new HorizontalRackRow(topRackRowStartPoint, aisleLength, SHELVES_PER_RACK);
         bottomRackRow = new HorizontalRackRow(bottomRackRowStartPoint, aisleLength,SHELVES_PER_RACK);
-}
-
-    @Override
-    public void setRacksAsObstacles(List<Node> nodeGrid) {
-        for(Node n : nodeGrid) {
-            for(RackRow rackRow : getRackRowList()) {
-                for(Rack rack : rackRow.getRackList()) {
-                    Point2D rackPoint = rack.getRackPosition();
-                    if (n.getX() == rackPoint.getX() && n.getY() == rackPoint.getY()) {
-                        n.setNodeType(OBSTACLE);
-                        break; //We jump out of the inner loop
-                    }
-                }
-            }
-        }
     }
 
     @Override

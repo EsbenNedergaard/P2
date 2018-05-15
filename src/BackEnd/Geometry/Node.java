@@ -19,7 +19,7 @@ public class Node extends Point2D {
     private int distanceFromStart;
     private int distanceToEnd;
     private Node cameFrom;
-    private ArrayList<Node> neighbourNodes;
+    private ArrayList<Node> neighbourNodes = new ArrayList<>();
     private NodeLayer nodeLayerPointer;
     private NodeType nodeType;
 
@@ -43,20 +43,6 @@ public class Node extends Point2D {
                 return true;
             }
         }
-        return false;
-    }
-
-    boolean isNeighbourInBaseLayer(Node node) {
-        if (this.getX() == node.getX() + 1 && this.getY() == node.getY()) {
-            return true;
-        } else if (this.getX() == node.getX() - 1 && this.getY() == node.getY()) {
-            return true;
-        } else if (this.getX() == node.getX() && this.getY() == node.getY() + 1) {
-            return true;
-        } else if (this.getX() == node.getX() && this.getY() == node.getY() - 1) {
-            return true;
-        }
-
         return false;
     }
 
@@ -145,15 +131,6 @@ public class Node extends Point2D {
         }
     }
 
-    public void setBaseLayerNeighbours(List<Node> possibleNeighbours) {
-        neighbourNodes = new ArrayList<>();
-        for (Node node : possibleNeighbours) {
-            if (this.isNeighbourInBaseLayer(node)) {
-                neighbourNodes.add(node);
-            }
-        }
-    }
-
     public void setNodeType(NodeType nodeType) {
         switch (nodeType) {
             case OBSTACLE:
@@ -165,6 +142,10 @@ public class Node extends Point2D {
             default:
                 throw new IsNotValidNodeTypeException();
         }
+    }
+
+    public void addNeighbour(Node neighbourNode) {
+        this.neighbourNodes.add(neighbourNode);
     }
 }
 

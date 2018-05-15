@@ -11,6 +11,7 @@ import java.util.PriorityQueue;
 
 public class TrueDistance implements Heuristic {
     Node startNode;
+    NodeLayer baseLayer;
     List<Node> baseLayerNodeList;
     PriorityQueue<Node> openSet;
     List<Node> closedSet;
@@ -18,7 +19,9 @@ public class TrueDistance implements Heuristic {
 
     @Override
     public void findDistanceToEndForAllNodes(SpaceTimeGrid spaceTimeGrid, Node endNode) {
-        this.baseLayerNodeList = spaceTimeGrid.getBaseLayer().getNodeListWithoutObstacles();
+        this.baseLayer = new NodeLayer(spaceTimeGrid.getBaseLayer().getNodeListWithoutObstacles(), 0);
+        endNode.setNodeLayer(baseLayer);
+        this.baseLayerNodeList  = baseLayer.getNodeList();
         this.startNode = endNode;
         this.openSet = new PriorityQueue<>(baseLayerNodeList.size(), new NodeComparator());
         this.closedSet = new ArrayList<>();
@@ -26,6 +29,7 @@ public class TrueDistance implements Heuristic {
         //Køre truedistance på baseLayer i spaceTimeGrid, og finde deres distancer her og derefter går ned af i gennem spaceTimeGridet
         //og give punket 0,0 samme distance til end som den du fandt for 0,0 i baselayeret.
 
+        this.setBaseLayerNeighbours();
         this.setStartValues(baseLayerNodeList, startNode);
         this.calculateTrueDistances();
         this.setTrueDistancesToEndForBaseLayer();
@@ -108,6 +112,34 @@ public class TrueDistance implements Heuristic {
         Node next = openSet.poll();
         closedSet.add(next);
         return next;
+    }
+
+    private void setBaseLayerNeighbours() {
+        for (Node node : baseLayerNodeList) {
+            setNeighboursForNode(node);
+        }
+    }
+
+    private void setNeighboursForNode(Node node) {
+        for (Node possibleNeighbour : baseLayerNodeList) {
+            if(isNeighbours(node, possibleNeighbour)) {
+                node.addNeighbour(possibleNeighbour);
+            }
+        }
+    }
+
+    private boolean isNeighbours(Node node1, Node node2) {
+        if (node1.getX() == node2.getX() + 1 && node1.getY() == node2.getY()) {
+            return true;
+        } else if (node1.getX() == node2.getX() - 1 && node1.getY() == node2.getY()) {
+            return true;
+        } else if (node1.getX() == node2.getX() && node1.getY() == node2.getY() + 1) {
+            return true;
+        } else if (node1.getX() == node2.getX() && node1.getY() == node2.getY() - 1) {
+            return true;
+        }
+
+        return false;
     }
 
 }

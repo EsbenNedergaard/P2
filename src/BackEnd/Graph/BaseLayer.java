@@ -18,15 +18,8 @@ public class BaseLayer {
                 this.nodeList.add(n);
             }
         }
-        
-        setBaseLayerNeighbours();
     }
 
-    private void setBaseLayerNeighbours() {
-        for (Node node : nodeList) {
-            node.setBaseLayerNeighbours(nodeList);
-        }
-    }
 
     public List<Node> getNodeListWithoutObstacles() {
         return nodeList;

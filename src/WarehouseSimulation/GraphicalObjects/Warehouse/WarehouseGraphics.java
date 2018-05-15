@@ -1,17 +1,11 @@
 package WarehouseSimulation.GraphicalObjects.Warehouse;
 
 import BackEnd.Geometry.Point2D;
-import WarehouseSimulation.GraphicalObjects.RackGraphic;
 import WarehouseSimulation.GraphicalObjects.RackRowGraphic;
 import WarehouseSimulation.GraphicalObjects.Tile;
-import Warehouse.Racks.Rack;
 import Warehouse.Racks.RackRow;
 import Warehouse.Warehouse;
-import javafx.geometry.Insets;
 import javafx.scene.Group;
-import javafx.scene.control.Label;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 public class WarehouseGraphics {
 
@@ -57,8 +51,8 @@ public class WarehouseGraphics {
 
     public Group createStartAndEndPoints(Point2D startPoint, Point2D endPoint) {
         Group pointGroup = new Group();
-        TileFill startFill = new TileFill("#49eb41", startPoint);
-        TileFill endFill = new TileFill("#ee4a2f", endPoint);
+        Line startFill = new Line("#49eb41", startPoint);
+        Line endFill = new Line("#ee4a2f", endPoint);
         pointGroup.getChildren().addAll(startFill, endFill);
         return pointGroup;
     }

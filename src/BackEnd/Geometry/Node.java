@@ -19,7 +19,7 @@ public class Node extends Point2D {
     private int distanceFromStart;
     private int distanceToEnd;
     private Node cameFrom;
-    private ArrayList<Node> neighbourNodes;
+    private ArrayList<Node> neighbourNodes = new ArrayList<>();
     private NodeLayer nodeLayerPointer;
     private NodeType nodeType;
 
@@ -142,6 +142,10 @@ public class Node extends Point2D {
             default:
                 throw new IsNotValidNodeTypeException();
         }
+    }
+
+    public void addNeighbour(Node neighbourNode) {
+        this.neighbourNodes.add(neighbourNode);
     }
 }
 

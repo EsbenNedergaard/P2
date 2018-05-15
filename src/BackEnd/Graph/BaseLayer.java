@@ -20,6 +20,7 @@ public class BaseLayer {
         }
     }
 
+
     public List<Node> getNodeListWithoutObstacles() {
         return nodeList;
     }

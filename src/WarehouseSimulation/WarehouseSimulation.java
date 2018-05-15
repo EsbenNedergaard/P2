@@ -2,10 +2,9 @@ package WarehouseSimulation;
 
 import BackEnd.Geometry.PickingPoint;
 import BackEnd.Geometry.Point2D;
-import BackEnd.Pathfinding.RouteFinders.FastestRouteFinder;
+import BackEnd.Pathfinding.PathFinders.ShortestPathFinder;
 import BackEnd.Pathfinding.RouteFinders.RouteFinder;
 import BackEnd.Pathfinding.PickingRoute;
-import BackEnd.Pathfinding.RouteFinders.ShortestRouteFinder;
 import Exceptions.IllegalTextInputException;
 import BackEnd.Graph.SpaceTimeGrid;
 import WarehouseSimulation.GraphicalObjects.Colors.PickerColors;
@@ -60,8 +59,8 @@ public class WarehouseSimulation {
         SpaceTimeGrid grid = new SpaceTimeGrid(this.warehouse.getBaseLayer(), MAX_TIME);
         this.routeStartPoint = new Point2D(0, 5);
         this.routeEndPoint = new Point2D(0, 6);
-        //this.routeFinder = new ShortestRouteFinder(grid, routeStartPoint, routeEndPoint);
-        this.routeFinder = new FastestRouteFinder(grid, routeStartPoint, routeEndPoint);
+        this.routeFinder = new RouteFinder(grid, routeStartPoint, routeEndPoint);
+        //this.routeFinder = new RouteFinder(grid, routeStartPoint, routeEndPoint, new ShortestPathFinder(grid));
     }
 
     private void addPicker(OrderPickerGraphic picker) {

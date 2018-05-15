@@ -53,12 +53,12 @@ public class Point2D {
     }
 
     @Override
-    public boolean equals(Object that) {
-        if(this == that) return true;
-        if(that == null || this.getClass() != that.getClass()) return false;
+    public boolean equals(Object o) {
+        if(this == o) return true;
+        if(o == null || this.getClass() != o.getClass()) return false;
 
-        Point2D point = (Point2D) that;
+        Point2D that = (Point2D) o;
 
-        return point.getX() == this.x && point.getY() == this.y;
+        return that.getX() == this.x && that.getY() == this.y;
     }
 }

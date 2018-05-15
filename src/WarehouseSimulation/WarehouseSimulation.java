@@ -35,14 +35,10 @@ public class WarehouseSimulation {
     private PickerColors pickerColorGenerator;
     // The simulation
     private WarehouseGraphics warehouseSimulator;
-    // Number of routes added (Only used for the table)
     private int routesAdded = 0;
     private RouteHighlighter routeHighlighter;
-    // Animation programTimer
     private AnimationTimer programTimer;
     private int UPDATE_COUNTER = 0;
-    private Point2D routeStartPoint;
-    private Point2D routeEndPoint;
 
     public WarehouseSimulation(Warehouse warehouse) {
         this.warehouse = warehouse;
@@ -57,10 +53,11 @@ public class WarehouseSimulation {
 
     private void setupOptimalRouteFinder() {
         SpaceTimeGrid grid = new SpaceTimeGrid(this.warehouse.getBaseLayer(), MAX_TIME);
-        this.routeStartPoint = new Point2D(0, 5);
-        this.routeEndPoint = new Point2D(0, 6);
+
+        Point2D routeStartPoint = warehouse.getRouteStartPoint();
+        Point2D routeEndPoint = warehouse.getRouteEndPoint();
         this.routeFinder = new RouteFinder(grid, routeStartPoint, routeEndPoint);
-        //this.routeFinder = new RouteFinder(grid, routeStartPoint, routeEndPoint, new ShortestPathFinder(grid));
+        //this.routeFinder = new RouteFinder( new ShortestPathFinder(grid), routeStartPoint, routeEndPoint);
     }
 
     private void addPicker(OrderPickerGraphic picker) {
@@ -83,23 +80,36 @@ public class WarehouseSimulation {
         Button launchButton = interactionGraphics.getLaunchButton();
         Button resetAllButton = interactionGraphics.getResetAllButton();
         Button startOverButton = interactionGraphics.getReLaunchButton();
+        Button normalSpeedButton = interactionGraphics.getNormalSpeedButton();
+        Button doubleSpeedButton = interactionGraphics.getDoubleSpeedButton();
+        Button speedUpByFiveButton = interactionGraphics.getSpeedUpByFiveButton();
         TextField inputField = interactionGraphics.getInputField();
         Table table = interactionGraphics.getTableView();
 
-        // Set objects in GridPane
-        gridpane.add(heading, 1, 1, 5, 1);
-        gridpane.add(inputField, 1, 2, 4, 2);
-        gridpane.add(addRouteButton, 5, 2);
-        gridpane.add(launchButton, 5, 5);
-        gridpane.add(resetAllButton, 5, 6);
-        gridpane.add(startOverButton, 5, 7);
+        VBox headingBox = new VBox(heading);
+        HBox inputBox = new HBox(inputField, addRouteButton);
+        HBox buttonsBox = new HBox(launchButton, startOverButton, resetAllButton);
+        HBox speedOptionsBox = new HBox(normalSpeedButton, doubleSpeedButton, speedUpByFiveButton);
+        speedOptionsBox.setSpacing(15);
+        buttonsBox.setSpacing(20);
+
+        gridpane.add(headingBox, 1, 1, 5, 1);
+        gridpane.add(inputBox, 1, 2, 5, 2);
+        gridpane.add(buttonsBox, 1, 4, 5, 4);
+        gridpane.add(new Label("Change speed"), 1, 5, 5, 5);
+        gridpane.add(speedOptionsBox, 1, 8, 5, 8);
+        gridpane.setVgap(15); // Padding between rows
 
         borderPane.getStyleClass().add("interaction-border-pane");
         borderPane.setRight(gridpane);
         borderPane.setLeft(table.getTable());
 
         // Set event listeners
-        setOnButtonClickEvent(addRouteButton, inputField, launchButton, resetAllButton, startOverButton, table);
+        setOnButtonClickEvent(
+                addRouteButton, inputField, launchButton, resetAllButton,
+                startOverButton, normalSpeedButton, doubleSpeedButton, speedUpByFiveButton,
+                table
+        );
 
         return new Group(borderPane);
 
@@ -107,7 +117,9 @@ public class WarehouseSimulation {
 
     private void setOnButtonClickEvent(Button addButton, TextField inputField,
                                        Button launchButton, Button resetAllButton,
-                                       Button startOverButton, Table table) {
+                                       Button startOverButton, Button noramalSpeedButton,
+                                       Button doubleSpeedButton, Button speedUpFiveButton,
+                                       Table table) {
         // Run the same method on button clicked and ENTER pressed
         addButton.setOnMouseClicked(e -> this.actionsForAddProductIDs(inputField, table));
         inputField.setOnKeyPressed(e -> {
@@ -119,7 +131,16 @@ public class WarehouseSimulation {
         launchButton.setOnMouseClicked(e -> programTimer.start());
         startOverButton.setOnMouseClicked(e -> this.startOverOptions());
         resetAllButton.setOnMouseClicked(e -> this.resetWarehouseOptions(table));
+        noramalSpeedButton.setOnMouseClicked(e -> this.scaleSimulationSpeed(1));
+        doubleSpeedButton.setOnMouseClicked(e -> this.scaleSimulationSpeed(2));
+        speedUpFiveButton.setOnMouseClicked(e -> this.scaleSimulationSpeed(5));
 
+    }
+
+    private void scaleSimulationSpeed(int scaleFactor) {
+        for(OrderPickerGraphic currentOrderPicker : orderPickerList) {
+            currentOrderPicker.setScaleSpeed(scaleFactor);
+        }
     }
 
     private void actionsForAddProductIDs(TextField inputField, Table table) {
@@ -229,6 +250,10 @@ public class WarehouseSimulation {
                 // Graphical groups for simulations
                 warehouseSimulator.getRackRowGroup(),
                 routeHighlighter.getHighlightGroup(),
+                warehouseSimulator.createStartAndEndPoints(
+                        warehouse.getRouteStartPoint(),
+                        warehouse.getRouteEndPoint()
+                ),
                 warehouseSimulator.getTileGroup(),
                 orderPickerGroup
         );

@@ -137,10 +137,9 @@ class NodeLayerTest {
         assertNotEquals(temp, testLayer1);
     }
 
-
     //We test that our 2 test layers should not be equal because they have different times*/
     @Test
-    void equals4() {
+    void equals3() {
         assertNotEquals(testLayer1, testLayer2);
     }
 

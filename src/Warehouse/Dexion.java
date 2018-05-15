@@ -31,7 +31,7 @@ public class Dexion implements Warehouse {
         createNodeGrid();
         createAisleList();
         createProducts();
-        setStartAndEndPoints(new Point2D(0, 4), new Point2D(0, 6));
+        setStartAndEndPoints(new Point2D(0, 4), new Point2D(0, 7));
     }
 
     private void createNodeGrid(){

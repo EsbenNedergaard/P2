@@ -94,7 +94,6 @@ public abstract class PathFinder {
 
         //We set the start-point to reference the correct layer.
         startNode.setNodeLayer(spaceTimeGrid.getNodeLayerList().get(startTime));
-
         //First node gets distance 0, other nodes get distance infinity
         for (Node node : spaceTimeGrid.getAllNodes()) {
             if (node.equals(startNode)) {

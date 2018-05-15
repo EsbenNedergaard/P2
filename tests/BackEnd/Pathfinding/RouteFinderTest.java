@@ -8,5 +8,8 @@ class RouteFinderTest {
     //TODO: få lavet disse tests til routeFinder
     @Test
     void calculateBestRoute() {
+
+
+
     }
 }

@@ -16,7 +16,6 @@ import java.util.List;
 public class RouteFinder {
     private final int WAIT_TIME_BETWEEN_PICKERS = 3;
     private int startTime;
-    private SpaceTimeGrid spaceTimeGrid;
     private Point2D routeStartPoint;
     private Point2D routeEndPoint;
     private PathFinder pathFinder;
@@ -24,16 +23,14 @@ public class RouteFinder {
 
 
     public RouteFinder(SpaceTimeGrid grid, Point2D routeStartPoint, Point2D routeEndPoint) {
-        this.spaceTimeGrid = grid;
         this.routeStartPoint = new Node(routeStartPoint);
         this.routeEndPoint = new Node(routeEndPoint);
-        this.pathFinder = new FastestPathFinder(spaceTimeGrid);
+        this.pathFinder = new FastestPathFinder(grid);
         this.amountPickersInGraph = 0;
         this.startTime = 0;
     }
 
-    public RouteFinder(SpaceTimeGrid grid, Point2D routeStartPoint, Point2D routeEndPoint, PathFinder pathFinder) {
-        this.spaceTimeGrid = grid;
+    public RouteFinder(PathFinder pathFinder, Point2D routeStartPoint, Point2D routeEndPoint) {
         this.routeStartPoint = new Node(routeStartPoint);
         this.routeEndPoint = new Node(routeEndPoint);
         this.pathFinder = pathFinder;
@@ -41,19 +38,12 @@ public class RouteFinder {
         this.startTime = 0;
     }
 
-
-
     public void reset() {
         this.pathFinder.resetSpaceTimeGrid();
         this.amountPickersInGraph = 0;
         this.startTime = 0;
     }
 
-    public SpaceTimeGrid getSpaceTimeGrid() {
-        return spaceTimeGrid;
-    }
-
-    //TODO: problemer med picking points bliver lavet om når vi har 700 - 970
     //Method that calculates the best route for the pickingList that it is given
     public PickingRoute calculateBestRoute(List<PickingPoint> pickingList) {
         this.startTime = amountPickersInGraph * WAIT_TIME_BETWEEN_PICKERS;

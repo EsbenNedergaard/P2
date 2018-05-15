@@ -4,8 +4,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class FastestRouteFinderTest {
-
+class RouteFinderTest {
+    //TODO: få lavet disse tests til routeFinder
     @Test
     void calculateBestRoute() {
     }

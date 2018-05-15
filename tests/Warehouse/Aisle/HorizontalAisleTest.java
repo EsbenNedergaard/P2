@@ -17,10 +17,10 @@ class HorizontalAisleTest {
 
     @BeforeEach
     void setUp() {
-        testAisle01 = new HorizontalAisle(30, new Point2D(0,5));
+        testAisle01 = new HorizontalAisle(28, new Point2D(0,5));
 
-        HorizontalRackRow testFirstRackRow = new HorizontalRackRow(new Point2D(1, 4), 28, 8);
-        HorizontalRackRow testSecondRackRow = new HorizontalRackRow(new Point2D(1, 6), 28, 8);
+        HorizontalRackRow testFirstRackRow = new HorizontalRackRow(new Point2D(0, 4), 28, 8);
+        HorizontalRackRow testSecondRackRow = new HorizontalRackRow(new Point2D(0, 6), 28, 8);
 
         testRackRowList = new ArrayList<>();
         testRackRowList.add(testFirstRackRow);
@@ -29,7 +29,7 @@ class HorizontalAisleTest {
 
     @Test
     void getAisleLength01() {
-        assertEquals(30, testAisle01.getAisleLength());
+        assertEquals(28, testAisle01.getAisleLength());
     }
 
     @Test
@@ -42,7 +42,6 @@ class HorizontalAisleTest {
     void getRackRowList01() {
         assertEquals(testRackRowList, testAisle01.getRackRowList());
     }
-
 
     @Test
     void getPickingPoints01() {

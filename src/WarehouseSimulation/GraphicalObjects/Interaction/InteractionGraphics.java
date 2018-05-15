@@ -10,6 +10,9 @@ public class InteractionGraphics {
     private Button launchButton;
     private Button resetAllButton;
     private Button reLaunchButton;
+    private Button speedUpByFiveButton;
+    private Button doubleSpeedButton;
+    private Button normalSpeedButton;
     private Table tableView;
 
     public InteractionGraphics() {
@@ -18,6 +21,9 @@ public class InteractionGraphics {
         this.launchButton = new Button("Launch");
         this.resetAllButton = new Button("Reset");
         this.reLaunchButton = new Button("Re-Launch");
+        this.normalSpeedButton = new Button("x1");
+        this.doubleSpeedButton = new Button("x2");
+        this.speedUpByFiveButton = new Button("x5");
         this.tableView = new Table();
         // Add style class to launch button
         launchButton.getStyleClass().add("launch-button");
@@ -43,6 +49,18 @@ public class InteractionGraphics {
 
     public Button getReLaunchButton() {
         return reLaunchButton;
+    }
+
+    public Button getSpeedUpByFiveButton() {
+        return speedUpByFiveButton;
+    }
+
+    public Button getNormalSpeedButton() {
+        return normalSpeedButton;
+    }
+
+    public Button getDoubleSpeedButton() {
+        return doubleSpeedButton;
     }
 
     public Table getTableView() {

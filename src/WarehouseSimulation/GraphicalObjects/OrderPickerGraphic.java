@@ -15,11 +15,13 @@ public class OrderPickerGraphic extends Circle {
     private final static int SCREEN_HZ = 60; /* change this to screen HZ */
     private List<Node> routeList;
     private double moveDistancePerUpdate;
+    private int scaleFactorMoveDistance;
     private int indexOfTargetNode;
 
     public OrderPickerGraphic(List<Node> routeList, String color) {
         this.routeList = routeList;
-        this.moveDistancePerUpdate = calculateMoveDistancePerUpdate();
+        this.scaleFactorMoveDistance = 1;
+        this.moveDistancePerUpdate = calculateMoveDistancePerUpdate(scaleFactorMoveDistance);
         this.indexOfTargetNode = 1;
         setDesign(color);
         setStartLocation();
@@ -27,7 +29,8 @@ public class OrderPickerGraphic extends Circle {
 
     public OrderPickerGraphic(List<Node> routeList) {
         this.routeList = routeList;
-        this.moveDistancePerUpdate = calculateMoveDistancePerUpdate();
+        this.scaleFactorMoveDistance = 1;
+        this.moveDistancePerUpdate = calculateMoveDistancePerUpdate(scaleFactorMoveDistance);
         this.indexOfTargetNode = 1;
         setDesign(Colors.BLUE.getColor());
         setStartLocation();
@@ -44,8 +47,8 @@ public class OrderPickerGraphic extends Circle {
         setFill(Color.valueOf(color));
     }
 
-    private double calculateMoveDistancePerUpdate() {
-        return PICKER_SPEED_IN_MPS * TILE_SIZE * 1 / SCREEN_HZ;
+    private double calculateMoveDistancePerUpdate(int scaleFactor) {
+        return (PICKER_SPEED_IN_MPS * TILE_SIZE * 1 / SCREEN_HZ) * scaleFactor;
     }
 
     // Call this 60 times / sec
@@ -148,6 +151,10 @@ public class OrderPickerGraphic extends Circle {
 
     public void startOver() {
         indexOfTargetNode = 1;
+    }
+
+    public void setScaleSpeed(int scaleFactor) {
+        moveDistancePerUpdate = calculateMoveDistancePerUpdate(scaleFactor);
     }
 
 }

@@ -11,11 +11,11 @@ import Warehouse.Racks.RackRow;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Simple5by5Warehouse implements Warehouse {
+public class Simple7x7Warehouse implements Warehouse {
     private List<Node> nodeList;
     private List<RackRow> rackRowList;
 
-    public Simple5by5Warehouse() {
+    public Simple7x7Warehouse() {
         this.nodeList = new ArrayList<>();
         this.rackRowList = new ArrayList<>();
 
@@ -40,6 +40,10 @@ public class Simple5by5Warehouse implements Warehouse {
         int shelvesPerRack = 3;
         this.rackRowList.add(new HorizontalRackRow(firstRackRowStartPoint, rackRowLenght, shelvesPerRack));
         this.rackRowList.add(new HorizontalRackRow(secondRackRowStartPoint, rackRowLenght, shelvesPerRack));
+
+        for(RackRow rackRow : this.getRackRowList()) {
+            rackRow.setRacksAsObstacles(nodeList);
+        }
     }
 
     @Override

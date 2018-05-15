@@ -23,7 +23,7 @@ public class GUIWarehouse extends Application {
     @Override
     public void init() {
         this.warehouse = new Dexion();
-        //this.warehouse = new Simple5by5Warehouse();
+        //this.warehouse = new Simple7x7Warehouse();
         this.graphicalWarehouse = new WarehouseSimulation(warehouse);
     }
 

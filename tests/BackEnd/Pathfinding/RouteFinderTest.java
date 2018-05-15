@@ -1,28 +1,19 @@
 package BackEnd.Pathfinding;
 
-import BackEnd.Geometry.Node;
-import BackEnd.Geometry.NodeType;
 import BackEnd.Geometry.PickingPoint;
 import BackEnd.Geometry.Point2D;
-import BackEnd.Graph.BaseLayer;
 import BackEnd.Graph.SpaceTimeGrid;
 import BackEnd.Pathfinding.PathFinders.FastestPathFinder;
-import BackEnd.Pathfinding.PathFinders.ShortestPathFinder;
 import BackEnd.Pathfinding.RouteFinders.RouteFinder;
 import BackEnd.TempRoutePrinter;
-import Exceptions.ProductNotInRackException;
 import Warehouse.Product;
 import Warehouse.Racks.Rack;
-import Warehouse.Simple5by5Warehouse;
 import Warehouse.Warehouse;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class RouteFinderTest {
     private RouteFinder testRouteFinder;
@@ -34,7 +25,7 @@ class RouteFinderTest {
     @BeforeEach
     void beforeEach(){
         int MAX_TIME = 100;
-        Warehouse warehouse = new Simple5by5Warehouse();
+        Warehouse warehouse = new Warehouse.Simple7x7Warehouse();
         this.grid = new SpaceTimeGrid(warehouse.getBaseLayer(), MAX_TIME);
 
         this.testRouteFinder = new RouteFinder(new FastestPathFinder(grid), warehouse.getRouteStartPoint(), warehouse.getRouteEndPoint());

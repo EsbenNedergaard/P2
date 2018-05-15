@@ -9,14 +9,26 @@ public class ShortestPathFinder extends PathFinder {
     }
 
     void updateNeighbourDistanceFromStart(Node current, Node neighbour) {
-        if (current.getDistanceFromStart() + 1 < neighbour.getDistanceFromStart()) {
+        int distanceBelow = 1;
+        int distanceNotBelow = 100;
+
+        if(current.getX() == neighbour.getX() && current.getY() == neighbour.getY() && current.getDistanceFromStart() + distanceBelow < neighbour.getDistanceFromStart()){
+            neighbour.setCameFrom(current);
+            neighbour.setDistanceFromStart(current.getDistanceFromStart() + distanceBelow);
+        } else if(current.getDistanceFromStart() + distanceNotBelow < neighbour.getDistanceFromStart()) {
+            neighbour.setCameFrom(current);
+            neighbour.setDistanceFromStart(current.getDistanceFromStart() + distanceNotBelow);
+        }
+
+
+        /*if (current.getDistanceFromStart() + 1 < neighbour.getDistanceFromStart()) {
             neighbour.setCameFrom(current);
             if(current.getX() == neighbour.getX() && current.getY() == neighbour.getY()) {
                 neighbour.setDistanceFromStart(current.getDistanceFromStart()); //Here we don't punish for waiting.
             } else {
                 neighbour.setDistanceFromStart(current.getDistanceFromStart() + 1);
             }
-        }
+        }*/
     }
 
 }

@@ -2,7 +2,7 @@ package WarehouseSimulation;
 
 import BackEnd.Geometry.PickingPoint;
 import BackEnd.Geometry.Point2D;
-import BackEnd.Pathfinding.RouteFinders.FastestRouteFinder;
+import BackEnd.Pathfinding.PathFinders.ShortestPathFinder;
 import BackEnd.Pathfinding.RouteFinders.RouteFinder;
 import BackEnd.Pathfinding.PickingRoute;
 import Exceptions.IllegalTextInputException;
@@ -53,9 +53,11 @@ public class WarehouseSimulation {
 
     private void setupOptimalRouteFinder() {
         SpaceTimeGrid grid = new SpaceTimeGrid(this.warehouse.getBaseLayer(), MAX_TIME);
+
         Point2D routeStartPoint = warehouse.getRouteStartPoint();
         Point2D routeEndPoint = warehouse.getRouteEndPoint();
         this.routeFinder = new FastestRouteFinder(grid, routeStartPoint, routeEndPoint);
+        //this.routeFinder = new RouteFinder(grid, routeStartPoint, routeEndPoint, new ShortestPathFinder(grid));
     }
 
     private void addPicker(OrderPickerGraphic picker) {

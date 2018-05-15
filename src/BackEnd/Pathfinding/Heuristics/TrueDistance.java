@@ -1,28 +1,38 @@
 package BackEnd.Pathfinding.Heuristics;
 
 import BackEnd.Geometry.Node;
+import BackEnd.Geometry.NodeComparator;
 import BackEnd.Graph.NodeLayer;
 import BackEnd.Graph.SpaceTimeGrid;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.PriorityQueue;
 
 public class TrueDistance implements Heuristic {
+    Node startNode;
+    List<Node> baseLayerNodeList;
+    PriorityQueue<Node> openSet;
+    List<Node> closedSet;
+
+
     @Override
     public void findDistanceToEndForAllNodes(SpaceTimeGrid spaceTimeGrid, Node endNode) {
-        List<Node> baseLayerNodeList = spaceTimeGrid.getBaseLayer().getNodeListWithoutObstacles();
+        this.baseLayerNodeList = spaceTimeGrid.getBaseLayer().getNodeListWithoutObstacles();
+        this.startNode = endNode;
+        this.openSet = new PriorityQueue<>(baseLayerNodeList.size(), new NodeComparator());
+        this.closedSet = new ArrayList<>();
+
         //Køre truedistance på baseLayer i spaceTimeGrid, og finde deres distancer her og derefter går ned af i gennem spaceTimeGridet
         //og give punket 0,0 samme distance til end som den du fandt for 0,0 i baselayeret.
 
-        //MODIFCIER DETTE SÅ DET ER TRUE DISTANCE OG IKKE MANHATTEN
-        for(Node node : baseLayerNodeList) {
-            int xDistance = Math.abs(endNode.getX() - node.getX());
-            int yDistance = Math.abs(endNode.getY() - node.getY());
+        this.setStartValues(baseLayerNodeList, startNode);
+        this.calculateTrueDistances();
+        this.setTrueDistancesToEndForBaseLayer();
+        this.setTrueDistancesForAllLayers(spaceTimeGrid);
+    }
 
-            int distanceToEnd = xDistance + yDistance;
-            node.setDistanceToEnd(distanceToEnd);
-        }
-
-
+    private void setTrueDistancesForAllLayers(SpaceTimeGrid spaceTimeGrid) {
         int baseLayerSize = baseLayerNodeList.size();
         //BURDE SORTERE NODERNE FØRST FOR EN SIKKERHEDSSKYLD
         for(NodeLayer nodeLayer : spaceTimeGrid.getNodeLayerList()) {
@@ -32,4 +42,72 @@ public class TrueDistance implements Heuristic {
             }
         }
     }
+
+    private void setTrueDistancesToEndForBaseLayer() {
+        for (Node node : baseLayerNodeList) {
+            node.setDistanceToEnd(node.getDistanceFromStart());
+        }
+    }
+
+    private void setStartValues(List<Node> baseLayerNodeList, Node startNode) {
+        //Makes sure the sets are empty before the algorithm begins
+        openSet.clear();
+        closedSet.clear();
+
+        //First node gets distance 0, other nodes get distance infinity
+        for (Node node : baseLayerNodeList) {
+            if (node.equals(startNode)) {
+                node.setDistanceFromStart(0);
+                openSet.add(node);
+            } else {
+                node.setDistanceToInf();
+            }
+        }
+
+        // All nodes get a heuristic distance of 0 to the end
+        for (Node node : baseLayerNodeList) {
+            node.setDistanceToEnd(0);
+        }
+
+    }
+
+    private void calculateTrueDistances() {
+        //Runs till all nodes have been visited
+        while (!openSet.isEmpty()) {
+            Node current = getNextNode();
+
+            //Checks if there exists a better path through current node to its neighbours
+            for (Node neighbour : current.getNeighbourNodes()) {
+                //We check if the current node is in the already checked nodes (closed set)
+                if (closedSet.contains(neighbour)) {
+                    continue;
+                }
+                //Update distance to neighbour if the distance through current is shorter
+                if(distanceThroughCurrentIsShorter(current, neighbour)) {
+                    neighbour.setDistanceFromStart(current.getDistanceFromStart() + 1);
+                }
+
+                if (!openSet.contains(neighbour)) {
+                    openSet.add(neighbour);
+                }
+            }
+        }
+    }
+
+    //Checks if the distance from start to a neighbour node is shorter through the current node
+    private boolean distanceThroughCurrentIsShorter(Node current, Node neighbour) {
+        if(current.getDistanceFromStart() + 1 < neighbour.getDistanceFromStart()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    //Retrieves next node to visit and adds it to the closed set
+    private Node getNextNode(){
+        Node next = openSet.poll();
+        closedSet.add(next);
+        return next;
+    }
+
 }

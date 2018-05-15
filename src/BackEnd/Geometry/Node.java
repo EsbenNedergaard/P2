@@ -46,6 +46,20 @@ public class Node extends Point2D {
         return false;
     }
 
+    boolean isNeighbourInBaseLayer(Node node) {
+        if (this.getX() == node.getX() + 1 && this.getY() == node.getY()) {
+            return true;
+        } else if (this.getX() == node.getX() - 1 && this.getY() == node.getY()) {
+            return true;
+        } else if (this.getX() == node.getX() && this.getY() == node.getY() + 1) {
+            return true;
+        } else if (this.getX() == node.getX() && this.getY() == node.getY() - 1) {
+            return true;
+        }
+
+        return false;
+    }
+
     public int getTotalDistance() {
         return distanceFromStart + distanceToEnd;
     }
@@ -126,6 +140,15 @@ public class Node extends Point2D {
         neighbourNodes = new ArrayList<>();
         for (Node node : possibleNeighbours) {
             if (this.isNeighbour(node)) {
+                neighbourNodes.add(node);
+            }
+        }
+    }
+
+    public void setBaseLayerNeighbours(List<Node> possibleNeighbours) {
+        neighbourNodes = new ArrayList<>();
+        for (Node node : possibleNeighbours) {
+            if (this.isNeighbourInBaseLayer(node)) {
                 neighbourNodes.add(node);
             }
         }

@@ -59,7 +59,8 @@ class DexionTest {
         List<PickingPoint> pickingPointList = testWarehouse.getPickingPoints(productIdList);
 
         // The two pickingPoints have equal Point2D
-        assertEquals(pickingPointList.get(0), pickingPointList.get(1));
+        assertEquals(pickingPointList.get(0).getX(), pickingPointList.get(1).getX());
+        assertEquals(pickingPointList.get(0).getY(), pickingPointList.get(1).getY());
     }
 
     @Test

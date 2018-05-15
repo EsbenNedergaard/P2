@@ -37,14 +37,14 @@ public class Product {
     }
 
     @Override
-    public boolean equals(Object that) {
+    public boolean equals(Object o) {
         // Two product objects are equal if they have the same ID
-        if(this == that) return true;
-        if(that == null || this.getClass() != that.getClass()) return false;
+        if(this == o) return true;
+        if(o == null || this.getClass() != o.getClass()) return false;
 
-        Product product = (Product) that;
+        Product that = (Product) o;
 
-        return product.getId() == this.id;
+        return that.getId() == this.id;
     }
 
     public int getShelfIndex() {

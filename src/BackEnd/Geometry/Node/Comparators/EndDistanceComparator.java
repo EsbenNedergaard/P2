@@ -4,7 +4,7 @@ import BackEnd.Geometry.Node.Node;
 
 import java.util.Comparator;
 
-public class DistanceToEndComparator implements Comparator<Node> {
+public class EndDistanceComparator implements Comparator<Node> {
     @Override
     public int compare(Node o1, Node o2) {
         int heuristicDiff = o1.getDistanceToEnd() - o2.getDistanceToEnd();

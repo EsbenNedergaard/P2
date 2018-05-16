@@ -1,5 +1,7 @@
 package BackEnd.Pathfinding.RouteFinders;
 
+import BackEnd.Geometry.Node.Comparators.EndDistanceComparator;
+import BackEnd.Geometry.Node.Comparators.TotalDistanceComparator;
 import BackEnd.Geometry.Node.Node;
 import BackEnd.Geometry.PickingPoint;
 import BackEnd.Geometry.Point2D;
@@ -35,9 +37,12 @@ public class RouteFinder {
     //Method that calculates the best route for the pickingList that it is given
     public PickingRoute calculateFastestRoute(List<PickingPoint> pickingList) {
         this.startTime = amountPickersInGraph * WAIT_TIME_BETWEEN_PICKERS;
+
         PickingRoute fastestRoute = new PickingRoute();
         fastestRoute = findRouteRecursive(routeStartPoint, pickingList, fastestRoute);
 
+        PickingRoute shortestRoute = this.calculateShortestRoute(pickingList);
+        fastestRoute.setShortestRoute(shortestRoute);
         //TODO: få lavet så SpaceTimeGrid tager en pickingRoute i stedet.
         pathFinder.getSpaceTimeGrid().removeRoute(fastestRoute.getRoute());
 
@@ -106,6 +111,13 @@ public class RouteFinder {
         return nextList;
     }
 
+    private PickingRoute calculateShortestRoute(List<PickingPoint> pickingList) {
+        PickingRoute shortestRoute = new PickingRoute();
+        pathFinder.changeComparator(new EndDistanceComparator());
 
+
+        pathFinder.changeComparator(new TotalDistanceComparator());
+        return shortestRoute;
+    }
 }
 

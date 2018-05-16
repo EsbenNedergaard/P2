@@ -1,13 +1,10 @@
 package WarehouseSimulation.GraphicalObjects;
 
-import BackEnd.Geometry.Node;
+import BackEnd.Geometry.Node.Node;
 import BackEnd.Geometry.Point2D;
 import javafx.scene.Group;
-import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextBoundsType;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,14 +24,14 @@ public class RouteHighlighter {
     private void createHighlight() {
 
         // Create the new highlighted route
-        for(Node node : routeList) {
+        for (Node node : routeList) {
             Point2D tileLocation = new Point2D(node.getX(), node.getY());
             highlightGroup.getChildren().add(new CircleTile(tileLocation, color, 2));
         }
 
         // Create product highlights
         int i = 1;
-        for(Point2D point : productPositions) {
+        for (Point2D point : productPositions) {
             CircleTile circle = new CircleTile(point, color, 8);
             Text text = new Text("" + i);
             PaneCircleText pane = new PaneCircleText(circle, text);
@@ -54,11 +51,10 @@ public class RouteHighlighter {
         this.productPositions = productPositions;
 
         // When the exact same route is highlighted again, delete the highlight
-        if(isHighlightOn() && checkIfHighlighted()) {
+        if (isHighlightOn() && checkIfHighlighted()) {
             reset();
             setHighlightOn(false);
-        }
-        else {
+        } else {
             // When a new route should be highlighted, delete the previous
             reset();
             createHighlight();
@@ -76,7 +72,7 @@ public class RouteHighlighter {
         int i = 0;
         for (Node node : routeList) {
             if (node.getXPixels() != getHighlightGroup().getChildren().get(i).getTranslateX() ||
-                node.getYPixels() != getHighlightGroup().getChildren().get(i).getTranslateY()) {
+                    node.getYPixels() != getHighlightGroup().getChildren().get(i).getTranslateY()) {
                 return false;
             }
             i++;

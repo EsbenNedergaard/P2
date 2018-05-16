@@ -21,7 +21,7 @@ public class PickerColors {
 
     public String getUnusedColor() {
         String unusedColor;
-        if(!nextColorIsAvailable())
+        if (!nextColorIsAvailable())
             resetIndexOfUnusedColor();
         unusedColor = colorsList.get(indexOfUnusedColor).getColor();
         indexOfUnusedColor++;

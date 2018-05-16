@@ -1,17 +1,17 @@
 package BackEnd.Pathfinding.PathFinders;
 
-import BackEnd.Geometry.Node;
+import BackEnd.Geometry.Node.Node;
 import Exceptions.NodeLayerDoesNotExistException;
 import Exceptions.RouteNotPossibleException;
 
 public class PathFinderStartValueChecker {
-    static public void checkValues(PathFinder pathFinder){
+    static public void checkValues(PathFinder pathFinder) {
         checkStartNode(pathFinder);
         checkEndNode(pathFinder);
         checkStartTime(pathFinder);
     }
 
-    static private void checkStartNode(PathFinder pathFinder)  {
+    static private void checkStartNode(PathFinder pathFinder) {
         //We check that the startNode is inside the timeLayer for our startTime
         for (Node n : pathFinder.getSpaceTimeGrid().getNodeLayerPointer(pathFinder.getStartTime()).getNodeList()) {
             if (n.getX() == pathFinder.getStartNode().getX() && n.getY() == pathFinder.getStartNode().getY()) {
@@ -23,7 +23,7 @@ public class PathFinderStartValueChecker {
 
     static private void checkEndNode(PathFinder pathFinder) {
         //We check that the endNode is inside the grid
-        for(Node n : pathFinder.getSpaceTimeGrid().getBaseLayer().getNodeListWithoutObstacles()) {
+        for (Node n : pathFinder.getSpaceTimeGrid().getBaseLayer().getNodeListWithoutObstacles()) {
             if (n.getX() == pathFinder.getEndNode().getX() && n.getY() == pathFinder.getEndNode().getY()) {
                 return;
             }

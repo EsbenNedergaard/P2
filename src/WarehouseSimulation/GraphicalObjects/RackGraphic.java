@@ -18,8 +18,7 @@ public class RackGraphic extends Circle {
         if (rack.getProductList().size() > 0) {
             setFill(Color.valueOf("#fc481e"));
             setStrokeType(StrokeType.INSIDE);
-        }
-        else {
+        } else {
             setOpacity(0);
         }
     }

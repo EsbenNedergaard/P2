@@ -1,9 +1,10 @@
 package Warehouse.Racks;
 
-import Warehouse.Exceptions.FullRackException;
 import BackEnd.Geometry.Point2D;
+import Warehouse.Exceptions.FullRackException;
 import Warehouse.Product;
 import Warehouse.Shelf;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -38,13 +39,13 @@ public class Rack {
 
     public boolean doesItContainProduct(Product product) {
         for (Shelf shelf : shelfList) {
-            if(product.equals(shelf.getProduct()))
+            if (product.equals(shelf.getProduct()))
                 return true;
         }
         return false;
     }
 
-    public boolean isFull(){
+    public boolean isFull() {
         for (Shelf shelf : shelfList) {
             if (!shelf.containsProduct()) {
                 return false;
@@ -54,7 +55,7 @@ public class Rack {
         return true;
     }
 
-    public List<Product> getProductList(){
+    public List<Product> getProductList() {
         List<Product> productList = new ArrayList<>();
 
         for (Shelf shelf : shelfList) {
@@ -85,8 +86,8 @@ public class Rack {
 
     @Override
     public boolean equals(Object that) {
-        if(this == that) return true;
-        if(that == null || this.getClass() != that.getClass()) return false;
+        if (this == that) return true;
+        if (that == null || this.getClass() != that.getClass()) return false;
 
         Rack thatRack = (Rack) that;
         return this.getRackPosition().equals(thatRack.getRackPosition());

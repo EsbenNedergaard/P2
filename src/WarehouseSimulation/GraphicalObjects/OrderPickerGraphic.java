@@ -1,12 +1,13 @@
 package WarehouseSimulation.GraphicalObjects;
 
-import BackEnd.Geometry.Node;
+import BackEnd.Geometry.Node.Node;
 import BackEnd.Geometry.Point2D;
 import WarehouseSimulation.GraphicalObjects.Colors.Colors;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 import java.util.List;
+
 import static Warehouse.GUIWarehouse.TILE_SIZE;
 
 public class OrderPickerGraphic extends Circle {
@@ -53,15 +54,15 @@ public class OrderPickerGraphic extends Circle {
 
     // Call this 60 times / sec
     public boolean move(final int UPDATE_COUNTER) {
-        if(!routeIsDone()) {
-            if(moveIsVertical())
+        if (!routeIsDone()) {
+            if (moveIsVertical())
                 moveVertical();
             else if (moveIsHorizontal())
                 moveHorizontal();
             else
                 waiting();
 
-            if(isAtTargetNode(UPDATE_COUNTER)) {
+            if (isAtTargetNode(UPDATE_COUNTER)) {
                 forcePickerToTargetNode();
                 moveOnToNextTargetNode();
             }
@@ -76,16 +77,16 @@ public class OrderPickerGraphic extends Circle {
 
     private boolean moveIsVertical() {
         return getLastVisitedNode().getXPixels() != getTargetNode().getXPixels() &&
-               getLastVisitedNode().getYPixels() == getTargetNode().getYPixels();
+                getLastVisitedNode().getYPixels() == getTargetNode().getYPixels();
     }
 
     private boolean moveIsHorizontal() {
         return getLastVisitedNode().getYPixels() != getTargetNode().getYPixels() &&
-               getLastVisitedNode().getXPixels() == getTargetNode().getXPixels();
+                getLastVisitedNode().getXPixels() == getTargetNode().getXPixels();
     }
 
     private void moveVertical() {
-        if(isLeftMove()) moveLeft();
+        if (isLeftMove()) moveLeft();
         else moveRight();
     }
 
@@ -102,7 +103,7 @@ public class OrderPickerGraphic extends Circle {
     }
 
     private void moveHorizontal() {
-        if(isUpMove()) moveUp();
+        if (isUpMove()) moveUp();
         else moveDown();
     }
 
@@ -119,7 +120,8 @@ public class OrderPickerGraphic extends Circle {
     }
 
     // TODO: Do something while waiting?
-    private void waiting() {}
+    private void waiting() {
+    }
 
     private Node getLastVisitedNode() {
         return this.routeList.get(indexOfTargetNode - 1);

@@ -1,9 +1,9 @@
 package BackEnd.Pathfinding;
 
-import BackEnd.Geometry.Node;
-import BackEnd.Geometry.NodeType;
+import BackEnd.Geometry.Node.Node;
+import BackEnd.Geometry.Node.NodeType;
 import BackEnd.Geometry.Point2D;
-import BackEnd.Pathfinding.PathFinders.FastestPathFinder;
+import BackEnd.Pathfinding.PathFinders.PathFinder;
 import BackEnd.TempRoutePrinter;
 import Exceptions.RouteNotPossibleException;
 import BackEnd.Graph.BaseLayer;
@@ -16,13 +16,15 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class FastestPathFinderTest {
+class PathFinderTest {
     private final int MAX_TIME = 100;
     private final int GRID_SIZE = 10;
     private final int START_TIME = 0;
+    private final int PICK_TIME = 0;
     private SpaceTimeGrid spaceTimeGrid;
     private List<Node> inputSet;
     private BaseLayer baseLayer;
+    private PathFinder testPathFinder;
 
     //TODO: Få lavet tests til de nye checks af værdier og lign.
 
@@ -45,6 +47,7 @@ class FastestPathFinderTest {
         }
         baseLayer = new BaseLayer(inputSet);
         spaceTimeGrid = new SpaceTimeGrid(baseLayer, MAX_TIME);
+        testPathFinder = new PathFinder(spaceTimeGrid);
     }
 
     // Testing if the path calculated by the algorithm is the actual shortest path
@@ -53,10 +56,9 @@ class FastestPathFinderTest {
         Node startNode = new Node(new Point2D(0, 0));
         Node endNode = new Node(new Point2D(GRID_SIZE-1,GRID_SIZE-1));
 
-        FastestPathFinder testFastestPathFinder = new FastestPathFinder(spaceTimeGrid);
         PickingRoute testResultRoute = new PickingRoute();
         try {
-            testResultRoute = testFastestPathFinder.findFastestPath(startNode, endNode, START_TIME);
+            testResultRoute = testPathFinder.findFastestPath(startNode, endNode, START_TIME, PICK_TIME);
         }
         catch (RouteNotPossibleException e) {
             System.out.println(e.toString());
@@ -118,20 +120,17 @@ class FastestPathFinderTest {
     void testRemoveRoute() {
         Node startNode = new Node(new Point2D(0, 0));
         Node endNode = new Node(new Point2D(GRID_SIZE-1,GRID_SIZE-1));
-
-        FastestPathFinder testFastestPathFinder = new FastestPathFinder(spaceTimeGrid);
-
         List<Node> testNonPermanentObstruction = new ArrayList<>();
 
         // Adds an obstruction at a specific field until time reaches a specific number
         for(int i = 0; i < MAX_TIME/2; i++) {
-            testNonPermanentObstruction.add(testFastestPathFinder.getSpaceTimeGrid().getNodePointer(1, 2, i));
+            testNonPermanentObstruction.add(testPathFinder.getSpaceTimeGrid().getNodePointer(1, 2, i));
         }
-        testFastestPathFinder.removeRoute(testNonPermanentObstruction);
+        testPathFinder.removeRoute(testNonPermanentObstruction);
 
         PickingRoute testResultRoute = new PickingRoute();
         try {
-            testResultRoute = testFastestPathFinder.findFastestPath(startNode, endNode, START_TIME);
+            testResultRoute = testPathFinder.findFastestPath(startNode, endNode, START_TIME, PICK_TIME);
         }
         catch (RouteNotPossibleException e) {
             System.out.println(e.toString());
@@ -156,8 +155,9 @@ class FastestPathFinderTest {
         Node startNode = new Node(new Point2D(0, 0));
         Node endNode = new Node(new Point2D(GRID_SIZE-1, GRID_SIZE-1));
 
-        FastestPathFinder testFastestPathFinder = new FastestPathFinder(spaceTimeGrid);
-        assertThrows(RouteNotPossibleException.class, ()-> testFastestPathFinder.findFastestPath(startNode, endNode, START_TIME));
+        //We have an updated spacetime, that we use here
+        testPathFinder = new PathFinder(spaceTimeGrid);
+        assertThrows(RouteNotPossibleException.class, ()-> testPathFinder.findFastestPath(startNode, endNode, START_TIME, PICK_TIME));
     }
 
     @Test
@@ -174,9 +174,9 @@ class FastestPathFinderTest {
         Node startNode = new Node(new Point2D(0, 0));
         Node endNode = new Node(new Point2D(GRID_SIZE-1, GRID_SIZE-1));
 
-        FastestPathFinder testFastestPathFinder = new FastestPathFinder(spaceTimeGrid);
+        testPathFinder = new PathFinder(spaceTimeGrid);
 
-        assertThrows(RouteNotPossibleException.class, ()-> testFastestPathFinder.findFastestPath(startNode, endNode, START_TIME));
+        assertThrows(RouteNotPossibleException.class, ()-> testPathFinder.findFastestPath(startNode, endNode, START_TIME, PICK_TIME));
     }
 
     @Test
@@ -193,29 +193,23 @@ class FastestPathFinderTest {
         Node startNode = new Node(new Point2D(0, 0));
         Node endNode = new Node(new Point2D(GRID_SIZE-1, GRID_SIZE-1));
 
-        FastestPathFinder testFastestPathFinder = new FastestPathFinder(spaceTimeGrid);
+        testPathFinder = new PathFinder(spaceTimeGrid);
 
-        assertThrows(RouteNotPossibleException.class, ()-> testFastestPathFinder.findFastestPath(startNode, endNode, START_TIME));
+        assertThrows(RouteNotPossibleException.class, ()-> testPathFinder.findFastestPath(startNode, endNode, START_TIME, PICK_TIME));
     }
 
     @Test
     void testStartPointOutsideGrid1(){
         Node startNode = new Node(new Point2D(-1, -1));
         Node endNode = new Node(new Point2D(GRID_SIZE-1, GRID_SIZE-1));
-
-        FastestPathFinder testFastestPathFinder = new FastestPathFinder(spaceTimeGrid);
-
-        assertThrows(RouteNotPossibleException.class, ()-> testFastestPathFinder.findFastestPath(startNode, endNode, START_TIME));
+        assertThrows(RouteNotPossibleException.class, ()-> testPathFinder.findFastestPath(startNode, endNode, START_TIME, PICK_TIME));
     }
 
     @Test
     void testStartPointOutsideGrid2(){
         Node startNode = new Node(new Point2D(GRID_SIZE, GRID_SIZE));
         Node endNode = new Node(new Point2D(GRID_SIZE-1, GRID_SIZE-1));
-
-        FastestPathFinder testFastestPathFinder = new FastestPathFinder(spaceTimeGrid);
-
-        assertThrows(RouteNotPossibleException.class, ()-> testFastestPathFinder.findFastestPath(startNode, endNode, START_TIME));
+        assertThrows(RouteNotPossibleException.class, ()-> testPathFinder.findFastestPath(startNode, endNode, START_TIME, PICK_TIME));
     }
 
     @Test
@@ -223,9 +217,7 @@ class FastestPathFinderTest {
         Node startNode = new Node(new Point2D(0, 0));
         Node endNode = new Node(new Point2D(-1, -1));
 
-        FastestPathFinder testFastestPathFinder = new FastestPathFinder(spaceTimeGrid);
-
-        assertThrows(RouteNotPossibleException.class, ()-> testFastestPathFinder.findFastestPath(startNode, endNode, START_TIME));
+        assertThrows(RouteNotPossibleException.class, ()-> testPathFinder.findFastestPath(startNode, endNode, START_TIME, PICK_TIME));
     }
 
     @Test
@@ -233,8 +225,6 @@ class FastestPathFinderTest {
         Node startNode = new Node(new Point2D(0, 0));
         Node endNode = new Node(new Point2D(GRID_SIZE, GRID_SIZE));
 
-        FastestPathFinder testFastestPathFinder = new FastestPathFinder(spaceTimeGrid);
-
-        assertThrows(RouteNotPossibleException.class, ()-> testFastestPathFinder.findFastestPath(startNode, endNode, START_TIME));
+        assertThrows(RouteNotPossibleException.class, ()-> testPathFinder.findFastestPath(startNode, endNode, START_TIME, PICK_TIME));
     }
 }

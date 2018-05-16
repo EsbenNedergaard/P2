@@ -1,9 +1,10 @@
 package BackEnd.Pathfinding;
 
-import BackEnd.Geometry.Node;
+import BackEnd.Geometry.Node.Node;
+import BackEnd.Geometry.PickingPoint;
 import BackEnd.Geometry.Point2D;
 import BackEnd.Graph.SpaceTimeGrid;
-import BackEnd.Geometry.PickingPoint;
+import Exceptions.ShortestRouteNotCalculatedException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,8 @@ public class PickingRoute {
     private int totalPickTime;
     private List<Node> route;
     private List<PickingPoint> pickingPoints;
+    private PickingRoute shortestRoute;
+
 
     public PickingRoute() {
         totalPickTime = 0;
@@ -43,10 +46,10 @@ public class PickingRoute {
         return route;
     }
 
-    public List<Point2D> getProductPoints(){
+    public List<Point2D> getProductPoints() {
         List<Point2D> productPoints = new ArrayList<>();
         //We run through all the products and get the product positions.
-        for(PickingPoint pickingPoint : this.getPickingPoints()) {
+        for (PickingPoint pickingPoint : this.getPickingPoints()) {
             productPoints.add(pickingPoint.getProduct().getProductPostion());
         }
 
@@ -67,7 +70,7 @@ public class PickingRoute {
 
     public void addPickingToRouteEnd(SpaceTimeGrid spaceTimeGrid, int pickTime) {
         Node pickPoint = route.get(route.size() - 1);
-        for(int i = 0; i < pickTime; i++) {
+        for (int i = 0; i < pickTime; i++) {
             route.add(spaceTimeGrid.getNodePointer(pickPoint.getX(), pickPoint.getY(), (pickPoint.getTime() + i) + 1));
             totalPickTime++;
         }
@@ -79,7 +82,7 @@ public class PickingRoute {
         /*These are added as just Nodes, that are not part of the SpaceTimeGrid, because the GUI, needs them
           to start the pickers at different times because it does not look at their time but only x and y */
         List<Node> waitTime = new ArrayList<>();
-        for(int i = 0; i < startTime; i++) {
+        for (int i = 0; i < startTime; i++) {
             waitTime.add(new Node(routeStartPoint));
         }
 
@@ -88,5 +91,16 @@ public class PickingRoute {
         fullRoute.addAll(this.route);
 
         this.route = fullRoute;
+    }
+
+    public PickingRoute getShortestRoute() {
+        if(this.shortestRoute == null) {
+            throw new ShortestRouteNotCalculatedException("We have not calculated the shortest route yet");
+        }
+        return shortestRoute;
+    }
+
+    public void setShortestRoute(PickingRoute shortestRoute) {
+        this.shortestRoute = shortestRoute;
     }
 }

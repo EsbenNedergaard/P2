@@ -1,4 +1,4 @@
-package Exceptions;
+package Exceptions.Warehouse;
 
 public class RackRowDoesNotContainProductException extends Exception {
     private String errorMsg;

@@ -2,20 +2,15 @@ package Warehouse.Aisle;
 
 
 import BackEnd.Geometry.PickingPoint;
-import Exceptions.RackRowDoesNotContainProductException;
-import Warehouse.Exceptions.FullAisleException;
-import Warehouse.Exceptions.FullRackException;
-import BackEnd.Geometry.Node;
 import BackEnd.Geometry.Point2D;
+import Exceptions.Warehouse.RackRowDoesNotContainProductException;
+import Warehouse.Exceptions.FullAisleException;
 import Warehouse.Product;
 import Warehouse.Racks.HorizontalRackRow;
-import Warehouse.Racks.Rack;
 import Warehouse.Racks.RackRow;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static BackEnd.Geometry.NodeType.OBSTACLE;
 
 
 /* This is a class that we use for our Aisles, the purpose of this class is to make it possible for us too make a
@@ -36,7 +31,7 @@ public class HorizontalAisle implements Aisle {
         Point2D topRackRowStartPoint = new Point2D(startPoint.getX(), startPoint.getY() - 1);
         Point2D bottomRackRowStartPoint = new Point2D(startPoint.getX(), startPoint.getY() + 1);
         topRackRow = new HorizontalRackRow(topRackRowStartPoint, aisleLength, SHELVES_PER_RACK);
-        bottomRackRow = new HorizontalRackRow(bottomRackRowStartPoint, aisleLength,SHELVES_PER_RACK);
+        bottomRackRow = new HorizontalRackRow(bottomRackRowStartPoint, aisleLength, SHELVES_PER_RACK);
     }
 
     @Override
@@ -81,7 +76,8 @@ public class HorizontalAisle implements Aisle {
                 Point2D productPosition = tempProduct.getProductPostion();
                 //We say y+1, because it is a topRackRow and our coordinate system goes downward
                 pickingPointList.add(new PickingPoint(new Point2D(productPosition.getX(), productPosition.getY() + 1), tempProduct));
-            } catch (RackRowDoesNotContainProductException ignored) {}
+            } catch (RackRowDoesNotContainProductException ignored) {
+            }
 
             //Same for the bottom.
             try {
@@ -89,7 +85,8 @@ public class HorizontalAisle implements Aisle {
                 Point2D productPosition = tempProduct.getProductPostion();
                 //We y-1, because it is a bottomRackRow and our coordinate system goes downward
                 pickingPointList.add(new PickingPoint(new Point2D(productPosition.getX(), productPosition.getY() - 1), tempProduct));
-            } catch (RackRowDoesNotContainProductException ignored) {}
+            } catch (RackRowDoesNotContainProductException ignored) {
+            }
         }
 
         return pickingPointList;

@@ -1,6 +1,6 @@
 package WarehouseSimulation.GraphicalObjects.Interaction.TableView;
 
-import BackEnd.Geometry.Node;
+import BackEnd.Geometry.Node.Node;
 import BackEnd.Geometry.Point2D;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.Button;
@@ -61,7 +61,7 @@ public class TableFactoryData {
     private void setButtonStyles() {
         this.highlightButton.setStyle(
                 "-fx-background-color: " + this.routeColor + "; " +
-                "-fx-text-fill: white;");
+                        "-fx-text-fill: white;");
     }
 
 }

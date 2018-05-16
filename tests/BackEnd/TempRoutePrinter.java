@@ -1,6 +1,6 @@
 package BackEnd;
 
-import BackEnd.Geometry.Node;
+import BackEnd.Geometry.Node.Node;
 import BackEnd.Graph.BaseLayer;
 
 import java.util.List;

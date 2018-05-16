@@ -52,8 +52,7 @@ public class RouteFinder {
         fastestRoute.addStartTime(startTime);
 
         amountPickersInGraph++;
-        return shortestRoute;
-        //return fastestRoute;
+        return fastestRoute;
     }
 
 
@@ -125,7 +124,7 @@ public class RouteFinder {
     }
 
     private List<PickingPoint> getShortestPickPointOrder(List<PickingPoint> pickingList) {
-        PathFinder unmodifiedPathFinder = new PathFinder(new SpaceTimeGrid(pathFinder.getSpaceTimeGrid()));
+        PathFinder unmodifiedPathFinder = new PathFinder(pathFinder.getSpaceTimeGrid());
         //We here remove all the moving obstacles so that we will find the order to pick that gives the shortest route
         pathFinder.resetSpaceTimeGrid();
 

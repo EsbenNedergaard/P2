@@ -32,7 +32,7 @@ public class GUIWarehouse extends Application {
         Scene scene = new Scene(graphicalWarehouse.getWarehouseGraphics());
         scene.getStylesheets().add("WarehouseSimulation/Styles/stylesheet.css");
         primaryStage.setMinWidth(1100);
-        primaryStage.setMinHeight(700);
+        primaryStage.setMinHeight(750);
         primaryStage.setTitle("GUIWarehouse");
         primaryStage.setScene(scene);
         primaryStage.show();

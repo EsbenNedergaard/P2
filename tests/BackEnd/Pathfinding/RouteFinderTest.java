@@ -5,10 +5,9 @@ import BackEnd.Geometry.Point2D;
 import BackEnd.Graph.SpaceTimeGrid;
 import BackEnd.Pathfinding.PathFinders.FastestPathFinder;
 import BackEnd.Pathfinding.RouteFinders.RouteFinder;
-import BackEnd.TempRoutePrinter;
 import Warehouse.Product;
 import Warehouse.Racks.Rack;
-import Warehouse.Simple7x7Warehouse;
+import Warehouse.SimpleNxNWarehouse;
 import Warehouse.Warehouse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,7 +23,7 @@ class RouteFinderTest {
     @BeforeEach
     void beforeEach(){
         int MAX_TIME = 100;
-        Warehouse warehouse = new Simple7x7Warehouse();
+        Warehouse warehouse = new SimpleNxNWarehouse(5);
         SpaceTimeGrid grid = new SpaceTimeGrid(warehouse.getBaseLayer(), MAX_TIME);
 
         this.testRouteFinder = new RouteFinder(new FastestPathFinder(grid), warehouse.getRouteStartPoint(), warehouse.getRouteEndPoint());

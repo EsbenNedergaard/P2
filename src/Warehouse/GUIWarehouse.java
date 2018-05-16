@@ -22,8 +22,8 @@ public class GUIWarehouse extends Application {
 
     @Override
     public void init() {
-        this.warehouse = new Dexion();
-        //this.warehouse = new Simple7x7Warehouse();
+        //this.warehouse = new Dexion();
+        this.warehouse = new SimpleNxNWarehouse(10);
         this.graphicalWarehouse = new WarehouseSimulation(warehouse);
     }
 

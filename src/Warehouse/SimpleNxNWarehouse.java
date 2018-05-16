@@ -5,7 +5,6 @@ import BackEnd.Geometry.PickingPoint;
 import BackEnd.Geometry.Point2D;
 import BackEnd.Graph.BaseLayer;
 import Exceptions.RackRowDoesNotContainProductException;
-import Warehouse.Aisle.Aisle;
 import Warehouse.Racks.HorizontalRackRow;
 import Warehouse.Racks.Rack;
 import Warehouse.Racks.RackRow;
@@ -13,14 +12,15 @@ import Warehouse.Racks.RackRow;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Simple7x7Warehouse implements Warehouse {
+public class SimpleNxNWarehouse implements Warehouse {
     private List<Node> nodeList;
     private List<RackRow> rackRowList;
-    private final int SIZE = 7;
+    private int size;
 
-    public Simple7x7Warehouse() {
+    public SimpleNxNWarehouse(int size) {
         this.nodeList = new ArrayList<>();
         this.rackRowList = new ArrayList<>();
+        this.size = size;
 
         this.createNodeGrid();
         this.setupRackRows();
@@ -37,11 +37,12 @@ public class Simple7x7Warehouse implements Warehouse {
 
     private void setupRackRows() {
         List<Point2D> rackRowStartPoints = new ArrayList<>();
-        rackRowStartPoints.add(new Point2D(1, 1));
-        rackRowStartPoints.add(new Point2D(1, 3));
-        rackRowStartPoints.add(new Point2D(1, 5));
+        //We start at one and add 2 every time
+        for(int i = 1; i < size; i += 2) {
+            rackRowStartPoints.add(new Point2D(1, i));
+        }
 
-        int rackRowLenght = 5;
+        int rackRowLenght = size-2;
         int shelvesPerRack = 1;
         for (Point2D startPoint : rackRowStartPoints) {
             this.rackRowList.add(new HorizontalRackRow(startPoint, rackRowLenght, shelvesPerRack));
@@ -95,12 +96,12 @@ public class Simple7x7Warehouse implements Warehouse {
 
     @Override
     public int getWidth() {
-        return SIZE;
+        return size;
     }
 
     @Override
     public int getLength() {
-        return SIZE;
+        return size;
     }
 
     @Override

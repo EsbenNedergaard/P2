@@ -14,7 +14,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.PriorityQueue;
 
-public abstract class PathFinder {
+public class PathFinder {
     private SpaceTimeGrid spaceTimeGrid;
     private List<Node> closedSet;
     private PriorityQueue<Node> openSet;
@@ -131,8 +131,6 @@ public abstract class PathFinder {
         return next;
     }
 
-    abstract void updateNeighbourDistanceFromStart(Node current, Node neighbour);
-
     private Boolean isEndNode(Node current) {
         return current.getX() == endNode.getX() && current.getY() == endNode.getY() && this.checkIfPickingIsPossible(current);
     }
@@ -140,6 +138,15 @@ public abstract class PathFinder {
     private void checkIfOutOfTime(Node current){
         if (spaceTimeGrid.getMaxTime() <= (current.getTime() + (pickTime + 1))){
             throw new RouteNotPossibleException("Did not find a route in the given time");
+        }
+    }
+
+    private void updateNeighbourDistanceFromStart(Node current, Node neighbour) {
+        //Update distance through neighbour
+        if (current.getDistanceFromStart() + 1 < neighbour.getDistanceFromStart()) {
+            //A better path exists.
+            neighbour.setCameFrom(current);
+            neighbour.setDistanceFromStart(current.getDistanceFromStart() + 1); //We increase the distance to the start with 1
         }
     }
 

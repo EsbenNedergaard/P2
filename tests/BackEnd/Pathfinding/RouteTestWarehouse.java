@@ -2,7 +2,7 @@ package BackEnd.Pathfinding;
 
 import BackEnd.Geometry.Node;
 import BackEnd.Geometry.Point2D;
-import BackEnd.Pathfinding.PathFinders.FastestPathFinder;
+import BackEnd.Pathfinding.PathFinders.PathFinder;
 import BackEnd.TempRoutePrinter;
 import Exceptions.RouteNotPossibleException;
 import BackEnd.Graph.BaseLayer;
@@ -25,12 +25,12 @@ class RouteTestWarehouse {
         Node endNode = new Node(new Point2D(42,3));
         //Node endNode = new Node(new Point2D(15,5));
 
-        FastestPathFinder testFastestPathFinder = new FastestPathFinder(spaceTimeGrid);
+        PathFinder testPathFinder = new PathFinder(spaceTimeGrid);
 
         PickingRoute testResultRoute = new PickingRoute();
         try {
             for (int i = 0; i < 100; i++) {
-                testResultRoute = testFastestPathFinder.findFastestPath(startNode, endNode, 0, 0);
+                testResultRoute = testPathFinder.findFastestPath(startNode, endNode, 0, 0);
             }
         }
         catch (RouteNotPossibleException e) {

@@ -3,7 +3,7 @@ package BackEnd.Pathfinding;
 import BackEnd.Geometry.PickingPoint;
 import BackEnd.Geometry.Point2D;
 import BackEnd.Graph.SpaceTimeGrid;
-import BackEnd.Pathfinding.PathFinders.FastestPathFinder;
+import BackEnd.Pathfinding.PathFinders.PathFinder;
 import BackEnd.Pathfinding.RouteFinders.RouteFinder;
 import Warehouse.Product;
 import Warehouse.Racks.Rack;
@@ -26,7 +26,7 @@ class RouteFinderTest {
         Warehouse warehouse = new SimpleNxNWarehouse(5);
         SpaceTimeGrid grid = new SpaceTimeGrid(warehouse.getBaseLayer(), MAX_TIME);
 
-        this.testRouteFinder = new RouteFinder(new FastestPathFinder(grid), warehouse.getRouteStartPoint(), warehouse.getRouteEndPoint());
+        this.testRouteFinder = new RouteFinder(new PathFinder(grid), warehouse.getRouteStartPoint(), warehouse.getRouteEndPoint());
         this.createPickingPoints();
     }
 

@@ -4,9 +4,7 @@ import BackEnd.Geometry.Node;
 import BackEnd.Geometry.PickingPoint;
 import BackEnd.Geometry.Point2D;
 import BackEnd.Graph.SpaceTimeGrid;
-import BackEnd.Pathfinding.PathFinders.FastestPathFinder;
 import BackEnd.Pathfinding.PathFinders.PathFinder;
-import BackEnd.Pathfinding.PathFinders.ShortestPathFinder;
 import BackEnd.Pathfinding.PickingRoute;
 import Exceptions.RouteNotPossibleException;
 
@@ -25,7 +23,7 @@ public class RouteFinder {
     public RouteFinder(SpaceTimeGrid grid, Point2D routeStartPoint, Point2D routeEndPoint) {
         this.routeStartPoint = new Node(routeStartPoint);
         this.routeEndPoint = new Node(routeEndPoint);
-        this.pathFinder = new FastestPathFinder(grid);
+        this.pathFinder = new PathFinder(grid);
         this.amountPickersInGraph = 0;
         this.startTime = 0;
     }

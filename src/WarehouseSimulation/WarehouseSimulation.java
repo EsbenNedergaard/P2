@@ -8,6 +8,7 @@ import BackEnd.Pathfinding.PickingRoute;
 import Exceptions.IllegalTextInputException;
 import BackEnd.Graph.SpaceTimeGrid;
 import WarehouseSimulation.GraphicalObjects.Colors.PickerColors;
+import WarehouseSimulation.GraphicalObjects.Interaction.Handler.RandomProducts;
 import WarehouseSimulation.GraphicalObjects.Interaction.TableView.TableFactoryData;
 import WarehouseSimulation.GraphicalObjects.Interaction.Handler.InputFieldDataHandler;
 import static Warehouse.GUIWarehouse.*;
@@ -83,6 +84,7 @@ public class WarehouseSimulation {
         Button normalSpeedButton = interactionGraphics.getNormalSpeedButton();
         Button doubleSpeedButton = interactionGraphics.getDoubleSpeedButton();
         Button speedUpByFiveButton = interactionGraphics.getSpeedUpByFiveButton();
+        Button randomRouteButton = interactionGraphics.getRandomRouteButton();
         TextField inputField = interactionGraphics.getInputField();
         Table table = interactionGraphics.getTableView();
 
@@ -98,6 +100,7 @@ public class WarehouseSimulation {
         gridpane.add(buttonsBox, 1, 4, 5, 4);
         gridpane.add(new Label("Change speed"), 1, 5, 5, 5);
         gridpane.add(speedOptionsBox, 1, 8, 5, 8);
+        gridpane.add(randomRouteButton, 1, 10, 5, 10);
         gridpane.setVgap(15); // Padding between rows
 
         borderPane.getStyleClass().add("interaction-border-pane");
@@ -108,7 +111,7 @@ public class WarehouseSimulation {
         setOnButtonClickEvent(
                 addRouteButton, inputField, launchButton, resetAllButton,
                 startOverButton, normalSpeedButton, doubleSpeedButton, speedUpByFiveButton,
-                table
+                table, randomRouteButton
         );
 
         return new Group(borderPane);
@@ -119,7 +122,7 @@ public class WarehouseSimulation {
                                        Button launchButton, Button resetAllButton,
                                        Button startOverButton, Button noramalSpeedButton,
                                        Button doubleSpeedButton, Button speedUpFiveButton,
-                                       Table table) {
+                                       Table table, Button randomRouteButton) {
         // Run the same method on button clicked and ENTER pressed
         addButton.setOnMouseClicked(e -> this.actionsForAddProductIDs(inputField, table));
         inputField.setOnKeyPressed(e -> {
@@ -134,6 +137,7 @@ public class WarehouseSimulation {
         noramalSpeedButton.setOnMouseClicked(e -> this.scaleSimulationSpeed(1));
         doubleSpeedButton.setOnMouseClicked(e -> this.scaleSimulationSpeed(2));
         speedUpFiveButton.setOnMouseClicked(e -> this.scaleSimulationSpeed(5));
+        randomRouteButton.setOnMouseClicked(e -> this.setRandomProductsToInputField(inputField, table));
 
     }
 
@@ -141,6 +145,20 @@ public class WarehouseSimulation {
         for(OrderPickerGraphic currentOrderPicker : orderPickerList) {
             currentOrderPicker.setScaleSpeed(scaleFactor);
         }
+    }
+
+    private void setRandomProductsToInputField(TextField inputField, Table table) {
+        inputField.clear();
+        RandomProducts rand = new RandomProducts();
+        List<String> randomProductIDList = rand.nextProductIDList(5, 2176);
+        for(int i = 0; i < randomProductIDList.size(); i++) {
+            String currentProductID = randomProductIDList.get(i);
+            if(i != randomProductIDList.size() - 1)
+                inputField.setText(inputField.getText() + currentProductID + ", ");
+            else
+                inputField.setText(inputField.getText() + currentProductID);
+        }
+        actionsForAddProductIDs(inputField, table);
     }
 
     private void actionsForAddProductIDs(TextField inputField, Table table) {
@@ -160,6 +178,7 @@ public class WarehouseSimulation {
             showAlert(e.getMessage(), Alert.AlertType.WARNING);
             return;
         }
+
         PickingRoute pickingRoute = getPickingRouteFromIDlist(tempProductIDList);
 
         String pickerColorValue = this.setupPicker(pickingRoute);

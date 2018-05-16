@@ -53,7 +53,6 @@ public class WarehouseSimulation {
     private InputFieldDataHandler textHandler;
 
     private int UPDATE_COUNTER = 0;
-
     private InteractionGraphics interactions;
 
     public WarehouseSimulation(Warehouse warehouse) {
@@ -112,13 +111,13 @@ public class WarehouseSimulation {
 
     private void actionsForAddProductIDs() {
         TextField inputField = interactions.getInputField();
-
         if (inputField.getText().isEmpty()) {
             showAlert("The text field was empty", Alert.AlertType.WARNING);
             return;
         }
 
         textHandler = new InputFieldDataHandler();
+
         // Get the id list from the input field
         List<Integer> tempProductIDList;
         try {
@@ -130,7 +129,7 @@ public class WarehouseSimulation {
 
         PickingRoute pickingRoute = getPickingRouteFromIDlist(tempProductIDList);
 
-        this.setupPicker(pickingRoute);
+        setupPicker(pickingRoute);
         //this.setupPicker(pickingRoute.getShortestRoute());
         // Clear the input field when done
         inputField.clear();
@@ -192,15 +191,12 @@ public class WarehouseSimulation {
         return routeFinder.calculateFastestRoute(pickPointList);
     }
 
-    private String setupPicker(PickingRoute pickingRoute) {
+    private void setupPicker(PickingRoute pickingRoute) {
         String pickerColorValue = pickerColorGenerator.getUnusedColor();
         OrderPickerGraphic orderPicker = new OrderPickerGraphic(pickingRoute.getRoute(), pickerColorValue);
         addPicker(orderPicker);
         routesAdded++;
-
         this.addPickerToTable(pickingRoute, pickerColorValue);
-
-        return pickerColorValue;
     }
 
     private void addPickerToTable(PickingRoute pickingRoute, String pickerColorValue){

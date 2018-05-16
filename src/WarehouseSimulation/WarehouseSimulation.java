@@ -3,9 +3,12 @@ package WarehouseSimulation;
 import BackEnd.Geometry.PickingPoint;
 import BackEnd.Geometry.Point2D;
 import BackEnd.Pathfinding.RouteFinders.RouteFinder;
-import BackEnd.Pathfinding.PickingRoute;
-import Exceptions.IllegalTextInputException;
 import BackEnd.Graph.SpaceTimeGrid;
+import BackEnd.Pathfinding.PathFinders.PathFinder;
+import BackEnd.Pathfinding.PickingRoute;
+import BackEnd.Pathfinding.RouteFinders.RouteFinder;
+import Exceptions.IllegalTextInputException;
+import Warehouse.Warehouse;
 import WarehouseSimulation.GraphicalObjects.Colors.PickerColors;
 import WarehouseSimulation.GraphicalObjects.Interaction.Handler.RandomProducts;
 import WarehouseSimulation.GraphicalObjects.Interaction.TableView.TableFactoryData;
@@ -14,16 +17,26 @@ import static Warehouse.GUIWarehouse.*;
 import static WarehouseSimulation.GraphicalObjects.Interaction.ButtonType.*;
 
 import WarehouseSimulation.GraphicalObjects.Interaction.InteractionGraphics;
-import WarehouseSimulation.GraphicalObjects.Warehouse.WarehouseGraphics;
-import WarehouseSimulation.GraphicalObjects.*;
 import WarehouseSimulation.GraphicalObjects.Interaction.TableView.Table;
+import WarehouseSimulation.GraphicalObjects.Interaction.TableView.TableFactoryData;
+import WarehouseSimulation.GraphicalObjects.OrderPickerGraphic;
+import WarehouseSimulation.GraphicalObjects.RouteHighlighter;
+import WarehouseSimulation.GraphicalObjects.Warehouse.WarehouseGraphics;
 import javafx.animation.AnimationTimer;
+import javafx.scene.Group;
+import javafx.scene.Parent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.*;
-import Warehouse.*;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static Warehouse.GUIWarehouse.SCALE;
+import static Warehouse.GUIWarehouse.TILE_SIZE;
 
 public class WarehouseSimulation {
     private Warehouse warehouse;
@@ -56,7 +69,7 @@ public class WarehouseSimulation {
         SpaceTimeGrid grid = new SpaceTimeGrid(this.warehouse.getBaseLayer(), MAX_TIME);
         Point2D routeStartPoint = warehouse.getRouteStartPoint();
         Point2D routeEndPoint = warehouse.getRouteEndPoint();
-        this.routeFinder = new RouteFinder(grid, routeStartPoint, routeEndPoint);
+        this.routeFinder = new RouteFinder(new PathFinder(grid), routeStartPoint, routeEndPoint);
     }
 
     public Parent getWarehouseGraphics() {
@@ -111,8 +124,7 @@ public class WarehouseSimulation {
         List<Integer> tempProductIDList;
         try {
             tempProductIDList = textHandler.generateProductIDList(inputField.getText());
-        }
-        catch(IllegalTextInputException e) {
+        } catch (IllegalTextInputException e) {
             showAlert(e.getMessage(), Alert.AlertType.WARNING);
             return;
         }
@@ -132,7 +144,7 @@ public class WarehouseSimulation {
 
         setViewRouteButtonClickEvent(generatedProductIDs);
 
-        if(!generatedProductIDs.getProductIDSet().equals(""))
+        if (!generatedProductIDs.getProductIDSet().equals(""))
             table.add(generatedProductIDs);
 
         // Clear the input field when done
@@ -183,17 +195,16 @@ public class WarehouseSimulation {
     private void reLaunchOptions() {
         if(UPDATE_COUNTER == 0) {
             showAlert("And how would you like this to be possible?", Alert.AlertType.INFORMATION);
-        }
-        else {
+        } else {
             UPDATE_COUNTER = 0;
-            for(OrderPickerGraphic currentPicker : orderPickerList)
+            for (OrderPickerGraphic currentPicker : orderPickerList)
                 currentPicker.startOver();
         }
     }
 
     private PickingRoute getPickingRouteFromIDlist(List<Integer> idList) {
         List<PickingPoint> pickPointList = this.warehouse.getPickingPoints(idList);
-        return routeFinder.calculateBestRoute(pickPointList);
+        return routeFinder.calculateFastestRoute(pickPointList);
     }
 
     private String setupPicker(PickingRoute pickingRoute) {
@@ -215,8 +226,8 @@ public class WarehouseSimulation {
     private void setViewRouteButtonClickEvent(TableFactoryData generatedProductIDs) {
         generatedProductIDs.getHighlightButton().setOnMouseClicked(e -> {
             routeHighlighter.setHighlightRouteList(generatedProductIDs.getRouteList(),
-                                                   generatedProductIDs.getRouteColor(),
-                                                   generatedProductIDs.getProductPositions());
+                    generatedProductIDs.getRouteColor(),
+                    generatedProductIDs.getProductPositions());
         });
     }
 

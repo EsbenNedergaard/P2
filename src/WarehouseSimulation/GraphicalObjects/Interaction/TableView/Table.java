@@ -2,7 +2,8 @@ package WarehouseSimulation.GraphicalObjects.Interaction.TableView;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.*;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.util.List;
@@ -19,9 +20,9 @@ public class Table<E> {
 
     private void createTable() {
         List<TableColumn> columnList = List.of(
-                createColumn("#", 40,  "number"),
+                createColumn("#", 40, "number"),
                 createColumn("Product ID", 320, "productIDSet"),
-                createColumn("View", 80,  "highlightButton")
+                createColumn("View", 80, "highlightButton")
         );
         setColumnsSortable(columnList, false);
         addColumnsToTable(columnList);
@@ -51,17 +52,17 @@ public class Table<E> {
     }
 
     private void setColumnsSortable(List<TableColumn> columnList, boolean sortable) {
-        for(TableColumn column : columnList)
+        for (TableColumn column : columnList)
             column.setSortable(sortable);
     }
 
     private void addColumnsToTable(List<TableColumn> columnList) {
-        for(TableColumn column : columnList)
+        for (TableColumn column : columnList)
             table.getColumns().addAll(column);
     }
 
     public void add(E productIDSet) {
-        if(data == null)
+        if (data == null)
             data = FXCollections.observableArrayList();
 
         data.addAll(productIDSet);
@@ -69,7 +70,7 @@ public class Table<E> {
     }
 
     public void clear() {
-        if(data != null) {
+        if (data != null) {
             data.clear();
             table.setItems(data);
         }

@@ -1,13 +1,13 @@
 package Exceptions;
 
-public class IsNotValidNodeTypeException extends RuntimeException{
+public class IsNotValidNodeTypeException extends RuntimeException {
     private String errorMsg;
 
     public IsNotValidNodeTypeException(String errorMsg) {
         this.errorMsg = errorMsg;
     }
 
-    public IsNotValidNodeTypeException(){
+    public IsNotValidNodeTypeException() {
         this.errorMsg = "Not a valid NodeType";
     }
 

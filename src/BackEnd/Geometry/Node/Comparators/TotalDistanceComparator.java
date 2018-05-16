@@ -1,19 +1,20 @@
-package BackEnd.Geometry;
+package BackEnd.Geometry.Node.Comparators;
+
+import BackEnd.Geometry.Node.Node;
 
 import java.util.Comparator;
 
-public class NodeComparator implements Comparator<Node> {
+public class TotalDistanceComparator implements Comparator<Node> {
 
     // Compares two nodes by lowest total distance first, lowest distance to end secondly, and highest y value finally
     @Override
     public int compare(Node o1, Node o2) {
-
         int distanceDiff = o1.getTotalDistance() - o2.getTotalDistance();
 
-        if(distanceDiff == 0){
+        if (distanceDiff == 0) {
             int heuristicDiff = o1.getDistanceToEnd() - o2.getDistanceToEnd();
 
-            if(heuristicDiff == 0){
+            if (heuristicDiff == 0) {
                 return o2.getY() - o1.getY();
             }
             return heuristicDiff;

@@ -1,8 +1,9 @@
 package BackEnd.Geometry;
 
-import static BackEnd.Geometry.NodeType.WALKABLE;
+import static BackEnd.Geometry.Node.NodeType.WALKABLE;
 import static org.junit.jupiter.api.Assertions.*;
 
+import BackEnd.Geometry.Node.Node;
 import BackEnd.Graph.NodeLayer;
 import Exceptions.UnplacedNodeException;
 import org.junit.jupiter.api.BeforeEach;
@@ -110,10 +111,11 @@ class NodeTest {
         node1 = nodeLayer1.getNodeList().get(0);
 
         //Layer2 element 1 is (0,1)
-        assertTrue(node1.isNeighbour(nodeLayer2.getNodeList().get(1)));
+        assertEquals(nodeLayer2.getNodeList().get(1), node1.getNeighbourNodes().get(1));
+
 
         //Layer2 element 2 is (0,2)
-        assertFalse(node1.isNeighbour(nodeLayer2.getNodeList().get(2)));
+        assertNotEquals(nodeLayer2.getNodeList().get(2), node1.getNeighbourNodes().get(1));
     }
 
     @Test

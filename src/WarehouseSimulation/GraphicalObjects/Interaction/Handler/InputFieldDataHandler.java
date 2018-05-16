@@ -16,26 +16,26 @@ public class InputFieldDataHandler {
 
     // This method takes a string of product id's, clears product buffer,
     // adds new result to the productIDListBuffer and returns it
-    public List<Integer> generateProductIDList(String inputString){
+    public List<Integer> generateProductIDList(String inputString) {
         productIDListBuffer.clear();
 
         String tempStringBuffer = "";
         int inputStringLength = inputString.length() - 1;
 
-        for(int charIndex = 0; charIndex <= inputStringLength; charIndex++) {
+        for (int charIndex = 0; charIndex <= inputStringLength; charIndex++) {
             char currentChar = inputString.charAt(charIndex);
 
-            if(!Character.isDigit(currentChar) && currentChar != ' ' && currentChar != ',') {
+            if (!Character.isDigit(currentChar) && currentChar != ' ' && currentChar != ',') {
                 throw new IllegalTextInputException("Your input contains a letter or illegal special character");
             }
 
-            if(Character.isDigit(currentChar)) {
+            if (Character.isDigit(currentChar)) {
                 tempStringBuffer += currentChar;
             }
 
             // Buffer closing conditions
-            if(currentChar == ',' || charIndex == inputStringLength) {
-                if(tempStringBuffer.isEmpty()) {
+            if (currentChar == ',' || charIndex == inputStringLength) {
+                if (tempStringBuffer.isEmpty()) {
                     throw new IllegalTextInputException("Illegal input before a comma or at end of input");
                 }
 
@@ -46,7 +46,7 @@ public class InputFieldDataHandler {
                     productIDListBuffer.add(foundNumber);
                     tempStringBuffer = "";
 
-                } catch(NumberFormatException e) {
+                } catch (NumberFormatException e) {
                     showAlert(e.getMessage(), Alert.AlertType.ERROR);
                 }
             }
@@ -59,16 +59,16 @@ public class InputFieldDataHandler {
     public String generateProductIDString() {
 
         // Fun
-        if(productIDListBuffer.get(0) == 123456) {
+        if (productIDListBuffer.get(0) == 123456) {
             return "Anton. Lad nu vær";
         }
 
         String productIDString = "";
 
-        for(Integer number : productIDListBuffer) {
+        for (Integer number : productIDListBuffer) {
             String currentNumber = number.toString();
 
-            if(productIDString.equals(""))
+            if (productIDString.equals(""))
                 productIDString = currentNumber;
             else
                 productIDString = productIDString + ", " + currentNumber;

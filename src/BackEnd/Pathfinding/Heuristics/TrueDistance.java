@@ -1,7 +1,7 @@
 package BackEnd.Pathfinding.Heuristics;
 
-import BackEnd.Geometry.Node;
-import BackEnd.Geometry.NodeComparator;
+import BackEnd.Geometry.Node.Comparators.TotalDistanceComparator;
+import BackEnd.Geometry.Node.Node;
 import BackEnd.Graph.NodeLayer;
 import BackEnd.Graph.SpaceTimeGrid;
 
@@ -10,24 +10,21 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 public class TrueDistance implements Heuristic {
-    Node startNode;
-    NodeLayer baseLayer;
-    List<Node> baseLayerNodeList;
-    PriorityQueue<Node> openSet;
-    List<Node> closedSet;
+    private Node startNode;
+    private NodeLayer baseLayer;
+    private List<Node> baseLayerNodeList;
+    private PriorityQueue<Node> openSet;
+    private List<Node> closedSet;
 
 
     @Override
     public void findDistanceToEndForAllNodes(SpaceTimeGrid spaceTimeGrid, Node endNode) {
         this.baseLayer = new NodeLayer(spaceTimeGrid.getBaseLayer().getNodeListWithoutObstacles(), 0);
         endNode.setNodeLayer(baseLayer);
-        this.baseLayerNodeList  = baseLayer.getNodeList();
+        this.baseLayerNodeList = baseLayer.getNodeList();
         this.startNode = endNode;
-        this.openSet = new PriorityQueue<>(baseLayerNodeList.size(), new NodeComparator());
+        this.openSet = new PriorityQueue<>(baseLayerNodeList.size(), new TotalDistanceComparator());
         this.closedSet = new ArrayList<>();
-
-        //Køre truedistance på baseLayer i spaceTimeGrid, og finde deres distancer her og derefter går ned af i gennem spaceTimeGridet
-        //og give punket 0,0 samme distance til end som den du fandt for 0,0 i baselayeret.
 
         this.setBaseLayerNeighbours();
         this.setStartValues(baseLayerNodeList, startNode);
@@ -38,10 +35,9 @@ public class TrueDistance implements Heuristic {
 
     private void setTrueDistancesForAllLayers(SpaceTimeGrid spaceTimeGrid) {
         int baseLayerSize = baseLayerNodeList.size();
-        //BURDE SORTERE NODERNE FØRST FOR EN SIKKERHEDSSKYLD
-        for(NodeLayer nodeLayer : spaceTimeGrid.getNodeLayerList()) {
+        for (NodeLayer nodeLayer : spaceTimeGrid.getNodeLayerList()) {
             //We run through all the nodes in the layer and set the distance to end, to be the same as for the baseLayer
-            for(int i = 0; i < baseLayerSize; i++) {
+            for (int i = 0; i < baseLayerSize; i++) {
                 nodeLayer.getNodeList().get(i).setDistanceToEnd(baseLayerNodeList.get(i).getDistanceToEnd());
             }
         }
@@ -87,7 +83,7 @@ public class TrueDistance implements Heuristic {
                     continue;
                 }
                 //Update distance to neighbour if the distance through current is shorter
-                if(distanceThroughCurrentIsShorter(current, neighbour)) {
+                if (distanceThroughCurrentIsShorter(current, neighbour)) {
                     neighbour.setDistanceFromStart(current.getDistanceFromStart() + 1);
                 }
 
@@ -100,7 +96,7 @@ public class TrueDistance implements Heuristic {
 
     //Checks if the distance from start to a neighbour node is shorter through the current node
     private boolean distanceThroughCurrentIsShorter(Node current, Node neighbour) {
-        if(current.getDistanceFromStart() + 1 < neighbour.getDistanceFromStart()) {
+        if (current.getDistanceFromStart() + 1 < neighbour.getDistanceFromStart()) {
             return true;
         }
 
@@ -108,7 +104,7 @@ public class TrueDistance implements Heuristic {
     }
 
     //Retrieves next node to visit and adds it to the closed set
-    private Node getNextNode(){
+    private Node getNextNode() {
         Node next = openSet.poll();
         closedSet.add(next);
         return next;
@@ -122,7 +118,7 @@ public class TrueDistance implements Heuristic {
 
     private void setNeighboursForNode(Node node) {
         for (Node possibleNeighbour : baseLayerNodeList) {
-            if(isNeighbours(node, possibleNeighbour)) {
+            if (isNeighbours(node, possibleNeighbour)) {
                 node.addNeighbour(possibleNeighbour);
             }
         }
@@ -138,7 +134,6 @@ public class TrueDistance implements Heuristic {
         } else if (node1.getX() == node2.getX() && node1.getY() == node2.getY() - 1) {
             return true;
         }
-
         return false;
     }
 

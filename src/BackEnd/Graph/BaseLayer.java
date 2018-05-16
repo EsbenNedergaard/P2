@@ -1,6 +1,6 @@
 package BackEnd.Graph;
 
-import BackEnd.Geometry.Node;
+import BackEnd.Geometry.Node.Node;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +13,7 @@ public class BaseLayer {
         for (Node n : nodeList) {
             if (n.isObstacle()) {
                 stationaryObstacles.add(n);
-            }
-            else {
+            } else {
                 this.nodeList.add(n);
             }
         }

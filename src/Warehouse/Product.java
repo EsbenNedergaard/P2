@@ -1,7 +1,7 @@
 package Warehouse;
 
 import BackEnd.Geometry.Point2D;
-import Exceptions.ProductNotInRackException;
+import Exceptions.Warehouse.ProductNotInRackException;
 import Warehouse.Racks.Rack;
 
 import java.util.List;
@@ -39,8 +39,8 @@ public class Product {
     @Override
     public boolean equals(Object o) {
         // Two product objects are equal if they have the same ID
-        if(this == o) return true;
-        if(o == null || this.getClass() != o.getClass()) return false;
+        if (this == o) return true;
+        if (o == null || this.getClass() != o.getClass()) return false;
 
         Product that = (Product) o;
 
@@ -48,14 +48,14 @@ public class Product {
     }
 
     public int getShelfIndex() {
-        if(getRack() == null)
+        if (getRack() == null)
             throw new ProductNotInRackException();
 
         List<Product> productList = rack.getProductList();
         int productListSize = productList.size();
 
-        for(int i = 0; i < productListSize; i++) {
-            if(this.equals(productList.get(i))) {
+        for (int i = 0; i < productListSize; i++) {
+            if (this.equals(productList.get(i))) {
                 return i;
             }
         }

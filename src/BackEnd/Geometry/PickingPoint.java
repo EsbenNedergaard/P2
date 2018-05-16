@@ -13,6 +13,7 @@ public class PickingPoint extends Point2D {
         this.product = product;
         this.pickTime = 3 + product.getShelfIndex();
     }
+
     public void setProduct(Product product) {
         this.product = product;
     }

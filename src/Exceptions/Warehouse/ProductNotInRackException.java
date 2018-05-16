@@ -1,4 +1,4 @@
-package Exceptions;
+package Exceptions.Warehouse;
 
 public class ProductNotInRackException extends RuntimeException {
     private String errorMsg;

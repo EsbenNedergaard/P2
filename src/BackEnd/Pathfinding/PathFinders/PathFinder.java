@@ -1,7 +1,7 @@
 package BackEnd.Pathfinding.PathFinders;
 
-import BackEnd.Geometry.Node;
-import BackEnd.Geometry.NodeComparator;
+import BackEnd.Geometry.Node.Comparators.TotalDistanceComparator;
+import BackEnd.Geometry.Node.Node;
 import BackEnd.Geometry.Point2D;
 import BackEnd.Graph.SpaceTimeGrid;
 import BackEnd.Pathfinding.Heuristics.Heuristic;
@@ -9,14 +9,10 @@ import BackEnd.Pathfinding.Heuristics.TrueDistance;
 import BackEnd.Pathfinding.PickingRoute;
 import Exceptions.RouteNotPossibleException;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.PriorityQueue;
+import java.util.*;
 
-public abstract class PathFinder {
+public class PathFinder {
     private SpaceTimeGrid spaceTimeGrid;
-    private SpaceTimeGrid unmodifiedSpaceTimeGrid;
     private List<Node> closedSet;
     private PriorityQueue<Node> openSet;
     private Node startNode;
@@ -28,16 +24,18 @@ public abstract class PathFinder {
 
     public PathFinder(SpaceTimeGrid spaceTimeGrid) {
         this.spaceTimeGrid = spaceTimeGrid;
-        this.unmodifiedSpaceTimeGrid = spaceTimeGrid;
         this.closedSet = new ArrayList<>();
         this.heuristic = new TrueDistance();
-        //this.heuristic = new Manhatten();
         //We set the openSet to in worst case be cable of containing all nodes
-        this.openSet = new PriorityQueue<>(spaceTimeGrid.getAllNodes().size(), new NodeComparator());
+        this.openSet = new PriorityQueue<>(spaceTimeGrid.getAllNodes().size(), new TotalDistanceComparator());
     }
 
     public void resetSpaceTimeGrid() {
         this.spaceTimeGrid = new SpaceTimeGrid(spaceTimeGrid.getBaseLayer(), spaceTimeGrid.getMaxTime());
+    }
+
+    public void changeComparator(Comparator<Node> comparator) {
+        this.openSet = new PriorityQueue<>(spaceTimeGrid.getAllNodes().size(), comparator);
     }
 
     public SpaceTimeGrid getSpaceTimeGrid() {
@@ -60,22 +58,9 @@ public abstract class PathFinder {
         spaceTimeGrid.removeRoute(route);
     }
 
-    public PickingRoute findFastestPath(Point2D start, Point2D end, int startTime) throws RouteNotPossibleException {
-        this.startNode =  new Node(start);
-        this.endNode = new Node (end);
-        this.startTime = startTime;
-        this.pickTime = 0;
-
-        PathFinderStartValueChecker.checkValues(this);
-        this.setStartValues();
-        this.calculateFastestPath();
-
-        return constructPath();
-    }
-
     public PickingRoute findFastestPath(Point2D start, Point2D end, int startTime, int pickTime) throws RouteNotPossibleException {
-        this.startNode =  new Node(start);
-        this.endNode = new Node (end);
+        this.startNode = new Node(start);
+        this.endNode = new Node(end);
         this.startTime = startTime;
         this.pickTime = pickTime;
 
@@ -105,6 +90,10 @@ public abstract class PathFinder {
         }
         // All nodes gets an estimated distance to the end node
         heuristic.findDistanceToEndForAllNodes(spaceTimeGrid, endNode);
+
+        /*for(Node n : this.getSpaceTimeGrid().getAllNodes()) {
+            n.setDistanceToEnd(n.getDistanceToEnd() * 1000);
+        }*/
     }
 
     private void calculateFastestPath() {
@@ -136,24 +125,30 @@ public abstract class PathFinder {
     }
 
     //Retrieves next node to visit and adds it to the closed set
-    private Node getNextNode(){
+    private Node getNextNode() {
         Node next = openSet.poll();
         closedSet.add(next);
         return next;
     }
 
     private Boolean isEndNode(Node current) {
-        return current.getX() == endNode.getX() && current.getY() == endNode.getY() && checkIfPickingIsPossible(current);
+        return current.getX() == endNode.getX() && current.getY() == endNode.getY() && this.checkIfPickingIsPossible(current);
     }
 
-    private void checkIfOutOfTime(Node current){
-        if (spaceTimeGrid.getMaxTime() <= (current.getTime() + (pickTime + 1))){
+    private void checkIfOutOfTime(Node current) {
+        if (spaceTimeGrid.getMaxTime() <= (current.getTime() + (pickTime + 1))) {
             throw new RouteNotPossibleException("Did not find a route in the given time");
         }
     }
 
-
-    abstract void updateNeighbourDistanceFromStart(Node current, Node neighbour);
+    private void updateNeighbourDistanceFromStart(Node current, Node neighbour) {
+        //Update distance through neighbour
+        if (current.getDistanceFromStart() + 1 < neighbour.getDistanceFromStart()) {
+            //A better path exists.
+            neighbour.setCameFrom(current);
+            neighbour.setDistanceFromStart(current.getDistanceFromStart() + 1); //We increase the distance to the start with 1
+        }
+    }
 
     //Constructs the shortest route as a list of nodes
     private PickingRoute constructPath() {
@@ -179,17 +174,17 @@ public abstract class PathFinder {
         Node current = possibleEndPoint;
 
         /*We add one to PICK_TIME because we need to make sure the next route also has a point to start on*/
-        for(int i = 0; i < pickTime + 1; i++) {
+        for (int i = 0; i < pickTime + 1; i++) {
             Node next = spaceTimeGrid.getNodePointer(current.getX(), current.getY(), current.getTime() + 1);
             found = false;
-            for(Node neighbourToCurrent : current.getNeighbourNodes()) {
+            for (Node neighbourToCurrent : current.getNeighbourNodes()) {
                 //We check that the next node exists in the current neighbour list and haven't been removed
-                if(next.equals(neighbourToCurrent)) {
+                if (next.equals(neighbourToCurrent)) {
                     found = true;
                     break;
                 }
             }
-            if(!found) {
+            if (!found) {
                 return false;
             }
             current = next;

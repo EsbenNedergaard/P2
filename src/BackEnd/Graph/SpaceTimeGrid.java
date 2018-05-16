@@ -1,8 +1,8 @@
 package BackEnd.Graph;
 
-import Exceptions.NodeLayerDoesNotExistException;
+import BackEnd.Geometry.Node.Node;
 import Exceptions.NodeDoesNotExistException;
-import BackEnd.Geometry.Node;
+import Exceptions.NodeLayerDoesNotExistException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ public class SpaceTimeGrid {
         for (int i = 0; i < maxTime; i++) {
             nodeLayerList.add(new NodeLayer(baseLayer.getNodeListWithoutObstacles(), i));
             if (i != 0) {
-                nodeLayerList.get(i-1).setAllNeighbourNodesForLayer(nodeLayerList.get(i));
+                nodeLayerList.get(i - 1).setAllNeighbourNodesForLayer(nodeLayerList.get(i));
             }
         }
     }
@@ -41,9 +41,9 @@ public class SpaceTimeGrid {
         return baseLayer;
     }
 
-    public List<Node> getAllNodes(){
+    public List<Node> getAllNodes() {
         List<Node> allNodes = new ArrayList<>();
-        for(NodeLayer element : nodeLayerList){
+        for (NodeLayer element : nodeLayerList) {
             allNodes.addAll(element.getNodeList());
         }
 
@@ -52,7 +52,7 @@ public class SpaceTimeGrid {
 
     public Node getNodePointer(int x, int y, int time) {
         for (NodeLayer nodeLayer : nodeLayerList) {
-            if(time == nodeLayer.getTime()) {
+            if (time == nodeLayer.getTime()) {
                 try {
                     return nodeLayer.getNodePointer(x, y);
                 } catch (NodeDoesNotExistException e) {
@@ -64,9 +64,9 @@ public class SpaceTimeGrid {
         throw new NodeLayerDoesNotExistException("There is no NodeLayer with the time: " + time + " in this graph");
     }
 
-    public NodeLayer getNodeLayerPointer(int time){
-        for(NodeLayer nodeLayer : nodeLayerList) {
-            if(time == nodeLayer.getTime()) {
+    public NodeLayer getNodeLayerPointer(int time) {
+        for (NodeLayer nodeLayer : nodeLayerList) {
+            if (time == nodeLayer.getTime()) {
                 return nodeLayer;
             }
         }
@@ -92,15 +92,15 @@ public class SpaceTimeGrid {
         }
     }
 
-    public void removeNodeFromNeighbourLists(Node node){
-        if(node.getTime() == 0) {
+    public void removeNodeFromNeighbourLists(Node node) {
+        if (node.getTime() == 0) {
             return;
         }
-        NodeLayer earlierNodeLayer = this.getNodeLayerPointer(node.getTime()-1);
+        NodeLayer earlierNodeLayer = this.getNodeLayerPointer(node.getTime() - 1);
 
-        for(Node nodeInEarlierLayer : earlierNodeLayer.getNodeList()) {
+        for (Node nodeInEarlierLayer : earlierNodeLayer.getNodeList()) {
             for (Node neighbour : nodeInEarlierLayer.getNeighbourNodes()) {
-                if(node.equals(neighbour)) {
+                if (node.equals(neighbour)) {
                     nodeInEarlierLayer.getNeighbourNodes().remove(neighbour);
                     /* We need this break because we remove an element from the Neighbour-loop that we are running through
                     otherwise the for-each loop will crash */

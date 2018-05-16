@@ -150,7 +150,7 @@ public class WarehouseSimulation {
     private void setRandomProductsToInputField(TextField inputField, Table table) {
         inputField.clear();
         RandomProducts rand = new RandomProducts();
-        List<String> randomProductIDList = rand.nextProductIDList(5, 2176);
+        List<String> randomProductIDList = rand.nextProductIDList(5, warehouse.getAmountOfProducts());
         for(int i = 0; i < randomProductIDList.size(); i++) {
             String currentProductID = randomProductIDList.get(i);
             if(i != randomProductIDList.size() - 1)

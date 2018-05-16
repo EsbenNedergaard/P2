@@ -22,8 +22,8 @@ public class GUIWarehouse extends Application {
 
     @Override
     public void init() {
-        //this.warehouse = new Dexion();
-        this.warehouse = new SimpleNxNWarehouse(10);
+        this.warehouse = new Dexion();
+        //this.warehouse = new SimpleNxNWarehouse(10);
         this.graphicalWarehouse = new WarehouseSimulation(warehouse);
     }
 
@@ -31,6 +31,8 @@ public class GUIWarehouse extends Application {
     public void start(Stage primaryStage) {
         Scene scene = new Scene(graphicalWarehouse.getWarehouseGraphics());
         scene.getStylesheets().add("WarehouseSimulation/Styles/stylesheet.css");
+        primaryStage.setMinWidth(1100);
+        primaryStage.setMinHeight(700);
         primaryStage.setTitle("GUIWarehouse");
         primaryStage.setScene(scene);
         primaryStage.show();

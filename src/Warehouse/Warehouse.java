@@ -16,4 +16,5 @@ public interface Warehouse {
     int getLength();
     Point2D getRouteStartPoint();
     Point2D getRouteEndPoint();
+    int getAmountOfProducts();
 }

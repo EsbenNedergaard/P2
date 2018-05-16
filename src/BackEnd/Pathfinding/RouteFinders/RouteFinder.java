@@ -43,6 +43,7 @@ public class RouteFinder {
         fastestRoute = findRouteRecursive(routeStartPoint, pickingList, fastestRoute);
 
         PickingRoute shortestRoute = this.calculateShortestRoute(pickingList);
+        shortestRoute.addStartTime(startTime);
         fastestRoute.setShortestRoute(shortestRoute);
         //TODO: få lavet så SpaceTimeGrid tager en pickingRoute i stedet.
         pathFinder.getSpaceTimeGrid().removeRoute(fastestRoute.getRoute());
@@ -51,7 +52,8 @@ public class RouteFinder {
         fastestRoute.addStartTime(startTime);
 
         amountPickersInGraph++;
-        return fastestRoute;
+        return shortestRoute;
+        //return fastestRoute;
     }
 
 
@@ -142,6 +144,7 @@ public class RouteFinder {
             PickingPoint nextPickPoint = pickingList.remove(0);
 
             addPathToRoute(shortestRoute, currPosition, nextPickPoint);
+            addPickingTimeToRoute(shortestRoute, nextPickPoint);
             currPosition = nextPickPoint;
         }
         this.addFinalPathToRoute(shortestRoute, currPosition);

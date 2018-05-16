@@ -7,6 +7,7 @@ import BackEnd.Graph.SpaceTimeGrid;
 import BackEnd.Pathfinding.Heuristics.Heuristic;
 import BackEnd.Pathfinding.Heuristics.TrueDistance;
 import BackEnd.Pathfinding.PickingRoute;
+import Exceptions.PickerIsTrappedException;
 import Exceptions.RouteNotPossibleException;
 
 import java.util.*;
@@ -67,9 +68,8 @@ public class PathFinder {
         //Checks and then sets starting values, and calculate the path
         PathFinderStartValueChecker.checkValues(this);
         this.setStartValues();
-        this.calculateFastestPath();
 
-        return constructPath();
+        return calculateFastestPath();
     }
 
     private void setStartValues() {
@@ -96,14 +96,14 @@ public class PathFinder {
         }*/
     }
 
-    private void calculateFastestPath() {
+    private PickingRoute calculateFastestPath() {
         //Runs till all nodes have been visited or till we find the end node
         while (!openSet.isEmpty()) {
             Node current = getNextNode();
 
             if (isEndNode(current)) {
                 endNode = current;
-                break; //We have reached the destination
+                return constructPath(); //We have reached the destination
             }
 
             this.checkIfOutOfTime(current);
@@ -122,6 +122,7 @@ public class PathFinder {
                 }
             }
         }
+        throw new PickerIsTrappedException("The picker was trapped");
     }
 
     //Retrieves next node to visit and adds it to the closed set

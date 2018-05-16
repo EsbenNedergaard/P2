@@ -5,6 +5,7 @@ import BackEnd.Geometry.Node.Comparators.TotalDistanceComparator;
 import BackEnd.Geometry.Node.Node;
 import BackEnd.Geometry.PickingPoint;
 import BackEnd.Geometry.Point2D;
+import BackEnd.Graph.SpaceTimeGrid;
 import BackEnd.Pathfinding.PathFinders.PathFinder;
 import BackEnd.Pathfinding.PickingRoute;
 import Exceptions.RouteNotPossibleException;
@@ -112,18 +113,40 @@ public class RouteFinder {
     }
 
     private PickingRoute calculateShortestRoute(List<PickingPoint> pickingList) {
-        PickingRoute shortestRoute = new PickingRoute();
-
         List<PickingPoint> pickPointOrder = getShortestPickPointOrder(pickingList);
 
-        //PickingRoute route = this.findRouteRecursive()
         pathFinder.changeComparator(new EndDistanceComparator());
+        PickingRoute shortestRoute = this.findRouteInPickPointOrder(pickPointOrder);
         pathFinder.changeComparator(new TotalDistanceComparator());
+
         return shortestRoute;
     }
 
     private List<PickingPoint> getShortestPickPointOrder(List<PickingPoint> pickingList) {
-        return null;
+        PathFinder unmodifiedPathFinder = new PathFinder(new SpaceTimeGrid(pathFinder.getSpaceTimeGrid()));
+        //We here remove all the moving obstacles so that we will find the order to pick that gives the shortest route
+        pathFinder.resetSpaceTimeGrid();
+
+        PickingRoute routeWithOutMovingObstacles = new PickingRoute();
+        routeWithOutMovingObstacles = findRouteRecursive(routeStartPoint, pickingList, routeWithOutMovingObstacles);
+
+        pathFinder = unmodifiedPathFinder;
+        return routeWithOutMovingObstacles.getPickingPoints();
+    }
+
+    private PickingRoute findRouteInPickPointOrder(List<PickingPoint> pickingList) {
+        Point2D currPosition = routeStartPoint;
+        PickingRoute shortestRoute = new PickingRoute();
+
+        while(!pickingList.isEmpty()) {
+            PickingPoint nextPickPoint = pickingList.remove(0);
+
+            addPathToRoute(shortestRoute, currPosition, nextPickPoint);
+            currPosition = nextPickPoint;
+        }
+        this.addFinalPathToRoute(shortestRoute, currPosition);
+
+        return shortestRoute;
     }
 }
 

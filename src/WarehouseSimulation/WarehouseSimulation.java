@@ -3,6 +3,7 @@ package WarehouseSimulation;
 import BackEnd.Geometry.PickingPoint;
 import BackEnd.Geometry.Point2D;
 import BackEnd.Pathfinding.PathFinders.PathFinder;
+import BackEnd.Pathfinding.RouteFinders.FastestRouteFinder;
 import BackEnd.Pathfinding.RouteFinders.RouteFinder;
 import BackEnd.Pathfinding.PickingRoute;
 import Exceptions.IllegalTextInputException;
@@ -27,7 +28,7 @@ public class WarehouseSimulation {
     private Warehouse warehouse;
     private int LENGTH_WAREHOUSE;
     private int WIDTH_WAREHOUSE;
-    // Path finder
+    //Route finder
     private RouteFinder routeFinder;
     private final int MAX_TIME = 500;
     private Group orderPickerGroup;
@@ -56,7 +57,7 @@ public class WarehouseSimulation {
 
         Point2D routeStartPoint = warehouse.getRouteStartPoint();
         Point2D routeEndPoint = warehouse.getRouteEndPoint();
-        this.routeFinder = new RouteFinder(new PathFinder(grid), routeStartPoint, routeEndPoint);
+        this.routeFinder = new FastestRouteFinder(new PathFinder(grid), routeStartPoint, routeEndPoint);
     }
 
     private void addPicker(OrderPickerGraphic picker) {
@@ -195,7 +196,7 @@ public class WarehouseSimulation {
     private PickingRoute getPickingRouteFromIDlist(List<Integer> idList) {
         // Find route for picker
         List<PickingPoint> pickPointList = this.warehouse.getPickingPoints(idList);
-        return routeFinder.calculateBestRoute(pickPointList);
+        return routeFinder.calculateRoute(pickPointList);
     }
 
     private String setupPicker(PickingRoute pickingRoute) {

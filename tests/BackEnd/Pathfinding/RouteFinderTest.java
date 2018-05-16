@@ -4,6 +4,7 @@ import BackEnd.Geometry.PickingPoint;
 import BackEnd.Geometry.Point2D;
 import BackEnd.Graph.SpaceTimeGrid;
 import BackEnd.Pathfinding.PathFinders.PathFinder;
+import BackEnd.Pathfinding.RouteFinders.FastestRouteFinder;
 import BackEnd.Pathfinding.RouteFinders.RouteFinder;
 import Warehouse.Product;
 import Warehouse.Racks.Rack;
@@ -26,7 +27,7 @@ class RouteFinderTest {
         Warehouse warehouse = new SimpleNxNWarehouse(5);
         SpaceTimeGrid grid = new SpaceTimeGrid(warehouse.getBaseLayer(), MAX_TIME);
 
-        this.testRouteFinder = new RouteFinder(new PathFinder(grid), warehouse.getRouteStartPoint(), warehouse.getRouteEndPoint());
+        this.testRouteFinder = new FastestRouteFinder(new PathFinder(grid), warehouse.getRouteStartPoint(), warehouse.getRouteEndPoint());
         this.createPickingPoints();
     }
 
@@ -52,6 +53,6 @@ class RouteFinderTest {
         pickingList.add(pickPoint2);
 
 
-        PickingRoute pickingRoute = testRouteFinder.calculateBestRoute(pickingList);
+        PickingRoute pickingRoute = testRouteFinder.calculateRoute(pickingList);
     }
 }

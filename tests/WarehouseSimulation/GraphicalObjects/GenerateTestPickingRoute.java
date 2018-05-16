@@ -3,6 +3,7 @@ package WarehouseSimulation.GraphicalObjects;
 import BackEnd.Geometry.*;
 import BackEnd.Graph.BaseLayer;
 import BackEnd.Graph.SpaceTimeGrid;
+import BackEnd.Pathfinding.PathFinders.PathFinder;
 import BackEnd.Pathfinding.PickingRoute;
 import BackEnd.Pathfinding.RouteFinders.RouteFinder;
 import Warehouse.*;
@@ -31,7 +32,7 @@ public class GenerateTestPickingRoute {
         Warehouse testWarehouse = new Dexion();
         BaseLayer baseLayer = testWarehouse.getBaseLayer();
         SpaceTimeGrid spaceTimeGrid = new SpaceTimeGrid(baseLayer, 500);
-        routeFinder = new RouteFinder(spaceTimeGrid, routeStartPoint, routeEndPoint);
+        routeFinder = new RouteFinder(new PathFinder(spaceTimeGrid), routeStartPoint, routeEndPoint);
 
         pickPoints.add(new PickingPoint(new Point2D(6,1), new Product(1)));
         pickPoints.add(new PickingPoint(new Point2D(6,1), new Product(1)));
@@ -47,7 +48,7 @@ public class GenerateTestPickingRoute {
         Warehouse testWarehouse = new Dexion();
         BaseLayer baseLayer = testWarehouse.getBaseLayer();
         SpaceTimeGrid spaceTimeGrid = new SpaceTimeGrid(baseLayer, 500);
-        routeFinder = new RouteFinder(spaceTimeGrid, routeStartPoint, routeEndPoint);
+        routeFinder = new RouteFinder(new PathFinder(spaceTimeGrid), routeStartPoint, routeEndPoint);
 
         pickPoints.add(new PickingPoint(new Point2D(8,1), new Product(1)));
         pickPoints.add(new PickingPoint(new Point2D(34,1), new Product(1)));

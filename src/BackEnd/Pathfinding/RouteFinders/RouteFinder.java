@@ -19,15 +19,6 @@ public class RouteFinder {
     private PathFinder pathFinder;
     private int amountPickersInGraph;
 
-
-    public RouteFinder(SpaceTimeGrid grid, Point2D routeStartPoint, Point2D routeEndPoint) {
-        this.routeStartPoint = new Node(routeStartPoint);
-        this.routeEndPoint = new Node(routeEndPoint);
-        this.pathFinder = new PathFinder(grid);
-        this.amountPickersInGraph = 0;
-        this.startTime = 0;
-    }
-
     public RouteFinder(PathFinder pathFinder, Point2D routeStartPoint, Point2D routeEndPoint) {
         this.routeStartPoint = new Node(routeStartPoint);
         this.routeEndPoint = new Node(routeEndPoint);

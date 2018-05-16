@@ -113,11 +113,17 @@ public class RouteFinder {
 
     private PickingRoute calculateShortestRoute(List<PickingPoint> pickingList) {
         PickingRoute shortestRoute = new PickingRoute();
+
+        List<PickingPoint> pickPointOrder = getShortestPickPointOrder(pickingList);
+
+        //PickingRoute route = this.findRouteRecursive()
         pathFinder.changeComparator(new EndDistanceComparator());
-
-
         pathFinder.changeComparator(new TotalDistanceComparator());
         return shortestRoute;
+    }
+
+    private List<PickingPoint> getShortestPickPointOrder(List<PickingPoint> pickingList) {
+        return null;
     }
 }
 

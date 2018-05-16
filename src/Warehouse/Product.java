@@ -1,7 +1,7 @@
 package Warehouse;
 
 import BackEnd.Geometry.Point2D;
-import Exceptions.ProductNotInRackException;
+import Exceptions.Warehouse.ProductNotInRackException;
 import Warehouse.Racks.Rack;
 
 import java.util.List;

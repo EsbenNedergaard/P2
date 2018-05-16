@@ -1,4 +1,4 @@
-package Exceptions;
+package Exceptions.Warehouse;
 
 public class IllegalRackDimensionException extends RuntimeException {
     private String errorMsg;

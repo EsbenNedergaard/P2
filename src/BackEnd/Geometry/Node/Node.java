@@ -1,5 +1,6 @@
-package BackEnd.Geometry;
+package BackEnd.Geometry.Node;
 
+import BackEnd.Geometry.Point2D;
 import BackEnd.Graph.NodeLayer;
 import Exceptions.IsNotValidNodeTypeException;
 import Exceptions.UnplacedNodeException;
@@ -29,7 +30,7 @@ public class Node extends Point2D {
     }
 
 
-    boolean isNeighbour(Node node) {
+    private boolean isNeighbour(Node node) {
         if (this.getTime() + 1 == node.getTime()) {
             if (this.getX() == node.getX() + 1 && this.getY() == node.getY()) {
                 return true;

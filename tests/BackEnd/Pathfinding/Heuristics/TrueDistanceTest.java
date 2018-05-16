@@ -1,6 +1,6 @@
 package BackEnd.Pathfinding.Heuristics;
 
-import BackEnd.Geometry.Node;
+import BackEnd.Geometry.Node.Node;
 import BackEnd.Geometry.Point2D;
 import BackEnd.Graph.SpaceTimeGrid;
 import Warehouse.SimpleNxNWarehouse;

@@ -1,7 +1,7 @@
 package BackEnd.Pathfinding.Heuristics;
 
-import BackEnd.Geometry.LowestTotalDistanceComparator;
-import BackEnd.Geometry.Node;
+import BackEnd.Geometry.Node.Comparators.TotalDistanceComparator;
+import BackEnd.Geometry.Node.Node;
 import BackEnd.Graph.NodeLayer;
 import BackEnd.Graph.SpaceTimeGrid;
 
@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 public class TrueDistance implements Heuristic {
-    Node startNode;
-    NodeLayer baseLayer;
-    List<Node> baseLayerNodeList;
-    PriorityQueue<Node> openSet;
-    List<Node> closedSet;
+    private Node startNode;
+    private NodeLayer baseLayer;
+    private List<Node> baseLayerNodeList;
+    private PriorityQueue<Node> openSet;
+    private List<Node> closedSet;
 
 
     @Override
@@ -23,11 +23,8 @@ public class TrueDistance implements Heuristic {
         endNode.setNodeLayer(baseLayer);
         this.baseLayerNodeList = baseLayer.getNodeList();
         this.startNode = endNode;
-        this.openSet = new PriorityQueue<>(baseLayerNodeList.size(), new LowestTotalDistanceComparator());
+        this.openSet = new PriorityQueue<>(baseLayerNodeList.size(), new TotalDistanceComparator());
         this.closedSet = new ArrayList<>();
-
-        //Køre truedistance på baseLayer i spaceTimeGrid, og finde deres distancer her og derefter går ned af i gennem spaceTimeGridet
-        //og give punket 0,0 samme distance til end som den du fandt for 0,0 i baselayeret.
 
         this.setBaseLayerNeighbours();
         this.setStartValues(baseLayerNodeList, startNode);
@@ -38,7 +35,6 @@ public class TrueDistance implements Heuristic {
 
     private void setTrueDistancesForAllLayers(SpaceTimeGrid spaceTimeGrid) {
         int baseLayerSize = baseLayerNodeList.size();
-        //BURDE SORTERE NODERNE FØRST FOR EN SIKKERHEDSSKYLD
         for (NodeLayer nodeLayer : spaceTimeGrid.getNodeLayerList()) {
             //We run through all the nodes in the layer and set the distance to end, to be the same as for the baseLayer
             for (int i = 0; i < baseLayerSize; i++) {
@@ -138,7 +134,6 @@ public class TrueDistance implements Heuristic {
         } else if (node1.getX() == node2.getX() && node1.getY() == node2.getY() - 1) {
             return true;
         }
-
         return false;
     }
 

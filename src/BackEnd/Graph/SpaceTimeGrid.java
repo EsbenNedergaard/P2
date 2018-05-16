@@ -1,6 +1,6 @@
 package BackEnd.Graph;
 
-import BackEnd.Geometry.Node;
+import BackEnd.Geometry.Node.Node;
 import Exceptions.NodeDoesNotExistException;
 import Exceptions.NodeLayerDoesNotExistException;
 

@@ -1,6 +1,6 @@
 package BackEnd.Pathfinding.PathFinders;
 
-import BackEnd.Geometry.Node;
+import BackEnd.Geometry.Node.Node;
 import Exceptions.NodeLayerDoesNotExistException;
 import Exceptions.RouteNotPossibleException;
 

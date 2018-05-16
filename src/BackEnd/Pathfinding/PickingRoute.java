@@ -1,9 +1,10 @@
 package BackEnd.Pathfinding;
 
-import BackEnd.Geometry.Node;
+import BackEnd.Geometry.Node.Node;
 import BackEnd.Geometry.PickingPoint;
 import BackEnd.Geometry.Point2D;
 import BackEnd.Graph.SpaceTimeGrid;
+import Exceptions.ShortestRouteNotCalculatedException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,8 @@ public class PickingRoute {
     private int totalPickTime;
     private List<Node> route;
     private List<PickingPoint> pickingPoints;
+    private PickingRoute shortestRoute;
+
 
     public PickingRoute() {
         totalPickTime = 0;
@@ -88,5 +91,16 @@ public class PickingRoute {
         fullRoute.addAll(this.route);
 
         this.route = fullRoute;
+    }
+
+    public PickingRoute getShortestRoute() {
+        if(this.shortestRoute == null) {
+            throw new ShortestRouteNotCalculatedException("We have not calculated the shortest route yet");
+        }
+        return shortestRoute;
+    }
+
+    public void setShortestRoute(PickingRoute shortestRoute) {
+        this.shortestRoute = shortestRoute;
     }
 }

@@ -1,8 +1,10 @@
-package BackEnd.Geometry;
+package BackEnd.Geometry.Node.Comparators;
+
+import BackEnd.Geometry.Node.Node;
 
 import java.util.Comparator;
 
-public class LowestDistanceToEndComparator implements Comparator<Node> {
+public class DistanceToEndComparator implements Comparator<Node> {
     @Override
     public int compare(Node o1, Node o2) {
         int heuristicDiff = o1.getDistanceToEnd() - o2.getDistanceToEnd();

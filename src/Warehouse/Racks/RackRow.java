@@ -1,8 +1,8 @@
 package Warehouse.Racks;
 
-import BackEnd.Geometry.Node;
+import BackEnd.Geometry.Node.Node;
 import BackEnd.Geometry.Point2D;
-import Exceptions.RackRowDoesNotContainProductException;
+import Exceptions.Warehouse.RackRowDoesNotContainProductException;
 import Warehouse.Product;
 
 import java.util.List;

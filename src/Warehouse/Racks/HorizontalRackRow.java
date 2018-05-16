@@ -1,8 +1,8 @@
 package Warehouse.Racks;
 
-import BackEnd.Geometry.Node;
+import BackEnd.Geometry.Node.Node;
 import BackEnd.Geometry.Point2D;
-import Exceptions.RackRowDoesNotContainProductException;
+import Exceptions.Warehouse.RackRowDoesNotContainProductException;
 import Warehouse.Exceptions.FullRackException;
 import Warehouse.Exceptions.FullRackRowException;
 import Warehouse.Product;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static BackEnd.Geometry.NodeType.OBSTACLE;
+import static BackEnd.Geometry.Node.NodeType.OBSTACLE;
 
 public class HorizontalRackRow implements RackRow {
     private Point2D startPoint;

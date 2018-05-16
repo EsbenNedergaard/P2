@@ -1,7 +1,7 @@
 package BackEnd.Pathfinding.PathFinders;
 
-import BackEnd.Geometry.LowestTotalDistanceComparator;
-import BackEnd.Geometry.Node;
+import BackEnd.Geometry.Node.Comparators.TotalDistanceComparator;
+import BackEnd.Geometry.Node.Node;
 import BackEnd.Geometry.Point2D;
 import BackEnd.Graph.SpaceTimeGrid;
 import BackEnd.Pathfinding.Heuristics.Heuristic;
@@ -27,7 +27,7 @@ public class PathFinder {
         this.closedSet = new ArrayList<>();
         this.heuristic = new TrueDistance();
         //We set the openSet to in worst case be cable of containing all nodes
-        this.openSet = new PriorityQueue<>(spaceTimeGrid.getAllNodes().size(), new LowestTotalDistanceComparator());
+        this.openSet = new PriorityQueue<>(spaceTimeGrid.getAllNodes().size(), new TotalDistanceComparator());
     }
 
     public void resetSpaceTimeGrid() {

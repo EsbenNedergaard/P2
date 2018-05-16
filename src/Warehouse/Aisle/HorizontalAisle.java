@@ -3,7 +3,7 @@ package Warehouse.Aisle;
 
 import BackEnd.Geometry.PickingPoint;
 import BackEnd.Geometry.Point2D;
-import Exceptions.RackRowDoesNotContainProductException;
+import Exceptions.Warehouse.RackRowDoesNotContainProductException;
 import Warehouse.Exceptions.FullAisleException;
 import Warehouse.Product;
 import Warehouse.Racks.HorizontalRackRow;

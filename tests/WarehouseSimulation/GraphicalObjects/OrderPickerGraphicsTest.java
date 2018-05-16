@@ -1,6 +1,6 @@
 package WarehouseSimulation.GraphicalObjects;
 
-import BackEnd.Geometry.Node;
+import BackEnd.Geometry.Node.Node;
 import BackEnd.Geometry.Point2D;
 import BackEnd.Graph.SpaceTimeGrid;
 import BackEnd.Pathfinding.PathFinders.PathFinder;

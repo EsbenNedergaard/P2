@@ -1,6 +1,6 @@
 package BackEnd.Pathfinding.Heuristics;
 
-import BackEnd.Geometry.Node;
+import BackEnd.Geometry.Node.Node;
 import BackEnd.Graph.SpaceTimeGrid;
 
 public class Manhatten implements Heuristic {

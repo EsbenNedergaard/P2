@@ -1,6 +1,6 @@
 package WarehouseSimulation.GraphicalObjects;
 
-import BackEnd.Geometry.Node;
+import BackEnd.Geometry.Node.Node;
 import BackEnd.Geometry.Point2D;
 import WarehouseSimulation.GraphicalObjects.Colors.Colors;
 import javafx.scene.paint.Color;

@@ -1,7 +1,7 @@
 package BackEnd.Pathfinding;
 
-import BackEnd.Geometry.Node;
-import BackEnd.Geometry.NodeType;
+import BackEnd.Geometry.Node.Node;
+import BackEnd.Geometry.Node.NodeType;
 import BackEnd.Geometry.Point2D;
 import BackEnd.Pathfinding.PathFinders.PathFinder;
 import BackEnd.TempRoutePrinter;

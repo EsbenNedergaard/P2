@@ -1,8 +1,10 @@
-package BackEnd.Geometry;
+package BackEnd.Geometry.Node.Comparators;
+
+import BackEnd.Geometry.Node.Node;
 
 import java.util.Comparator;
 
-public class LowestTotalDistanceComparator implements Comparator<Node> {
+public class TotalDistanceComparator implements Comparator<Node> {
 
     // Compares two nodes by lowest total distance first, lowest distance to end secondly, and highest y value finally
     @Override

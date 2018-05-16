@@ -1,11 +1,13 @@
 package BackEnd.Geometry;
 
+import BackEnd.Geometry.Node.Comparators.TotalDistanceComparator;
+import BackEnd.Geometry.Node.Node;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 
-class LowestTotalDistanceComparatorTest {
+class TotalDistanceComparatorTest {
     // Same total distance, different distances to end and different y values. Should prioritize node with shortest distance to end.
     @Test
     void testMethod_compare_01(){
@@ -21,7 +23,7 @@ class LowestTotalDistanceComparatorTest {
         secondNode.setDistanceFromStart(4);
 
 
-        LowestTotalDistanceComparator compareElement = new LowestTotalDistanceComparator();
+        TotalDistanceComparator compareElement = new TotalDistanceComparator();
 
         assertTrue(compareElement.compare(firstNode, secondNode) > 0);
         assertTrue(compareElement.compare(secondNode, firstNode) < 0);
@@ -41,7 +43,7 @@ class LowestTotalDistanceComparatorTest {
         firstNode.setDistanceFromStart(4);
         secondNode.setDistanceFromStart(4);
 
-        LowestTotalDistanceComparator compareElement = new LowestTotalDistanceComparator();
+        TotalDistanceComparator compareElement = new TotalDistanceComparator();
 
         assertTrue(compareElement.compare(firstNode, secondNode) < 0);
         assertTrue(compareElement.compare(secondNode, firstNode) > 0);
@@ -60,7 +62,7 @@ class LowestTotalDistanceComparatorTest {
         firstNode.setDistanceFromStart(2);
         secondNode.setDistanceFromStart(2);
 
-        LowestTotalDistanceComparator compareElement = new LowestTotalDistanceComparator();
+        TotalDistanceComparator compareElement = new TotalDistanceComparator();
 
         assertTrue(compareElement.compare(firstNode, secondNode) < 0);
         assertTrue(compareElement.compare(secondNode, firstNode) > 0);
@@ -79,7 +81,7 @@ class LowestTotalDistanceComparatorTest {
         firstNode.setDistanceFromStart(3);
         secondNode.setDistanceFromStart(3);
 
-        LowestTotalDistanceComparator compareElement = new LowestTotalDistanceComparator();
+        TotalDistanceComparator compareElement = new TotalDistanceComparator();
 
         assertTrue(compareElement.compare(firstNode, secondNode) == 0);
         assertTrue(compareElement.compare(secondNode, firstNode) == 0);

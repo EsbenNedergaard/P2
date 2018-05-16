@@ -115,9 +115,13 @@ public class RouteFinder {
 
     private PickingRoute calculateShortestRoute(List<PickingPoint> pickingList) {
         List<PickingPoint> pickPointOrder = getShortestPickPointOrder(pickingList);
+        PickingRoute shortestRoute = new PickingRoute();
+        for(PickingPoint pickingPoint : pickPointOrder) {
+            shortestRoute.addPickPoint(pickingPoint);
+        }
 
         pathFinder.changeComparator(new EndDistanceComparator());
-        PickingRoute shortestRoute = this.findRouteInPickPointOrder(pickPointOrder);
+        shortestRoute = this.findRouteInPickPointOrder(pickPointOrder);
         pathFinder.changeComparator(new TotalDistanceComparator());
 
         return shortestRoute;

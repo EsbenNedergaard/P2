@@ -50,6 +50,7 @@ public class WarehouseSimulation {
     private int routesAdded = 0;
     private RouteHighlighter routeHighlighter;
     private AnimationTimer programTimer;
+    private InputFieldDataHandler textHandler;
 
     private int UPDATE_COUNTER = 0;
 
@@ -111,15 +112,13 @@ public class WarehouseSimulation {
 
     private void actionsForAddProductIDs() {
         TextField inputField = interactions.getInputField();
-        Table table = interactions.getTableView();
 
         if (inputField.getText().isEmpty()) {
             showAlert("The text field was empty", Alert.AlertType.WARNING);
             return;
         }
 
-        InputFieldDataHandler textHandler = new InputFieldDataHandler();
-
+        textHandler = new InputFieldDataHandler();
         // Get the id list from the input field
         List<Integer> tempProductIDList;
         try {
@@ -131,22 +130,8 @@ public class WarehouseSimulation {
 
         PickingRoute pickingRoute = getPickingRouteFromIDlist(tempProductIDList);
 
-        String pickerColorValue = this.setupPicker(pickingRoute);
-
-        // Create a data type which fits the table view
-        TableFactoryData generatedProductIDs = new TableFactoryData(
-                textHandler.generateProductIDString(),
-                routesAdded,
-                pickingRoute.getRoute(),
-                pickingRoute.getProductPoints(),
-                pickerColorValue
-        );
-
-        setViewRouteButtonClickEvent(generatedProductIDs);
-
-        if (!generatedProductIDs.getProductIDSet().equals(""))
-            table.add(generatedProductIDs);
-
+        this.setupPicker(pickingRoute);
+        //this.setupPicker(pickingRoute.getShortestRoute());
         // Clear the input field when done
         inputField.clear();
     }
@@ -213,7 +198,27 @@ public class WarehouseSimulation {
         addPicker(orderPicker);
         routesAdded++;
 
+        this.addPickerToTable(pickingRoute, pickerColorValue);
+
         return pickerColorValue;
+    }
+
+    private void addPickerToTable(PickingRoute pickingRoute, String pickerColorValue){
+        Table table = interactions.getTableView();
+        // Create a data type which fits the table view
+        TableFactoryData generatedProductIDs = new TableFactoryData(
+                textHandler.generateProductIDString(),
+                routesAdded,
+                pickingRoute.getRoute(),
+                pickingRoute.getProductPoints(),
+                pickerColorValue
+        );
+
+        setViewRouteButtonClickEvent(generatedProductIDs);
+
+        if (!generatedProductIDs.getProductIDSet().equals(""))
+            table.add(generatedProductIDs);
+
     }
 
     private void showAlert(String contentText, Alert.AlertType type) {

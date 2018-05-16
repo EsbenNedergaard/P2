@@ -9,10 +9,7 @@ import BackEnd.Pathfinding.Heuristics.TrueDistance;
 import BackEnd.Pathfinding.PickingRoute;
 import Exceptions.RouteNotPossibleException;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.PriorityQueue;
+import java.util.*;
 
 public class PathFinder {
     private SpaceTimeGrid spaceTimeGrid;
@@ -29,13 +26,16 @@ public class PathFinder {
         this.spaceTimeGrid = spaceTimeGrid;
         this.closedSet = new ArrayList<>();
         this.heuristic = new TrueDistance();
-        //this.heuristic = new Manhatten();
         //We set the openSet to in worst case be cable of containing all nodes
         this.openSet = new PriorityQueue<>(spaceTimeGrid.getAllNodes().size(), new LowestTotalDistanceComparator());
     }
 
     public void resetSpaceTimeGrid() {
         this.spaceTimeGrid = new SpaceTimeGrid(spaceTimeGrid.getBaseLayer(), spaceTimeGrid.getMaxTime());
+    }
+
+    public void changeComparator(Comparator<Node> comparator) {
+        this.openSet = new PriorityQueue<>(spaceTimeGrid.getAllNodes().size(), comparator);
     }
 
     public SpaceTimeGrid getSpaceTimeGrid() {

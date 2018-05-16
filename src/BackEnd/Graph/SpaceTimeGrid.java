@@ -14,11 +14,20 @@ public class SpaceTimeGrid {
 
     public SpaceTimeGrid(BaseLayer baseLayer, int maxTime) {
         this.baseLayer = baseLayer;
-        this.nodeLayerList = new ArrayList<>();
         this.maxTime = maxTime;
+        this.nodeLayerList = new ArrayList<>();
 
-        setupNodeLayerList();
+        this.setupNodeLayerList();
     }
+
+    public SpaceTimeGrid(SpaceTimeGrid spaceTimeGrid) {
+        this.baseLayer = spaceTimeGrid.getBaseLayer();
+        this.maxTime = spaceTimeGrid.getMaxTime();
+        this.nodeLayerList = new ArrayList<>();
+
+        this.setupNodeLayerList();
+    }
+
 
     private void setupNodeLayerList() {
         for (int i = 0; i < maxTime; i++) {

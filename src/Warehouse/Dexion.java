@@ -19,6 +19,7 @@ public class Dexion implements Warehouse {
     private List<Node> nodeList;
     private Point2D routeStartPoint;
     private Point2D routeEndPoint;
+    private int amountOfProducts = 0;
 
     private static final int AISLE_LENGTH = 34;
     private static final int AISLE_PADDING = 5;
@@ -74,11 +75,17 @@ public class Dexion implements Warehouse {
                 }
             }
         }
+        amountOfProducts = i - 1;
     }
 
     private void setStartAndEndPoints(Point2D routeStartPoint, Point2D routeEndPoint) {
         this.routeStartPoint = routeStartPoint;
         this.routeEndPoint = routeEndPoint;
+    }
+
+    @Override
+    public int getAmountOfProducts() {
+        return amountOfProducts;
     }
 
     @Override

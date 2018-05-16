@@ -16,6 +16,7 @@ public class SimpleNxNWarehouse implements Warehouse {
     private List<Node> nodeList;
     private List<RackRow> rackRowList;
     private int size;
+    private int amountOfProducts;
 
     public SimpleNxNWarehouse(int size) {
         this.nodeList = new ArrayList<>();
@@ -63,6 +64,7 @@ public class SimpleNxNWarehouse implements Warehouse {
                 }
             }
         }
+        amountOfProducts = i - 1;
     }
 
     @Override
@@ -113,5 +115,10 @@ public class SimpleNxNWarehouse implements Warehouse {
     @Override
     public Point2D getRouteEndPoint() {
         return new Point2D(0, 0);
+    }
+
+    @Override
+    public int getAmountOfProducts() {
+        return amountOfProducts;
     }
 }

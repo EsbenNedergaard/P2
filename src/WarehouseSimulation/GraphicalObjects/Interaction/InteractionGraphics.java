@@ -14,6 +14,7 @@ public class InteractionGraphics {
     private Button speedUpByFiveButton;
     private Button doubleSpeedButton;
     private Button normalSpeedButton;
+    private Button randomRouteButton;
     private Table tableView;
 
     public InteractionGraphics() {
@@ -25,6 +26,7 @@ public class InteractionGraphics {
         this.normalSpeedButton = new Button("x1");
         this.doubleSpeedButton = new Button("x2");
         this.speedUpByFiveButton = new Button("x5");
+        this.randomRouteButton = new Button("Randomize");
         this.tableView = new Table();
         // Add style class to launch button
         launchButton.getStyleClass().add("launch-button");
@@ -62,6 +64,10 @@ public class InteractionGraphics {
 
     public Button getDoubleSpeedButton() {
         return doubleSpeedButton;
+    }
+
+    public Button getRandomRouteButton() {
+        return randomRouteButton;
     }
 
     public Table getTableView() {

@@ -13,8 +13,7 @@ public class BaseLayer {
         for (Node n : nodeList) {
             if (n.isObstacle()) {
                 stationaryObstacles.add(n);
-            }
-            else {
+            } else {
                 this.nodeList.add(n);
             }
         }

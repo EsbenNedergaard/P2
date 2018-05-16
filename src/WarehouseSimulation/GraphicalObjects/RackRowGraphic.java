@@ -8,7 +8,7 @@ import static Warehouse.GUIWarehouse.TILE_SIZE;
 public class RackRowGraphic extends Rectangle {
 
     public RackRowGraphic(Warehouse.Racks.RackRow rackRow) {
-        if(rackRow.isHorizontal()) {
+        if (rackRow.isHorizontal()) {
             setWidth(TILE_SIZE * rackRow.getRackRowLength());
             setHeight(TILE_SIZE);
         } else {

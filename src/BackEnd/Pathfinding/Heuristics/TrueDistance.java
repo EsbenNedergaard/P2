@@ -1,7 +1,7 @@
 package BackEnd.Pathfinding.Heuristics;
 
-import BackEnd.Geometry.Node;
 import BackEnd.Geometry.LowestTotalDistanceComparator;
+import BackEnd.Geometry.Node;
 import BackEnd.Graph.NodeLayer;
 import BackEnd.Graph.SpaceTimeGrid;
 
@@ -21,7 +21,7 @@ public class TrueDistance implements Heuristic {
     public void findDistanceToEndForAllNodes(SpaceTimeGrid spaceTimeGrid, Node endNode) {
         this.baseLayer = new NodeLayer(spaceTimeGrid.getBaseLayer().getNodeListWithoutObstacles(), 0);
         endNode.setNodeLayer(baseLayer);
-        this.baseLayerNodeList  = baseLayer.getNodeList();
+        this.baseLayerNodeList = baseLayer.getNodeList();
         this.startNode = endNode;
         this.openSet = new PriorityQueue<>(baseLayerNodeList.size(), new LowestTotalDistanceComparator());
         this.closedSet = new ArrayList<>();
@@ -39,9 +39,9 @@ public class TrueDistance implements Heuristic {
     private void setTrueDistancesForAllLayers(SpaceTimeGrid spaceTimeGrid) {
         int baseLayerSize = baseLayerNodeList.size();
         //BURDE SORTERE NODERNE FØRST FOR EN SIKKERHEDSSKYLD
-        for(NodeLayer nodeLayer : spaceTimeGrid.getNodeLayerList()) {
+        for (NodeLayer nodeLayer : spaceTimeGrid.getNodeLayerList()) {
             //We run through all the nodes in the layer and set the distance to end, to be the same as for the baseLayer
-            for(int i = 0; i < baseLayerSize; i++) {
+            for (int i = 0; i < baseLayerSize; i++) {
                 nodeLayer.getNodeList().get(i).setDistanceToEnd(baseLayerNodeList.get(i).getDistanceToEnd());
             }
         }
@@ -87,7 +87,7 @@ public class TrueDistance implements Heuristic {
                     continue;
                 }
                 //Update distance to neighbour if the distance through current is shorter
-                if(distanceThroughCurrentIsShorter(current, neighbour)) {
+                if (distanceThroughCurrentIsShorter(current, neighbour)) {
                     neighbour.setDistanceFromStart(current.getDistanceFromStart() + 1);
                 }
 
@@ -100,7 +100,7 @@ public class TrueDistance implements Heuristic {
 
     //Checks if the distance from start to a neighbour node is shorter through the current node
     private boolean distanceThroughCurrentIsShorter(Node current, Node neighbour) {
-        if(current.getDistanceFromStart() + 1 < neighbour.getDistanceFromStart()) {
+        if (current.getDistanceFromStart() + 1 < neighbour.getDistanceFromStart()) {
             return true;
         }
 
@@ -108,7 +108,7 @@ public class TrueDistance implements Heuristic {
     }
 
     //Retrieves next node to visit and adds it to the closed set
-    private Node getNextNode(){
+    private Node getNextNode() {
         Node next = openSet.poll();
         closedSet.add(next);
         return next;
@@ -122,7 +122,7 @@ public class TrueDistance implements Heuristic {
 
     private void setNeighboursForNode(Node node) {
         for (Node possibleNeighbour : baseLayerNodeList) {
-            if(isNeighbours(node, possibleNeighbour)) {
+            if (isNeighbours(node, possibleNeighbour)) {
                 node.addNeighbour(possibleNeighbour);
             }
         }

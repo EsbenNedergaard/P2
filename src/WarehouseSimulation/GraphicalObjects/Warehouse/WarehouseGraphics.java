@@ -1,10 +1,10 @@
 package WarehouseSimulation.GraphicalObjects.Warehouse;
 
 import BackEnd.Geometry.Point2D;
-import WarehouseSimulation.GraphicalObjects.RackRowGraphic;
-import WarehouseSimulation.GraphicalObjects.Tile;
 import Warehouse.Racks.RackRow;
 import Warehouse.Warehouse;
+import WarehouseSimulation.GraphicalObjects.RackRowGraphic;
+import WarehouseSimulation.GraphicalObjects.Tile;
 import javafx.scene.Group;
 
 public class WarehouseGraphics {
@@ -39,7 +39,7 @@ public class WarehouseGraphics {
         // Create a group of graphical racks
         Group rackRowGroup = new Group();
 
-        for(RackRow rackRowElement : warehouse.getRackRowList()) {
+        for (RackRow rackRowElement : warehouse.getRackRowList()) {
             // Styles the rack
             RackRowGraphic graphicRack = new RackRowGraphic(rackRowElement);
             // Puts the rack into the group

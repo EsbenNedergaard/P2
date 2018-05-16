@@ -1,6 +1,8 @@
 package BackEnd.Pathfinding.RouteFinders;
 
-import BackEnd.Geometry.*;
+import BackEnd.Geometry.Node;
+import BackEnd.Geometry.PickingPoint;
+import BackEnd.Geometry.Point2D;
 import BackEnd.Pathfinding.PathFinders.PathFinder;
 import BackEnd.Pathfinding.PickingRoute;
 import Exceptions.RouteNotPossibleException;
@@ -9,17 +11,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FastestRouteFinder implements RouteFinder {
-    private final int WAIT_TIME_BETWEEN_PICKERS = 3;
     private int startTime;
+    private PathFinder pathFinder;
     private Point2D routeStartPoint;
     private Point2D routeEndPoint;
-    private PathFinder pathFinder;
     private int amountPickersInGraph;
 
     public FastestRouteFinder(PathFinder pathFinder, Point2D routeStartPoint, Point2D routeEndPoint) {
+        this.pathFinder = pathFinder;
         this.routeStartPoint = new Node(routeStartPoint);
         this.routeEndPoint = new Node(routeEndPoint);
-        this.pathFinder = pathFinder;
         this.amountPickersInGraph = 0;
         this.startTime = 0;
     }
@@ -78,16 +79,16 @@ public class FastestRouteFinder implements RouteFinder {
         return bestRoute;
     }
 
-    private boolean newRouteIsBestRoute (PickingRoute newRoute, PickingRoute bestRoute) {
+    private boolean newRouteIsBestRoute(PickingRoute newRoute, PickingRoute bestRoute) {
         return newRoute.getRouteLength() < bestRoute.getRouteLength() || bestRoute.getRouteLength() == 0;
     }
 
-    private void addPathToRoute (PickingRoute newRoute, Point2D currPosition, PickingPoint nextPickPoint){
+    private void addPathToRoute(PickingRoute newRoute, Point2D currPosition, PickingPoint nextPickPoint) {
         int timeTravelledSinceStart = newRoute.getRouteLength() + startTime;
         newRoute.addOtherRoute(pathFinder.findFastestPath(currPosition, nextPickPoint, timeTravelledSinceStart, nextPickPoint.getPickTime()));
     }
 
-    private void addFinalPathToRoute (PickingRoute newRoute, Point2D currPosition){
+    private void addFinalPathToRoute(PickingRoute newRoute, Point2D currPosition) {
         int timeTravelledSinceStart = newRoute.getRouteLength() + startTime;
         newRoute.addOtherRoute(pathFinder.findFastestPath(currPosition, routeEndPoint, timeTravelledSinceStart, 0));
     }
@@ -98,7 +99,7 @@ public class FastestRouteFinder implements RouteFinder {
         newRoute.addPickPoint(nextPickPoint);
     }
 
-    private List<PickingPoint> getNextList (List<PickingPoint> remainingPickingPoints, PickingPoint nextPickPoint) {
+    private List<PickingPoint> getNextList(List<PickingPoint> remainingPickingPoints, PickingPoint nextPickPoint) {
         List<PickingPoint> nextList = new ArrayList<>(remainingPickingPoints);
         nextList.remove(nextPickPoint);
         return nextList;

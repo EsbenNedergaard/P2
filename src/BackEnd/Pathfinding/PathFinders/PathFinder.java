@@ -1,7 +1,7 @@
 package BackEnd.Pathfinding.PathFinders;
 
-import BackEnd.Geometry.Node;
 import BackEnd.Geometry.LowestTotalDistanceComparator;
+import BackEnd.Geometry.Node;
 import BackEnd.Geometry.Point2D;
 import BackEnd.Graph.SpaceTimeGrid;
 import BackEnd.Pathfinding.Heuristics.Heuristic;
@@ -59,8 +59,8 @@ public class PathFinder {
     }
 
     public PickingRoute findFastestPath(Point2D start, Point2D end, int startTime, int pickTime) throws RouteNotPossibleException {
-        this.startNode =  new Node(start);
-        this.endNode = new Node (end);
+        this.startNode = new Node(start);
+        this.endNode = new Node(end);
         this.startTime = startTime;
         this.pickTime = pickTime;
 
@@ -125,7 +125,7 @@ public class PathFinder {
     }
 
     //Retrieves next node to visit and adds it to the closed set
-    private Node getNextNode(){
+    private Node getNextNode() {
         Node next = openSet.poll();
         closedSet.add(next);
         return next;
@@ -135,8 +135,8 @@ public class PathFinder {
         return current.getX() == endNode.getX() && current.getY() == endNode.getY() && this.checkIfPickingIsPossible(current);
     }
 
-    private void checkIfOutOfTime(Node current){
-        if (spaceTimeGrid.getMaxTime() <= (current.getTime() + (pickTime + 1))){
+    private void checkIfOutOfTime(Node current) {
+        if (spaceTimeGrid.getMaxTime() <= (current.getTime() + (pickTime + 1))) {
             throw new RouteNotPossibleException("Did not find a route in the given time");
         }
     }
@@ -174,17 +174,17 @@ public class PathFinder {
         Node current = possibleEndPoint;
 
         /*We add one to PICK_TIME because we need to make sure the next route also has a point to start on*/
-        for(int i = 0; i < pickTime + 1; i++) {
+        for (int i = 0; i < pickTime + 1; i++) {
             Node next = spaceTimeGrid.getNodePointer(current.getX(), current.getY(), current.getTime() + 1);
             found = false;
-            for(Node neighbourToCurrent : current.getNeighbourNodes()) {
+            for (Node neighbourToCurrent : current.getNeighbourNodes()) {
                 //We check that the next node exists in the current neighbour list and haven't been removed
-                if(next.equals(neighbourToCurrent)) {
+                if (next.equals(neighbourToCurrent)) {
                     found = true;
                     break;
                 }
             }
-            if(!found) {
+            if (!found) {
                 return false;
             }
             current = next;

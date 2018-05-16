@@ -1,11 +1,12 @@
 package BackEnd.Graph;
 
-import Exceptions.NodeDoesNotExistException;
 import BackEnd.Geometry.Node;
+import Exceptions.NodeDoesNotExistException;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
 // Every node has layers representing a time dimension
 public class NodeLayer {
     private List<Node> nodeList = new ArrayList<>();
@@ -15,22 +16,22 @@ public class NodeLayer {
         if (nodeList == null || nodeList.size() < 0) {
             throw new IllegalArgumentException();
         }
-        for(Node element : nodeList) {
+        for (Node element : nodeList) {
             this.nodeList.add(new Node(element));
         }
         this.time = time;
         setUpNodeReferences();
     }
 
-    private void setUpNodeReferences(){
+    private void setUpNodeReferences() {
         for (Node element : this.nodeList) {
             element.setNodeLayer(this);
         }
     }
 
     public Node getNodePointer(int x, int y) {
-        for(Node n : nodeList) {
-            if(x == n.getX() && y == n.getY()) {
+        for (Node n : nodeList) {
+            if (x == n.getX() && y == n.getY()) {
                 return n;
             }
         }
@@ -39,7 +40,7 @@ public class NodeLayer {
 
     public void setAllNeighbourNodesForLayer(NodeLayer nextNodeLayer) {
         for (Node node : this.getNodeList()) {
-           node.setNeighbourNodes(nextNodeLayer.getNodeList());
+            node.setNeighbourNodes(nextNodeLayer.getNodeList());
         }
     }
 
@@ -51,7 +52,7 @@ public class NodeLayer {
         return nodeList;
     }
 
-    public void removeNode(Node n){
+    public void removeNode(Node n) {
         nodeList.remove(n);
     }
 
@@ -70,12 +71,11 @@ public class NodeLayer {
         }
 
         /*We check if there is a node in the layer with the same x and y coordinate for every node in our current layer*/
-        try{
-            for(Node node : this.getNodeList()) {
+        try {
+            for (Node node : this.getNodeList()) {
                 nodeLayer.getNodePointer(node.getX(), node.getY());
             }
-        }
-        catch (NodeDoesNotExistException e) {
+        } catch (NodeDoesNotExistException e) {
             return false;
         }
         return true;

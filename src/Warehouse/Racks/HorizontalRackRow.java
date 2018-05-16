@@ -1,10 +1,9 @@
 package Warehouse.Racks;
 
 import BackEnd.Geometry.Node;
-import BackEnd.Geometry.PickingPoint;
+import BackEnd.Geometry.Point2D;
 import Exceptions.RackRowDoesNotContainProductException;
 import Warehouse.Exceptions.FullRackException;
-import BackEnd.Geometry.Point2D;
 import Warehouse.Exceptions.FullRackRowException;
 import Warehouse.Product;
 
@@ -24,7 +23,7 @@ public class HorizontalRackRow implements RackRow {
         this.rackRowLength = rackRowLength;
         this.rackList = new ArrayList<>();
 
-        for(int i = 0; i < rackRowLength; i++) {
+        for (int i = 0; i < rackRowLength; i++) {
             rackList.add(new Rack(numberOfShelvesInSingleRack, new Point2D(startPoint.getX() + i, startPoint.getY())));
         }
     }
@@ -46,14 +45,12 @@ public class HorizontalRackRow implements RackRow {
     }
 
     @Override
-    public boolean addProductToRack(Product product, int rackIndex) throws FullRackException{
+    public boolean addProductToRack(Product product, int rackIndex) throws FullRackException {
         rackList.get(rackIndex).addProduct(product);
 
         //We only get here if the rack is not full otherwise it will throw an fullRackException
         return true;
     }
-
-
 
 
     @Override
@@ -69,7 +66,7 @@ public class HorizontalRackRow implements RackRow {
     @Override
     public List<Product> getAllProductsInRackRow() {
         List<Product> productList = new ArrayList<>();
-        for(Rack rackElement : rackList) {
+        for (Rack rackElement : rackList) {
             productList.addAll(rackElement.getProductList());
         }
         return productList;
@@ -87,8 +84,8 @@ public class HorizontalRackRow implements RackRow {
 
     @Override
     public void setRacksAsObstacles(List<Node> nodeGrid) {
-        for(Node n : nodeGrid) {
-            for(Rack rack : this.getRackList()) {
+        for (Node n : nodeGrid) {
+            for (Rack rack : this.getRackList()) {
                 Point2D rackPoint = rack.getRackPosition();
                 if (n.getX() == rackPoint.getX() && n.getY() == rackPoint.getY()) {
                     n.setNodeType(OBSTACLE);
@@ -107,8 +104,8 @@ public class HorizontalRackRow implements RackRow {
             List<Product> productsInRack = this.getRackByIndex(rackIndex).getProductList();
 
             //We do this to get the correct productPointer
-            for(Product product : productsInRack) {
-                if(product.equals(tempProduct)) {
+            for (Product product : productsInRack) {
+                if (product.equals(tempProduct)) {
                     return product;
                 }
             }
@@ -119,7 +116,7 @@ public class HorizontalRackRow implements RackRow {
 
     private int doesItContainProduct(Product e) {
         int i = 0;
-        for(Rack r : rackList) {
+        for (Rack r : rackList) {
             if (r.doesItContainProduct(e)) {
                 return i;
             }
@@ -135,8 +132,8 @@ public class HorizontalRackRow implements RackRow {
 
     @Override
     public boolean equals(Object that) {
-        if(this == that) return true;
-        if(that == null || this.getClass() != that.getClass()) return false;
+        if (this == that) return true;
+        if (that == null || this.getClass() != that.getClass()) return false;
 
         RackRow thatRackRow = (RackRow) that;
         return this.getStartPoint().equals(thatRackRow.getStartPoint()) && this.getRackRowLength() == thatRackRow.getRackRowLength();

@@ -38,11 +38,11 @@ public class SimpleNxNWarehouse implements Warehouse {
     private void setupRackRows() {
         List<Point2D> rackRowStartPoints = new ArrayList<>();
         //We start at one and add 2 every time
-        for(int i = 1; i < size; i += 2) {
+        for (int i = 1; i < size; i += 2) {
             rackRowStartPoints.add(new Point2D(1, i));
         }
 
-        int rackRowLenght = size-2;
+        int rackRowLenght = size - 2;
         int shelvesPerRack = 1;
         for (Point2D startPoint : rackRowStartPoints) {
             this.rackRowList.add(new HorizontalRackRow(startPoint, rackRowLenght, shelvesPerRack));
@@ -81,13 +81,14 @@ public class SimpleNxNWarehouse implements Warehouse {
 
         for (Integer productId : productIdList) {
             Product tempProduct;
-            for(RackRow rackRow : this.getRackRowList()) {
+            for (RackRow rackRow : this.getRackRowList()) {
                 try {
                     tempProduct = rackRow.getProductPointerFromID(productId);
                     Point2D productPosition = tempProduct.getProductPostion();
                     //We y-1, because it is a bottomRackRow and our coordinate system goes downward
                     pickingPoints.add(new PickingPoint(new Point2D(productPosition.getX(), productPosition.getY() - 1), tempProduct));
-                } catch (RackRowDoesNotContainProductException ignored) {}
+                } catch (RackRowDoesNotContainProductException ignored) {
+                }
             }
         }
 

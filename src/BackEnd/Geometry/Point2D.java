@@ -54,8 +54,8 @@ public class Point2D {
 
     @Override
     public boolean equals(Object o) {
-        if(this == o) return true;
-        if(o == null || this.getClass() != o.getClass()) return false;
+        if (this == o) return true;
+        if (o == null || this.getClass() != o.getClass()) return false;
 
         Point2D that = (Point2D) o;
 

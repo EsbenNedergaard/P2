@@ -1,7 +1,7 @@
 package BackEnd.Geometry;
 
-import Exceptions.IsNotValidNodeTypeException;
 import BackEnd.Graph.NodeLayer;
+import Exceptions.IsNotValidNodeTypeException;
 import Exceptions.UnplacedNodeException;
 
 import java.util.ArrayList;
@@ -101,7 +101,7 @@ public class Node extends Point2D {
     public void setNodeLayer(NodeLayer nodeLayerPointer) {
         this.nodeLayerPointer = nodeLayerPointer;
     }
-  
+
     public NodeType getNodeType() {
         return nodeType;
     }

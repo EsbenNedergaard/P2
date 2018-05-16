@@ -61,7 +61,7 @@ public class TableFactoryData {
     private void setButtonStyles() {
         this.highlightButton.setStyle(
                 "-fx-background-color: " + this.routeColor + "; " +
-                "-fx-text-fill: white;");
+                        "-fx-text-fill: white;");
     }
 
 }

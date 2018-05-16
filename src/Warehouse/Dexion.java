@@ -1,9 +1,9 @@
 package Warehouse;
 
-import BackEnd.Geometry.PickingPoint;
-import BackEnd.Graph.BaseLayer;
 import BackEnd.Geometry.Node;
+import BackEnd.Geometry.PickingPoint;
 import BackEnd.Geometry.Point2D;
+import BackEnd.Graph.BaseLayer;
 import Warehouse.Aisle.Aisle;
 import Warehouse.Aisle.HorizontalAisle;
 import Warehouse.Racks.Rack;
@@ -32,10 +32,10 @@ public class Dexion implements Warehouse {
         setStartAndEndPoints(new Point2D(0, 4), new Point2D(0, 7));
     }
 
-    private void createNodeGrid(){
+    private void createNodeGrid() {
         nodeList = new ArrayList<>();
-        for(int j = 0; j < this.getWidth(); j++) {
-            for(int i = 0; i < this.getLength(); i++) {
+        for (int j = 0; j < this.getWidth(); j++) {
+            for (int i = 0; i < this.getLength(); i++) {
                 nodeList.add(new Node(new Point2D(i, j)));
             }
         }
@@ -56,8 +56,8 @@ public class Dexion implements Warehouse {
         this.setRackRowsAsObstacles();
     }
 
-    private void setRackRowsAsObstacles(){
-        for(RackRow rackRow : this.getRackRowList()) {
+    private void setRackRowsAsObstacles() {
+        for (RackRow rackRow : this.getRackRowList()) {
             rackRow.setRacksAsObstacles(nodeList);
         }
     }
@@ -84,7 +84,7 @@ public class Dexion implements Warehouse {
     @Override
     public List<RackRow> getRackRowList() {
         List<RackRow> tempRackRowList = new ArrayList<>();
-        for(Aisle aisleElement : aisleList) {
+        for (Aisle aisleElement : aisleList) {
             tempRackRowList.addAll(aisleElement.getRackRowList());
         }
         return tempRackRowList;
@@ -122,6 +122,7 @@ public class Dexion implements Warehouse {
     }
 
     @Override
-    public int getLength() {return this.length;
+    public int getLength() {
+        return this.length;
     }
 }

@@ -104,7 +104,7 @@ public class RouteFinder {
 
     private void addFinalPathToRoute (PickingRoute newRoute, Point2D currPosition){
         int timeTravelledSinceStart = newRoute.getRouteLength() + startTime;
-        newRoute.addOtherRoute(pathFinder.findFastestPath(currPosition, routeEndPoint, timeTravelledSinceStart));
+        newRoute.addOtherRoute(pathFinder.findFastestPath(currPosition, routeEndPoint, timeTravelledSinceStart, 0));
     }
 
     private void addPickingTimeToRoute(PickingRoute newRoute, PickingPoint nextPickPoint) {

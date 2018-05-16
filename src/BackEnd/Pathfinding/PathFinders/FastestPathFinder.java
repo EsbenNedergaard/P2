@@ -1,19 +1,7 @@
 package BackEnd.Pathfinding.PathFinders;
 
 import BackEnd.Geometry.Node;
-import BackEnd.Geometry.NodeComparator;
-import BackEnd.Geometry.PickingPoint;
-import BackEnd.Geometry.Point2D;
-import BackEnd.Pathfinding.PickingRoute;
-import Exceptions.NodeDoesNotExistException;
-import Exceptions.NodeLayerDoesNotExistException;
-import Exceptions.RouteNotPossibleException;
 import BackEnd.Graph.SpaceTimeGrid;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.PriorityQueue;
 
 public class FastestPathFinder extends PathFinder{
     public FastestPathFinder(SpaceTimeGrid spaceTimeGrid) {

@@ -30,7 +30,7 @@ class RouteTestWarehouse {
         PickingRoute testResultRoute = new PickingRoute();
         try {
             for (int i = 0; i < 100; i++) {
-                testResultRoute = testFastestPathFinder.findFastestPath(startNode, endNode, 0);
+                testResultRoute = testFastestPathFinder.findFastestPath(startNode, endNode, 0, 0);
             }
         }
         catch (RouteNotPossibleException e) {

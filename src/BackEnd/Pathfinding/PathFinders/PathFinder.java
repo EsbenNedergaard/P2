@@ -1,7 +1,7 @@
 package BackEnd.Pathfinding.PathFinders;
 
 import BackEnd.Geometry.Node;
-import BackEnd.Geometry.NodeComparator;
+import BackEnd.Geometry.LowestTotalDistanceComparator;
 import BackEnd.Geometry.Point2D;
 import BackEnd.Graph.SpaceTimeGrid;
 import BackEnd.Pathfinding.Heuristics.Heuristic;
@@ -16,7 +16,6 @@ import java.util.PriorityQueue;
 
 public abstract class PathFinder {
     private SpaceTimeGrid spaceTimeGrid;
-    private SpaceTimeGrid unmodifiedSpaceTimeGrid;
     private List<Node> closedSet;
     private PriorityQueue<Node> openSet;
     private Node startNode;
@@ -28,12 +27,11 @@ public abstract class PathFinder {
 
     public PathFinder(SpaceTimeGrid spaceTimeGrid) {
         this.spaceTimeGrid = spaceTimeGrid;
-        this.unmodifiedSpaceTimeGrid = spaceTimeGrid;
         this.closedSet = new ArrayList<>();
         this.heuristic = new TrueDistance();
         //this.heuristic = new Manhatten();
         //We set the openSet to in worst case be cable of containing all nodes
-        this.openSet = new PriorityQueue<>(spaceTimeGrid.getAllNodes().size(), new NodeComparator());
+        this.openSet = new PriorityQueue<>(spaceTimeGrid.getAllNodes().size(), new LowestTotalDistanceComparator());
     }
 
     public void resetSpaceTimeGrid() {
@@ -58,19 +56,6 @@ public abstract class PathFinder {
 
     public void removeRoute(List<Node> route) {
         spaceTimeGrid.removeRoute(route);
-    }
-
-    public PickingRoute findFastestPath(Point2D start, Point2D end, int startTime) throws RouteNotPossibleException {
-        this.startNode =  new Node(start);
-        this.endNode = new Node (end);
-        this.startTime = startTime;
-        this.pickTime = 0;
-
-        PathFinderStartValueChecker.checkValues(this);
-        this.setStartValues();
-        this.calculateFastestPath();
-
-        return constructPath();
     }
 
     public PickingRoute findFastestPath(Point2D start, Point2D end, int startTime, int pickTime) throws RouteNotPossibleException {

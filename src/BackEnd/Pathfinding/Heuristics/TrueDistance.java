@@ -1,7 +1,7 @@
 package BackEnd.Pathfinding.Heuristics;
 
 import BackEnd.Geometry.Node;
-import BackEnd.Geometry.NodeComparator;
+import BackEnd.Geometry.LowestTotalDistanceComparator;
 import BackEnd.Graph.NodeLayer;
 import BackEnd.Graph.SpaceTimeGrid;
 
@@ -23,7 +23,7 @@ public class TrueDistance implements Heuristic {
         endNode.setNodeLayer(baseLayer);
         this.baseLayerNodeList  = baseLayer.getNodeList();
         this.startNode = endNode;
-        this.openSet = new PriorityQueue<>(baseLayerNodeList.size(), new NodeComparator());
+        this.openSet = new PriorityQueue<>(baseLayerNodeList.size(), new LowestTotalDistanceComparator());
         this.closedSet = new ArrayList<>();
 
         //Køre truedistance på baseLayer i spaceTimeGrid, og finde deres distancer her og derefter går ned af i gennem spaceTimeGridet

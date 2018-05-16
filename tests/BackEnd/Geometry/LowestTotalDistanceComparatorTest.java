@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-class NodeComparatorTest {
+class LowestTotalDistanceComparatorTest {
     // Same total distance, different distances to end and different y values. Should prioritize node with shortest distance to end.
     @Test
     void testMethod_compare_01(){
@@ -21,7 +21,7 @@ class NodeComparatorTest {
         secondNode.setDistanceFromStart(4);
 
 
-        NodeComparator compareElement = new NodeComparator();
+        LowestTotalDistanceComparator compareElement = new LowestTotalDistanceComparator();
 
         assertTrue(compareElement.compare(firstNode, secondNode) > 0);
         assertTrue(compareElement.compare(secondNode, firstNode) < 0);
@@ -41,7 +41,7 @@ class NodeComparatorTest {
         firstNode.setDistanceFromStart(4);
         secondNode.setDistanceFromStart(4);
 
-        NodeComparator compareElement = new NodeComparator();
+        LowestTotalDistanceComparator compareElement = new LowestTotalDistanceComparator();
 
         assertTrue(compareElement.compare(firstNode, secondNode) < 0);
         assertTrue(compareElement.compare(secondNode, firstNode) > 0);
@@ -60,7 +60,7 @@ class NodeComparatorTest {
         firstNode.setDistanceFromStart(2);
         secondNode.setDistanceFromStart(2);
 
-        NodeComparator compareElement = new NodeComparator();
+        LowestTotalDistanceComparator compareElement = new LowestTotalDistanceComparator();
 
         assertTrue(compareElement.compare(firstNode, secondNode) < 0);
         assertTrue(compareElement.compare(secondNode, firstNode) > 0);
@@ -79,7 +79,7 @@ class NodeComparatorTest {
         firstNode.setDistanceFromStart(3);
         secondNode.setDistanceFromStart(3);
 
-        NodeComparator compareElement = new NodeComparator();
+        LowestTotalDistanceComparator compareElement = new LowestTotalDistanceComparator();
 
         assertTrue(compareElement.compare(firstNode, secondNode) == 0);
         assertTrue(compareElement.compare(secondNode, firstNode) == 0);

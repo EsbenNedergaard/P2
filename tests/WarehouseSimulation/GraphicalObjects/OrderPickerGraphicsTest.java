@@ -13,11 +13,11 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class OrderPickerGraphicsTest {
-
     private FastestPathFinder fastestPathFinder;
     private OrderPickerGraphic orderPicker;
     private Point2D startPoint;
     private Point2D endPoint;
+    private final int PICK_TIME = 0;
 
     @BeforeEach
     void beforeEach() {
@@ -30,7 +30,7 @@ class OrderPickerGraphicsTest {
     void testPickerStartsAtExpectedPosition() {
         startPoint = new Point2D(0,0);
         endPoint = new Point2D(14, 1);
-        List<Node> shortestRoute = fastestPathFinder.findFastestPath(startPoint, endPoint, 0).getRoute();
+        List<Node> shortestRoute = fastestPathFinder.findFastestPath(startPoint, endPoint, 0, PICK_TIME).getRoute();
         orderPicker = new OrderPickerGraphic(shortestRoute);
 
         assertEquals(startPoint, orderPicker.getCurrentPosition());
@@ -40,7 +40,7 @@ class OrderPickerGraphicsTest {
     void testPickerEndsAtExpectedPosition() {
         startPoint = new Point2D(0,0);
         endPoint = new Point2D(14, 1);
-        List<Node> shortestRoute = fastestPathFinder.findFastestPath(startPoint, endPoint, 0).getRoute();
+        List<Node> shortestRoute = fastestPathFinder.findFastestPath(startPoint, endPoint, 0, PICK_TIME).getRoute();
         orderPicker = new OrderPickerGraphic(shortestRoute);
 
         int COUNTER = 0;

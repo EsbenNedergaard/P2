@@ -9,26 +9,30 @@ public class ShortestPathFinder extends PathFinder {
     }
 
     void updateNeighbourDistanceFromStart(Node current, Node neighbour) {
-        int distanceBelow = 1;
-        int distanceNotBelow = 100;
+        int punishmentForWaiting = 1;
+        int punishmentForMoving = 1000;
 
-        if(current.getX() == neighbour.getX() && current.getY() == neighbour.getY() && current.getDistanceFromStart() + distanceBelow < neighbour.getDistanceFromStart()){
+
+        /*if(current.getX() == neighbour.getX() && current.getY() == neighbour.getY()) {
+            if(current.getDistanceFromStart() + punishmentForWaiting < neighbour.getDistanceFromStart()) {
+                neighbour.setCameFrom(current);
+                neighbour.setDistanceFromStart(current.getDistanceFromStart() + punishmentForWaiting); //Here we don't punish for waiting.
+            }
+        } else if (current.getDistanceFromStart() + punishmentForMoving < neighbour.getDistanceFromStart()){
             neighbour.setCameFrom(current);
-            neighbour.setDistanceFromStart(current.getDistanceFromStart() + distanceBelow);
-        } else if(current.getDistanceFromStart() + distanceNotBelow < neighbour.getDistanceFromStart()) {
+            neighbour.setDistanceFromStart(current.getDistanceFromStart() + punishmentForMoving);
+        }*/
+
+        if(current.getX() == neighbour.getX() && current.getY() == neighbour.getY()) {
+            if(current.getDistanceFromStart() < neighbour.getDistanceFromStart()) {
+                neighbour.setCameFrom(current);
+                neighbour.setDistanceFromStart(current.getDistanceFromStart()); //Here we don't punish for waiting.
+            }
+        } else if (current.getDistanceFromStart() + 1 < neighbour.getDistanceFromStart()){
             neighbour.setCameFrom(current);
-            neighbour.setDistanceFromStart(current.getDistanceFromStart() + distanceNotBelow);
+            neighbour.setDistanceFromStart(current.getDistanceFromStart() + 1);
         }
 
-
-        /*if (current.getDistanceFromStart() + 1 < neighbour.getDistanceFromStart()) {
-            neighbour.setCameFrom(current);
-            if(current.getX() == neighbour.getX() && current.getY() == neighbour.getY()) {
-                neighbour.setDistanceFromStart(current.getDistanceFromStart()); //Here we don't punish for waiting.
-            } else {
-                neighbour.setDistanceFromStart(current.getDistanceFromStart() + 1);
-            }
-        }*/
     }
 
 }

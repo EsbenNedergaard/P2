@@ -105,6 +105,10 @@ public abstract class PathFinder {
         }
         // All nodes gets an estimated distance to the end node
         heuristic.findDistanceToEndForAllNodes(spaceTimeGrid, endNode);
+
+        /*for(Node n : this.getSpaceTimeGrid().getAllNodes()) {
+            n.setDistanceToEnd(n.getDistanceToEnd() * 1000);
+        }*/
     }
 
     private void calculateFastestPath() {
@@ -142,8 +146,10 @@ public abstract class PathFinder {
         return next;
     }
 
+    abstract void updateNeighbourDistanceFromStart(Node current, Node neighbour);
+
     private Boolean isEndNode(Node current) {
-        return current.getX() == endNode.getX() && current.getY() == endNode.getY() && checkIfPickingIsPossible(current);
+        return current.getX() == endNode.getX() && current.getY() == endNode.getY() && this.checkIfPickingIsPossible(current);
     }
 
     private void checkIfOutOfTime(Node current){
@@ -151,9 +157,6 @@ public abstract class PathFinder {
             throw new RouteNotPossibleException("Did not find a route in the given time");
         }
     }
-
-
-    abstract void updateNeighbourDistanceFromStart(Node current, Node neighbour);
 
     //Constructs the shortest route as a list of nodes
     private PickingRoute constructPath() {

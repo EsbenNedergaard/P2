@@ -17,13 +17,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CompareShortestToFastestAlgorithm {
-    final int NUMBER_OF_EXAMPLES = 100;
-    final int MAX_PRODUCTS_TO_PICK = 5;
-    final int TOTAL_PRODUCT_IDS = 2176;
+class CompareShortestToFastestAlgorithm {
+    private final int NUMBER_OF_EXAMPLES = 1000;
+    private final int MAX_PRODUCTS_TO_PICK = 5;
+    private final int TOTAL_PRODUCT_IDS = 2176;
     private Warehouse warehouse = new Dexion();
     private RandomProducts randomProducts = new RandomProducts();
-    private RouteFinder routeFinder;
     private List<Integer> randomIDs = new ArrayList<>();
     private PickingRoute route;
 
@@ -60,6 +59,7 @@ public class CompareShortestToFastestAlgorithm {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             writer.write("Fastest\tShortest");
             writer.newLine();
+            RouteFinder routeFinder;
             for (int i = 0; i < NUMBER_OF_EXAMPLES; i++) {
                 routeFinder = new RouteFinder(new PathFinder(new SpaceTimeGrid(warehouse.getBaseLayer(), 500)), warehouse.getRouteStartPoint(), warehouse.getRouteEndPoint());
                 for (int j = 0; j < pickersPerTest; j++) {
@@ -75,6 +75,7 @@ public class CompareShortestToFastestAlgorithm {
                     //printIDlist(writer, randomIDs);
                     writer.newLine();
                 }
+                writer.flush();
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,8 +1,7 @@
 package Warehouse;
 
 import BackEnd.Geometry.Point2D;
-import Exceptions.Warehouse.ProductNotInRackException;
-import Warehouse.Racks.Rack;
+import Exceptions.Warehouse.ProductNotInShelfException;
 
 import java.util.List;
 import java.util.Objects;
@@ -10,28 +9,32 @@ import java.util.Objects;
 public class Product {
     private int id;
     private Shelf shelf;
-    private Rack rack;
 
     public Product(int id) {
         this.id = id;
     }
 
-    public void setRack(Rack rack) {
-        this.rack = rack;
+    public void setShelf(Shelf shelf) {
+        this.shelf = shelf;
     }
 
     public int getId() {
         return id;
     }
 
-
-
-    public Rack getRack() {
-        return rack;
+    public Shelf getShelf(){
+        return this.shelf;
     }
 
-    public Point2D getProductPostion() {
-        return this.getRack().getRackPosition();
+    public Point2D getProductPosition() {
+        return this.getShelf().getRack().getRackPosition();
+    }
+
+    public int getShelfIndex() {
+       if(shelf == null) {
+           throw new ProductNotInShelfException();
+       }
+       return shelf.getShelfIndex();
     }
 
     @Override
@@ -48,21 +51,5 @@ public class Product {
         Product that = (Product) o;
 
         return that.getId() == this.id;
-    }
-
-    public int getShelfIndex() {
-        if (getRack() == null)
-            throw new ProductNotInRackException();
-
-        List<Product> productList = rack.getProductList();
-        int productListSize = productList.size();
-
-        for (int i = 0; i < productListSize; i++) {
-            if (this.equals(productList.get(i))) {
-                return i;
-            }
-        }
-
-        throw new ProductNotInRackException();
     }
 }

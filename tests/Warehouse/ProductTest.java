@@ -21,23 +21,9 @@ class ProductTest {
         rack = new Rack(2, new Point2D(1,1));
     }
 
-
-    //GIVER FØRST MENING NÅR VI HAR EXCEPTIONS
-    @Test
-    void setRack() {
-
-
-    }
-
     @Test
     void getId1() {
         assertEquals(1, testProduct.getId());
-    }
-
-    @Test
-    void getRack() {
-        testProduct.setRack(rack);
-        assertEquals(rack, testProduct.getRack());
     }
 
     @Test

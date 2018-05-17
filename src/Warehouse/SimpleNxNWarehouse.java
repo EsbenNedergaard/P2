@@ -86,7 +86,7 @@ public class SimpleNxNWarehouse implements Warehouse {
             for (RackRow rackRow : this.getRackRowList()) {
                 try {
                     tempProduct = rackRow.getProductPointerFromID(productId);
-                    Point2D productPosition = tempProduct.getProductPostion();
+                    Point2D productPosition = tempProduct.getProductPosition();
                     //We y-1, because it is a bottomRackRow and our coordinate system goes downward
                     pickingPoints.add(new PickingPoint(new Point2D(productPosition.getX(), productPosition.getY() - 1), tempProduct));
                 } catch (RackRowDoesNotContainProductException ignored) {

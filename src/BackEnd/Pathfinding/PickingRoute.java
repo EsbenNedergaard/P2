@@ -50,7 +50,7 @@ public class PickingRoute {
         List<Point2D> productPoints = new ArrayList<>();
         //We run through all the products and get the product positions.
         for (PickingPoint pickingPoint : this.getPickingPoints()) {
-            productPoints.add(pickingPoint.getProduct().getProductPostion());
+            productPoints.add(pickingPoint.getProduct().getProductPosition());
         }
 
         return productPoints;

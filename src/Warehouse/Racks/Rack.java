@@ -27,10 +27,10 @@ public class Rack {
         if (isFull()) {
             throw new FullRackException("This rack is already full");
         }
-        product.setRack(this);
 
         for (Shelf shelf : shelfList) {
             if (!shelf.containsProduct()) {
+                product.setShelf(shelf);
                 shelf.setProduct(product);
                 return;
             }
@@ -73,6 +73,10 @@ public class Rack {
 
     public int getAmountOfShelvesInRack() {
         return this.amountOfShelvesInRack;
+    }
+
+    public List<Shelf> getShelfList() {
+        return shelfList;
     }
 
     public Point2D getRackPosition() {

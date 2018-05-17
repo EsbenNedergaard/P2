@@ -73,7 +73,7 @@ public class HorizontalAisle implements Aisle {
             //We try to get the pointer to the product with the ID if it exists in the top rackRow
             try {
                 tempProduct = topRackRow.getProductPointerFromID(productId);
-                Point2D productPosition = tempProduct.getProductPostion();
+                Point2D productPosition = tempProduct.getProductPosition();
                 //We say y+1, because it is a topRackRow and our coordinate system goes downward
                 pickingPointList.add(new PickingPoint(new Point2D(productPosition.getX(), productPosition.getY() + 1), tempProduct));
             } catch (RackRowDoesNotContainProductException ignored) {
@@ -82,7 +82,7 @@ public class HorizontalAisle implements Aisle {
             //Same for the bottom.
             try {
                 tempProduct = bottomRackRow.getProductPointerFromID(productId);
-                Point2D productPosition = tempProduct.getProductPostion();
+                Point2D productPosition = tempProduct.getProductPosition();
                 //We y-1, because it is a bottomRackRow and our coordinate system goes downward
                 pickingPointList.add(new PickingPoint(new Point2D(productPosition.getX(), productPosition.getY() - 1), tempProduct));
             } catch (RackRowDoesNotContainProductException ignored) {

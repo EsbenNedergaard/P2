@@ -15,7 +15,6 @@ public class PickingRoute {
     private int totalPickTime;
     private List<Node> route;
     private List<PickingPoint> pickingPoints;
-    private PickingRoute shortestRoute;
 
 
     public PickingRoute() {
@@ -91,16 +90,5 @@ public class PickingRoute {
         fullRoute.addAll(this.route);
 
         this.route = fullRoute;
-    }
-
-    public PickingRoute getShortestRoute() {
-        if(this.shortestRoute == null) {
-            throw new ShortestRouteNotCalculatedException("We have not calculated the shortest route yet");
-        }
-        return shortestRoute;
-    }
-
-    public void setShortestRoute(PickingRoute shortestRoute) {
-        this.shortestRoute = shortestRoute;
     }
 }

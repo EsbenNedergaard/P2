@@ -48,10 +48,15 @@ public class SimpleNxNWarehouse implements Warehouse {
         for (Point2D startPoint : rackRowStartPoints) {
             this.rackRowList.add(new HorizontalRackRow(startPoint, rackRowLenght, shelvesPerRack));
         }
+        this.setupObstacles();
+        this.setupProducts();
+    }
+
+    @Override
+    public void setupObstacles() {
         for (RackRow rackRow : this.getRackRowList()) {
             rackRow.setRacksAsObstacles(nodeList);
         }
-        this.setupProducts();
     }
 
     private void setupProducts() {

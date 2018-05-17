@@ -56,6 +56,8 @@ public class RouteFinder {
     }
 
 
+
+
     /*Our recursive function that calls itself with a smaller and smaller version of the list of remaining pick points
      * and a bigger currRoute plus a new start point*/
     private PickingRoute findRouteRecursive(Point2D currPosition, List<PickingPoint> remainingPickingPoints, PickingRoute currRoute) throws RouteNotPossibleException {

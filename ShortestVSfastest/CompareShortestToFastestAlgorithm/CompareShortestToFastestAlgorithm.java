@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 class CompareShortestToFastestAlgorithm {
+    //TODO: FJERN OPSAMLINGSTID
     private final int NUMBER_OF_EXAMPLES = 1;
     private final int MAX_PRODUCTS_TO_PICK = 5;
     private final int TOTAL_PRODUCT_IDS = 2176;

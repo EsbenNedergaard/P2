@@ -30,11 +30,16 @@ public class Product {
         return this.getShelf().getRack().getRackPosition();
     }
 
-    public int getShelfIndex() {
+    private int getShelfIndex() {
        if(shelf == null) {
            throw new ProductNotInShelfException();
        }
        return shelf.getShelfIndex();
+    }
+
+    public int getPickTime(){
+        int basePickTime = 3;
+        return this.getShelfIndex() + basePickTime;
     }
 
     @Override

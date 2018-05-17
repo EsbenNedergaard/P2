@@ -1,7 +1,7 @@
 Fastest	Shortest	ProductsPicked
-60	60	2
-93	93	2
-107	107	5
+131	131	5
+30	30	1
+58	58	2
 
 Products visited	Paths calculated	1 product routes	2 product routes	3 product routes	4 product routes	5 product routes
-9	457	0	2	0	0	1
+8	453	1	1	0	0	1

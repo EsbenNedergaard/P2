@@ -43,7 +43,6 @@ public class RouteFinder {
         fastestRoute = findRouteRecursive(routeStartPoint, pickingList, fastestRoute);
 
         PickingRoute shortestRoute = this.calculateShortestRoute(pickingList);
-        fastestRoute.setShortestRoute(shortestRoute);
         //TODO: få lavet så SpaceTimeGrid tager en pickingRoute i stedet.
         pathFinder.getSpaceTimeGrid().removeRoute(fastestRoute.getRoute());
 

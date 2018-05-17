@@ -1,14 +1,19 @@
 package Warehouse;
 
 
+import Warehouse.Racks.Rack;
+
 public class Shelf {
     private Product product;
+    private Rack rack;
 
-    public Shelf(Product product) {
+    public Shelf(Rack rack, Product product) {
+        this.rack = rack;
         this.product = product;
     }
 
-    public Shelf() {
+    public Shelf(Rack rack) {
+        this.rack = rack;
     }
 
     public void setProduct(Product product) {

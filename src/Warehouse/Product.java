@@ -9,6 +9,7 @@ import java.util.Objects;
 
 public class Product {
     private int id;
+    private Shelf shelf;
     private Rack rack;
 
     public Product(int id) {
@@ -23,12 +24,14 @@ public class Product {
         return id;
     }
 
+
+
     public Rack getRack() {
         return rack;
     }
 
     public Point2D getProductPostion() {
-        return getRack().getRackPosition();
+        return this.getRack().getRackPosition();
     }
 
     @Override

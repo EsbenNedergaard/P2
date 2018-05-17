@@ -7,12 +7,11 @@ import javafx.scene.shape.Rectangle;
 import static Warehouse.GUIWarehouse.TILE_SIZE;
 
 public class Tile extends Rectangle {
-
     public Tile(Point2D point) {
         setWidth(TILE_SIZE);
         setHeight(TILE_SIZE);
         relocate(point.getXPixels(), point.getYPixels());
-        setDesign();
+        this.setDesign();
     }
 
     public void setDesign() {

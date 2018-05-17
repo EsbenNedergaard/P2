@@ -19,7 +19,7 @@ public class Rack {
         this.rackPosition = rackPosition;
 
         for (int i = 0; i < amountOfShelvesInRack; i++) {
-            shelfList.add(new Shelf());
+            shelfList.add(new Shelf(this));
         }
     }
 

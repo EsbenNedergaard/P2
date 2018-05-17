@@ -6,37 +6,34 @@ import BackEnd.Pathfinding.RouteFinders.RouteFinder;
 import BackEnd.Graph.SpaceTimeGrid;
 import BackEnd.Pathfinding.PathFinders.PathFinder;
 import BackEnd.Pathfinding.PickingRoute;
-import BackEnd.Pathfinding.RouteFinders.RouteFinder;
 import Exceptions.IllegalTextInputException;
 import Warehouse.Warehouse;
 import WarehouseSimulation.GraphicalObjects.Colors.PickerColors;
 import WarehouseSimulation.GraphicalObjects.Interaction.Handler.RandomProducts;
 import WarehouseSimulation.GraphicalObjects.Interaction.TableView.TableFactoryData;
 import WarehouseSimulation.GraphicalObjects.Interaction.Handler.InputFieldDataHandler;
-import static Warehouse.GUIWarehouse.*;
+
 import static WarehouseSimulation.GraphicalObjects.Interaction.ButtonType.*;
 
 import WarehouseSimulation.GraphicalObjects.Interaction.InteractionGraphics;
 import WarehouseSimulation.GraphicalObjects.Interaction.TableView.Table;
-import WarehouseSimulation.GraphicalObjects.Interaction.TableView.TableFactoryData;
-import WarehouseSimulation.GraphicalObjects.OrderPickerGraphic;
+import WarehouseSimulation.GraphicalObjects.OrderPicker.MovingObject;
+import WarehouseSimulation.GraphicalObjects.OrderPicker.OrderPicker;
+import WarehouseSimulation.GraphicalObjects.OrderPicker.ShadowPicker;
 import WarehouseSimulation.GraphicalObjects.RouteHighlighter;
 import WarehouseSimulation.GraphicalObjects.Warehouse.WarehouseGraphics;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-
-import static Warehouse.GUIWarehouse.SCALE;
-import static Warehouse.GUIWarehouse.TILE_SIZE;
 
 public class WarehouseSimulation {
     private Warehouse warehouse;
@@ -44,7 +41,7 @@ public class WarehouseSimulation {
     private RouteFinder routeFinder;
     private final int MAX_TIME = 500;
     private Group orderPickerGroup;
-    private List<OrderPickerGraphic> orderPickerList;
+    private List<MovingObject> orderPickerList;
     private PickerColors pickerColorGenerator;
     // The simulation
     private int routesAdded = 0;
@@ -129,10 +126,27 @@ public class WarehouseSimulation {
 
         PickingRoute pickingRoute = getPickingRouteFromIDlist(tempProductIDList);
 
-        setupPicker(pickingRoute);
+        setupPickers(pickingRoute, pickingRoute.getShortestRoute());
         //this.setupPicker(pickingRoute.getShortestRoute());
         // Clear the input field when done
         inputField.clear();
+    }
+
+    private void setupPicker(PickingRoute pickingRoute) {
+        String pickerColorValue = pickerColorGenerator.getUnusedColor();
+        MovingObject orderPicker = new OrderPicker(pickingRoute.getRoute(), pickerColorValue);
+        addPicker(orderPicker);
+        routesAdded++;
+        this.addPickerToTable(pickingRoute, pickerColorValue);
+    }
+
+    private void setupPickers(PickingRoute fastestRoute, PickingRoute shortestRoute) {
+        String pickerColorValue = pickerColorGenerator.getUnusedColor();
+        MovingObject fastestPicker = new OrderPicker(fastestRoute.getRoute(), pickerColorValue);
+        MovingObject shortestPicker = new ShadowPicker(shortestRoute.getRoute(), pickerColorValue);
+        addPicker(fastestPicker, shortestPicker);
+        routesAdded++;
+        this.addPickerToTable(fastestRoute, pickerColorValue);
     }
 
     private Group getSimulationElements() {
@@ -149,13 +163,14 @@ public class WarehouseSimulation {
         );
     }
 
-    private void addPicker(OrderPickerGraphic picker) {
-        orderPickerList.add(picker);
-        orderPickerGroup.getChildren().add(picker);
+    private void addPicker(MovingObject ... picker) {
+        orderPickerList.addAll(Arrays.asList(picker));
+        for(MovingObject currentPicker : picker)
+            orderPickerGroup.getChildren().add((Node) currentPicker);
     }
 
     private void scaleSimulationSpeed(int scaleFactor) {
-        for(OrderPickerGraphic currentOrderPicker : orderPickerList) {
+        for(MovingObject currentOrderPicker : orderPickerList) {
             currentOrderPicker.setScaleSpeed(scaleFactor);
         }
     }
@@ -181,7 +196,7 @@ public class WarehouseSimulation {
             showAlert("And how would you like this to be possible?", Alert.AlertType.INFORMATION);
         } else {
             UPDATE_COUNTER = 0;
-            for (OrderPickerGraphic currentPicker : orderPickerList)
+            for (MovingObject currentPicker : orderPickerList)
                 currentPicker.startOver();
         }
     }
@@ -189,14 +204,6 @@ public class WarehouseSimulation {
     private PickingRoute getPickingRouteFromIDlist(List<Integer> idList) {
         List<PickingPoint> pickPointList = this.warehouse.getPickingPoints(idList);
         return routeFinder.calculateFastestRoute(pickPointList);
-    }
-
-    private void setupPicker(PickingRoute pickingRoute) {
-        String pickerColorValue = pickerColorGenerator.getUnusedColor();
-        OrderPickerGraphic orderPicker = new OrderPickerGraphic(pickingRoute.getRoute(), pickerColorValue);
-        addPicker(orderPicker);
-        routesAdded++;
-        this.addPickerToTable(pickingRoute, pickerColorValue);
     }
 
     private void addPickerToTable(PickingRoute pickingRoute, String pickerColorValue){
@@ -253,7 +260,7 @@ public class WarehouseSimulation {
 
     private void onUpdate() {
         UPDATE_COUNTER++;
-        for(OrderPickerGraphic picker : orderPickerList)
+        for(MovingObject picker : orderPickerList)
             if(picker.move(UPDATE_COUNTER));
     }
 }

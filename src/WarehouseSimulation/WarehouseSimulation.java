@@ -203,7 +203,7 @@ public class WarehouseSimulation {
 
     private PickingRoute getPickingRouteFromIDlist(List<Integer> idList) {
         List<PickingPoint> pickPointList = this.warehouse.getPickingPoints(idList);
-        return routeFinder.calculateFastestRoute(pickPointList);
+        return routeFinder.calculateBothRoutes(pickPointList);
     }
 
     private void addPickerToTable(PickingRoute pickingRoute, String pickerColorValue){

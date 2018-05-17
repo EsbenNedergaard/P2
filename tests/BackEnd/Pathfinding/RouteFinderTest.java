@@ -52,6 +52,6 @@ class RouteFinderTest {
         pickingList.add(pickPoint2);
 
 
-        PickingRoute pickingRoute = testRouteFinder.calculateFastestRoute(pickingList);
+        PickingRoute pickingRoute = testRouteFinder.calculateBothRoutes(pickingList);
     }
 }

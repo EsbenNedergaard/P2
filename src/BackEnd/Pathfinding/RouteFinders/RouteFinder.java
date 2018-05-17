@@ -36,14 +36,12 @@ public class RouteFinder {
     }
 
     //Method that calculates the best route for the pickingList that it is given
-    public PickingRoute calculateFastestRoute(List<PickingPoint> pickingList) {
+    public PickingRoute calculateBothRoutes(List<PickingPoint> pickingList) {
         this.startTime = amountPickersInGraph * WAIT_TIME_BETWEEN_PICKERS;
-
         PickingRoute fastestRoute = new PickingRoute();
         fastestRoute = findRouteRecursive(routeStartPoint, pickingList, fastestRoute);
 
         PickingRoute shortestRoute = this.calculateShortestRoute(pickingList);
-        shortestRoute.addStartTime(startTime);
         fastestRoute.setShortestRoute(shortestRoute);
         //TODO: få lavet så SpaceTimeGrid tager en pickingRoute i stedet.
         pathFinder.getSpaceTimeGrid().removeRoute(fastestRoute.getRoute());
@@ -55,7 +53,19 @@ public class RouteFinder {
         return fastestRoute;
     }
 
+    public PickingRoute calculateFastestRoute(List<PickingPoint> pickingList) {
+        this.startTime = amountPickersInGraph * WAIT_TIME_BETWEEN_PICKERS;
+        PickingRoute fastestRoute = new PickingRoute();
+        fastestRoute = findRouteRecursive(routeStartPoint, pickingList, fastestRoute);
 
+        pathFinder.getSpaceTimeGrid().removeRoute(fastestRoute.getRoute());
+
+        //Here we add the initial start time between the routes
+        fastestRoute.addStartTime(startTime);
+
+        amountPickersInGraph++;
+        return fastestRoute;
+    }
 
 
     /*Our recursive function that calls itself with a smaller and smaller version of the list of remaining pick points
@@ -154,6 +164,7 @@ public class RouteFinder {
         }
         this.addFinalPathToRoute(shortestRoute, currPosition);
 
+        shortestRoute.addStartTime(startTime);
         return shortestRoute;
     }
 }

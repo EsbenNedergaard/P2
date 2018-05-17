@@ -5,10 +5,12 @@ import BackEnd.Geometry.Node.Comparators.TotalDistanceComparator;
 import BackEnd.Geometry.Node.Node;
 import BackEnd.Geometry.PickingPoint;
 import BackEnd.Geometry.Point2D;
-import BackEnd.Graph.SpaceTimeGrid;
 import BackEnd.Pathfinding.FastestAndShortestRoute;
 import BackEnd.Pathfinding.PathFinders.PathFinder;
 import BackEnd.Pathfinding.PickingRoute;
+import Exceptions.BranchNotPossibleException;
+import Exceptions.PickerIsTrappedException;
+import Exceptions.PathNotPossibleException;
 import Exceptions.RouteNotPossibleException;
 
 import java.util.ArrayList;
@@ -40,7 +42,11 @@ public class RouteFinder {
     public FastestAndShortestRoute calculateBothRoutes(List<PickingPoint> pickingList) {
         this.startTime = amountPickersInGraph * WAIT_TIME_BETWEEN_PICKERS;
         PickingRoute fastestRoute = new PickingRoute();
-        fastestRoute = findRouteRecursive(routeStartPoint, pickingList, fastestRoute);
+        try {
+            fastestRoute = findRouteRecursive(routeStartPoint, pickingList, fastestRoute);
+        } catch (BranchNotPossibleException e) {
+            System.out.println("It is not possible to create this route, due to picker getting stuck");
+        }
 
         PickingRoute shortestRoute = this.calculateShortestRoute(pickingList);
         //TODO: få lavet så SpaceTimeGrid tager en pickingRoute i stedet.
@@ -57,7 +63,11 @@ public class RouteFinder {
     public PickingRoute calculateFastestRoute(List<PickingPoint> pickingList) {
         this.startTime = amountPickersInGraph * WAIT_TIME_BETWEEN_PICKERS;
         PickingRoute fastestRoute = new PickingRoute();
-        fastestRoute = findRouteRecursive(routeStartPoint, pickingList, fastestRoute);
+        try {
+            fastestRoute = findRouteRecursive(routeStartPoint, pickingList, fastestRoute);
+        } catch (BranchNotPossibleException e) {
+            throw new RouteNotPossibleException("It is not possible to create this route, due to picker getting stuck");
+        }
 
         pathFinder.getSpaceTimeGrid().removeRoute(fastestRoute.getRoute());
 
@@ -71,18 +81,27 @@ public class RouteFinder {
 
     /*Our recursive function that calls itself with a smaller and smaller version of the list of remaining pick points
      * and a bigger currRoute plus a new start point*/
-    private PickingRoute findRouteRecursive(Point2D currPosition, List<PickingPoint> remainingPickingPoints, PickingRoute currRoute) throws RouteNotPossibleException {
+    private PickingRoute findRouteRecursive(Point2D currPosition, List<PickingPoint> remainingPickingPoints, PickingRoute currRoute) throws PathNotPossibleException, BranchNotPossibleException {
         PickingRoute bestRoute = new PickingRoute();
 
         if (remainingPickingPoints.isEmpty()) {
             //Adds the path from last picking point to delivery area
-            addFinalPathToRoute(currRoute, currPosition);
-            return currRoute;
+            try {
+                addFinalPathToRoute(currRoute, currPosition);
+                return currRoute;
+            } catch(PickerIsTrappedException e){
+                throw new BranchNotPossibleException();
+            }
         }
         for (PickingPoint nextPickPoint : remainingPickingPoints) { //Iterates through all remaining picking points
             PickingRoute newRoute = new PickingRoute(currRoute);
             //Adds the path from current picking point to next picking point
-            addPathToRoute(newRoute, currPosition, nextPickPoint);
+            try {
+                addPathToRoute(newRoute, currPosition, nextPickPoint);
+            } catch(PickerIsTrappedException e){
+                throw new BranchNotPossibleException();
+            }
+
             addPickingTimeToRoute(newRoute, nextPickPoint);
 
             /*Creates a new list that doesn't include the (just added) next pick point, because we can't remove
@@ -90,12 +109,14 @@ public class RouteFinder {
             List<PickingPoint> nextList = getNextList(remainingPickingPoints, nextPickPoint);
 
             //Function calls itself with remaining picking points to be visited
-            newRoute = findRouteRecursive(nextPickPoint, nextList, newRoute);
+            try {
+                newRoute = findRouteRecursive(nextPickPoint, nextList, newRoute);
 
-            //Found route is the fastest found so far
-            if (newRouteIsBestRoute(newRoute, bestRoute)) {
-                bestRoute = new PickingRoute(newRoute);
-            }
+                //Found route is the fastest found so far
+                if (newRouteIsBestRoute(newRoute, bestRoute)) {
+                    bestRoute = new PickingRoute(newRoute);
+                }
+            } catch (BranchNotPossibleException ignore) { }
         }
         return bestRoute;
     }
@@ -111,6 +132,7 @@ public class RouteFinder {
 
     private void addFinalPathToRoute(PickingRoute newRoute, Point2D currPosition) {
         int timeTravelledSinceStart = newRoute.getRouteLength() + startTime;
+
         newRoute.addOtherRoute(pathFinder.findFastestPath(currPosition, routeEndPoint, timeTravelledSinceStart, 0));
     }
 
@@ -146,7 +168,11 @@ public class RouteFinder {
         pathFinder.resetSpaceTimeGrid();
 
         PickingRoute routeWithOutMovingObstacles = new PickingRoute();
-        routeWithOutMovingObstacles = findRouteRecursive(routeStartPoint, pickingList, routeWithOutMovingObstacles);
+        try {
+            routeWithOutMovingObstacles = findRouteRecursive(routeStartPoint, pickingList, routeWithOutMovingObstacles);
+        } catch (BranchNotPossibleException e) {
+            System.out.println("It is not possible to create this route, due to picker getting stuck");
+        }
 
         pathFinder = unmodifiedPathFinder;
         return routeWithOutMovingObstacles.getPickingPoints();

@@ -8,7 +8,7 @@ import BackEnd.Pathfinding.Heuristics.Heuristic;
 import BackEnd.Pathfinding.Heuristics.TrueDistance;
 import BackEnd.Pathfinding.PickingRoute;
 import Exceptions.PickerIsTrappedException;
-import Exceptions.RouteNotPossibleException;
+import Exceptions.PathNotPossibleException;
 
 import java.util.*;
 
@@ -59,7 +59,7 @@ public class PathFinder {
         spaceTimeGrid.removeRoute(route);
     }
 
-    public PickingRoute findFastestPath(Point2D start, Point2D end, int startTime, int pickTime) throws RouteNotPossibleException {
+    public PickingRoute findFastestPath(Point2D start, Point2D end, int startTime, int pickTime) throws PathNotPossibleException {
         this.startNode = new Node(start);
         this.endNode = new Node(end);
         this.startTime = startTime;
@@ -138,7 +138,7 @@ public class PathFinder {
 
     private void checkIfOutOfTime(Node current) {
         if (spaceTimeGrid.getMaxTime() <= (current.getTime() + (pickTime + 1))) {
-            throw new RouteNotPossibleException("Did not find a route in the given time");
+            throw new PathNotPossibleException("Did not find a route in the given time");
         }
     }
 

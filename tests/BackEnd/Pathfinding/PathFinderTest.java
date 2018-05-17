@@ -5,7 +5,7 @@ import BackEnd.Geometry.Node.NodeType;
 import BackEnd.Geometry.Point2D;
 import BackEnd.Pathfinding.PathFinders.PathFinder;
 import BackEnd.TempRoutePrinter;
-import Exceptions.RouteNotPossibleException;
+import Exceptions.PathNotPossibleException;
 import BackEnd.Graph.BaseLayer;
 import BackEnd.Graph.SpaceTimeGrid;
 import org.junit.jupiter.api.BeforeEach;
@@ -60,7 +60,7 @@ class PathFinderTest {
         try {
             testResultRoute = testPathFinder.findFastestPath(startNode, endNode, START_TIME, PICK_TIME);
         }
-        catch (RouteNotPossibleException e) {
+        catch (PathNotPossibleException e) {
             System.out.println(e.toString());
         }
 
@@ -132,7 +132,7 @@ class PathFinderTest {
         try {
             testResultRoute = testPathFinder.findFastestPath(startNode, endNode, START_TIME, PICK_TIME);
         }
-        catch (RouteNotPossibleException e) {
+        catch (PathNotPossibleException e) {
             System.out.println(e.toString());
         }
 
@@ -157,7 +157,7 @@ class PathFinderTest {
 
         //We have an updated spacetime, that we use here
         testPathFinder = new PathFinder(spaceTimeGrid);
-        assertThrows(RouteNotPossibleException.class, ()-> testPathFinder.findFastestPath(startNode, endNode, START_TIME, PICK_TIME));
+        assertThrows(PathNotPossibleException.class, ()-> testPathFinder.findFastestPath(startNode, endNode, START_TIME, PICK_TIME));
     }
 
     @Test
@@ -176,7 +176,7 @@ class PathFinderTest {
 
         testPathFinder = new PathFinder(spaceTimeGrid);
 
-        assertThrows(RouteNotPossibleException.class, ()-> testPathFinder.findFastestPath(startNode, endNode, START_TIME, PICK_TIME));
+        assertThrows(PathNotPossibleException.class, ()-> testPathFinder.findFastestPath(startNode, endNode, START_TIME, PICK_TIME));
     }
 
     @Test
@@ -195,21 +195,21 @@ class PathFinderTest {
 
         testPathFinder = new PathFinder(spaceTimeGrid);
 
-        assertThrows(RouteNotPossibleException.class, ()-> testPathFinder.findFastestPath(startNode, endNode, START_TIME, PICK_TIME));
+        assertThrows(PathNotPossibleException.class, ()-> testPathFinder.findFastestPath(startNode, endNode, START_TIME, PICK_TIME));
     }
 
     @Test
     void testStartPointOutsideGrid1(){
         Node startNode = new Node(new Point2D(-1, -1));
         Node endNode = new Node(new Point2D(GRID_SIZE-1, GRID_SIZE-1));
-        assertThrows(RouteNotPossibleException.class, ()-> testPathFinder.findFastestPath(startNode, endNode, START_TIME, PICK_TIME));
+        assertThrows(PathNotPossibleException.class, ()-> testPathFinder.findFastestPath(startNode, endNode, START_TIME, PICK_TIME));
     }
 
     @Test
     void testStartPointOutsideGrid2(){
         Node startNode = new Node(new Point2D(GRID_SIZE, GRID_SIZE));
         Node endNode = new Node(new Point2D(GRID_SIZE-1, GRID_SIZE-1));
-        assertThrows(RouteNotPossibleException.class, ()-> testPathFinder.findFastestPath(startNode, endNode, START_TIME, PICK_TIME));
+        assertThrows(PathNotPossibleException.class, ()-> testPathFinder.findFastestPath(startNode, endNode, START_TIME, PICK_TIME));
     }
 
     @Test
@@ -217,7 +217,7 @@ class PathFinderTest {
         Node startNode = new Node(new Point2D(0, 0));
         Node endNode = new Node(new Point2D(-1, -1));
 
-        assertThrows(RouteNotPossibleException.class, ()-> testPathFinder.findFastestPath(startNode, endNode, START_TIME, PICK_TIME));
+        assertThrows(PathNotPossibleException.class, ()-> testPathFinder.findFastestPath(startNode, endNode, START_TIME, PICK_TIME));
     }
 
     @Test
@@ -225,6 +225,6 @@ class PathFinderTest {
         Node startNode = new Node(new Point2D(0, 0));
         Node endNode = new Node(new Point2D(GRID_SIZE, GRID_SIZE));
 
-        assertThrows(RouteNotPossibleException.class, ()-> testPathFinder.findFastestPath(startNode, endNode, START_TIME, PICK_TIME));
+        assertThrows(PathNotPossibleException.class, ()-> testPathFinder.findFastestPath(startNode, endNode, START_TIME, PICK_TIME));
     }
 }

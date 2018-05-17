@@ -2,7 +2,7 @@ package BackEnd.Pathfinding.PathFinders;
 
 import BackEnd.Geometry.Node.Node;
 import Exceptions.NodeLayerDoesNotExistException;
-import Exceptions.RouteNotPossibleException;
+import Exceptions.PathNotPossibleException;
 
 public class PathFinderStartValueChecker {
     static public void checkValues(PathFinder pathFinder) {
@@ -18,7 +18,7 @@ public class PathFinderStartValueChecker {
                 return;
             }
         }
-        throw new RouteNotPossibleException("The start point was placed outside the SpaceTimeGrid: (" + pathFinder.getStartNode().getX() + ";" + pathFinder.getStartNode().getY() + ")");
+        throw new PathNotPossibleException("The start point was placed outside the SpaceTimeGrid: (" + pathFinder.getStartNode().getX() + ";" + pathFinder.getStartNode().getY() + ")");
     }
 
     static private void checkEndNode(PathFinder pathFinder) {
@@ -28,14 +28,14 @@ public class PathFinderStartValueChecker {
                 return;
             }
         }
-        throw new RouteNotPossibleException("The end point was placed outside the SpaceTimeGrid: (" + pathFinder.getEndNode().getX() + ";" + pathFinder.getEndNode().getY() + ")");
+        throw new PathNotPossibleException("The end point was placed outside the SpaceTimeGrid: (" + pathFinder.getEndNode().getX() + ";" + pathFinder.getEndNode().getY() + ")");
     }
 
     static private void checkStartTime(PathFinder pathFinder) {
         try {
             pathFinder.getSpaceTimeGrid().getNodeLayerPointer(pathFinder.getStartTime());
         } catch (NodeLayerDoesNotExistException e) {
-            throw new RouteNotPossibleException("There is no NodeLayer with the same time as the startTime :" + pathFinder.getStartTime());
+            throw new PathNotPossibleException("There is no NodeLayer with the same time as the startTime :" + pathFinder.getStartTime());
         }
     }
 

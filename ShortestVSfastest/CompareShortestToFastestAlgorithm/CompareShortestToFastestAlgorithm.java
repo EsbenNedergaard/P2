@@ -3,11 +3,10 @@ package CompareShortestToFastestAlgorithm;
 import BackEnd.Graph.SpaceTimeGrid;
 import BackEnd.Pathfinding.FastestAndShortestRoute;
 import BackEnd.Pathfinding.PathFinders.PathFinder;
-import BackEnd.Pathfinding.PickingRoute;
 import BackEnd.Pathfinding.RouteFinders.RouteFinder;
 import Exceptions.NodeLayerDoesNotExistException;
 import Exceptions.PickerIsTrappedException;
-import Exceptions.RouteNotPossibleException;
+import Exceptions.PathNotPossibleException;
 import Warehouse.Dexion;
 import Warehouse.Warehouse;
 import WarehouseSimulation.GraphicalObjects.Interaction.Handler.RandomProducts;
@@ -126,7 +125,7 @@ class CompareShortestToFastestAlgorithm {
                         //Write to file in the following format "FastestRouteLength     ShortestRouteLength     (ID list)"
                         writer.write(bothRoutes.getFastestRoute().getRouteLength() + "\t" + bothRoutes.getShortestRoute().getRouteLength() + "\t" + randomIDs.size());
                         writer.newLine();
-                    } catch (PickerIsTrappedException | RouteNotPossibleException | NodeLayerDoesNotExistException ignore) { }
+                    } catch (PickerIsTrappedException | PathNotPossibleException | NodeLayerDoesNotExistException ignore) { }
                 }
                 writer.flush();
             }

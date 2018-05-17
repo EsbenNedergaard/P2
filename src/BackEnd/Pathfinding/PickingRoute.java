@@ -33,6 +33,10 @@ public class PickingRoute {
         return route.size();
     }
 
+    public int getTravelTime(){
+        return this.getRouteLength() - this.getTotalPickTime();
+    }
+
     public int getTotalPickTime() {
         return totalPickTime;
     }

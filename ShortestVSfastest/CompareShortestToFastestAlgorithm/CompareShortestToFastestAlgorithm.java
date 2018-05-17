@@ -124,7 +124,7 @@ class CompareShortestToFastestAlgorithm {
                         pathsCalculated += aStarCalculations(randomIDs.size());
 
                         //Write to file in the following format "FastestRouteLength     ShortestRouteLength     (ID list)"
-                        writer.write(bothRoutes.getFastestRoute().getRouteLength() + "\t" + bothRoutes.getShortestRoute().getRouteLength() + "\t" + randomIDs.size());
+                        writer.write(bothRoutes.getFastestRoute().getTravelTime() + "\t" + bothRoutes.getShortestRoute().getTravelTime() + "\t" + randomIDs.size());
                         writer.newLine();
                     } catch (PickerIsTrappedException | RouteNotPossibleException | NodeLayerDoesNotExistException ignore) { }
                 }

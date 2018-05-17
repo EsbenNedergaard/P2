@@ -1,6 +1,7 @@
 package CompareShortestToFastestAlgorithm;
 
 import BackEnd.Graph.SpaceTimeGrid;
+import BackEnd.Pathfinding.FastestAndShortestRoute;
 import BackEnd.Pathfinding.PathFinders.PathFinder;
 import BackEnd.Pathfinding.PickingRoute;
 import BackEnd.Pathfinding.RouteFinders.RouteFinder;
@@ -20,13 +21,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 class CompareShortestToFastestAlgorithm {
-    private final int NUMBER_OF_EXAMPLES = 10;
+    private final int NUMBER_OF_EXAMPLES = 1;
     private final int MAX_PRODUCTS_TO_PICK = 5;
     private final int TOTAL_PRODUCT_IDS = 2176;
     private Warehouse warehouse = new Dexion();
     private RandomProducts randomProducts = new RandomProducts();
     private List<Integer> randomIDs = new ArrayList<>();
-    private PickingRoute route;
+    private FastestAndShortestRoute bothRoutes;
 
     @Test
     void testWith1Picker() {
@@ -117,13 +118,13 @@ class CompareShortestToFastestAlgorithm {
                         randomIDs.add(Integer.parseInt(ID));
                     }
                     try {
-                        route = routeFinder.calculateFastestRoute(warehouse.getPickingPoints(randomIDs));
+                        bothRoutes = routeFinder.calculateBothRoutes(warehouse.getPickingPoints(randomIDs));
                         routesCalculated[randomIDs.size() - 1]++;
                         productsVisited += randomIDs.size();
                         pathsCalculated += aStarCalculations(randomIDs.size());
 
                         //Write to file in the following format "FastestRouteLength     ShortestRouteLength     (ID list)"
-                        writer.write(route.getRouteLength() + "\t" + route.getShortestRoute().getRouteLength() + "\t" + randomIDs.size());
+                        writer.write(bothRoutes.getFastestRoute().getRouteLength() + "\t" + bothRoutes.getShortestRoute().getRouteLength() + "\t" + randomIDs.size());
                         writer.newLine();
                     } catch (PickerIsTrappedException | RouteNotPossibleException | NodeLayerDoesNotExistException ignore) { }
                 }

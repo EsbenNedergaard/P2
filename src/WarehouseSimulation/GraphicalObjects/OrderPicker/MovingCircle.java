@@ -1,59 +1,41 @@
-package WarehouseSimulation.GraphicalObjects;
+package WarehouseSimulation.GraphicalObjects.OrderPicker;
 
 import BackEnd.Geometry.Node.Node;
 import BackEnd.Geometry.Point2D;
-import WarehouseSimulation.GraphicalObjects.Colors.Colors;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 import java.util.List;
 
 import static Warehouse.GUIWarehouse.TILE_SIZE;
 
-public class OrderPickerGraphic extends Circle {
+public abstract class MovingCircle extends Circle implements MovingObject {
 
     private final static double PICKER_SPEED_IN_MPS = 2;
     private final static int SCREEN_HZ = 60; /* change this to screen HZ */
     private List<Node> routeList;
     private double moveDistancePerUpdate;
-    private int scaleFactorMoveDistance;
     private int indexOfTargetNode;
 
-    public OrderPickerGraphic(List<Node> routeList, String color) {
+    public MovingCircle(List<Node> routeList) {
         this.routeList = routeList;
-        this.scaleFactorMoveDistance = 1;
-        this.moveDistancePerUpdate = calculateMoveDistancePerUpdate(scaleFactorMoveDistance);
+        this.moveDistancePerUpdate = calculateMoveDistancePerUpdate(1);
         this.indexOfTargetNode = 1;
-        setDesign(color);
         setStartLocation();
     }
 
-    public OrderPickerGraphic(List<Node> routeList) {
-        this.routeList = routeList;
-        this.scaleFactorMoveDistance = 1;
-        this.moveDistancePerUpdate = calculateMoveDistancePerUpdate(scaleFactorMoveDistance);
-        this.indexOfTargetNode = 1;
-        setDesign(Colors.BLUE.getColor());
-        setStartLocation();
-    }
-
-    private void setStartLocation() {
-        relocate(2.5, 2.5);
+    @Override
+    public void setStartLocation() {
         setTranslateX(routeList.get(0).getX() * TILE_SIZE);
         setTranslateY(routeList.get(0).getY() * TILE_SIZE);
     }
 
-    private void setDesign(String color) {
-        setRadius(TILE_SIZE / 2.5);
-        setFill(Color.valueOf(color));
-    }
-
-    private double calculateMoveDistancePerUpdate(int scaleFactor) {
+    @Override
+    public double calculateMoveDistancePerUpdate(int scaleFactor) {
         return (PICKER_SPEED_IN_MPS * TILE_SIZE * 1 / SCREEN_HZ) * scaleFactor;
     }
 
-    // Call this 60 times / sec
-    public boolean move(final int UPDATE_COUNTER) {
+    @Override
+    public boolean move(int UPDATE_COUNTER) {
         if (!routeIsDone()) {
             if (moveIsVertical())
                 moveVertical();
@@ -134,10 +116,6 @@ public class OrderPickerGraphic extends Circle {
         return this.routeList.get(indexOfTargetNode);
     }
 
-    Point2D getCurrentPosition() {
-        return new Point2D((int) getTranslateX() / TILE_SIZE, (int) getTranslateY() / TILE_SIZE);
-    }
-
     private boolean isAtTargetNode(final int UPDATE_COUNTER) {
         return UPDATE_COUNTER % (TILE_SIZE / moveDistancePerUpdate) == 0;
     }
@@ -151,10 +129,17 @@ public class OrderPickerGraphic extends Circle {
         indexOfTargetNode++;
     }
 
+    @Override
+    public Point2D getCurrentPosition() {
+        return new Point2D((int) getTranslateX() / TILE_SIZE, (int) getTranslateY() / TILE_SIZE);
+    }
+
+    @Override
     public void startOver() {
         indexOfTargetNode = 1;
     }
 
+    @Override
     public void setScaleSpeed(int scaleFactor) {
         moveDistancePerUpdate = calculateMoveDistancePerUpdate(scaleFactor);
     }

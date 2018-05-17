@@ -2,6 +2,7 @@ package WarehouseSimulation;
 
 import BackEnd.Geometry.PickingPoint;
 import BackEnd.Geometry.Point2D;
+import BackEnd.Pathfinding.FastestAndShortestRoute;
 import BackEnd.Pathfinding.RouteFinders.RouteFinder;
 import BackEnd.Graph.SpaceTimeGrid;
 import BackEnd.Pathfinding.PathFinders.PathFinder;
@@ -90,7 +91,8 @@ public class WarehouseSimulation {
 
     private void setButtonsClickEvents(InteractionGraphics interactions) {
         setEnterToCallAddProductIDs();
-        interactions.getButton(ADD).setOnMouseClicked(e -> this.actionsForAddProductIDs());
+        interactions.getButton(ADDFASTEST).setOnMouseClicked(e -> this.actionsForAddFastestRoute());
+        interactions.getButton(ADDBOTH).setOnMouseClicked(e -> this.actionsForAddBothRoutes());
         interactions.getButton(LAUNCH).setOnMouseClicked(e -> programTimer.start());
         interactions.getButton(RELAUNCH).setOnMouseClicked(e -> this.reLaunchOptions());
         interactions.getButton(RESET).setOnMouseClicked(e -> this.resetWarehouse());
@@ -102,34 +104,60 @@ public class WarehouseSimulation {
 
     private void setEnterToCallAddProductIDs() {
         interactions.getInputField().setOnKeyPressed(e -> {
-            if(e.getCode() == KeyCode.ENTER) this.actionsForAddProductIDs();
+            if(e.getCode() == KeyCode.ENTER) this.actionsForAddFastestRoute();
         });
     }
 
-    private void actionsForAddProductIDs() {
+    private void actionsForAddBothRoutes() {
         TextField inputField = interactions.getInputField();
-        if (inputField.getText().isEmpty()) {
-            showAlert("The text field was empty", Alert.AlertType.WARNING);
+
+        if(alertIfInputFieldEmpty(inputField))
             return;
-        }
 
         textHandler = new InputFieldDataHandler();
+        List<Integer> tempProductIDList = getProductIDList(inputField.getText());
 
-        // Get the id list from the input field
-        List<Integer> tempProductIDList;
-        try {
-            tempProductIDList = textHandler.generateProductIDList(inputField.getText());
-        } catch (IllegalTextInputException e) {
-            showAlert(e.getMessage(), Alert.AlertType.WARNING);
+        if(tempProductIDList != null) {
+            FastestAndShortestRoute fastAndShortestRoute = getBothRoutesFromIDList(tempProductIDList);
+            setupPickers(fastAndShortestRoute.getFastestRoute(), fastAndShortestRoute.getShortestRoute());
+        } else {
             return;
         }
-
-        PickingRoute pickingRoute = getPickingRouteFromIDlist(tempProductIDList);
-
-        setupPickers(pickingRoute, pickingRoute.getShortestRoute());
-        //this.setupPicker(pickingRoute.getShortestRoute());
-        // Clear the input field when done
         inputField.clear();
+    }
+
+    private void actionsForAddFastestRoute() {
+        TextField inputField = interactions.getInputField();
+        if(alertIfInputFieldEmpty(inputField))
+            return;
+
+        textHandler = new InputFieldDataHandler();
+        List<Integer> tempProductIDList = getProductIDList(inputField.getText());
+
+        if(tempProductIDList != null) {
+            PickingRoute fastestRoute = getFastestRouteFromIDList(tempProductIDList);
+            setupPicker(fastestRoute);
+        } else {
+            return;
+        }
+        inputField.clear();
+    }
+
+    private List<Integer> getProductIDList(String productIDString) {
+        try {
+            return textHandler.generateProductIDList(productIDString);
+        } catch (IllegalTextInputException e) {
+            showAlert(e.getMessage(), Alert.AlertType.WARNING);
+            return null;
+        }
+    }
+
+    private boolean alertIfInputFieldEmpty(TextField inputField) {
+        if(inputField.getText().isEmpty()) {
+            showAlert("The text field was empty", Alert.AlertType.WARNING);
+            return true;
+        }
+        return false;
     }
 
     private void setupPicker(PickingRoute pickingRoute) {
@@ -188,7 +216,7 @@ public class WarehouseSimulation {
             else
                 inputField.setText(inputField.getText() + currentProductID);
         }
-        actionsForAddProductIDs();
+        actionsForAddBothRoutes();
     }
 
     private void reLaunchOptions() {
@@ -201,9 +229,14 @@ public class WarehouseSimulation {
         }
     }
 
-    private PickingRoute getPickingRouteFromIDlist(List<Integer> idList) {
+    private FastestAndShortestRoute getBothRoutesFromIDList(List<Integer> idList) {
         List<PickingPoint> pickPointList = this.warehouse.getPickingPoints(idList);
         return routeFinder.calculateBothRoutes(pickPointList);
+    }
+
+    private PickingRoute getFastestRouteFromIDList(List<Integer> idList) {
+        List<PickingPoint> pickPointList = this.warehouse.getPickingPoints(idList);
+        return routeFinder.calculateFastestRoute(pickPointList);
     }
 
     private void addPickerToTable(PickingRoute pickingRoute, String pickerColorValue){

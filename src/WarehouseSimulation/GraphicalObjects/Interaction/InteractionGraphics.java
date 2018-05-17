@@ -36,7 +36,7 @@ public class InteractionGraphics {
     private GridPane getInteractionGrid() {
         GridPane gridpane = new GridPane();
         gridpane.add(new VBox(getHeading()), 1, 1, 5, 1);
-        gridpane.add(new HBox(inputField, getButton(ADD)), 1, 2, 5, 2);
+        gridpane.add(new HBox(inputField, getButton(ADDFASTEST), getButton(ADDBOTH)), 1, 2, 5, 2);
         gridpane.add(new HBox(
                 getButton(LAUNCH),
                 getButton(RELAUNCH),

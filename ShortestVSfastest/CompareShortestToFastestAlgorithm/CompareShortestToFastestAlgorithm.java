@@ -21,7 +21,7 @@ import java.util.List;
 
 class CompareShortestToFastestAlgorithm {
     //TODO: FJERN OPSAMLINGSTID
-    private final int NUMBER_OF_EXAMPLES = 0;
+    private final int NUMBER_OF_EXAMPLES = 10;
     private final int MAX_PRODUCTS_TO_PICK = 5;
     private final int TOTAL_PRODUCT_IDS = 2176;
     private Warehouse warehouse = new Dexion();
@@ -111,7 +111,7 @@ class CompareShortestToFastestAlgorithm {
             RouteFinder routeFinder;
             for (int i = 0; i < NUMBER_OF_EXAMPLES; i++) {
                 System.out.println("Example number: " + i);
-                routeFinder = new RouteFinder(new PathFinder(new SpaceTimeGrid(warehouse.getBaseLayer(), 300)), warehouse.getRouteStartPoint(), warehouse.getRouteEndPoint());
+                routeFinder = new RouteFinder(new PathFinder(new SpaceTimeGrid(warehouse.getBaseLayer(), 500)), warehouse.getRouteStartPoint(), warehouse.getRouteEndPoint());
                 for (int j = 0; j < pickersPerTest; j++) {
                     randomIDs.clear();
                     for (String ID : randomProducts.nextProductIDList(MAX_PRODUCTS_TO_PICK, TOTAL_PRODUCT_IDS)) {
@@ -126,7 +126,9 @@ class CompareShortestToFastestAlgorithm {
                         //Write to file in the following format "FastestRouteLength     ShortestRouteLength     (ID list)"
                         writer.write(bothRoutes.getFastestRoute().getTravelTime() + "\t" + bothRoutes.getShortestRoute().getTravelTime() + "\t" + randomIDs.size());
                         writer.newLine();
-                    } catch (PickerIsTrappedException | PathNotPossibleException | NodeLayerDoesNotExistException ignore) { }
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                 }
                 writer.flush();
             }

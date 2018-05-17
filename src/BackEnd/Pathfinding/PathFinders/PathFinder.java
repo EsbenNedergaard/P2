@@ -7,6 +7,7 @@ import BackEnd.Graph.SpaceTimeGrid;
 import BackEnd.Pathfinding.Heuristics.Heuristic;
 import BackEnd.Pathfinding.Heuristics.TrueDistance;
 import BackEnd.Pathfinding.PickingRoute;
+import Exceptions.NodeLayerDoesNotExistException;
 import Exceptions.PickerIsTrappedException;
 import Exceptions.PathNotPossibleException;
 
@@ -173,10 +174,16 @@ public class PathFinder {
     private boolean checkIfPickingIsPossible(Node possibleEndPoint) {
         boolean found;
         Node current = possibleEndPoint;
-
+        Node next;
         /*We add one to PICK_TIME because we need to make sure the next route also has a point to start on*/
         for (int i = 0; i < pickTime + 1; i++) {
-            Node next = spaceTimeGrid.getNodePointer(current.getX(), current.getY(), current.getTime() + 1);
+
+            try {
+                next = spaceTimeGrid.getNodePointer(current.getX(), current.getY(), current.getTime() + 1);
+            } catch (NodeLayerDoesNotExistException e) {
+                throw new PathNotPossibleException("The picker could not finishing picking before the graph ran out of time.");
+            }
+
             found = false;
             for (Node neighbourToCurrent : current.getNeighbourNodes()) {
                 //We check that the next node exists in the current neighbour list and haven't been removed

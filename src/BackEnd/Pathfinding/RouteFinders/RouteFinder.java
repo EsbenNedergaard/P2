@@ -39,16 +39,20 @@ public class RouteFinder {
     }
 
     //Method that calculates the best route for the pickingList that it is given
-    public FastestAndShortestRoute calculateBothRoutes(List<PickingPoint> pickingList) {
+    public FastestAndShortestRoute calculateBothRoutes(List<PickingPoint> pickingList) throws RouteNotPossibleException{
         this.startTime = amountPickersInGraph * WAIT_TIME_BETWEEN_PICKERS;
         PickingRoute fastestRoute = new PickingRoute();
+        PickingRoute shortestRoute = new PickingRoute();
         try {
             fastestRoute = findRouteRecursive(routeStartPoint, pickingList, fastestRoute);
+            shortestRoute = this.calculateShortestRoute(pickingList);
         } catch (BranchNotPossibleException e) {
-            System.out.println("It is not possible to create this route, due to picker getting stuck");
+            throw new RouteNotPossibleException(e.getReasonWhyBranchNotPossible().getMessage());
+        }
+        if(fastestRoute.getRoute().size() == 0 || shortestRoute.getRoute().size() == 0) {
+            throw new RouteNotPossibleException("The route was not created.");
         }
 
-        PickingRoute shortestRoute = this.calculateShortestRoute(pickingList);
         //TODO: få lavet så SpaceTimeGrid tager en pickingRoute i stedet.
         pathFinder.getSpaceTimeGrid().removeRoute(fastestRoute.getRoute());
 
@@ -60,7 +64,7 @@ public class RouteFinder {
         return new FastestAndShortestRoute(fastestRoute, shortestRoute);
     }
 
-    public PickingRoute calculateFastestRoute(List<PickingPoint> pickingList) {
+    public PickingRoute calculateFastestRoute(List<PickingPoint> pickingList) throws RouteNotPossibleException {
         this.startTime = amountPickersInGraph * WAIT_TIME_BETWEEN_PICKERS;
         PickingRoute fastestRoute = new PickingRoute();
         try {
@@ -89,8 +93,8 @@ public class RouteFinder {
             try {
                 addFinalPathToRoute(currRoute, currPosition);
                 return currRoute;
-            } catch(PickerIsTrappedException e){
-                throw new BranchNotPossibleException();
+            } catch(PickerIsTrappedException | PathNotPossibleException e){
+                throw new BranchNotPossibleException(e);
             }
         }
         for (PickingPoint nextPickPoint : remainingPickingPoints) { //Iterates through all remaining picking points
@@ -98,8 +102,8 @@ public class RouteFinder {
             //Adds the path from current picking point to next picking point
             try {
                 addPathToRoute(newRoute, currPosition, nextPickPoint);
-            } catch(PickerIsTrappedException e){
-                throw new BranchNotPossibleException();
+            } catch(PickerIsTrappedException | PathNotPossibleException e){
+                throw new BranchNotPossibleException(e);
             }
 
             addPickingTimeToRoute(newRoute, nextPickPoint);
@@ -116,7 +120,9 @@ public class RouteFinder {
                 if (newRouteIsBestRoute(newRoute, bestRoute)) {
                     bestRoute = new PickingRoute(newRoute);
                 }
-            } catch (BranchNotPossibleException ignore) { }
+            } catch (BranchNotPossibleException ignore) {
+                //This is if we get trapped in a inner branch
+            }
         }
         return bestRoute;
     }

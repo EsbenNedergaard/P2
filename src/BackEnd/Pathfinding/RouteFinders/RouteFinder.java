@@ -49,8 +49,10 @@ public class RouteFinder {
         } catch (BranchNotPossibleException e) {
             throw new RouteNotPossibleException(e.getReasonWhyBranchNotPossible().getMessage());
         }
-        if(fastestRoute.getRoute().size() == 0 || shortestRoute.getRoute().size() == 0) {
-            throw new RouteNotPossibleException("The route was not created.");
+        if(fastestRoute.getRoute().size() == 0) {
+            throw new RouteNotPossibleException("The fastest route was not created.");
+        } else if (shortestRoute.getRoute().size() == 0) {
+            throw new RouteNotPossibleException("The shortest route was not created");
         }
 
         //TODO: få lavet så SpaceTimeGrid tager en pickingRoute i stedet.

@@ -27,10 +27,11 @@ public class Dexion implements Warehouse {
     public Dexion() {
         length = AISLE_LENGTH + (AISLE_PADDING * 2);
         width = 12;
-        createNodeGrid();
-        createAisleList();
-        createProducts();
-        setStartAndEndPoints(new Point2D(0, 4), new Point2D(0, 7));
+        this.createNodeGrid();
+        this.createAisleList();
+        this.createProducts();
+        this.setupObstacles();
+        this.setStartAndEndPoints(new Point2D(0, 4), new Point2D(0, 7));
     }
 
     private void createNodeGrid() {
@@ -52,12 +53,10 @@ public class Dexion implements Warehouse {
         aisleList.add(aisle2);
         aisleList.add(aisle3);
         aisleList.add(aisle4);
-
-        //By creating the aisles we also create the rackRows which we make into obstacles
-        this.setRackRowsAsObstacles();
     }
 
-    private void setRackRowsAsObstacles() {
+    @Override
+    public void setupObstacles() {
         for (RackRow rackRow : this.getRackRowList()) {
             rackRow.setRacksAsObstacles(nodeList);
         }

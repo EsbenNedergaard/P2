@@ -22,4 +22,6 @@ public interface Warehouse {
 
     Point2D getRouteEndPoint();
     int getAmountOfProducts();
+
+    void setupObstacles();
 }

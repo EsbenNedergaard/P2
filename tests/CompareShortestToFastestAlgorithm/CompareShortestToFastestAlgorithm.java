@@ -16,18 +16,18 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 
 class CompareShortestToFastestAlgorithm {
-    private final int NUMBER_OF_EXAMPLES = 5;
+    private final int NUMBER_OF_EXAMPLES = 1000;
     private final int MAX_PRODUCTS_TO_PICK = 5;
     private final int TOTAL_PRODUCT_IDS = 2176;
     private Warehouse warehouse = new Dexion();
     private RandomProducts randomProducts = new RandomProducts();
     private List<Integer> randomIDs = new ArrayList<>();
     private PickingRoute route;
-    private int aStarCounter;
 
     @Test
     void testWith1Picker() {
@@ -101,11 +101,16 @@ class CompareShortestToFastestAlgorithm {
 
 
     private void randomFastestRoutesToFile(int pickersPerTest, File file) {
+        int productsVisited = 0;
+        int routesCalculated[] = new int[5];
+        int pathsCalculated = 0;
+
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-            writer.write("Fastest\tShortest");
+            writer.write("Fastest\tShortest\tProductsPicked");
             writer.newLine();
             RouteFinder routeFinder;
             for (int i = 0; i < NUMBER_OF_EXAMPLES; i++) {
+                System.out.println("Example number: " + i);
                 routeFinder = new RouteFinder(new PathFinder(new SpaceTimeGrid(warehouse.getBaseLayer(), 300)), warehouse.getRouteStartPoint(), warehouse.getRouteEndPoint());
                 for (int j = 0; j < pickersPerTest; j++) {
                     randomIDs.clear();
@@ -114,17 +119,33 @@ class CompareShortestToFastestAlgorithm {
                     }
                     try {
                         route = routeFinder.calculateFastestRoute(warehouse.getPickingPoints(randomIDs));
-                    } catch (PickerIsTrappedException | RouteNotPossibleException | NodeLayerDoesNotExistException ignore) {
-                    }
-                    //Write to file in the following format "FastestRouteLength     ShortestRouteLength     (ID list)"
-                    writer.write(route.getRouteLength() + "\t" + route.getShortestRoute().getRouteLength());
-                    //printIDlist(writer, randomIDs);
-                    writer.newLine();
+                        routesCalculated[randomIDs.size() - 1]++;
+                        productsVisited += randomIDs.size();
+                        pathsCalculated += aStarCalculations(randomIDs.size());
+
+                        //Write to file in the following format "FastestRouteLength     ShortestRouteLength     (ID list)"
+                        writer.write(route.getRouteLength() + "\t" + route.getShortestRoute().getRouteLength() + "\t" + randomIDs.size());
+                        writer.newLine();
+                    } catch (PickerIsTrappedException | RouteNotPossibleException | NodeLayerDoesNotExistException ignore) { }
                 }
                 writer.flush();
             }
+            writer.newLine();
+            writer.write("Products visited\tPaths calculated\t1 product routes\t2 product routes\t3 product routes\t4 product routes\t5 product routes");
+            writer.newLine();
+            writer.write(productsVisited + "\t" + pathsCalculated + "\t" + routesCalculated[0] + "\t" + routesCalculated[1] + "\t" + routesCalculated[2] + "\t" + routesCalculated[3] + "\t" + routesCalculated[4]);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private int aStarCalculations(int numberOfProducts) {
+        switch (numberOfProducts) {
+            case 1: return 2;
+            case 2: return 6;
+            case 3: return 21;
+            case 4: return 88;
+            default: return 445;
         }
     }
 

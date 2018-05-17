@@ -6,6 +6,7 @@ import BackEnd.Geometry.Node.Node;
 import BackEnd.Geometry.PickingPoint;
 import BackEnd.Geometry.Point2D;
 import BackEnd.Graph.SpaceTimeGrid;
+import BackEnd.Pathfinding.FastestAndShortestRoute;
 import BackEnd.Pathfinding.PathFinders.PathFinder;
 import BackEnd.Pathfinding.PickingRoute;
 import Exceptions.RouteNotPossibleException;
@@ -36,7 +37,7 @@ public class RouteFinder {
     }
 
     //Method that calculates the best route for the pickingList that it is given
-    public PickingRoute calculateBothRoutes(List<PickingPoint> pickingList) {
+    public FastestAndShortestRoute calculateBothRoutes(List<PickingPoint> pickingList) {
         this.startTime = amountPickersInGraph * WAIT_TIME_BETWEEN_PICKERS;
         PickingRoute fastestRoute = new PickingRoute();
         fastestRoute = findRouteRecursive(routeStartPoint, pickingList, fastestRoute);
@@ -50,7 +51,8 @@ public class RouteFinder {
         fastestRoute.addStartTime(startTime);
 
         amountPickersInGraph++;
-        return fastestRoute;
+
+        return new FastestAndShortestRoute(fastestRoute, shortestRoute);
     }
 
     public PickingRoute calculateFastestRoute(List<PickingPoint> pickingList) {

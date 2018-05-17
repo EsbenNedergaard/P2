@@ -1,5 +1,17 @@
-Fastest	Shortest	ProductsPicked
-25	25	1
+Fastest	Shortest	ProductsPicked	NumberOfPicker
+60	60	2	1
+128	152	5	2
+128	145	5	3
+96	96	2	1
+95	140	4	2
+29	29	1	3
+115	115	5	1
+100	128	3	2
+106	135	4	3
+
+
+
+
 
 Products visited	Paths calculated	1 product routes	2 product routes	3 product routes	4 product routes	5 product routes
-1	2	1	0	0	0	0
+31	1546	1	2	1	2	3

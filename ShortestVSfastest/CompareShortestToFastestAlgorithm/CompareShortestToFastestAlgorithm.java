@@ -20,8 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 class CompareShortestToFastestAlgorithm {
-    //TODO: FJERN OPSAMLINGSTID
-    private final int NUMBER_OF_EXAMPLES = 10;
+    private final int NUMBER_OF_EXAMPLES = 3;
     private final int MAX_PRODUCTS_TO_PICK = 5;
     private final int TOTAL_PRODUCT_IDS = 2176;
     private Warehouse warehouse = new Dexion();
@@ -106,7 +105,7 @@ class CompareShortestToFastestAlgorithm {
         int pathsCalculated = 0;
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-            writer.write("Fastest\tShortest\tProductsPicked");
+            writer.write("Fastest\tShortest\tProductsPicked\tNumberOfPicker");
             writer.newLine();
             RouteFinder routeFinder;
             for (int i = 0; i < NUMBER_OF_EXAMPLES; i++) {
@@ -124,7 +123,7 @@ class CompareShortestToFastestAlgorithm {
                         pathsCalculated += aStarCalculations(randomIDs.size());
 
                         //Write to file in the following format "FastestRouteLength     ShortestRouteLength     (ID list)"
-                        writer.write(bothRoutes.getFastestRoute().getTravelTime() + "\t" + bothRoutes.getShortestRoute().getTravelTime() + "\t" + randomIDs.size());
+                        writer.write(bothRoutes.getFastestRoute().getTravelTime() + "\t" + bothRoutes.getShortestRoute().getTravelTime() + "\t" + randomIDs.size() + "\t" + (j+1));
                         writer.newLine();
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
@@ -132,7 +131,7 @@ class CompareShortestToFastestAlgorithm {
                 }
                 writer.flush();
             }
-            writer.newLine();
+            writer.write("\n\n\n\n\n");
             writer.write("Products visited\tPaths calculated\t1 product routes\t2 product routes\t3 product routes\t4 product routes\t5 product routes");
             writer.newLine();
             writer.write(productsVisited + "\t" + pathsCalculated + "\t" + routesCalculated[0] + "\t" + routesCalculated[1] + "\t" + routesCalculated[2] + "\t" + routesCalculated[3] + "\t" + routesCalculated[4]);

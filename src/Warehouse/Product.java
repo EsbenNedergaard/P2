@@ -38,8 +38,9 @@ public class Product {
     }
 
     public int getPickTime(){
-        int basePickTime = 3;
-        return this.getShelfIndex() + basePickTime;
+        final int baseCollectingTime = 3;
+        final int extraPickTimePerShelf = 1;
+        return baseCollectingTime + this.getShelfIndex() * extraPickTimePerShelf;
     }
 
     @Override

@@ -65,9 +65,6 @@ public class HorizontalAisle implements Aisle {
     public List<PickingPoint> getPickingPoints(List<Integer> productIdList) {
         List<PickingPoint> pickingPointList = new ArrayList<>();
 
-        RackRow topRackRow = getTopRackRow();
-        RackRow bottomRackRow = getBottomRackRow();
-
         for (Integer productId : productIdList) {
             Product tempProduct;
             //We try to get the pointer to the product with the ID if it exists in the top rackRow

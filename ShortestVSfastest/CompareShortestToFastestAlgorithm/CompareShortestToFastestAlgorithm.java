@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 class CompareShortestToFastestAlgorithm {
-    private final int NUMBER_OF_EXAMPLES = 3;
+    private final int NUMBER_OF_EXAMPLES = 1;
     private final int MAX_PRODUCTS_TO_PICK = 5;
     private final int TOTAL_PRODUCT_IDS = 2176;
     private Warehouse warehouse = new Dexion();

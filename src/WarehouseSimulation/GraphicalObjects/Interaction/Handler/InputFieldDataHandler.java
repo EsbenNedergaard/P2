@@ -57,12 +57,6 @@ public class InputFieldDataHandler {
 
     // Generates a product ID string
     public String generateProductIDString() {
-
-        // Fun
-        if (productIDListBuffer.get(0) == 123456) {
-            return "Anton. Lad nu vær";
-        }
-
         String productIDString = "";
 
         for (Integer number : productIDListBuffer) {

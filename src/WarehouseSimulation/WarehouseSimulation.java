@@ -216,12 +216,12 @@ public class WarehouseSimulation {
             else
                 inputField.setText(inputField.getText() + currentProductID);
         }
-        actionsForAddBothRoutes();
+        actionsForAddFastestRoute();
     }
 
     private void reLaunchOptions() {
         if(UPDATE_COUNTER == 0) {
-            showAlert("And how would you like this to be possible?", Alert.AlertType.INFORMATION);
+            showAlert("You cant relaunch before having launched.", Alert.AlertType.INFORMATION);
         } else {
             UPDATE_COUNTER = 0;
             for (MovingObject currentPicker : orderPickerList)

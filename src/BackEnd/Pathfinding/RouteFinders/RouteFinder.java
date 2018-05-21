@@ -38,6 +38,10 @@ public class RouteFinder {
         this.startTime = 0;
     }
 
+    public PathFinder getPathFinder() {
+        return pathFinder;
+    }
+
     //Method that calculates the best route for the pickingList that it is given
     public FastestAndShortestRoute calculateBothRoutes(List<PickingPoint> pickingList) throws RouteNotPossibleException {
         this.startTime = amountPickersInGraph * WAIT_TIME_BETWEEN_PICKERS;

@@ -9,12 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/*TODO: få lavet et nabo-system i forhold til vores varehus, som ved hvilke punkter man kan gå fra og til, da det gør vi kan være ligeglade
-  med, hvilke punkter vi ikke kan gå igennem, hvis vi bare har ende punkterne af gangene, og kan afgøre, fra hvilke punkter man kan gå til andre punkter,
-  nemmeste ville nok være at lave en liste af "right end points" og en liste af "left end points" også kan bare tjekke om varens y-koordinat stemmer overens med
-  et endepunkt, så kører vi bare igennem et punkt efter et andet, og tager dem med lavest f-værdi som er naboer til vores nuværende punkt indtil vi når slutpunktet  */
-
-
 public class Node extends Point2D {
     private static final int INFINITY = 1000000;
     private int distanceFromStart;
@@ -28,7 +22,6 @@ public class Node extends Point2D {
         super(p);
         this.nodeType = NodeType.WALKABLE;
     }
-
 
     private boolean isNeighbour(Node node) {
         if (this.getTime() + 1 == node.getTime()) {
@@ -73,7 +66,6 @@ public class Node extends Point2D {
 
     public int getTime() {
         if (nodeLayerPointer == null) {
-            //TODO: make exception
             throw new UnplacedNodeException();
         }
         return nodeLayerPointer.getTime();

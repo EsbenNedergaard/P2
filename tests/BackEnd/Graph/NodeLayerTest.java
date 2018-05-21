@@ -126,21 +126,9 @@ class NodeLayerTest {
         assertEquals(temp, testLayer1);
     }
 
-    @Test
-    void equals2() {
-        //We try to remove a node an see that they are not equal
-        nodeList.remove(0);
-
-        NodeLayer temp = new NodeLayer(nodeList, 0);
-
-        assertNotEquals(temp, testLayer1);
-    }
-
     //We test that our 2 test layers should not be equal because they have different times*/
     @Test
-    void equals3() {
+    void equals2() {
         assertNotEquals(testLayer1, testLayer2);
     }
-
-
 }

@@ -8,8 +8,6 @@ import BackEnd.Graph.SpaceTimeGrid;
 import java.util.ArrayList;
 import java.util.List;
 
-
-//TODO: måske skelne mellem WaitTime og TravelTime, og dette routeLenght op i disse 2.
 public class PickingRoute {
     private int totalPickTime;
     private List<Node> route;

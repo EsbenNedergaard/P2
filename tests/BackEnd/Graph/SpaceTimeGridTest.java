@@ -70,20 +70,10 @@ class SpaceTimeGridTest {
     }
 
     @Test
-    void getAllNodes() {
-    }
-
-    @Test
     void getMaxTime() {
         assertEquals(MAX_TIME, spaceTimeGrid.getMaxTime());
     }
 
-    @Test
-    void getBaseLayer() {
-
-    }
-
-    //TODO: make better assertEquals in the end.
     @Test
     void removeNeighbourNode() {
         //We make a pointer to (0,0), (0, 1) and (1,0) in the first layer

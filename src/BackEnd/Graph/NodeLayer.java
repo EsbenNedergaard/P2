@@ -56,33 +56,17 @@ public class NodeLayer {
         nodeList.remove(n);
     }
 
-    //TODO: overveje om der skal være noget mere som gør NodeLayer ens
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NodeLayer nodeLayer = (NodeLayer) o;
 
-        if (this.getTime() != nodeLayer.getTime()) {
-            return false;
-        }
-        if (this.getNodeList().size() != nodeLayer.getNodeList().size()) {
-            return false;
-        }
-
-        /*We check if there is a node in the layer with the same x and y coordinate for every node in our current layer*/
-        try {
-            for (Node node : this.getNodeList()) {
-                nodeLayer.getNodePointer(node.getX(), node.getY());
-            }
-        } catch (NodeDoesNotExistException e) {
-            return false;
-        }
-        return true;
+        return this.getTime() == nodeLayer.getTime();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getTime()) + Objects.hash(getNodeList());
+        return Objects.hash(getTime());
     }
 }

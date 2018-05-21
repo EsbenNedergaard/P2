@@ -55,7 +55,6 @@ public class RouteFinder {
             throw new RouteNotPossibleException("The shortest route was not created");
         }
 
-        //TODO: få lavet så SpaceTimeGrid tager en pickingRoute i stedet.
         pathFinder.getSpaceTimeGrid().removeRoute(fastestRoute.getRoute());
 
         //Here we add the initial start time between the routes

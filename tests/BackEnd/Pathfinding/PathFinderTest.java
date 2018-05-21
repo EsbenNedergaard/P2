@@ -27,7 +27,6 @@ class PathFinderTest {
     private BaseLayer baseLayer;
     private PathFinder testPathFinder;
 
-    //TODO: Få lavet tests til de nye checks af værdier og lign.
 
     @BeforeEach
     void beforeEach() {

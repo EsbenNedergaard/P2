@@ -1,11 +1,11 @@
 package WarehouseSimulation.InteractionHandler;
 
-import Exceptions.IllegalTextInputException;
+import WarehouseSimulation.Exception.IllegalTextInputException;
 import WarehouseSimulation.GraphicalObjects.Interaction.Handler.InputFieldDataHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class InputFieldDataHandlerTest {
     InputFieldDataHandler handler;

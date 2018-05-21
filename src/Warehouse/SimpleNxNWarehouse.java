@@ -4,7 +4,7 @@ import BackEnd.Geometry.Node.Node;
 import BackEnd.Geometry.PickingPoint;
 import BackEnd.Geometry.Point2D;
 import BackEnd.Graph.BaseLayer;
-import Exceptions.Warehouse.RackRowDoesNotContainProductException;
+import Warehouse.Exceptions.RackRowDoesNotContainProductException;
 import Warehouse.Racks.HorizontalRackRow;
 import Warehouse.Racks.Rack;
 import Warehouse.Racks.RackRow;

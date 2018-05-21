@@ -1,8 +1,8 @@
 package BackEnd.Graph;
 
 import BackEnd.Geometry.Node.Node;
-import Exceptions.NodeDoesNotExistException;
-import Exceptions.NodeLayerDoesNotExistException;
+import BackEnd.Exceptions.NodeDoesNotExistException;
+import BackEnd.Exceptions.NodeLayerDoesNotExistException;
 
 import java.util.ArrayList;
 import java.util.List;

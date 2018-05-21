@@ -1,7 +1,7 @@
 package Warehouse;
 
 
-import Exceptions.Warehouse.ShelfNotInRackException;
+import Warehouse.Exceptions.ShelfNotInRackException;
 import Warehouse.Racks.Rack;
 
 import java.util.List;
@@ -39,7 +39,7 @@ public class Shelf {
         int amtShelves = this.rack.getAmountOfShelvesInRack();
         List<Shelf> shelves = rack.getShelfList();
 
-        for(int i = 0; i < amtShelves; i++) {
+        for (int i = 0; i < amtShelves; i++) {
             if (this.equals(shelves.get(i))) {
                 return i;
             }

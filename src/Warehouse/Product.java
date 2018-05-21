@@ -1,9 +1,8 @@
 package Warehouse;
 
 import BackEnd.Geometry.Point2D;
-import Exceptions.Warehouse.ProductNotInShelfException;
+import Warehouse.Exceptions.ProductNotInShelfException;
 
-import java.util.List;
 import java.util.Objects;
 
 public class Product {
@@ -22,7 +21,7 @@ public class Product {
         return id;
     }
 
-    public Shelf getShelf(){
+    public Shelf getShelf() {
         return this.shelf;
     }
 
@@ -31,13 +30,13 @@ public class Product {
     }
 
     private int getShelfIndex() {
-       if(shelf == null) {
-           throw new ProductNotInShelfException();
-       }
-       return shelf.getShelfIndex();
+        if (shelf == null) {
+            throw new ProductNotInShelfException();
+        }
+        return shelf.getShelfIndex();
     }
 
-    public int getPickTime(){
+    public int getPickTime() {
         final int baseCollectingTime = 3;
         final int extraPickTimePerShelf = 1;
         return baseCollectingTime + this.getShelfIndex() * extraPickTimePerShelf;

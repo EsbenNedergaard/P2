@@ -1,7 +1,7 @@
 package Warehouse.Racks;
 
-import Warehouse.Exceptions.FullRackException;
 import BackEnd.Geometry.Point2D;
+import Warehouse.Exceptions.FullRackException;
 import Warehouse.Product;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,7 +17,7 @@ class RackTest {
 
     @BeforeEach
     void beforeEach() {
-        testRack = new Rack(2, new Point2D(1,1));
+        testRack = new Rack(2, new Point2D(1, 1));
     }
 
     @Test
@@ -36,7 +36,7 @@ class RackTest {
         testRack.addProduct(new Product(1));
         testRack.addProduct(new Product(2));
 
-        assertThrows(FullRackException.class, ()-> testRack.addProduct(new Product(3)));
+        assertThrows(FullRackException.class, () -> testRack.addProduct(new Product(3)));
         assertEquals(2, testRack.getProductList().size());
     }
 

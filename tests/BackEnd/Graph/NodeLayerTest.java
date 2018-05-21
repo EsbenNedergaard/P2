@@ -2,8 +2,8 @@ package BackEnd.Graph;
 
 import BackEnd.Geometry.Node.Node;
 import BackEnd.Geometry.Point2D;
-import Exceptions.NodeDoesNotExistException;
-import Exceptions.UnplacedNodeException;
+import BackEnd.Exceptions.NodeDoesNotExistException;
+import BackEnd.Exceptions.UnplacedNodeException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,10 +19,10 @@ class NodeLayerTest {
     private final int GRID_SIZE = 3;
 
     @BeforeEach
-    void beforeEach(){
+    void beforeEach() {
         nodeList = new ArrayList<>();
-        for(int x = 0; x < GRID_SIZE; x++){
-            for(int y = 0; y < GRID_SIZE; y++) {
+        for (int x = 0; x < GRID_SIZE; x++) {
+            for (int y = 0; y < GRID_SIZE; y++) {
                 Node node = new Node(new Point2D(x, y));
                 nodeList.add(node);
             }
@@ -36,8 +36,8 @@ class NodeLayerTest {
     //Testing that we setup our reference correctly
     @Test
     void testSetupReferences() {
-        Node temp = new Node(new Point2D(1,1));
-        assertThrows(UnplacedNodeException.class, ()-> temp.getTime());
+        Node temp = new Node(new Point2D(1, 1));
+        assertThrows(UnplacedNodeException.class, () -> temp.getTime());
 
         temp.setNodeLayer(testLayer1);
         assertEquals(0, temp.getTime());
@@ -72,7 +72,7 @@ class NodeLayerTest {
     //Testing that we cant get a pointer to a node outside layer
     @Test
     void getNodePointer4() {
-        assertThrows(NodeDoesNotExistException.class, ()-> testLayer1.getNodePointer(GRID_SIZE+1, GRID_SIZE+1));
+        assertThrows(NodeDoesNotExistException.class, () -> testLayer1.getNodePointer(GRID_SIZE + 1, GRID_SIZE + 1));
     }
 
 
@@ -83,11 +83,11 @@ class NodeLayerTest {
 
         List<Node> expectedNeighbours = new ArrayList<>();
 
-        expectedNeighbours.add(testLayer2.getNodePointer(0,1));
-        expectedNeighbours.add(testLayer2.getNodePointer(1,0));
-        expectedNeighbours.add(testLayer2.getNodePointer(1,1));
-        expectedNeighbours.add(testLayer2.getNodePointer(1,2));
-        expectedNeighbours.add(testLayer2.getNodePointer(2,1));
+        expectedNeighbours.add(testLayer2.getNodePointer(0, 1));
+        expectedNeighbours.add(testLayer2.getNodePointer(1, 0));
+        expectedNeighbours.add(testLayer2.getNodePointer(1, 1));
+        expectedNeighbours.add(testLayer2.getNodePointer(1, 2));
+        expectedNeighbours.add(testLayer2.getNodePointer(2, 1));
 
         Node tempNodePointer = testLayer1.getNodePointer(1, 1);
         assertEquals(expectedNeighbours, tempNodePointer.getNeighbourNodes());
@@ -99,8 +99,8 @@ class NodeLayerTest {
     void setAllNeighbourNodesForLayer2() {
         testLayer2.setAllNeighbourNodesForLayer(testLayer1);
 
-        Node tempNodePointer = testLayer2.getNodePointer(0,0);
-        assertEquals(0 , tempNodePointer.getNeighbourNodes().size());
+        Node tempNodePointer = testLayer2.getNodePointer(0, 0);
+        assertEquals(0, tempNodePointer.getNeighbourNodes().size());
     }
 
     @Test
@@ -110,7 +110,7 @@ class NodeLayerTest {
 
     @Test
     void getNodeList() {
-        for(int i = 0; i < nodeList.size(); i++) {
+        for (int i = 0; i < nodeList.size(); i++) {
             assertEquals(nodeList.get(i).getX(), testLayer1.getNodeList().get(i).getX());
             assertEquals(nodeList.get(i).getY(), testLayer1.getNodeList().get(i).getY());
         }
@@ -141,7 +141,6 @@ class NodeLayerTest {
     void equals3() {
         assertNotEquals(testLayer1, testLayer2);
     }
-
 
 
 }

@@ -2,22 +2,19 @@ package WarehouseSimulation;
 
 import BackEnd.Geometry.PickingPoint;
 import BackEnd.Geometry.Point2D;
-import BackEnd.Pathfinding.FastestAndShortestRoute;
-import BackEnd.Pathfinding.RouteFinders.RouteFinder;
 import BackEnd.Graph.SpaceTimeGrid;
+import BackEnd.Pathfinding.FastestAndShortestRoute;
 import BackEnd.Pathfinding.PathFinders.PathFinder;
 import BackEnd.Pathfinding.PickingRoute;
-import Exceptions.IllegalTextInputException;
+import BackEnd.Pathfinding.RouteFinders.RouteFinder;
+import WarehouseSimulation.Exception.IllegalTextInputException;
 import Warehouse.Warehouse;
 import WarehouseSimulation.GraphicalObjects.Colors.PickerColors;
-import WarehouseSimulation.GraphicalObjects.Interaction.Handler.RandomProducts;
-import WarehouseSimulation.GraphicalObjects.Interaction.TableView.TableFactoryData;
 import WarehouseSimulation.GraphicalObjects.Interaction.Handler.InputFieldDataHandler;
-
-import static WarehouseSimulation.GraphicalObjects.Interaction.ButtonType.*;
-
+import WarehouseSimulation.GraphicalObjects.Interaction.Handler.RandomProducts;
 import WarehouseSimulation.GraphicalObjects.Interaction.InteractionGraphics;
 import WarehouseSimulation.GraphicalObjects.Interaction.TableView.Table;
+import WarehouseSimulation.GraphicalObjects.Interaction.TableView.TableFactoryData;
 import WarehouseSimulation.GraphicalObjects.OrderPicker.MovingObject;
 import WarehouseSimulation.GraphicalObjects.OrderPicker.OrderPicker;
 import WarehouseSimulation.GraphicalObjects.OrderPicker.ShadowPicker;
@@ -30,11 +27,14 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static WarehouseSimulation.GraphicalObjects.Interaction.ButtonType.*;
 
 public class WarehouseSimulation {
     private Warehouse warehouse;
@@ -104,20 +104,20 @@ public class WarehouseSimulation {
 
     private void setEnterToCallAddProductIDs() {
         interactions.getInputField().setOnKeyPressed(e -> {
-            if(e.getCode() == KeyCode.ENTER) this.actionsForAddFastestRoute();
+            if (e.getCode() == KeyCode.ENTER) this.actionsForAddFastestRoute();
         });
     }
 
     private void actionsForAddBothRoutes() {
         TextField inputField = interactions.getInputField();
 
-        if(alertIfInputFieldEmpty(inputField))
+        if (alertIfInputFieldEmpty(inputField))
             return;
 
         textHandler = new InputFieldDataHandler();
         List<Integer> tempProductIDList = getProductIDList(inputField.getText());
 
-        if(tempProductIDList != null) {
+        if (tempProductIDList != null) {
             FastestAndShortestRoute fastAndShortestRoute = getBothRoutesFromIDList(tempProductIDList);
             setupPickers(fastAndShortestRoute.getFastestRoute(), fastAndShortestRoute.getShortestRoute());
         } else {
@@ -128,13 +128,13 @@ public class WarehouseSimulation {
 
     private void actionsForAddFastestRoute() {
         TextField inputField = interactions.getInputField();
-        if(alertIfInputFieldEmpty(inputField))
+        if (alertIfInputFieldEmpty(inputField))
             return;
 
         textHandler = new InputFieldDataHandler();
         List<Integer> tempProductIDList = getProductIDList(inputField.getText());
 
-        if(tempProductIDList != null) {
+        if (tempProductIDList != null) {
             PickingRoute fastestRoute = getFastestRouteFromIDList(tempProductIDList);
             setupPicker(fastestRoute);
         } else {
@@ -153,7 +153,7 @@ public class WarehouseSimulation {
     }
 
     private boolean alertIfInputFieldEmpty(TextField inputField) {
-        if(inputField.getText().isEmpty()) {
+        if (inputField.getText().isEmpty()) {
             showAlert("The text field was empty", Alert.AlertType.WARNING);
             return true;
         }
@@ -191,14 +191,14 @@ public class WarehouseSimulation {
         );
     }
 
-    private void addPicker(MovingObject ... picker) {
+    private void addPicker(MovingObject... picker) {
         orderPickerList.addAll(Arrays.asList(picker));
-        for(MovingObject currentPicker : picker)
+        for (MovingObject currentPicker : picker)
             orderPickerGroup.getChildren().add((Node) currentPicker);
     }
 
     private void scaleSimulationSpeed(int scaleFactor) {
-        for(MovingObject currentOrderPicker : orderPickerList) {
+        for (MovingObject currentOrderPicker : orderPickerList) {
             currentOrderPicker.setScaleSpeed(scaleFactor);
         }
     }
@@ -209,9 +209,9 @@ public class WarehouseSimulation {
         inputField.clear();
         RandomProducts rand = new RandomProducts();
         List<String> randomProductIDList = rand.nextProductIDList(5, warehouse.getAmountOfProducts());
-        for(int i = 0; i < randomProductIDList.size(); i++) {
+        for (int i = 0; i < randomProductIDList.size(); i++) {
             String currentProductID = randomProductIDList.get(i);
-            if(i != randomProductIDList.size() - 1)
+            if (i != randomProductIDList.size() - 1)
                 inputField.setText(inputField.getText() + currentProductID + ", ");
             else
                 inputField.setText(inputField.getText() + currentProductID);
@@ -220,7 +220,7 @@ public class WarehouseSimulation {
     }
 
     private void reLaunchOptions() {
-        if(UPDATE_COUNTER == 0) {
+        if (UPDATE_COUNTER == 0) {
             showAlert("You cant relaunch before having launched.", Alert.AlertType.INFORMATION);
         } else {
             UPDATE_COUNTER = 0;
@@ -239,7 +239,7 @@ public class WarehouseSimulation {
         return routeFinder.calculateFastestRoute(pickPointList);
     }
 
-    private void addPickerToTable(PickingRoute pickingRoute, String pickerColorValue){
+    private void addPickerToTable(PickingRoute pickingRoute, String pickerColorValue) {
         Table table = interactions.getTableView();
         // Create a data type which fits the table view
         TableFactoryData generatedProductIDs = new TableFactoryData(
@@ -287,13 +287,15 @@ public class WarehouseSimulation {
     private void setupProgramTimer() {
         programTimer = new AnimationTimer() {
             @Override
-            public void handle(long now) { onUpdate(); }
+            public void handle(long now) {
+                onUpdate();
+            }
         };
     }
 
     private void onUpdate() {
         UPDATE_COUNTER++;
-        for(MovingObject picker : orderPickerList)
-            if(picker.move(UPDATE_COUNTER));
+        for (MovingObject picker : orderPickerList)
+            if (picker.move(UPDATE_COUNTER)) ;
     }
 }

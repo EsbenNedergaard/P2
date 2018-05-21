@@ -1,4 +1,4 @@
-package Exceptions;
+package BackEnd.Exceptions;
 
 public class UnplacedNodeException extends RuntimeException {
     private String errorMsg;

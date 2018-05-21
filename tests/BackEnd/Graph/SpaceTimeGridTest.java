@@ -2,8 +2,8 @@ package BackEnd.Graph;
 
 import BackEnd.Geometry.Node.Node;
 import BackEnd.Geometry.Point2D;
-import Exceptions.NodeDoesNotExistException;
-import Exceptions.NodeLayerDoesNotExistException;
+import BackEnd.Exceptions.NodeDoesNotExistException;
+import BackEnd.Exceptions.NodeLayerDoesNotExistException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -33,8 +33,8 @@ class SpaceTimeGridTest {
 
     //We check that they actually point at the same object
     @Test
-    void getNodePointer1(){
-        Node tempNodePointer = spaceTimeGrid.getNodePointer(0, 0,0);
+    void getNodePointer1() {
+        Node tempNodePointer = spaceTimeGrid.getNodePointer(0, 0, 0);
 
         assertTrue(tempNodePointer == spaceTimeGrid.getNodeLayerList().get(0).getNodeList().get(0));
     }
@@ -60,15 +60,15 @@ class SpaceTimeGridTest {
     //Testing that we cant get a pointer to a node outside grid
     @Test
     void getNodePointer4() {
-        assertThrows(NodeDoesNotExistException.class, ()-> spaceTimeGrid.getNodePointer(GRID_SIZE+1, GRID_SIZE+1, 0));
+        assertThrows(NodeDoesNotExistException.class, () -> spaceTimeGrid.getNodePointer(GRID_SIZE + 1, GRID_SIZE + 1, 0));
     }
 
     //Testing with a too high time
     @Test
     void getNodePointer5() {
-        assertThrows(NodeLayerDoesNotExistException.class, ()-> spaceTimeGrid.getNodePointer(1, 1, MAX_TIME+1));
+        assertThrows(NodeLayerDoesNotExistException.class, () -> spaceTimeGrid.getNodePointer(1, 1, MAX_TIME + 1));
     }
-     
+
     @Test
     void getAllNodes() {
     }
@@ -87,16 +87,16 @@ class SpaceTimeGridTest {
     @Test
     void removeNeighbourNode() {
         //We make a pointer to (0,0), (0, 1) and (1,0) in the first layer
-        Node temp1 = spaceTimeGrid.getNodePointer(0,0,0);
-        Node temp2 = spaceTimeGrid.getNodePointer(0,1,0);
-        Node temp3 = spaceTimeGrid.getNodePointer(1,0,0);
+        Node temp1 = spaceTimeGrid.getNodePointer(0, 0, 0);
+        Node temp2 = spaceTimeGrid.getNodePointer(0, 1, 0);
+        Node temp3 = spaceTimeGrid.getNodePointer(1, 0, 0);
 
         //We make a pointer to (0,0) in the second layer
-        Node nodeToRemove = spaceTimeGrid.getNodePointer(0,0,1);
+        Node nodeToRemove = spaceTimeGrid.getNodePointer(0, 0, 1);
 
-        assertEquals(3,  temp1.getNeighbourNodes().size());
-        assertEquals(4,  temp2.getNeighbourNodes().size());
-        assertEquals(4,  temp3.getNeighbourNodes().size());
+        assertEquals(3, temp1.getNeighbourNodes().size());
+        assertEquals(4, temp2.getNeighbourNodes().size());
+        assertEquals(4, temp3.getNeighbourNodes().size());
 
         spaceTimeGrid.removeNodeFromNeighbourLists(nodeToRemove);
         assertEquals(2, temp1.getNeighbourNodes().size());
@@ -111,9 +111,9 @@ class SpaceTimeGridTest {
         NodeLayer layer2 = new NodeLayer(spaceTimeGrid.getNodeLayerList().get(2).getNodeList(), 2);
 
         List<Node> route = new ArrayList<>();
-        route.add(spaceTimeGrid.getNodePointer(0,0,0));
-        route.add(spaceTimeGrid.getNodePointer(0,1,1));
-        route.add(spaceTimeGrid.getNodePointer(0,2,2));
+        route.add(spaceTimeGrid.getNodePointer(0, 0, 0));
+        route.add(spaceTimeGrid.getNodePointer(0, 1, 1));
+        route.add(spaceTimeGrid.getNodePointer(0, 2, 2));
         spaceTimeGrid.removeRoute(route);
 
         assertEquals(layer0, spaceTimeGrid.getNodeLayerList().get(0));

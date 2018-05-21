@@ -4,9 +4,6 @@ import BackEnd.Graph.SpaceTimeGrid;
 import BackEnd.Pathfinding.FastestAndShortestRoute;
 import BackEnd.Pathfinding.PathFinders.PathFinder;
 import BackEnd.Pathfinding.RouteFinders.RouteFinder;
-import Exceptions.NodeLayerDoesNotExistException;
-import Exceptions.PickerIsTrappedException;
-import Exceptions.PathNotPossibleException;
 import Warehouse.Dexion;
 import Warehouse.Warehouse;
 import WarehouseSimulation.GraphicalObjects.Interaction.Handler.RandomProducts;
@@ -20,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 class CompareShortestToFastestAlgorithm {
-    private final int NUMBER_OF_EXAMPLES = 1;
+    private final int NUMBER_OF_EXAMPLES = 0;
     private final int MAX_PRODUCTS_TO_PICK = 5;
     private final int TOTAL_PRODUCT_IDS = 2176;
     private Warehouse warehouse = new Dexion();
@@ -123,7 +120,7 @@ class CompareShortestToFastestAlgorithm {
                         pathsCalculated += aStarCalculations(randomIDs.size());
 
                         //Write to file in the following format "FastestRouteLength     ShortestRouteLength     (ID list)"
-                        writer.write(bothRoutes.getFastestRoute().getTravelTime() + "\t" + bothRoutes.getShortestRoute().getTravelTime() + "\t" + randomIDs.size() + "\t" + (j+1));
+                        writer.write(bothRoutes.getFastestRoute().getTravelTime() + "\t" + bothRoutes.getShortestRoute().getTravelTime() + "\t" + randomIDs.size() + "\t" + (j + 1));
                         writer.newLine();
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
@@ -142,11 +139,16 @@ class CompareShortestToFastestAlgorithm {
 
     private int aStarCalculations(int numberOfProducts) {
         switch (numberOfProducts) {
-            case 1: return 2;
-            case 2: return 6;
-            case 3: return 21;
-            case 4: return 88;
-            default: return 445;
+            case 1:
+                return 2;
+            case 2:
+                return 6;
+            case 3:
+                return 21;
+            case 4:
+                return 88;
+            default:
+                return 445;
         }
     }
 

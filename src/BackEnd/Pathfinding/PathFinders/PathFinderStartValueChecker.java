@@ -1,8 +1,8 @@
 package BackEnd.Pathfinding.PathFinders;
 
 import BackEnd.Geometry.Node.Node;
-import Exceptions.NodeLayerDoesNotExistException;
-import Exceptions.PathNotPossibleException;
+import BackEnd.Exceptions.NodeLayerDoesNotExistException;
+import BackEnd.Exceptions.PathNotPossibleException;
 
 public class PathFinderStartValueChecker {
     static public void checkValues(PathFinder pathFinder) {

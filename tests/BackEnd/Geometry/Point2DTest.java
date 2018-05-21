@@ -4,7 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static Warehouse.GUIWarehouse.TILE_SIZE;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class Point2DTest {
     private Point2D point1;
@@ -80,12 +81,12 @@ class Point2DTest {
 
     @Test
     void equals01() {
-        assertEquals(new Point2D(1,1), point1);
+        assertEquals(new Point2D(1, 1), point1);
     }
 
     @Test
     void equals02() {
-        assertEquals(new Point2D(7,5), point2);
+        assertEquals(new Point2D(7, 5), point2);
     }
 
     @Test
@@ -99,7 +100,7 @@ class Point2DTest {
     }
 
     @Test
-    void copyConstructor(){
+    void copyConstructor() {
         Point2D temp = new Point2D(point1);
         assertEquals(point1, temp);
     }

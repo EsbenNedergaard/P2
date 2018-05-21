@@ -15,7 +15,7 @@ public class RandomProducts {
     public List<String> nextProductIDList(int maxIDs, int maxProducts) {
         List<String> randomProductIDList = new ArrayList<>();
         int amount = getRandomAmount(maxIDs);
-        for(int i = 0; i < amount; i++)
+        for (int i = 0; i < amount; i++)
             randomProductIDList.add(getRandomString(maxProducts));
         return randomProductIDList;
     }
@@ -32,7 +32,6 @@ public class RandomProducts {
     private String parseToString(int number) {
         return String.valueOf(number);
     }
-
 
 
 }

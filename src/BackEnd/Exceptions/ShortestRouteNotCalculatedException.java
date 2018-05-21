@@ -1,6 +1,6 @@
-package Exceptions;
+package BackEnd.Exceptions;
 
-public class ShortestRouteNotCalculatedException extends RuntimeException{
+public class ShortestRouteNotCalculatedException extends RuntimeException {
     private String errorMsg;
 
     public ShortestRouteNotCalculatedException(String errorMsg) {

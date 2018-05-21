@@ -8,7 +8,7 @@ import Warehouse.Warehouse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TrueDistanceTest {
     private SpaceTimeGrid grid;
@@ -27,14 +27,14 @@ class TrueDistanceTest {
     }
 
     private void checkForAllLayers(int x, int y, int expectedDistance) {
-        for(int i = 0; i < maxTime; i++) {
+        for (int i = 0; i < maxTime; i++) {
             assertEquals(expectedDistance, grid.getNodePointer(x, y, i).getDistanceToEnd());
         }
     }
 
     @Test
     void findDistanceToEndForPoint00() {
-        checkForAllLayers(0, 0,5);
+        checkForAllLayers(0, 0, 5);
     }
 
     @Test

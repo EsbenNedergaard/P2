@@ -1,7 +1,7 @@
 package Warehouse.Racks;
 
-import Warehouse.Exceptions.FullRackException;
 import BackEnd.Geometry.Point2D;
+import Warehouse.Exceptions.FullRackException;
 import Warehouse.Exceptions.FullRackRowException;
 import Warehouse.Product;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,11 +25,11 @@ class HorizontalRackRowTest {
     //TODO: Flyttes lavning af produkter herop og kalde dem p1, p2 osv. samt lave vores getters om til package private, da de ikke skal bruges andre steder
     @BeforeEach
     void beforeEach() {
-        Point2D startPoint = new Point2D(1,1);
-        testRow = new HorizontalRackRow(startPoint, 2,2);
+        Point2D startPoint = new Point2D(1, 1);
+        testRow = new HorizontalRackRow(startPoint, 2, 2);
 
-        rack0 = new Rack(2, new Point2D(1,1));
-        rack1 = new Rack(2, new Point2D(2,1));
+        rack0 = new Rack(2, new Point2D(1, 1));
+        rack1 = new Rack(2, new Point2D(2, 1));
 
         product1 = new Product(1);
         product2 = new Product(2);
@@ -98,7 +98,7 @@ class HorizontalRackRowTest {
         testRow.addProduct(product3);
         testRow.addProduct(product4);
 
-        assertThrows(FullRackRowException.class, ()-> testRow.addProduct(product5));
+        assertThrows(FullRackRowException.class, () -> testRow.addProduct(product5));
     }
 
     @Test
@@ -116,7 +116,7 @@ class HorizontalRackRowTest {
         testRow.addProductToRack(product1, 1);
         testRow.addProductToRack(product2, 1);
 
-        assertThrows(FullRackException.class, ()-> testRow.addProductToRack(product3, 1));
+        assertThrows(FullRackException.class, () -> testRow.addProductToRack(product3, 1));
     }
 
 

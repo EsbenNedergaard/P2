@@ -9,7 +9,8 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class BaseLayerTest {
 
@@ -58,7 +59,7 @@ class BaseLayerTest {
         for (int x = 0; x < 36; x++) {
             for (int y = 0; y < 12; y++) {
                 Node node = new Node(new Point2D(x, y));
-                if(x == 20 && y == 10)
+                if (x == 20 && y == 10)
                     node.setNodeType(NodeType.OBSTACLE);
                 nodeListTest.add(node);
             }

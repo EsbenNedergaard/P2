@@ -17,28 +17,27 @@ public class TempRoutePrinter {
 
     public void printRoute(int gridLength, int gridHeight) {
         String[][] graphic = new String[gridLength][gridHeight];
-        for(int x = 0; x < gridLength; x++) {
+        for (int x = 0; x < gridLength; x++) {
             for (int y = 0; y < gridHeight; y++) {
                 graphic[x][y] = "o";
             }
         }
 
-        for(int i = 0; i < route.size(); i++) {
+        for (int i = 0; i < route.size(); i++) {
             Node n = route.get(i);
-            if(!(graphic[n.getX()][n.getY()].equals("o"))) {
+            if (!(graphic[n.getX()][n.getY()].equals("o"))) {
                 int temp = Integer.parseInt(graphic[n.getX()][n.getY()]);
                 temp++;
                 graphic[n.getX()][n.getY()] = "" + temp;
-            }
-            else {
+            } else {
                 graphic[n.getX()][n.getY()] = "1";
             }
         }
-        for(Node n : baseLayer.getStationaryObstacles()) {
+        for (Node n : baseLayer.getStationaryObstacles()) {
             graphic[n.getX()][n.getY()] = "X";
         }
 
-        for(int y = 0; y < gridHeight; y++) {
+        for (int y = 0; y < gridHeight; y++) {
             for (int x = 0; x < gridLength; x++) {
                 System.out.print(graphic[x][y] + " ");
             }

@@ -1,9 +1,9 @@
-package Exceptions.Warehouse;
+package Warehouse.Exceptions;
 
 public class ShelfNotInRackException extends RuntimeException {
     private String errorMsg;
 
-    public  ShelfNotInRackException(String errorMsg) {
+    public ShelfNotInRackException(String errorMsg) {
         this.errorMsg = errorMsg;
     }
 

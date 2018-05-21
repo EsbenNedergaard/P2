@@ -1,13 +1,13 @@
-package Exceptions;
+package BackEnd.Exceptions;
 
-public class PickerIsTrappedException extends RuntimeException {
+public class RouteNotPossibleException extends RuntimeException {
     private String errorMsg;
 
-    public PickerIsTrappedException(String errorMsg) {
+    public RouteNotPossibleException(String errorMsg) {
         this.errorMsg = errorMsg;
     }
 
-    public PickerIsTrappedException() {
+    public RouteNotPossibleException() {
         this.errorMsg = "The route was not possible to create";
     }
 

@@ -1,4 +1,4 @@
-package Exceptions.Warehouse;
+package Warehouse.Exceptions;
 
 public class IllegalProductPositionException extends RuntimeException {
     private String errorMsg;

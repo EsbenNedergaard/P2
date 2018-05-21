@@ -1,7 +1,7 @@
 package BackEnd.Graph;
 
 import BackEnd.Geometry.Node.Node;
-import Exceptions.NodeDoesNotExistException;
+import BackEnd.Exceptions.NodeDoesNotExistException;
 
 import java.util.ArrayList;
 import java.util.List;

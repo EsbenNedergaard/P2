@@ -5,7 +5,8 @@ import Warehouse.Racks.Rack;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class ProductTest {
     private Product testProduct;
@@ -18,7 +19,7 @@ class ProductTest {
         testProduct = new Product(1);
         product1 = new Product(1);
         product2 = new Product(2);
-        rack = new Rack(2, new Point2D(1,1));
+        rack = new Rack(2, new Point2D(1, 1));
     }
 
     @Test

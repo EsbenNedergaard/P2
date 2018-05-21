@@ -1,4 +1,4 @@
-package Exceptions;
+package WarehouseSimulation.Exception;
 
 public class IllegalMoveSpeedArgument extends RuntimeException {
     private String errorMsg;

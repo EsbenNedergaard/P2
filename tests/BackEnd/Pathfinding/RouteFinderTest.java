@@ -21,7 +21,7 @@ class RouteFinderTest {
     private PickingPoint pickPoint2;
 
     @BeforeEach
-    void beforeEach(){
+    void beforeEach() {
         int MAX_TIME = 100;
         Warehouse warehouse = new SimpleNxNWarehouse(5);
         SpaceTimeGrid grid = new SpaceTimeGrid(warehouse.getBaseLayer(), MAX_TIME);
@@ -30,7 +30,7 @@ class RouteFinderTest {
         this.createPickingPoints();
     }
 
-    private void createPickingPoints(){
+    private void createPickingPoints() {
         //LAV EN RACK
         Rack rack = new Rack(2, new Point2D(-1, -1));
         Product product1 = new Product(1);
@@ -38,10 +38,9 @@ class RouteFinderTest {
         rack.addProduct(product1);
         rack.addProduct(product2);
 
-        pickPoint1 = new PickingPoint(new Point2D(3,0), product1);
-        pickPoint2 = new PickingPoint(new Point2D(3,2), product2);
+        pickPoint1 = new PickingPoint(new Point2D(3, 0), product1);
+        pickPoint2 = new PickingPoint(new Point2D(3, 2), product2);
     }
-
 
 
     //TODO: få lavet disse tests til routeFinder

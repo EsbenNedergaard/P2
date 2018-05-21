@@ -1,17 +1,16 @@
 package BackEnd.Geometry;
 
-import static BackEnd.Geometry.Node.NodeType.WALKABLE;
-import static org.junit.jupiter.api.Assertions.*;
-
 import BackEnd.Geometry.Node.Node;
 import BackEnd.Graph.NodeLayer;
-import Exceptions.UnplacedNodeException;
+import BackEnd.Exceptions.UnplacedNodeException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-
 import java.util.ArrayList;
 import java.util.List;
+
+import static BackEnd.Geometry.Node.NodeType.WALKABLE;
+import static org.junit.jupiter.api.Assertions.*;
 
 class NodeTest {
 
@@ -19,14 +18,14 @@ class NodeTest {
     Node node2;
 
     @BeforeEach
-    void setupObjects(){
+    void setupObjects() {
         node1 = new Node(new Point2D(1, 1));
         node2 = new Node(node1);
     }
 
     @Test
-    void testSetter_setTimeLayer(){
-        Node nodeToTest1 = new Node(new Point2D(1,1));
+    void testSetter_setTimeLayer() {
+        Node nodeToTest1 = new Node(new Point2D(1, 1));
         Node nodeToTest2 = new Node(new Point2D(2, 2));
 
 
@@ -51,13 +50,13 @@ class NodeTest {
     }
 
     @Test
-    void testEquality(){
-        Node nodeToTest1 = new Node(new Point2D(1,1));
+    void testEquality() {
+        Node nodeToTest1 = new Node(new Point2D(1, 1));
         Node nodeToTest2 = new Node(new Point2D(2, 2));
 
 
         List<Node> nodeList = new ArrayList<>();
-        NodeLayer nodeLayer = new NodeLayer(nodeList,0);
+        NodeLayer nodeLayer = new NodeLayer(nodeList, 0);
 
 
         nodeToTest1.setNodeLayer(nodeLayer);
@@ -75,9 +74,9 @@ class NodeTest {
     }
 
     @Test
-    void testGetter_getTime(){
-        assertThrows(UnplacedNodeException.class, ()-> node1.getTime());
-        assertThrows(UnplacedNodeException.class, ()-> node2.getTime());
+    void testGetter_getTime() {
+        assertThrows(UnplacedNodeException.class, () -> node1.getTime());
+        assertThrows(UnplacedNodeException.class, () -> node2.getTime());
 
         Node node = new Node(new Point2D(3, 3));
 
@@ -91,12 +90,12 @@ class NodeTest {
     }
 
     @Test
-    void testMethod_isNeighbour(){
+    void testMethod_isNeighbour() {
 
         List<Node> nodeList = new ArrayList<>();
 
-        for(int x = 0; x < 30; x++){
-            for(int y = 0; y < 30; y++) {
+        for (int x = 0; x < 30; x++) {
+            for (int y = 0; y < 30; y++) {
                 Node node = new Node(new Point2D(x, y));
                 nodeList.add(node);
             }
@@ -119,8 +118,8 @@ class NodeTest {
     }
 
     @Test
-    void testMethod_setDistanceToEnd(){
-        Node endNode = new Node(new Point2D(3,3));
+    void testMethod_setDistanceToEnd() {
+        Node endNode = new Node(new Point2D(3, 3));
         node1.setDistanceToEnd(4);
 
         // Expect the sum of the difference between the two point coordinates: (1,1), (3,3), which is 2 + 2 = 4
@@ -129,7 +128,7 @@ class NodeTest {
     }
 
     @Test
-    void testConstructor(){
+    void testConstructor() {
         assertEquals(WALKABLE, node1.getNodeType());
     }
 }

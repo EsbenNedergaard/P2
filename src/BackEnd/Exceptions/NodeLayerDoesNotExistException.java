@@ -1,4 +1,4 @@
-package Exceptions;
+package BackEnd.Exceptions;
 
 public class NodeLayerDoesNotExistException extends RuntimeException {
     private String errorMsg;

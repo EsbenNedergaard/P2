@@ -2,7 +2,7 @@ package Warehouse.Racks;
 
 import BackEnd.Geometry.Node.Node;
 import BackEnd.Geometry.Point2D;
-import Exceptions.Warehouse.RackRowDoesNotContainProductException;
+import Warehouse.Exceptions.RackRowDoesNotContainProductException;
 import Warehouse.Exceptions.FullRackException;
 import Warehouse.Exceptions.FullRackRowException;
 import Warehouse.Product;

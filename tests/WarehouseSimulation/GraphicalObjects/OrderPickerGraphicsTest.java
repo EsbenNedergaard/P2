@@ -4,14 +4,16 @@ import BackEnd.Geometry.Node.Node;
 import BackEnd.Geometry.Point2D;
 import BackEnd.Graph.SpaceTimeGrid;
 import BackEnd.Pathfinding.PathFinders.PathFinder;
-import Warehouse.Warehouse;
 import Warehouse.Dexion;
-import WarehouseSimulation.GraphicalObjects.OrderPicker.*;
-import org.junit.jupiter.api.*;
+import Warehouse.Warehouse;
+import WarehouseSimulation.GraphicalObjects.OrderPicker.MovingObject;
+import WarehouseSimulation.GraphicalObjects.OrderPicker.OrderPicker;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class OrderPickerGraphicsTest {
     private PathFinder pathFinder;
@@ -29,7 +31,7 @@ class OrderPickerGraphicsTest {
 
     @Test
     void testPickerStartsAtExpectedPosition() {
-        startPoint = new Point2D(0,0);
+        startPoint = new Point2D(0, 0);
         endPoint = new Point2D(14, 1);
         List<Node> shortestRoute = pathFinder.findFastestPath(startPoint, endPoint, 0, PICK_TIME).getRoute();
         orderPicker = new OrderPicker(shortestRoute, "black");
@@ -39,13 +41,13 @@ class OrderPickerGraphicsTest {
 
     @Test
     void testPickerEndsAtExpectedPosition() {
-        startPoint = new Point2D(0,0);
+        startPoint = new Point2D(0, 0);
         endPoint = new Point2D(14, 1);
         List<Node> shortestRoute = pathFinder.findFastestPath(startPoint, endPoint, 0, PICK_TIME).getRoute();
         orderPicker = new OrderPicker(shortestRoute, "black");
 
         int COUNTER = 0;
-        while(orderPicker.move(COUNTER++));  // Move picker towards end of route
+        while (orderPicker.move(COUNTER++)) ;  // Move picker towards end of route
 
         assertEquals(endPoint, orderPicker.getCurrentPosition());
     }

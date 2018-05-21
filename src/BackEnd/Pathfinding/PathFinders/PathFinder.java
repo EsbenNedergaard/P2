@@ -7,9 +7,9 @@ import BackEnd.Graph.SpaceTimeGrid;
 import BackEnd.Pathfinding.Heuristics.Heuristic;
 import BackEnd.Pathfinding.Heuristics.TrueDistance;
 import BackEnd.Pathfinding.PickingRoute;
-import Exceptions.NodeLayerDoesNotExistException;
-import Exceptions.PickerIsTrappedException;
-import Exceptions.PathNotPossibleException;
+import BackEnd.Exceptions.NodeLayerDoesNotExistException;
+import BackEnd.Exceptions.PathNotPossibleException;
+import BackEnd.Exceptions.PickerIsTrappedException;
 
 import java.util.*;
 

@@ -8,10 +8,10 @@ import BackEnd.Geometry.Point2D;
 import BackEnd.Pathfinding.FastestAndShortestRoute;
 import BackEnd.Pathfinding.PathFinders.PathFinder;
 import BackEnd.Pathfinding.PickingRoute;
-import Exceptions.BranchNotPossibleException;
-import Exceptions.PickerIsTrappedException;
-import Exceptions.PathNotPossibleException;
-import Exceptions.RouteNotPossibleException;
+import BackEnd.Exceptions.BranchNotPossibleException;
+import BackEnd.Exceptions.PathNotPossibleException;
+import BackEnd.Exceptions.PickerIsTrappedException;
+import BackEnd.Exceptions.RouteNotPossibleException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +39,7 @@ public class RouteFinder {
     }
 
     //Method that calculates the best route for the pickingList that it is given
-    public FastestAndShortestRoute calculateBothRoutes(List<PickingPoint> pickingList) throws RouteNotPossibleException{
+    public FastestAndShortestRoute calculateBothRoutes(List<PickingPoint> pickingList) throws RouteNotPossibleException {
         this.startTime = amountPickersInGraph * WAIT_TIME_BETWEEN_PICKERS;
         PickingRoute fastestRoute = new PickingRoute();
         PickingRoute shortestRoute = new PickingRoute();
@@ -49,7 +49,7 @@ public class RouteFinder {
         } catch (BranchNotPossibleException e) {
             throw new RouteNotPossibleException(e.getReasonWhyBranchNotPossible().getMessage());
         }
-        if(fastestRoute.getRoute().size() == 0) {
+        if (fastestRoute.getRoute().size() == 0) {
             throw new RouteNotPossibleException("The fastest route was not created.");
         } else if (shortestRoute.getRoute().size() == 0) {
             throw new RouteNotPossibleException("The shortest route was not created");
@@ -95,7 +95,7 @@ public class RouteFinder {
             try {
                 addFinalPathToRoute(currRoute, currPosition);
                 return currRoute;
-            } catch(PickerIsTrappedException | PathNotPossibleException e){
+            } catch (PickerIsTrappedException | PathNotPossibleException e) {
                 throw new BranchNotPossibleException(e);
             }
         }
@@ -104,7 +104,7 @@ public class RouteFinder {
             //Adds the path from current picking point to next picking point
             try {
                 addPathToRoute(newRoute, currPosition, nextPickPoint);
-            } catch(PickerIsTrappedException | PathNotPossibleException e){
+            } catch (PickerIsTrappedException | PathNotPossibleException e) {
                 throw new BranchNotPossibleException(e);
             }
 
@@ -159,7 +159,7 @@ public class RouteFinder {
     private PickingRoute calculateShortestRoute(List<PickingPoint> pickingList) {
         List<PickingPoint> pickPointOrder = getShortestPickPointOrder(pickingList);
         PickingRoute shortestRoute = new PickingRoute();
-        for(PickingPoint pickingPoint : pickPointOrder) {
+        for (PickingPoint pickingPoint : pickPointOrder) {
             shortestRoute.addPickPoint(pickingPoint);
         }
 
@@ -190,7 +190,7 @@ public class RouteFinder {
         Point2D currPosition = routeStartPoint;
         PickingRoute shortestRoute = new PickingRoute();
 
-        while(!pickingList.isEmpty()) {
+        while (!pickingList.isEmpty()) {
             PickingPoint nextPickPoint = pickingList.remove(0);
 
             addPathToRoute(shortestRoute, currPosition, nextPickPoint);

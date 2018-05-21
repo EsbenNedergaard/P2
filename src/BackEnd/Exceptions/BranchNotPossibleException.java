@@ -1,4 +1,4 @@
-package Exceptions;
+package BackEnd.Exceptions;
 
 public class BranchNotPossibleException extends Exception {
     Exception reasonWhyBranchNotPossible;

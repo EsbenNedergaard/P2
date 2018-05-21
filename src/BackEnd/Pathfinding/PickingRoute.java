@@ -4,7 +4,6 @@ import BackEnd.Geometry.Node.Node;
 import BackEnd.Geometry.PickingPoint;
 import BackEnd.Geometry.Point2D;
 import BackEnd.Graph.SpaceTimeGrid;
-import Exceptions.ShortestRouteNotCalculatedException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +32,7 @@ public class PickingRoute {
         return route.size();
     }
 
-    public int getTravelTime(){
+    public int getTravelTime() {
         return this.getRouteLength() - this.getTotalPickTime();
     }
 

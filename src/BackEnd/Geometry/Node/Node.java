@@ -2,8 +2,8 @@ package BackEnd.Geometry.Node;
 
 import BackEnd.Geometry.Point2D;
 import BackEnd.Graph.NodeLayer;
-import Exceptions.IsNotValidNodeTypeException;
-import Exceptions.UnplacedNodeException;
+import BackEnd.Exceptions.IsNotValidNodeTypeException;
+import BackEnd.Exceptions.UnplacedNodeException;
 
 import java.util.ArrayList;
 import java.util.List;

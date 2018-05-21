@@ -1,4 +1,4 @@
-package Exceptions;
+package WarehouseSimulation.Exception;
 
 public class IllegalTextInputException extends RuntimeException {
     private String errorMsg;

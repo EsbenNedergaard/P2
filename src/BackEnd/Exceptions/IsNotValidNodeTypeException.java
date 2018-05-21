@@ -1,4 +1,4 @@
-package Exceptions;
+package BackEnd.Exceptions;
 
 public class IsNotValidNodeTypeException extends RuntimeException {
     private String errorMsg;

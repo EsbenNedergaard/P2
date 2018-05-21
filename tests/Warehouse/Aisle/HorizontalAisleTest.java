@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class HorizontalAisleTest {
     private HorizontalAisle testAisle01;
@@ -17,7 +17,7 @@ class HorizontalAisleTest {
 
     @BeforeEach
     void setUp() {
-        testAisle01 = new HorizontalAisle(28, new Point2D(0,5));
+        testAisle01 = new HorizontalAisle(28, new Point2D(0, 5));
 
         HorizontalRackRow testFirstRackRow = new HorizontalRackRow(new Point2D(0, 4), 28, 8);
         HorizontalRackRow testSecondRackRow = new HorizontalRackRow(new Point2D(0, 6), 28, 8);

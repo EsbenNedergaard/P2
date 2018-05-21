@@ -1,6 +1,6 @@
 package WarehouseSimulation.GraphicalObjects.Interaction.Handler;
 
-import Exceptions.IllegalTextInputException;
+import WarehouseSimulation.Exception.IllegalTextInputException;
 import javafx.scene.control.Alert;
 
 import java.util.ArrayList;
@@ -69,10 +69,6 @@ public class InputFieldDataHandler {
         }
 
         return productIDString;
-    }
-
-    public List<Integer> getProductIDList() {
-        return productIDListBuffer;
     }
 
     private void showAlert(String contentText, Alert.AlertType type) {

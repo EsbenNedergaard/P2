@@ -1,8 +1,8 @@
 package BackEnd.Geometry;
 
+import BackEnd.Exceptions.UnplacedNodeException;
 import BackEnd.Geometry.Node.Node;
 import BackEnd.Graph.NodeLayer;
-import BackEnd.Exceptions.UnplacedNodeException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

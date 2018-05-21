@@ -1,13 +1,12 @@
 package BackEnd.Pathfinding;
 
+import BackEnd.Exceptions.PathNotPossibleException;
 import BackEnd.Geometry.Node.Node;
 import BackEnd.Geometry.Node.NodeType;
 import BackEnd.Geometry.Point2D;
 import BackEnd.Graph.BaseLayer;
 import BackEnd.Graph.SpaceTimeGrid;
 import BackEnd.Pathfinding.PathFinders.PathFinder;
-import BackEnd.TempRoutePrinter;
-import BackEnd.Exceptions.PathNotPossibleException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -110,33 +109,7 @@ class PathFinderTest {
         bestResultRoute.add(spaceTimeGrid.getNodePointer(9, 9, 38));
 
         // Testing to see if the route computed is the actual shortest route
-        //TODO: lave en equals i en PickingRoute
         assertEquals(bestResultRoute, testResultRoute.getRoute());
-    }
-
-    // An obstruction is added so another route will be taken
-    @Test
-    void testRemoveRoute() {
-        Node startNode = new Node(new Point2D(0, 0));
-        Node endNode = new Node(new Point2D(GRID_SIZE - 1, GRID_SIZE - 1));
-        List<Node> testNonPermanentObstruction = new ArrayList<>();
-
-        // Adds an obstruction at a specific field until time reaches a specific number
-        for (int i = 0; i < MAX_TIME / 2; i++) {
-            testNonPermanentObstruction.add(testPathFinder.getSpaceTimeGrid().getNodePointer(1, 2, i));
-        }
-        testPathFinder.removeRoute(testNonPermanentObstruction);
-
-        PickingRoute testResultRoute = new PickingRoute();
-        try {
-            testResultRoute = testPathFinder.findFastestPath(startNode, endNode, START_TIME, PICK_TIME);
-        } catch (PathNotPossibleException e) {
-            System.out.println(e.toString());
-        }
-
-        TempRoutePrinter printer = new TempRoutePrinter(testResultRoute.getRoute(), baseLayer);
-        printer.printRoute(GRID_SIZE, GRID_SIZE);
-        //TODO: make some asserts here
     }
 
     @Test

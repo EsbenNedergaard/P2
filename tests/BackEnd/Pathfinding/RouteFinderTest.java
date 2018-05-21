@@ -1,12 +1,10 @@
 package BackEnd.Pathfinding;
 
+import BackEnd.Geometry.Node.Node;
 import BackEnd.Geometry.PickingPoint;
-import BackEnd.Geometry.Point2D;
 import BackEnd.Graph.SpaceTimeGrid;
 import BackEnd.Pathfinding.PathFinders.PathFinder;
 import BackEnd.Pathfinding.RouteFinders.RouteFinder;
-import Warehouse.Product;
-import Warehouse.Racks.Rack;
 import Warehouse.SimpleNxNWarehouse;
 import Warehouse.Warehouse;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,42 +13,69 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+
 class RouteFinderTest {
     private RouteFinder testRouteFinder;
-    private PickingPoint pickPoint1;
-    private PickingPoint pickPoint2;
+    private List<PickingPoint> pickingPoints;
+    private Warehouse warehouse;
+    private SpaceTimeGrid spaceTimeGrid;
 
     @BeforeEach
     void beforeEach() {
         int MAX_TIME = 100;
-        Warehouse warehouse = new SimpleNxNWarehouse(5);
-        SpaceTimeGrid grid = new SpaceTimeGrid(warehouse.getBaseLayer(), MAX_TIME);
+        warehouse = new SimpleNxNWarehouse(5);
+        spaceTimeGrid = new SpaceTimeGrid(warehouse.getBaseLayer(), MAX_TIME);
 
-        this.testRouteFinder = new RouteFinder(new PathFinder(grid), warehouse.getRouteStartPoint(), warehouse.getRouteEndPoint());
+        this.testRouteFinder = new RouteFinder(new PathFinder(spaceTimeGrid), warehouse.getRouteStartPoint(), warehouse.getRouteEndPoint());
         this.createPickingPoints();
     }
 
     private void createPickingPoints() {
-        //LAV EN RACK
-        Rack rack = new Rack(2, new Point2D(-1, -1));
-        Product product1 = new Product(1);
-        Product product2 = new Product(2);
-        rack.addProduct(product1);
-        rack.addProduct(product2);
+        List<Integer> idList = new ArrayList<>();
+        idList.add(3);
+        idList.add(6);
 
-        pickPoint1 = new PickingPoint(new Point2D(3, 0), product1);
-        pickPoint2 = new PickingPoint(new Point2D(3, 2), product2);
+        pickingPoints = warehouse.getPickingPoints(idList);
     }
 
 
-    //TODO: få lavet disse tests til routeFinder
     @Test
     void calculateBestRoute() {
-        List<PickingPoint> pickingList = new ArrayList<>();
-        pickingList.add(pickPoint1);
-        pickingList.add(pickPoint2);
+        PickingRoute pickingRoute = testRouteFinder.calculateFastestRoute(pickingPoints);
+        List<Node> expected = new ArrayList<>();
 
+        //Walking to (3,0) which is ID 3.
+        expected.add(spaceTimeGrid.getNodePointer(0, 0, 0));
+        expected.add(spaceTimeGrid.getNodePointer(1, 0, 1));
+        expected.add(spaceTimeGrid.getNodePointer(2, 0, 2));
 
-        PickingRoute pickingRoute = testRouteFinder.calculateFastestRoute(pickingList);
+        //Picking at ID = 3
+        expected.add(spaceTimeGrid.getNodePointer(3, 0, 3));
+        expected.add(spaceTimeGrid.getNodePointer(3, 0, 4));
+        expected.add(spaceTimeGrid.getNodePointer(3, 0, 5));
+        expected.add(spaceTimeGrid.getNodePointer(3, 0, 6));
+        expected.add(spaceTimeGrid.getNodePointer(3, 0, 7));
+
+        //Walking to (3,2) which is ID 6
+        expected.add(spaceTimeGrid.getNodePointer(4, 0, 8));
+        expected.add(spaceTimeGrid.getNodePointer(4, 1, 9));
+        expected.add(spaceTimeGrid.getNodePointer(4, 2, 10));
+
+        //Picking at ID=6
+        expected.add(spaceTimeGrid.getNodePointer(3, 2, 11));
+        expected.add(spaceTimeGrid.getNodePointer(3, 2, 12));
+        expected.add(spaceTimeGrid.getNodePointer(3, 2, 13));
+        expected.add(spaceTimeGrid.getNodePointer(3, 2, 14));
+        expected.add(spaceTimeGrid.getNodePointer(3, 2, 15));
+
+        //Moving back to the starting area
+        expected.add(spaceTimeGrid.getNodePointer(2, 2, 16));
+        expected.add(spaceTimeGrid.getNodePointer(1, 2, 17));
+        expected.add(spaceTimeGrid.getNodePointer(0, 2, 18));
+        expected.add(spaceTimeGrid.getNodePointer(0, 1, 19));
+        expected.add(spaceTimeGrid.getNodePointer(0, 0, 20));
+
+        assertEquals
+
     }
 }

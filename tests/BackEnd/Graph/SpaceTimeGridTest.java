@@ -1,9 +1,9 @@
 package BackEnd.Graph;
 
-import BackEnd.Geometry.Node.Node;
-import BackEnd.Geometry.Point2D;
 import BackEnd.Exceptions.NodeDoesNotExistException;
 import BackEnd.Exceptions.NodeLayerDoesNotExistException;
+import BackEnd.Geometry.Node.Node;
+import BackEnd.Geometry.Point2D;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

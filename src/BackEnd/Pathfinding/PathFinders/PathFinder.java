@@ -1,5 +1,8 @@
 package BackEnd.Pathfinding.PathFinders;
 
+import BackEnd.Exceptions.NodeLayerDoesNotExistException;
+import BackEnd.Exceptions.PathNotPossibleException;
+import BackEnd.Exceptions.PickerIsTrappedException;
 import BackEnd.Geometry.Node.Comparators.TotalDistanceComparator;
 import BackEnd.Geometry.Node.Node;
 import BackEnd.Geometry.Point2D;
@@ -7,9 +10,6 @@ import BackEnd.Graph.SpaceTimeGrid;
 import BackEnd.Pathfinding.Heuristics.Heuristic;
 import BackEnd.Pathfinding.Heuristics.TrueDistance;
 import BackEnd.Pathfinding.PickingRoute;
-import BackEnd.Exceptions.NodeLayerDoesNotExistException;
-import BackEnd.Exceptions.PathNotPossibleException;
-import BackEnd.Exceptions.PickerIsTrappedException;
 
 import java.util.*;
 

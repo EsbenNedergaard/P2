@@ -1,5 +1,9 @@
 package BackEnd.Pathfinding.RouteFinders;
 
+import BackEnd.Exceptions.BranchNotPossibleException;
+import BackEnd.Exceptions.PathNotPossibleException;
+import BackEnd.Exceptions.PickerIsTrappedException;
+import BackEnd.Exceptions.RouteNotPossibleException;
 import BackEnd.Geometry.Node.Comparators.EndDistanceComparator;
 import BackEnd.Geometry.Node.Comparators.TotalDistanceComparator;
 import BackEnd.Geometry.Node.Node;
@@ -8,10 +12,6 @@ import BackEnd.Geometry.Point2D;
 import BackEnd.Pathfinding.FastestAndShortestRoute;
 import BackEnd.Pathfinding.PathFinders.PathFinder;
 import BackEnd.Pathfinding.PickingRoute;
-import BackEnd.Exceptions.BranchNotPossibleException;
-import BackEnd.Exceptions.PathNotPossibleException;
-import BackEnd.Exceptions.PickerIsTrappedException;
-import BackEnd.Exceptions.RouteNotPossibleException;
 
 import java.util.ArrayList;
 import java.util.List;

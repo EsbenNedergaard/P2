@@ -2,9 +2,9 @@ package Warehouse.Racks;
 
 import BackEnd.Geometry.Node.Node;
 import BackEnd.Geometry.Point2D;
-import Warehouse.Exceptions.RackRowDoesNotContainProductException;
 import Warehouse.Exceptions.FullRackException;
 import Warehouse.Exceptions.FullRackRowException;
+import Warehouse.Exceptions.RackRowDoesNotContainProductException;
 import Warehouse.Product;
 
 import java.util.ArrayList;

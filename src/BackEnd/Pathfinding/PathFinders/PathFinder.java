@@ -32,6 +32,14 @@ public class PathFinder {
         this.openSet = new PriorityQueue<>(spaceTimeGrid.getAllNodes().size(), new TotalDistanceComparator());
     }
 
+    public PathFinder(SpaceTimeGrid spaceTimeGrid, Heuristic heuristic) {
+        this.spaceTimeGrid = spaceTimeGrid;
+        this.closedSet = new ArrayList<>();
+        this.heuristic = heuristic;
+        //We set the openSet to in worst case be cable of containing all nodes
+        this.openSet = new PriorityQueue<>(spaceTimeGrid.getAllNodes().size(), new TotalDistanceComparator());
+    }
+
     public void resetSpaceTimeGrid() {
         this.spaceTimeGrid = new SpaceTimeGrid(spaceTimeGrid.getBaseLayer(), spaceTimeGrid.getMaxTime());
     }

@@ -24,74 +24,75 @@ class CompareShortestToFastestAlgorithm {
     private RandomProducts randomProducts = new RandomProducts();
     private List<Integer> randomIDs = new ArrayList<>();
     private FastestAndShortestRoute bothRoutes;
+    String basePath = "ComparisionTests\\outputFiles\\ShortVsFast\\";
 
     @Test
     void testWith1Picker() {
         final int NUMBER_OF_PICKERS = 1;
-        File file = new File("src\\outputFiles\\testExamples\\testWith1Picker.xls");
+        File file = new File(basePath + "testWith1Picker.xls");
         randomFastestRoutesToFile(NUMBER_OF_PICKERS, file);
     }
 
     @Test
     void testWith2Pickers() {
         final int NUMBER_OF_PICKERS = 2;
-        File file = new File("src\\outputFiles\\testExamples\\testWith2Pickers.xls");
+        File file = new File(basePath + "testWith2Picker.xls");
         randomFastestRoutesToFile(NUMBER_OF_PICKERS, file);
     }
 
     @Test
     void testWith3Pickers() {
         final int NUMBER_OF_PICKERS = 3;
-        File file = new File("src\\outputFiles\\testExamples\\testWith3Pickers.xls");
+        File file = new File(basePath + "testWith3Picker.xls");
         randomFastestRoutesToFile(NUMBER_OF_PICKERS, file);
     }
 
     @Test
     void testWith4Pickers() {
         final int NUMBER_OF_PICKERS = 4;
-        File file = new File("src\\outputFiles\\testExamples\\testWith4Pickers.xls");
+        File file = new File(basePath + "testWith4Picker.xls");
         randomFastestRoutesToFile(NUMBER_OF_PICKERS, file);
     }
 
     @Test
     void testWith5Pickers() {
         final int NUMBER_OF_PICKERS = 5;
-        File file = new File("src\\outputFiles\\testExamples\\testWith5Pickers.xls");
+        File file = new File(basePath + "testWith5Picker.xls");
         randomFastestRoutesToFile(NUMBER_OF_PICKERS, file);
     }
 
     @Test
     void testWith6Pickers() {
         final int NUMBER_OF_PICKERS = 6;
-        File file = new File("src\\outputFiles\\testExamples\\testWith6Pickers.xls");
+        File file = new File(basePath + "testWith6Picker.xls");
         randomFastestRoutesToFile(NUMBER_OF_PICKERS, file);
     }
 
     @Test
     void testWith7Pickers() {
         final int NUMBER_OF_PICKERS = 7;
-        File file = new File("src\\outputFiles\\testExamples\\testWith7Pickers.xls");
+        File file = new File(basePath + "testWith7Picker.xls");
         randomFastestRoutesToFile(NUMBER_OF_PICKERS, file);
     }
 
     @Test
     void testWith8Pickers() {
         final int NUMBER_OF_PICKERS = 8;
-        File file = new File("src\\outputFiles\\testExamples\\testWith8Pickers.xls");
+        File file = new File(basePath + "testWith8Picker.xls");
         randomFastestRoutesToFile(NUMBER_OF_PICKERS, file);
     }
 
     @Test
     void testWith9Pickers() {
         final int NUMBER_OF_PICKERS = 9;
-        File file = new File("src\\outputFiles\\testExamples\\testWith9Pickers.xls");
+        File file = new File(basePath + "testWith9Picker.xls");
         randomFastestRoutesToFile(NUMBER_OF_PICKERS, file);
     }
 
     @Test
     void testWith10Pickers() {
         final int NUMBER_OF_PICKERS = 10;
-        File file = new File("src\\outputFiles\\testExamples\\testWith10Pickers.xls");
+        File file = new File(basePath + "testWith10Picker.xls");
         randomFastestRoutesToFile(NUMBER_OF_PICKERS, file);
     }
 

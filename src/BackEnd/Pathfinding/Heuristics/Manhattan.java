@@ -3,7 +3,7 @@ package BackEnd.Pathfinding.Heuristics;
 import BackEnd.Geometry.Node.Node;
 import BackEnd.Graph.SpaceTimeGrid;
 
-public class Manhatten implements Heuristic {
+public class Manhattan implements Heuristic {
     @Override
     public void findDistanceToEndForAllNodes(SpaceTimeGrid spaceTimeGrid, Node endNode) {
         for (Node node : spaceTimeGrid.getAllNodes()) {

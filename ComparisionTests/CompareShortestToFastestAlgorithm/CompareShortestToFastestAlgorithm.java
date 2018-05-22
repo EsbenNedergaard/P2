@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 class CompareShortestToFastestAlgorithm {
+    private String basePath = "ComparisionTests\\outputFiles\\ShortVsFast\\";
     private final int NUMBER_OF_EXAMPLES = 0;
     private final int MAX_PRODUCTS_TO_PICK = 5;
     private final int TOTAL_PRODUCT_IDS = 2176;
@@ -24,7 +25,6 @@ class CompareShortestToFastestAlgorithm {
     private RandomProducts randomProducts = new RandomProducts();
     private List<Integer> randomIDs = new ArrayList<>();
     private FastestAndShortestRoute bothRoutes;
-    String basePath = "ComparisionTests\\outputFiles\\ShortVsFast\\";
 
     @Test
     void testWith1Picker() {
@@ -120,7 +120,7 @@ class CompareShortestToFastestAlgorithm {
                         productsVisited += randomIDs.size();
                         pathsCalculated += aStarCalculations(randomIDs.size());
 
-                        //Write to file in the following format "FastestRouteLength     ShortestRouteLength     (ID list)"
+                        //Write to file in the following format "FastestRouteLength     ShortestRouteLength     (ID list)   Picker ID"
                         writer.write(bothRoutes.getFastestRoute().getTravelTime() + "\t" + bothRoutes.getShortestRoute().getTravelTime() + "\t" + randomIDs.size() + "\t" + (j + 1));
                         writer.newLine();
                     } catch (Exception e) {

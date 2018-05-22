@@ -19,9 +19,7 @@ public class WarehouseGraphics {
         this.WIDTH_WAREHOUSE = warehouse.getWidth();
     }
 
-    // Returns a group of graphical tiles which represents the warehouse floor
     public Group getTileGroup() {
-        // Create a group to the graphical tiles
         Group tileGroup = new Group();
 
         for (int x = 0; x < LENGTH_WAREHOUSE; x++) {
@@ -34,15 +32,11 @@ public class WarehouseGraphics {
         return tileGroup;
     }
 
-    // Graphical group of rack rows
     public Group getRackRowGroup() {
-        // Create a group of graphical racks
         Group rackRowGroup = new Group();
 
         for (RackRow rackRowElement : warehouse.getRackRowList()) {
-            // Styles the rack
             RackRowGraphic graphicRack = new RackRowGraphic(rackRowElement);
-            // Puts the rack into the group
             rackRowGroup.getChildren().add(graphicRack);
         }
 

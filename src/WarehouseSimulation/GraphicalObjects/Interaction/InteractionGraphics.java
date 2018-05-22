@@ -1,19 +1,11 @@
 package WarehouseSimulation.GraphicalObjects.Interaction;
 
 import WarehouseSimulation.GraphicalObjects.Interaction.TableView.Table;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
 import java.util.HashMap;
 import java.util.Map;
-
-import static Warehouse.GUIWarehouse.SCALE;
-import static Warehouse.GUIWarehouse.TILE_SIZE;
+import static Warehouse.GUIWarehouse.*;
 import static WarehouseSimulation.GraphicalObjects.Interaction.ButtonType.*;
 
 public class InteractionGraphics {

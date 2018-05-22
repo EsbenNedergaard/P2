@@ -22,7 +22,7 @@ import java.util.List;
 
 public class CompareManhattanToTrueDistance {
     private String basePath = "ComparisionTests\\outputFiles\\Heurstics\\";
-    private final int NUMBER_OF_EXAMPLES = 50;
+    private final int NUMBER_OF_EXAMPLES = 1500;
     private final int MAX_PRODUCTS_TO_PICK = 5;
     private final int TOTAL_PRODUCT_IDS = 2176;
     private Warehouse warehouse;
@@ -40,69 +40,6 @@ public class CompareManhattanToTrueDistance {
 
         manhattanRouteFinder = new RouteFinder(manhattanPathFinder, warehouse.getRouteStartPoint(), warehouse.getRouteEndPoint());
         trueDistanceRouteFinder = new RouteFinder(trueDistancePathFinder, warehouse.getRouteStartPoint(), warehouse.getRouteEndPoint());
-    }
-
-    @Test
-    void testWith1Picker(){
-        final int NUMBER_OF_PICKERS = 1;
-        File file = new File(basePath + "testWith1Picker.xls");
-        this.runtimesForRandomRoutesToFile(file, NUMBER_OF_PICKERS);
-    }
-
-    @Test
-    void testWith2Pickers(){
-        final int NUMBER_OF_PICKERS = 2;
-        File file = new File(basePath + "testWith2Pickers.xls");
-        this.runtimesForRandomRoutesToFile(file, NUMBER_OF_PICKERS);
-    }
-
-    @Test
-    void testWith3Pickers(){
-        final int NUMBER_OF_PICKERS = 3;
-        File file = new File(basePath + "testWith3Pickers.xls");
-        this.runtimesForRandomRoutesToFile(file, NUMBER_OF_PICKERS);
-    }
-
-    @Test
-    void testWith4Pickers(){
-        final int NUMBER_OF_PICKERS = 4;
-        File file = new File(basePath + "testWith4Pickers.xls");
-        this.runtimesForRandomRoutesToFile(file, NUMBER_OF_PICKERS);
-    }
-
-    @Test
-    void testWith5Pickers(){
-        final int NUMBER_OF_PICKERS = 5;
-        File file = new File(basePath + "testWith5Pickers.xls");
-        this.runtimesForRandomRoutesToFile(file, NUMBER_OF_PICKERS);
-    }
-
-    @Test
-    void testWith6Pickers(){
-        final int NUMBER_OF_PICKERS = 6;
-        File file = new File(basePath + "testWith6Pickers.xls");
-        this.runtimesForRandomRoutesToFile(file, NUMBER_OF_PICKERS);
-    }
-
-    @Test
-    void testWith7Pickers(){
-        final int NUMBER_OF_PICKERS = 7;
-        File file = new File(basePath + "testWith7Pickers.xls");
-        this.runtimesForRandomRoutesToFile(file, NUMBER_OF_PICKERS);
-    }
-
-    @Test
-    void testWith8Pickers(){
-        final int NUMBER_OF_PICKERS = 8;
-        File file = new File(basePath + "testWith8Pickers.xls");
-        this.runtimesForRandomRoutesToFile(file, NUMBER_OF_PICKERS);
-    }
-
-    @Test
-    void testWith9Pickers(){
-        final int NUMBER_OF_PICKERS = 9;
-        File file = new File(basePath + "testWith9Pickers.xls");
-        this.runtimesForRandomRoutesToFile(file, NUMBER_OF_PICKERS);
     }
 
     @Test

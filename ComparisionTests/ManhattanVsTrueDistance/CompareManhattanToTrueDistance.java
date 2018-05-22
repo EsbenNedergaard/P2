@@ -22,7 +22,7 @@ import java.util.List;
 
 public class CompareManhattanToTrueDistance {
     private String basePath = "ComparisionTests\\outputFiles\\Heurstics\\";
-    private final int NUMBER_OF_EXAMPLES = 25;
+    private final int NUMBER_OF_EXAMPLES = 50;
     private final int MAX_PRODUCTS_TO_PICK = 5;
     private final int TOTAL_PRODUCT_IDS = 2176;
     private Warehouse warehouse;

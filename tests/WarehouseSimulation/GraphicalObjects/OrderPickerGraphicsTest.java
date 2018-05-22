@@ -15,7 +15,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class OrderPickerGraphicsTest {
+class MovingObjectTest {
     private PathFinder pathFinder;
     private MovingObject orderPicker;
     private Point2D startPoint;
@@ -48,6 +48,34 @@ class OrderPickerGraphicsTest {
 
         int COUNTER = 0;
         while (orderPicker.move(COUNTER++)) ;  // Move picker towards end of route
+
+        assertEquals(endPoint, orderPicker.getCurrentPosition());
+    }
+
+    @Test
+    void testPickerEndsAtExceptedPositionWithDoubleSpeed() {
+        startPoint = new Point2D(1, 0);
+        endPoint = new Point2D(12, 10);
+        List<Node> shortestRoute = pathFinder.findFastestPath(startPoint, endPoint, 0, PICK_TIME).getRoute();
+        orderPicker = new OrderPicker(shortestRoute, "red");
+        orderPicker.setScaleSpeed(2);
+
+        int COUNTER = 0;
+        while (orderPicker.move(COUNTER++));
+
+        assertEquals(endPoint, orderPicker.getCurrentPosition());
+    }
+
+    @Test
+    void testPickerEndsAtExceptedPositionWithFiveTimesSpeed() {
+        startPoint = new Point2D(1, 0);
+        endPoint = new Point2D(12, 7);
+        List<Node> shortestRoute = pathFinder.findFastestPath(startPoint, endPoint, 0, PICK_TIME).getRoute();
+        orderPicker = new OrderPicker(shortestRoute, "purple");
+        orderPicker.setScaleSpeed(5);
+
+        int COUNTER = 0;
+        while (orderPicker.move(COUNTER++));
 
         assertEquals(endPoint, orderPicker.getCurrentPosition());
     }

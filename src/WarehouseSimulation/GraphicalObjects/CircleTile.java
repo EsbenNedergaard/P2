@@ -6,12 +6,9 @@ import javafx.scene.shape.Circle;
 
 import static Warehouse.GUIWarehouse.TILE_SIZE;
 
-/* THIS IS A GRAPHICAL OBJECT WHICH REPRESENTS A LINE */
-
 public class CircleTile extends Circle {
 
     public CircleTile(Point2D point, String color, int radius) {
-        // Pixel width of tile
         setRadius(radius);
         setDesign(point, color);
         relocateCircle(radius);
@@ -19,7 +16,6 @@ public class CircleTile extends Circle {
 
     private void setDesign(Point2D point, String color) {
         setFill(Color.valueOf(color));
-        // Graphical position of tile
         setTranslateX(point.getXPixels());
         setTranslateY(point.getYPixels());
     }

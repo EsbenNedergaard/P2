@@ -61,7 +61,7 @@ class MovingObjectTest {
         orderPicker.setScaleSpeed(2);
 
         int COUNTER = 0;
-        while (orderPicker.move(COUNTER++));
+        while (orderPicker.move(COUNTER++)) ;
 
         assertEquals(endPoint, orderPicker.getCurrentPosition());
     }
@@ -75,7 +75,7 @@ class MovingObjectTest {
         orderPicker.setScaleSpeed(5);
 
         int COUNTER = 0;
-        while (orderPicker.move(COUNTER++));
+        while (orderPicker.move(COUNTER++)) ;
 
         assertEquals(endPoint, orderPicker.getCurrentPosition());
     }

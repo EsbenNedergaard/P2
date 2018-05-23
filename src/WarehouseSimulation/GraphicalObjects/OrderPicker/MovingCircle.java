@@ -101,7 +101,8 @@ public abstract class MovingCircle extends Circle implements MovingObject {
         setTranslateY(getTranslateY() - moveDistancePerUpdate);
     }
 
-    private void waiting() {}
+    private void waiting() {
+    }
 
     private Node getLastVisitedNode() {
         return this.routeList.get(indexOfTargetNode - 1);

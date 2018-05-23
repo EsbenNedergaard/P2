@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
@@ -41,7 +42,7 @@ class RouteFinderTest {
 
     private void addPickingAtPoint(int currTime, int x, int y, List<Node> expected) {
         int pickTime = 5;
-        for(int i = currTime; i < currTime + pickTime; i++) {
+        for (int i = currTime; i < currTime + pickTime; i++) {
             expected.add(spaceTimeGrid.getNodePointer(x, y, i));
         }
     }
@@ -75,14 +76,14 @@ class RouteFinderTest {
     }
 
     @Test
-    void calculateBestRouteWithMovingObstacles(){
+    void calculateBestRouteWithMovingObstacles() {
         List<Node> nonPermanentObstacles = new ArrayList<>();
         //Adding an obstacle at 1,0 for 10 time units, which should not be worth waiting for
-        for(int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
             nonPermanentObstacles.add(spaceTimeGrid.getNodePointer(1, 0, i));
         }
         //Adding one at 1,2 for 5 time units, which should be worth for the algorithm to wait for
-        for(int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5; i++) {
             nonPermanentObstacles.add(spaceTimeGrid.getNodePointer(1, 2, i));
         }
         this.testRouteFinder.getPathFinder().removeRoute(nonPermanentObstacles);
@@ -110,9 +111,9 @@ class RouteFinderTest {
         this.addPickingAtPoint(16, 3, 0, expected);
 
         //Moving back to the start
-        expected.add(spaceTimeGrid.getNodePointer(2,0,21));
-        expected.add(spaceTimeGrid.getNodePointer(1,0,22));
-        expected.add(spaceTimeGrid.getNodePointer(0,0,23));
+        expected.add(spaceTimeGrid.getNodePointer(2, 0, 21));
+        expected.add(spaceTimeGrid.getNodePointer(1, 0, 22));
+        expected.add(spaceTimeGrid.getNodePointer(0, 0, 23));
 
         assertEquals(expected, pickingRoute.getRoute());
     }

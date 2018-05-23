@@ -8,7 +8,6 @@ import Warehouse.Dexion;
 import Warehouse.Warehouse;
 import WarehouseSimulation.GraphicalObjects.Interaction.Handler.RandomProducts;
 import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
 
 import java.io.BufferedWriter;
 import java.io.File;

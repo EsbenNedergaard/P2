@@ -5,14 +5,12 @@ import BackEnd.Graph.SpaceTimeGrid;
 import BackEnd.Pathfinding.Heuristics.Manhattan;
 import BackEnd.Pathfinding.Heuristics.TrueDistance;
 import BackEnd.Pathfinding.PathFinders.PathFinder;
-import BackEnd.Pathfinding.PickingRoute;
 import BackEnd.Pathfinding.RouteFinders.RouteFinder;
 import Warehouse.Dexion;
 import Warehouse.Warehouse;
 import WarehouseSimulation.GraphicalObjects.Interaction.Handler.RandomProducts;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -33,7 +31,7 @@ public class CompareManhattanToTrueDistance {
     private RouteFinder trueDistanceRouteFinder;
 
     @BeforeEach
-    void beforeEach(){
+    void beforeEach() {
         warehouse = new Dexion();
         SpaceTimeGrid grid = new SpaceTimeGrid(warehouse.getBaseLayer(), 300);
         PathFinder manhattanPathFinder = new PathFinder(new SpaceTimeGrid(grid), new Manhattan());
@@ -44,13 +42,13 @@ public class CompareManhattanToTrueDistance {
     }
 
     @Disabled
-    void testWith10Pickers(){
+    void testWith10Pickers() {
         final int NUMBER_OF_PICKERS = 10;
         File file = new File(basePath + "testWith10Pickers.xls");
         this.runtimesForRandomRoutesToFile(file, NUMBER_OF_PICKERS);
     }
 
-    void runtimesForRandomRoutesToFile(File file, int numberOfPickers){
+    void runtimesForRandomRoutesToFile(File file, int numberOfPickers) {
         int productsVisited = 0;
         int routesCalculated[] = new int[5];
         long startTime;

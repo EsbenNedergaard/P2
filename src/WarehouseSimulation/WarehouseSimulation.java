@@ -40,7 +40,7 @@ public class WarehouseSimulation {
     private Warehouse warehouse;
     // Path finder
     private RouteFinder routeFinder;
-    private final int MAX_TIME = 500;
+    private final int MAX_TIME = 511;
     private Group orderPickerGroup;
     private List<MovingObject> orderPickerList;
     private PickerColors pickerColorGenerator;

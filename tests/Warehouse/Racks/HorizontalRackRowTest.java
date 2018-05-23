@@ -21,8 +21,6 @@ class HorizontalRackRowTest {
     private Product product4;
     private Product product5;
 
-    //TODO: SKAL HAVE SAT TESTS OP FOR
-    //TODO: Flyttes lavning af produkter herop og kalde dem p1, p2 osv. samt lave vores getters om til package private, da de ikke skal bruges andre steder
     @BeforeEach
     void beforeEach() {
         Point2D startPoint = new Point2D(1, 1);

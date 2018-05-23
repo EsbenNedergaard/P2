@@ -13,8 +13,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class RackTest {
     private Rack testRack;
 
-    //TODO: FÅ SAT TEST OP FOR PUNKTET OG FOR EQUALITY
-
     @BeforeEach
     void beforeEach() {
         testRack = new Rack(2, new Point2D(1, 1));

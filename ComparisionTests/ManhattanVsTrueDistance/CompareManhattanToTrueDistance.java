@@ -11,6 +11,7 @@ import Warehouse.Dexion;
 import Warehouse.Warehouse;
 import WarehouseSimulation.GraphicalObjects.Interaction.Handler.RandomProducts;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.BufferedWriter;
@@ -42,7 +43,7 @@ public class CompareManhattanToTrueDistance {
         trueDistanceRouteFinder = new RouteFinder(trueDistancePathFinder, warehouse.getRouteStartPoint(), warehouse.getRouteEndPoint());
     }
 
-    @Test
+    @Disabled
     void testWith10Pickers(){
         final int NUMBER_OF_PICKERS = 10;
         File file = new File(basePath + "testWith10Pickers.xls");

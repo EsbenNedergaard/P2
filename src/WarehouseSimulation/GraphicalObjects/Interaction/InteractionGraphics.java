@@ -65,7 +65,7 @@ public class InteractionGraphics {
     }
 
     private void setGridPaneStyles(GridPane gridpane) {
-        gridpane.setMinWidth(TILE_SIZE * SCALE); // TODO: Fix this :))
+        gridpane.setMinWidth(TILE_SIZE * SCALE);
         gridpane.setHgap(10);
         gridpane.setVgap(15);
     }
